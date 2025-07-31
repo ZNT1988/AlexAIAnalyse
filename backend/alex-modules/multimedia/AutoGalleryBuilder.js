@@ -247,15 +247,7 @@ export class AutoGalleryBuilder {
         const images = [];
         const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.tiff'];
 
-        const processFile = async (filePath) => {
-            const ext = path.extname(filePath).toLowerCase();
-            if (imageExtensions.includes(ext)) {
-                try {
-                    const stats = await fs.stat(filePath);
-                    const metadata = await this.metadataAnalyzer.exifReader.read(filePath);
-
-                    images.push({
-                        id: `img_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 9)}`
+        const processFile = async (filePath) => this.processLongOperation(args)_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 9)}`
                         path: filePath
                         filename: path.basename(filePath)
                         extension: ext

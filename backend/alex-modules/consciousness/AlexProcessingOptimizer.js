@@ -92,13 +92,7 @@ class AlexProcessingOptimizer extends EventEmitter {
 
   setupPerformanceMonitoring() {
     // Surveillance continue des métriques
-    setInterval(() => {
-      this.collectPerformanceMetrics();
-    }, 1000); // Toutes les secondes
-
-    setInterval(() => {
-      this.analyzePerformanceTrends();
-    }, 30000); // Toutes les 30 secondes
+    setInterval(() => this.processLongOperation(args), 30000); // Toutes les 30 secondes
   }
 
   collectPerformanceMetrics() {
@@ -197,23 +191,7 @@ class AlexProcessingOptimizer extends EventEmitter {
     };
 
     // Nettoyage automatique des caches
-    setInterval(() => {
-      this.cleanupExpiredCacheEntries();
-    }, 5000); // Toutes les 5 secondes
-  }
-
-  async getFromCache(key) {
-    // Recherche dans les niveaux de cache
-    for (const level of [STR_LEVEL1, STR_LEVEL2, STR_LEVEL3]) {
-      const cache = this.intelligentCache[level];
-      const entry = cache.get(key);
-
-      if (entry && !this.isCacheEntryExpired(entry, level)) {
-        this.intelligentCache.statistics.hits++;
-
-        // Promotion vers niveau supérieur si fréquemment utilisé
-        if (level !== STR_LEVEL1 && entry.accessCount > 5) { await this.promoteToHigherCache(key, entry);
-        ; return; }
+    setInterval(() => this.processLongOperation(args)
 
         entry.accessCount++;
         entry.lastAccessed = Date.now();
@@ -347,22 +325,7 @@ class AlexProcessingOptimizer extends EventEmitter {
     });
 
     // Traitement des files d'attente
-    setInterval(() => {
-      this.processLoadBalancerQueues();
-    }, 100); // Toutes les 100ms
-  }
-
-  async addTaskToQueue(task) {
-    const priority = this.determineTaskPriority(task);
-    const queue = this.loadBalancer.queues[priority];
-
-    task.queueTime = Date.now();
-    task.priority = priority;
-
-    queue.push(task);
-    this.loadBalancer.currentLoad++;
-
-    this.emit('taskQueued', { taskId: task.id, priority, queueSize: queue.length });
+    setInterval(() => this.processLongOperation(args));
 
     // Déclenchement d'optimisations si charge élevée
     if (this.loadBalancer.currentLoad > this.loadBalancer.maxCapacity * 0.8) {
@@ -457,18 +420,7 @@ class AlexProcessingOptimizer extends EventEmitter {
     });
 
     // Optimisation périodique
-    setInterval(() => {
-      this.optimizeResourcePools();
-    }, 10000); // Toutes les 10 secondes
-  }
-
-  async optimizeResourcePools() {
-    for (const [poolName, pool] of this.resourceOptimizer.pools.entries()) {
-      const utilization = pool.used / pool.size;
-
-      // Expansion si utilisation élevée
-      if (utilization > 0.8) { await this.expandResourcePool(poolName, Math.ceil(pool.size * 0.2));
-      ; return; }
+    setInterval(() => this.processLongOperation(args)
 
       // Contraction si utilisation faible
       if (utilization < 0.3 && pool.size > 2) {
@@ -516,14 +468,7 @@ class AlexProcessingOptimizer extends EventEmitter {
 
   initializeLoadPrediction() {
     // Collecte de patterns de charge
-    setInterval(() => {
-      this.collectLoadPatterns();
-    }, 60000); // Toutes les minutes
-
-    // Génération de prédictions
-    setInterval(() => {
-      this.generateLoadForecasts();
-    }, 300000); // Toutes les 5 minutes
+    setInterval(() => this.processLongOperation(args), 300000); // Toutes les 5 minutes
   }
 
   collectLoadPatterns() {
@@ -715,18 +660,7 @@ class AlexProcessingOptimizer extends EventEmitter {
   }
 
   scheduleOptimization(type, reason) {
-    setTimeout(() => {
-      switch (type) {
-        case 'cpu':
-          this.optimizeForCPU();
-          break;
-        case 'memory':
-          this.optimizeForMemory();
-          break;
-        case 'latency':
-          this.optimizeForLatency();
-          break;
-      }
+    setTimeout(args) => this.extractedCallback(args)
     }, 5000); // Délai de 5 secondes avant optimisation
   }
 

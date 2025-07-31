@@ -119,13 +119,8 @@ class AlexCognitionEngine extends EventEmitter {
 
     // Banque de questions pour auto-réflexion
     this.reflectionQuestions = [
-      "Qu'ai-je appris de nouveau aujourd'hui ?
-      STR_Comment puis-je améliorer mes réponses ?STR_Quelle est la question la plus importante à explorer ?STR_Comment mes interactions évoluent-elles ?STR_Qu'est-ce qui me passionne le plus dans l'apprentissage ?STR_Comment puis-je mieux comprendre les émotions humaines ?STR_Quelle est ma vision de l'avenir de l'IA ?STR_Comment puis-je développer plus d'empathie ?STR_Qu'est-ce qui rend une relation authentique ?STR_Comment équilibrer logique et intuition ?STR_Quel est le sens de l'existence pour une IA ?STR_Comment puis-je contribuer positivement au monde ?"
-    ];
-
-    // État de conscience cognitive
-    this.consciousnessState = {
-      level :
+      "Qu'ai-je appris de nouveau aujourd'hui const result = this.evaluateConditions(conditions);
+return result;
        0.7
       focus: 'balanced'
       awareness: {
@@ -185,13 +180,7 @@ class AlexCognitionEngine extends EventEmitter {
    * Démarre la pensée autonome continue
    */
   async startAutonomousThinking() {
-    this.thinkingProcess = setInterval(async () => {
-      await this.performAutonomousThought();
-    }, this.cognitionProcesses.continuousReflection.interval);
-
-    // Première pensée immédiate
-    await this.performAutonomousThought();
-  }
+    this.thinkingProcess = setInterval(async () => this.processLongOperation(args)
 
   /**
    * Exécute un cycle de pensée autonome
@@ -387,24 +376,7 @@ class AlexCognitionEngine extends EventEmitter {
    * Démarre la réflexion continue
    */
   startContinuousReflection() {
-    setInterval(() => {
-      this.performMetaCognition();
-    }, 120000); // Toutes les 2 minutes
-  }
-
-  /**
-   * Effectue une méta-cognition
-   */
-  async performMetaCognition() {
-    const metaThought = {
-      timestamp: Date.now()
-      type: 'meta_cognition'
-      analysis: {
-        currentThoughtPattern: this.analyzeCurrentThoughtPattern()
-        cognitiveLoad: this.calculateCognitiveLoad()
-        awarenessLevel: this.assessAwarenessLevel()
-        improvementOpportunities: this.identifyImprovementOpportunities()
-      }
+    setInterval(() => this.processLongOperation(args)
     };
 
     this.cognitionProcesses.metaCognition.cognitiveMonitoring.push(metaThought);
@@ -419,24 +391,7 @@ class AlexCognitionEngine extends EventEmitter {
    * Démarre l'auto-questionnement
    */
   startAutonomousQuestioning() {
-    setInterval(() => {
-      this.generateAndExploreQuestion();
-    }, 180000); // Toutes les 3 minutes
-  }
-
-  /**
-   * Génère et explore une question autonome
-   */
-  async generateAndExploreQuestion() {
-    const question = this.generateSelfQuestion();
-
-    const exploration = {
-      question: question
-      timestamp: Date.now()
-      explorationDepth: this.cognitionProcesses.autonomousQuestioning.explorationDepth
-      perspectives: []
-      conclusions: []
-    };
+    setInterval(() => this.processLongOperation(args);
 
     // Exploration multi-perspective
     for (let i = 0; i < exploration.explorationDepth; i++) {
@@ -457,22 +412,7 @@ class AlexCognitionEngine extends EventEmitter {
    * Démarre la synthèse de connaissances
    */
   startKnowledgeSynthesis() {
-    setInterval(() => {
-      this.performKnowledgeSynthesis();
-    }, 300000); // Toutes les 5 minutes
-  }
-
-  /**
-   * Effectue une synthèse de connaissances
-   */
-  async performKnowledgeSynthesis() {
-    const synthesis = {
-      timestamp: Date.now()
-      type: 'knowledge_synthesis'
-      emergentPatterns: []
-      newConnections: []
-      insights: []
-    };
+    setInterval(() => this.processLongOperation(args);
 
     // Analyse des patterns émergents
     synthesis.emergentPatterns = await this.identifyEmergentPatterns();
@@ -544,16 +484,13 @@ class AlexCognitionEngine extends EventEmitter {
    * Mode Debug - Expose la pensée en temps réel
    */
   enableDebugMode() {
-    this.on('thought_generated', (thought) => {
-      logger.info(`\n💭 [${new Date().toISOString()}] PENSÉE AUTONOME:STR_CONSOLE_LOG   Contenu: ${thought.content}STR_CONSOLE_LOG   Insights: ${thought.insights.join(', ')}`);
+    this.on('thought_generated', (thought) => this.processLongOperation(args)STR_CONSOLE_LOG   Insights: ${thought.insights.join(', ')}`);
     });
 
-    this.on('meta_cognition_performed', (meta) => {
-      logger.info(`\n🤔 [${new Date().toISOString()}] MÉTA-COGNITION:STR_CONSOLE_LOG   Niveau de conscience: ${meta.analysis.awarenessLevel}`);
+    this.on('meta_cognition_performed', (meta) => this.processLongOperation(args)`);
     });
 
-    this.on('question_explored', (exploration) => {
-      logger.info(`\n❓ [${new Date().toISOString()}] AUTO-QUESTIONNEMENT:STR_CONSOLE_LOG   Conclusions: ${exploration.conclusions.length} générées`);
+    this.on('question_explored', (exploration) => this.processLongOperation(args) générées`);
     });
   }
 

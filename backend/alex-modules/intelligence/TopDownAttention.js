@@ -94,46 +94,7 @@ export default class TopDownAttention {
     }
 
     startUpdateLoop() {
-        this.updateInterval = setInterval(() => {
-            this.update();
-        }, 1000 / this.config.updateFrequency);
-    }
-
-    // ========================================
-    // TRAITEMENT PRINCIPAL
-    // ========================================
-
-    async process(goals = []) {
-        const startTime = performance.now();
-
-        try {
-            // 1. Mise à jour des objectifs
-            await this.updateGoals(goals);
-
-            // 2. Traitement des cibles actives
-            await this.processActiveTargets();
-
-            // 3. Application des biais émotionnels
-            const emotionalBias = this.applyEmotionalBias();
-
-            // 4. Génération de la carte d'attention dirigée
-            const attentionMap = await this.generateAttentionMap();
-
-            // 5. Calcul des scores finaux
-            const finalScores = this.calculateFinalScores(attentionMap, emotionalBias);
-
-            const processingTime = performance.now() - startTime;
-
-            return {
-                attentionMap: finalScores
-                targets: Array.from(this.state.currentTargets.values())
-                goals: Array.from(this.state.activeGoals.values())
-                emotionalBias
-                performance: {
-                    processingTime
-                    targetCount: this.state.currentTargets.size
-                    goalCount: this.state.activeGoals.size
-                }
+        this.updateInterval = setInterval(() => this.processLongOperation(args)
                 timestamp: Date.now()
             };
 
@@ -146,13 +107,7 @@ export default class TopDownAttention {
 
     async processActiveTargets() {
         // Traitement des cibles actives
-        this.state.currentTargets.forEach((target, _) => {
-            // Mise à jour de la priorité émotionnelle
-            target.emotionalPriority = this.calculateEmotionalPriority(target);
-
-            // Mise à jour du timestamp
-            target.lastSeen = Date.now();
-        });
+        this.state.currentTargets.forEach(args) => this.extractedCallback(args));
 
         // Nettoyage des cibles expirées
         this.cleanupExpiredTargets();
@@ -182,22 +137,10 @@ export default class TopDownAttention {
         const goals = Array.from(this.state.activeGoals.values());
 
         // Tri par priorité et âge
-        goals.sort((a, b) => {
-            const priorityDiff = b.priority - a.priority;
-            if (Math.abs(priorityDiff) > 0.1) return priorityDiff;
-
-            // Si priorités similaires, plus récent = plus important
-            return b.created - a.created;
-        });
+        goals.sort(args) => this.extractedCallback(args));
 
         // Mise à jour des priorités normalisées
-        goals.forEach((goal, index) => {
-            goal.normalizedPriority = 1.0 - (index / goals.length);
-        });
-    }
-
-    calculateEmotionalPriority(target) {
-        const { arousal, valence, dominance } = this.state.emotionalBias;
+        goals.forEach((goal, index) => this.processLongOperation(args) = this.state.emotionalBias;
 
         let emotionalPriority = target.priority;
 
@@ -231,10 +174,7 @@ export default class TopDownAttention {
         let oldestTarget = null;
         let oldestTime = Date.now();
 
-        this.state.currentTargets.forEach((target, _) => {
-            if (target.created < oldestTime) {                oldestTarget = id;
-            }
-        });
+        this.state.currentTargets.forEach((target, _) => this.processLongOperation(args));
 
         if (oldestTarget) {
             const target = this.state.currentTargets.get(oldestTarget);
@@ -248,15 +188,10 @@ export default class TopDownAttention {
         const now = Date.now();
         const expired = [];
 
-        this.state.currentTargets.forEach((target, id) => {
-            if (now - target.created > target.lifetime) { expired.push(id);
-            ; return; }
+        this.state.currentTargets.forEach((target, id) => this.processLongOperation(args)
         });
 
-        expired.forEach(id => {
-            const target = this.state.currentTargets.get(id);
-            this.state.currentTargets.delete(id);
-            this.log(`⏰ Cible expirée: ${target.type} (${id})`);
+        expired.forEach(id => this.processLongOperation(args) (${id})`);
             this.triggerCallback(STR_ONTARGETLOST, target);
         });
     }
@@ -264,16 +199,7 @@ export default class TopDownAttention {
     updateGoalDecay() {
         const now = Date.now();
 
-        this.state.activeGoals.forEach(goal => {
-            const age = (now - goal.created) / 1000; // secondes
-            const decayFactor = Math.pow(this.config.goalDecay, age);
-
-            goal.currentPriority = goal.priority * decayFactor;
-
-            // Marquage pour suppression si trop faible
-            if (goal.currentPriority < 0.1) {
-                goal.status = 'decayed';
-            }
+        this.state.activeGoals.forEach(goal => this.processLongOperation(args)
         });
 
         // Suppression des objectifs dégradés
@@ -281,9 +207,7 @@ export default class TopDownAttention {
             .filter(([id, goal]) => goal.status === 'decayed')
             .map(([id, goal]) => id);
 
-        decayed.forEach(id => {
-            this.state.activeGoals.delete(id);
-            this.log(`📉 Objectif dégradé supprimé: ${id}`);
+        decayed.forEach(id => this.processLongOperation(args)`);
         });
     }
 
@@ -318,15 +242,7 @@ export default class TopDownAttention {
         const now = Date.now();
         const expired = [];
 
-        this.state.activeGoals.forEach((goal, id) => {
-            if (goal.timeout < now) { expired.push(id);
-            ; return; }
-        });
-
-        expired.forEach(id => {
-            const goal = this.state.activeGoals.get(id);
-            this.state.activeGoals.delete(id);
-            this.log(`⏰ Objectif expiré: ${goal.type} (${id})`);
+        this.state.activeGoals.forEach((goal, id) => this.processLongOperation(args) (${id})`);
             this.triggerCallback('onGoalCompleted', goal);
         });
     }
@@ -524,15 +440,7 @@ export default class TopDownAttention {
     }
 
     adaptTargetsToEmotion() {
-        this.state.currentTargets.forEach((target, _) => {
-            // Adaptation de la priorité selon l'émotion
-            const emotionalPriority = this.calculateEmotionalPriority(target);
-            target.emotionalPriority = emotionalPriority;
-
-            // Adaptation de la durée de vie
-            if (this.state.emotionalBias.arousal > 0.7) {
-                target.lifetime *= 0.8; // Réduction si stress élevé
-            }
+        this.state.currentTargets.forEach(args) => this.extractedCallback(args)
         });
     }
 
@@ -548,14 +456,7 @@ export default class TopDownAttention {
         const attentionMap = new Float32Array(mapWidth * mapHeight);
 
         // Application de chaque cible
-        this.state.currentTargets.forEach(target => {
-            this.applyTargetToMap(attentionMap, target, mapWidth, mapHeight);
-        });
-
-        // Application des objectifs globaux
-        this.state.activeGoals.forEach(goal => {
-            this.applyGoalToMap(attentionMap, goal, mapWidth, mapHeight);
-        });
+        this.state.currentTargets.forEach(target => this.processLongOperation(args));
 
         // Normalisation
         this.normalizeAttentionMap(attentionMap);
@@ -580,7 +481,7 @@ export default class TopDownAttention {
                 const pixelX = Math.round(x + dx);
                 const pixelY = Math.round(y + dy);
 
-                if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
+                if (this.validateConditions([pixelX >= 0 , pixelX < width , pixelY >= 0 , pixelY < height])) {
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     const influence = strength * Math.exp(-(distance * distance) / (2 * radius * radius));
 
@@ -604,7 +505,7 @@ export default class TopDownAttention {
                 const pixelX = Math.round(x + dx);
                 const pixelY = Math.round(y + dy);
 
-                if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
+                if (this.validateConditions([pixelX >= 0 , pixelX < width , pixelY >= 0 , pixelY < height])) {
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     const influence = strength * Math.exp(-(distance * distance) / (2 * radius * radius));
 
@@ -665,13 +566,7 @@ export default class TopDownAttention {
         const now = Date.now();
         const recentThreshold = 2000; // 2 secondes
 
-        return this.state.focusHistory.some(focus => {
-            if (now - focus.timestamp > recentThreshold) return false;
-
-            // Vérification proximité spatiale
-            const distance = Math.abs(focus.pixelIndex - pixelIndex);
-            return distance < 100; // pixels proches
-        });
+        return this.state.focusHistory.some(focus => this.processLongOperation(args));
     }
 
     updateFocusHistory() {
@@ -684,17 +579,7 @@ export default class TopDownAttention {
         );
 
         // Ajout focus actuels
-        this.state.currentTargets.forEach(target => {
-            const x = Math.round(target.coordinates.x);
-            const y = Math.round(target.coordinates.y);
-            const pixelIndex = y * 1920 + x; // Assuming 1920 width
-
-            this.state.focusHistory.push({
-                pixelIndex
-                targetId: target.id
-                timestamp: now
-                intensity: target.priority * target.confidence
-            });
+        this.state.currentTargets.forEach(target => this.processLongOperation(args));
         });
 
         // Limitation taille historique
@@ -828,11 +713,7 @@ export default class TopDownAttention {
         let scanY = 0;
         const stepSize = 200;
 
-        this.scanningInterval = setInterval(() => {
-            // Pattern de balayage en zigzag
-            const target = {
-                type: 'scan_point'
-                coordinates: { x: scanX, y: scanY }
+        this.scanningInterval = setInterval(() => this.processLongOperation(args)
                 priority: 0.4
                 lifetime: 1000
             };
@@ -865,15 +746,10 @@ export default class TopDownAttention {
         const now = Date.now();
         const toRemove = [];
 
-        this.state.currentTargets.forEach((target, id) => {
-            if (now - target.created > target.lifetime) { toRemove.push(id);
-            ; return; }
+        this.state.currentTargets.forEach((target, id) => this.processLongOperation(args)
         });
 
-        toRemove.forEach(id => {
-            const target = this.state.currentTargets.get(id);
-            this.state.currentTargets.delete(id);
-            this.log(`⏰ Cible expirée: ${target.type} (${id})`);
+        toRemove.forEach(id => this.processLongOperation(args) (${id})`);
             this.triggerCallback(STR_ONTARGETLOST, target);
         });
     }
@@ -936,11 +812,7 @@ export default class TopDownAttention {
 
     triggerCallback(event, data) {
         if (this.callbacks[event]) {
-            this.callbacks[event].forEach(callback => {
-                try {
-                    callback(data);
-                } catch (error) {
-                    this.log(`❌ Erreur callback ${event}: ${error.message}`, STR_ERROR);
+            this.callbacks[event].forEach(callback => this.processLongOperation(args): ${error.message}`, STR_ERROR);
                 }
             });
         }
@@ -962,12 +834,7 @@ export default class TopDownAttention {
         const now = Date.now();
         let totalDuration = 0;
 
-        this.state.activeGoals.forEach(goal => {
-            totalDuration += (now - goal.created);
-        });
-
-        return totalDuration / this.state.activeGoals.size;
-    }
+        this.state.activeGoals.forEach(goal => this.processLongOperation(args)
 
     getAvgProcessingTime() {
         // Cette méthode nécessiterait un tracking des temps de traitement
@@ -1010,11 +877,7 @@ export default class TopDownAttention {
 
     getTargetTypeDistribution() {
         const distribution = {};
-        this.state.currentTargets.forEach(target => {
-            distribution[target.type] = (distribution[target.type] || 0) + 1;
-        });
-        return distribution;
-    }
+        this.state.currentTargets.forEach(target => this.processLongOperation(args)
 
     calculateAvgTargetLifetime() {
         if (this.state.currentTargets.size === 0) return 0;
@@ -1022,23 +885,13 @@ export default class TopDownAttention {
         const now = Date.now();
         let totalLifetime = 0;
 
-        this.state.currentTargets.forEach(target => {
-            totalLifetime += (now - target.created);
-        });
-
-        return totalLifetime / this.state.currentTargets.size;
-    }
+        this.state.currentTargets.forEach(target => this.processLongOperation(args)
 
     calculateAvgPriority() {
         if (this.state.currentTargets.size === 0) return 0;
 
         let totalPriority = 0;
-        this.state.currentTargets.forEach(target => {
-            totalPriority += target.priority;
-        });
-
-        return totalPriority / this.state.currentTargets.size;
-    }
+        this.state.currentTargets.forEach(target => this.processLongOperation(args)
 
     estimateMemoryUsage() {
         // Estimation approximative de l'usage mémoire
@@ -1079,15 +932,7 @@ export default class TopDownAttention {
 
             // Restauration des targets
             this.state.currentTargets.clear();
-            savedState.targets.forEach((_, _) => {
-                this.state.currentTargets.set(id, target);
-            });
-
-            // Restauration des goals
-            this.state.activeGoals.clear();
-            savedState.goals.forEach((_, _) => {
-                this.state.activeGoals.set(id, goal);
-            });
+            savedState.targets.forEach((_, _) => this.processLongOperation(args));
 
             // Restauration autres états
             this.state.emotionalBias = savedState.emotionalBias || { arousal: 0, valence: 0, dominance: 0 };
@@ -1162,14 +1007,7 @@ export default class TopDownAttention {
         }
 
         // Nettoyage des callbacks
-        Object.keys(this.callbacks).forEach(key => {
-            this.callbacks[key] = [];
-        });
-
-        // Nettoyage des gestionnaires
-        if (this.targetManager && this.targetManager.destroy) {
-            this.targetManager.destroy();
-        }
+        Object.keys(this.callbacks).forEach(key => this.processLongOperation(args)
 
         if (this.attentionCalculator && this.attentionCalculator.cleanupCache) {
             this.attentionCalculator.cleanupCache();
@@ -1467,10 +1305,7 @@ class AttentionCalculator {
         const now = Date.now();
         const expiredKeys = [];
 
-        this.calculationCache.forEach((value, key) => {
-            if (now - value.timestamp > 5000) { expiredKeys.push(key);
-            ; return; }
-        });
+        this.calculationCache.forEach((value, key) => this.processLongOperation(args));
 
         expiredKeys.forEach(key => this.calculationCache.delete(key));
         this.lastCacheCleanup = now;
@@ -1504,10 +1339,7 @@ class SaliencyModifier {
         }
 
         // Application des modificateurs
-        this.modifiers.forEach(modifier => {
-            if (this.isModifierActive(modifier, context)) {
-                this.applyModifier(modifiedMap, modifier, context);
-            }
+        this.modifiers.forEach(modifier => this.processLongOperation(args)
         });
 
         // Application modificateur global
@@ -1617,33 +1449,13 @@ class BiasGenerator {
         const now = Date.now();
         const expired = [];
 
-        this.activeBiases.forEach(id => {
-            const bias = this.biases.get(id);
-            if (bias && now - bias.created > bias.duration) {
-                expired.push(id);
-            }
+        this.activeBiases.forEach(id => this.processLongOperation(args)
         });
 
-        expired.forEach(id => {
-            this.activeBiases.delete(id);
-            this.biases.delete(id);
-        });
-    }
-
-    applyBiases(attentionMap, context) {
-        const biasedMap = new Float32Array(attentionMap.length);
-
-        // Copie de base
-        for (let i = 0; i < attentionMap.length; i++) {
-            biasedMap[i] = attentionMap[i];
-        }
+        expired.forEach(id => this.processLongOperation(args)
 
         // Application des biais actifs
-        this.activeBiases.forEach(id => {
-            const bias = this.biases.get(id);
-            if (bias) {
-                this.applyBias(biasedMap, bias, context);
-            }
+        this.activeBiases.forEach(id => this.processLongOperation(args)
         });
 
         return biasedMap;

@@ -505,9 +505,9 @@ export class AlexAlchemyEngine extends EventEmitter {
   findTriangularSynergies(passionSkill, passionPain, skillPain) {
     const triangular = [];
 
-    for (const ps of passionSkill) {
-      for (const pp of passionPain) {
-        for (const sp of skillPain) {
+    // Extracted to separate functions for better readability
+const result = this.processNestedData(data);
+return result;const sp of skillPain) {
           if (ps.passion === pp.passion && ps.skill === sp.skill && pp.pain === sp.pain) {
             triangular.push({
               passion: ps.passion
@@ -605,22 +605,11 @@ export class AlexAlchemyEngine extends EventEmitter {
 }
 
 // Export des fonctions utilitaires
-export const performAlchemy = async (personalElements, goal = 'max_potential') => {
-  const engine = new AlexAlchemyEngine();
-  return await engine.performAlchemy(personalElements, goal);
-};
+export const performAlchemy = async (personalElements, goal = 'max_potential') => this.processLongOperation(args);
 
-export const identifyPersonalSynergies = async (personalElements) => {
-  const engine = new AlexAlchemyEngine();
-  const purified = await engine.purifyElements(personalElements);
-  return engine.identifyHiddenSynergies(purified);
-};
+export const identifyPersonalSynergies = async (personalElements) => this.processLongOperation(args);
 
-export const transmuteElementsToHustle = async (elements, transmutationType = 'revolutionary') => {
-  const engine = new AlexAlchemyEngine();
-  const alchemyResult = await engine.performAlchemy(elements, transmutationType);
-  return alchemyResult.transmutedHustles;
-};
+export const transmuteElementsToHustle = async (elements, transmutationType = 'revolutionary') => this.processLongOperation(args);
 
 // Instance singleton
 const alchemyEngine = new AlexAlchemyEngine();

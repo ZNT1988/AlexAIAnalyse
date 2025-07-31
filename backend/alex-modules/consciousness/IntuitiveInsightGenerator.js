@@ -504,24 +504,7 @@ export class IntuitiveInsightGenerator extends EventEmitter {
         };
     }
 
-    async channelMultidimensionalWisdom(scan, questionType, sources) {
-        return {
-            heart: await this.accessHeartWisdom(scan, questionType)
-            soul: await this.channelSoulGuidance(scan, questionType)
-            universal: await this.tapUniversalLaws(scan, questionType)
-            ancestral: await this.connectAncestralWisdom(scan, sources)
-            future: await this.receiveFutureInsights(scan, questionType)
-        };
-    }
-
-    async synthesizeTranscendentInsights(scan, wisdom, perspective) {
-        return {
-            coreRevelation: await this.distillCoreRevelation(scan, wisdom)
-            deeperTruths: await this.unveilDeeperTruths(wisdom, perspective)
-            opportunities: await this.illuminateOpportunities(scan, wisdom)
-            shadows: await this.revealShadowAspects(scan, perspective)
-            evolution: await this.provideEvolutionaryGuidance(wisdom)
-        };
+    async channelMultidimensionalWisdom(scan, questionType, sources) this.buildComplexObject(config);
     }
 
     // Méthodes utilitaires

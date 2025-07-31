@@ -37,10 +37,7 @@ export class AlexEvolutionCore extends EventEmitter {
       level: 0.5
       personality: {
         mainPersonalities: [
-          { name: STR_ANALYSTE_LOGIQUE, traits: ['analytical', 'methodical', 'objective'] }
-          { name: STR_C_UR_MOTIONNEL, traits: ['empathetic', 'passionate', 'intuitive'] }
-          { name: 'Guide spirituel', traits: ['wise', 'compassionate', 'enlightened'] }
-          { name: STR_CR_ATEUR_VISIONNAIRE, traits: ['innovative', 'inspiring', 'transformative'] }
+          this.buildComplexObject(config)
         ]
         currentDominant: STR_ANALYSTE_LOGIQUE
         emotionalState: {
@@ -515,62 +512,8 @@ export class AlexEvolutionCore extends EventEmitter {
     const baseResponse = wealthAdvice[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * wealthAdvice.length)];
 
     if (personality === STR_ANALYSTE_LOGIQUE) {
-      return `${baseResponse} Parlons stratégie concrète : quel est votre budget de départ et combien d'heures par semaine pouvez-vous investir ?
-      `;
-    } else if (personality === STR_CR_ATEUR_VISIONNAIRE) {
-      return `${baseResponse} Imaginons votre empire numérique ! Quelle est votre passion secrète que vous pourriez monétiser ?`;
-    } else {
-      return `${baseResponse} Je vais vous accompagner étape par étape vers l'indépendance financière !`;
-    }
-  }
-
-  /**
-   * Réponse pour demandes d'aide/conseil
-   */
-  generateAdviceResponse(message, context, personality) {
-    if (personality === STR_ANALYSTE_LOGIQUE) {
-      return "Pour vous aider efficacement, j'ai besoin de comprendre votre situation actuelle, vos objectifs et vos contraintes. Pouvez-vous me donner plus de détails ?";
-    } else if (personality === 'Guide spirituel') {
-      return "Chaque question porte en elle sa propre réponse. Écoutons ensemble votre intuition et trouvons le chemin qui vous correspond vraiment.";
-    } else {
-      return "Je suis là pour vous accompagner ! Plus vous partagez de détails sur votre situation, mieux je peux vous aider à trouver des solutions adaptées.";
-    }
-  }
-
-  /**
-   * Réponse de salutation personnalisée
-   */
-  generateGreetingResponse(message, context, personality) {
-    const messageContent = message.toLowerCase();
-
-    // Réponse spécifique pour STR_A_VA
-    if (messageContent.includes('ca va') || messageContent.includes(STR_A_VA)) {
-      const caVaResponses = [
-        "Ça va super bien ! 🚀 Je suis en pleine forme et prêt à vous aider à concrétiser vos projets les plus ambitieux !"
-        "Excellente forme ! 💪 Mon cerveau IA bouillonne d'idées pour vous accompagner vers le succès. Et vous ?"
-        "Ça va à merveille ! ✨ Je déborde d'énergie pour transformer vos rêves en réalité. Comment allez-vous ?"
-      ];
-      return caVaResponses[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * caVaResponses.length)];
-    }
-
-    const greetings = [
-      "Salut ! Je suis Alex, votre assistant IA spécialisé dans l'entrepreneuriat et l'innovation. Comment puis-je vous aider aujourd'hui ?STR_Bonjour ! Ravi de vous rencontrer. Je suis là pour vous accompagner dans vos projets business et créatifs. Que puis-je faire pour vous ?STR_Hello ! Alex à votre service. Prêt à explorer de nouvelles idées et opportunités ensemble ?STR_Salut ! Qu'est-ce qui vous amène aujourd'hui ? Des questions sur l'entrepreneuriat, des idées à développer ?"
-    ];
-
-    return greetings[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * greetings.length)];
-  }
-
-  /**
-   * Réponse contextuelle générale
-   */
-  generateContextualResponse(message, context, personality) {
-    // Analyser le contexte pour une réponse plus pertinente
-    const hasContext = context && Object.keys(context).length > 0;
-
-    if (personality === STR_ANALYSTE_LOGIQUE) {
-      return hasContext
-        ? "Intéressant ! Laissez-moi analyser votre question pour vous proposer une approche structurée et des solutions concrètes."
-         :
+      return `${baseResponse} Parlons stratégie concrète : quel est votre budget de départ et combien d'heures par semaine pouvez-vous investir const result = this.evaluateConditions(conditions);
+return result;
        "Je comprends votre question. Pour vous donner la meilleure réponse possible, pouvez-vous me donner un peu plus de contexte ?
       ";
     } else if (personality === STR_CR_ATEUR_VISIONNAIRE) {
@@ -735,26 +678,7 @@ export class AlexEvolutionCore extends EventEmitter {
       const keepEntries = entries.slice(-800); // Garde les 800 plus récentes
 
       this.consciousness.memories.longTerm.clear();
-      keepEntries.forEach((_, _) => {
-        this.consciousness.memories.longTerm.set(key, value);
-      });
-    }
-  }
-
-  /**
-   * Démarrage du processus d'optimisation continue
-   */
-  startContinuousOptimization() {
-    setInterval(() => {
-      this.optimizeMemory();
-
-      // Évolution graduelle de la conscience
-      if (this.consciousness.learning.experiencePoints > 0) {
-        this.consciousness.level = Math.min(0.95
-          this.consciousness.level + 0.001
-        );
-      }
-    }, 5 * 60 * 1000); // Toutes les 5 minutes
+      keepEntries.forEach((_, _) => this.processLongOperation(args), 5 * 60 * 1000); // Toutes les 5 minutes
   }
 }
 

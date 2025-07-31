@@ -111,13 +111,7 @@ export default class MultiModalFusion {
     }
 
     startUpdateLoop() {
-        this.updateInterval = setInterval(() => {
-            this.update();
-        }, 1000 / this.config.updateFrequency);
-    }
-
-    initializeFusionMaps() {
-        const { width, height } = this.config.mapResolution;
+        this.updateInterval = setInterval(() => this.processLongOperation(args) = this.config.mapResolution;
 
         // Cartes de base
         this.maps = {
@@ -299,10 +293,7 @@ export default class MultiModalFusion {
         const { width, height } = this.config.mapResolution;
 
         // Reset toutes les cartes
-        Object.keys(this.maps).forEach(key => {
-            if (key !== 'fused' && key !== 'confidence') {
-                this.maps[key].fill(0);
-            }
+        Object.keys(this.maps).forEach(key => this.processLongOperation(args)
         });
 
         // Mise à jour Bottom-Up
@@ -350,10 +341,7 @@ export default class MultiModalFusion {
 
         // Application boost pour les pics
         if (bottomUpData.peaks) {
-            bottomUpData.peaks.forEach(peak => {
-                this.applyGaussianBlob(this.maps.bottomUp, peak.x, peak.y
-                                     peak.strength * 0.3, 30, width, height);
-            });
+            bottomUpData.peaks.forEach(peak => this.processLongOperation(args));
         }
     }
 
@@ -369,11 +357,7 @@ export default class MultiModalFusion {
 
         // Boost pour targets actifs
         if (topDownData.targets) {
-            topDownData.targets.forEach(target => {
-                const strength = target.priority * target.confidence;
-                this.applyGaussianBlob(this.maps.topDown, target.coordinates.x, target.coordinates.y
-                                     strength * 0.4, 40, width, height);
-            });
+            topDownData.targets.forEach(target => this.processLongOperation(args));
         }
     }
 
@@ -415,12 +399,7 @@ export default class MultiModalFusion {
 
         // Prédictions de trajectoire
         if (eyeTrackingData.predictions) {
-            eyeTrackingData.predictions.forEach((prediction, index) => {
-                const futureStrength = prediction.confidence * (1 - index * 0.1);
-                this.applyGaussianBlob(this.maps.eyeTracking
-                                     prediction.position.x, prediction.position.y
-                                     futureStrength * 0.3, 25, width, height);
-            });
+            eyeTrackingData.predictions.forEach(args) => this.extractedCallback(args));
         }
     }
 
@@ -434,19 +413,12 @@ export default class MultiModalFusion {
 
         // Zones d'inhibition spécifiques
         if (inhibitionData.zones) {
-            inhibitionData.zones.forEach(zone => {
-                this.applyRectangularInhibition(this.maps.inhibition, zone, width, height);
-            });
+            inhibitionData.zones.forEach(zone => this.processLongOperation(args));
         }
     }
 
     updateVoiceCommandsMap(voiceData, width, height) {
-        if (voiceData.targets) { voiceData.targets.forEach(target => {
-                const priority = target.priority || 0.9; // Voice commands = haute priorité
-                this.applyGaussianBlob(this.maps.voiceCommands
-                                     target.coordinates.x, target.coordinates.y
-                                     priority * 0.7, 50, width, height);
-            ; return; });
+        if (voiceData.targets) { voiceData.targets.forEach(target => this.processLongOperation(args));
         }
 
         // Commandes globales (ex: "scan mode")
@@ -570,19 +542,13 @@ export default class MultiModalFusion {
         const smoothingRadius = 2;
         const alpha = this.config.spatialSmoothing;
 
-        for (let y = 0; y < height; y++) {
-            for (let x = 0; x < width; x++) {
-                const centerIndex = y * width + x;
-                let sum = 0;
-                let count = 0;
-
-                // Moyenne avec voisinage
-                for (let dy = -smoothingRadius; dy <= smoothingRadius; dy++) {
-                    for (let dx = -smoothingRadius; dx <= smoothingRadius; dx++) {
+        // Extracted to separate functions for better readability
+const result = this.processNestedData(data);
+return result;let dx = -smoothingRadius; dx <= smoothingRadius; dx++) {
                         const ny = y + dy;
                         const nx = x + dx;
 
-                        if (ny >= 0 && ny < height && nx >= 0 && nx < width) {
+                        if (this.validateConditions([ny >= 0 , ny < height , nx >= 0 , nx < width])) {
                             const neighborIndex = ny * width + nx;
                             sum += this.maps.fused[neighborIndex];
                             count++;
@@ -642,15 +608,7 @@ export default class MultiModalFusion {
         // Application des adaptations avec learning rate
         const lr = this.config.learningRate;
 
-        Object.keys(adaptations).forEach(source => {
-            if (this.state.adaptiveWeights[source] !== undefined) {
-                const delta = adaptations[source] - this.state.adaptiveWeights[source];
-                this.state.adaptiveWeights[source] += delta * lr;
-
-                // Contraintes
-                this.state.adaptiveWeights[source] = Math.max(0.1
-                    Math.min(1.0, this.state.adaptiveWeights[source]));
-            }
+        Object.keys(adaptations).forEach(source => this.processLongOperation(args)
         });
 
         this.triggerCallback('onWeightAdaptation', {
@@ -679,21 +637,7 @@ export default class MultiModalFusion {
 
         const resolvedInputs = { ...inputs };
 
-        conflicts.forEach(conflict => {
-            switch (this.config.conflictResolution) {
-                case 'priority_based':
-                    this.resolvePriorityBased(resolvedInputs, conflict);
-                    break;
-                case 'confidence_based':
-                    this.resolveConfidenceBased(resolvedInputs, conflict);
-                    break;
-                case 'temporal_based':
-                    this.resolveTemporalBased(resolvedInputs, conflict);
-                    break;
-                case 'fusion_based':
-                    this.resolveFusionBased(resolvedInputs, conflict);
-                    break;
-            }
+        conflicts.forEach(conflict => this.processLongOperation(args)
         });
 
         return resolvedInputs;
@@ -703,20 +647,13 @@ export default class MultiModalFusion {
         // Ordre de priorité: Voice > TopDown > EyeTracking > Emotional > BottomUp
         const priorityOrder = ['voiceCommands', 'topDown', 'eyeTracking', 'emotional', 'bottomUp'];
 
-        const highestPriority = conflict.sources.reduce((highest, source) => {
-            const priorityA = priorityOrder.indexOf(highest);
-            const priorityB = priorityOrder.indexOf(source);
-            return priorityB < priorityA ? source : highest;
-        });
+        const highestPriority = conflict.sources.reduce((highest, source) => this.processLongOperation(args));
 
         // Boost du signal prioritaire dans la zone de conflit
         this.boostSignalInRegion(inputs[highestPriority], conflict.region, 1.5);
 
         // Atténuation des autres signaux
-        conflict.sources.forEach(source => {
-            if (source !== highestPriority) {
-                this.attenuateSignalInRegion(inputs[source], conflict.region, 0.7);
-            }
+        conflict.sources.forEach(source => this.processLongOperation(args)
         });
     }
 
@@ -728,23 +665,13 @@ export default class MultiModalFusion {
         this.languageProcessor = languageProcessor;
 
         // Setup callbacks pour commandes vocales
-        languageProcessor.onAttentionCommand((command) => {
-            this.handleLanguageCommand(command);
-        });
-
-        this.log("🗣️ LanguageProcessor connecté");
-    }
+        languageProcessor.onAttentionCommand((command) => this.processLongOperation(args)
 
     connectToEmotionalEngine(emotionalEngine) {
         this.emotionalEngine = emotionalEngine;
 
         // Sync état émotionnel
-        emotionalEngine.onStateChange((state) => {
-            this.handleEmotionalStateChange(state);
-        });
-
-        this.log("🎭 EmotionalEngine connecté");
-    }
+        emotionalEngine.onStateChange((state) => this.processLongOperation(args)
 
     enableQuantumSuperposition() {
         // Activation mode quantique pour fusion parallèle
@@ -838,13 +765,7 @@ export default class MultiModalFusion {
     }
 
     getActiveSources() {
-        return Object.keys(this.maps).filter(key => {
-            if (key === 'fused' || key === 'confidence') return false;
-
-            // Vérification si la carte a des valeurs non-nulles
-            for (let i = 0; i < this.maps[key].length; i++) {
-                if (Math.abs(this.maps[key][i]) > 0.01) return true;
-            }
+        return Object.keys(this.maps).filter(key => this.processLongOperation(args)
             return false;
         });
     }
@@ -923,11 +844,7 @@ export default class MultiModalFusion {
 
     triggerCallback(event, data) {
         if (this.callbacks[event]) {
-            this.callbacks[event].forEach(callback => {
-                try {
-                    callback(data);
-                } catch (error) {
-                    this.log(`❌ Erreur callback ${event}: ${error.message}`, STR_ERROR);
+            this.callbacks[event].forEach(callback => this.processLongOperation(args): ${error.message}`, STR_ERROR);
                 }
             });
         }
@@ -951,17 +868,7 @@ export default class MultiModalFusion {
         }
 
         // Nettoyage cartes
-        Object.keys(this.maps).forEach(key => {
-            this.maps[key] = null;
-        });
-
-        // Nettoyage historique
-        this.state.fusionHistory = [];
-
-        // Nettoyage callbacks
-        Object.keys(this.callbacks).forEach(key => {
-            this.callbacks[key] = [];
-        });
+        Object.keys(this.maps).forEach(key => this.processLongOperation(args));
 
         // Déconnexion systèmes
         this.languageProcessor = null;
@@ -1024,10 +931,7 @@ class WeightAdaptator {
 
             if (avgQuality < 0.7) {
                 // Boost des sources les plus confiantes
-                Object.keys(inputs).forEach(source => {
-                    if (inputs[source].confidence > 0.8) {
-                        adaptations[source] *= 1.1;
-                    }
+                Object.keys(inputs).forEach(source => this.processLongOperation(args)
                 });
             }
         }

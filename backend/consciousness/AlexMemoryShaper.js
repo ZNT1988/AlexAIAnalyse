@@ -48,7 +48,7 @@ export class AlexMemoryShaper extends EventEmitter {
                 healingMode: this.config.healingMode,
                 consciousnessLevel: this.config.consciousnessLevel
             });
-        } catch (error) {
+        } catch {
             // Logger fallback - ignore error
         }
     }
@@ -245,14 +245,14 @@ export class AlexMemoryShaper extends EventEmitter {
     }
 
     // Méthodes de support...
-    async analyzeMemoryPatterns(memoryMap, focusAreas) { return {}; }
-    async mapTraumaticEnergies(patternAnalysis, healingIntention) { return {}; }
+    async analyzeMemoryPatterns() { return {}; }
+    async mapTraumaticEnergies() { return {}; }
     async executeHealingProtocols(traumaMapping, healingMode) { return { healedMemories: [], clearedPatterns: [], energyReleaseScore: 0, removedBlockages: [], traumaHealingDetails: {}, depthAchieved: healingMode }; }
-    async reconstructMemoryArchitecture(healingResults, desiredOutcome) { return []; }
-    async integrateTransformations(reconstructedMemories, lifeVision) { return { purposeAlignment: 0.9, hiddenGifts: [], wisdomActivation: {} }; }
-    async anchorNewPatterns(integrationResults, anchoringStrategy) { return { newConsciousnessLevel: EXPANDED_CONSCIOUSNESS, evolutionMeasurement: 'Significant positive evolution', clarityScore: 0.95, expansionMetrics: {} }; }
-    async generateEvolutionPlan(shapingSession, longTermGoals) { return { immediateActions: [], monthlyGoals: [], yearlyTransformation: '', purposeRoadmap: [] }; }
-    generateSupportRecommendation(error) { return 'Consider working with a qualified therapist or consciousness coach for additional support.'; }
+    async reconstructMemoryArchitecture() { return []; }
+    async integrateTransformations() { return { purposeAlignment: 0.9, hiddenGifts: [], wisdomActivation: {} }; }
+    async anchorNewPatterns() { return { newConsciousnessLevel: EXPANDED_CONSCIOUSNESS, evolutionMeasurement: 'Significant positive evolution', clarityScore: 0.95, expansionMetrics: {} }; }
+    async generateEvolutionPlan() { return { immediateActions: [], monthlyGoals: [], yearlyTransformation: '', purposeRoadmap: [] }; }
+    generateSupportRecommendation() { return 'Consider working with a qualified therapist or consciousness coach for additional support.'; }
 }
 
 // Classes de support pour l'architecture de conscience
@@ -261,11 +261,11 @@ class MemoryPatternAnalyzer {}
 class MemoryReconstructionEngine {}
 class MemoryIntegrationEngine {}
 class MemoryValidationEngine {}
-class SurfaceConsciousnessLayer { async extractMemories(targetArea) { return ['recent experiences', 'current thoughts', 'immediate emotions']; } }
-class SubconsciousMemoryLayer { async extractMemories(targetArea) { return ['childhood memories', 'learned patterns', 'stored emotions']; } }
-class UnconsciousPatternLayer { async extractMemories(targetArea) { return ['deep patterns', 'ancestral memories', 'archetypal imprints']; } }
-class CollectiveMemoryLayer { async extractMemories(targetArea) { return ['collective patterns', 'species memories', 'cultural imprints']; } }
-class QuantumMemoryField { async extractMemories(targetArea) { return ['quantum possibilities', 'future potentials', 'dimensional memories']; } }
+class SurfaceConsciousnessLayer { async extractMemories() { return ['recent experiences', 'current thoughts', 'immediate emotions']; } }
+class SubconsciousMemoryLayer { async extractMemories() { return ['childhood memories', 'learned patterns', 'stored emotions']; } }
+class UnconsciousPatternLayer { async extractMemories() { return ['deep patterns', 'ancestral memories', 'archetypal imprints']; } }
+class CollectiveMemoryLayer { async extractMemories() { return ['collective patterns', 'species memories', 'cultural imprints']; } }
+class QuantumMemoryField { async extractMemories() { return ['quantum possibilities', 'future potentials', 'dimensional memories']; } }
 class TraumaReleaseProtocol {}
 class EnergyMemoryClearingSystem {}
 class MemoryBlockageRemover {}

@@ -61,20 +61,7 @@ class ReflectiveThinkingSystem {
 
     // Mots-clés complexes
     const complexWords = ['analyse', 'stratégie', 'optimisation', 'problème', 'défi', 'solution'];
-    complexWords.forEach(word => {
-      if (input.toLowerCase().includes(word)) score += 0.1;
-    });
-
-    // Questions multiples
-    const questionMarks = (input.match(/\?
-      /g) || []).length;
-    score += questionMarks * 0.15;
-
-    // Concepts abstraits
-    const abstractConcepts = ['innovation', 'créativité', 'efficacité', 'performance', 'qualité'];
-    abstractConcepts.forEach(concept => {
-      if (input.toLowerCase().includes(concept)) score += 0.1;
-    });
+    complexWords.forEach(word => this.processLongOperation(args));
 
     return Math.min(score, 1);
   }
@@ -279,11 +266,7 @@ class ReflectiveThinkingSystem {
   identifyUserPattern(context) {
     if (!context.history || context.history.length < 2) return 'analytique';
 
-    const questionTypes = context.history.map(h => {
-      if (h.input && h.input.includes(STR_COMMENT)) return 'pratique';
-      if (h.input && h.input.includes(STR_POURQUOI)) return 'conceptuelle';
-      return 'exploratoire';
-    });
+    const questionTypes = context.history.map(h => this.processLongOperation(args));
 
     return questionTypes.reduce((a, b, i, arr) =>
       arr.filter(v => v === a).length >= arr.filter(v => v === b).length ? a : b

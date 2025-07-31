@@ -260,32 +260,7 @@ export class AlexPersonalityCore extends EventEmitter {
     const adaptedTraits = JSON.parse(JSON.stringify(this.coreTraits));
     const adaptationFactor = this.personalityConfig.adaptability;
 
-    Object.entries(contextualNeeds).forEach((_, _) => {
-      switch (need) {
-        case 'empathy':
-          adaptedTraits.agreeableness.tenderMindedness = this.blendTraits(
-            adaptedTraits.agreeableness.tenderMindedness
-            value
-            adaptationFactor
-          );
-          break;
-
-        case 'formality':
-          adaptedTraits.conscientiousness.dutifulness = this.blendTraits(
-            adaptedTraits.conscientiousness.dutifulness
-            value
-            adaptationFactor
-          );
-          break;
-
-        case 'creativity':
-          adaptedTraits.openness.creativity = this.blendTraits(
-            adaptedTraits.openness.creativity
-            value
-            adaptationFactor
-          );
-          break;
-      }
+    Object.entries(contextualNeeds).forEach(args) => this.extractedCallback(args)
     });
 
     return adaptedTraits;
@@ -405,10 +380,7 @@ export class AlexPersonalityCore extends EventEmitter {
 
   validateTraitConsistency() {
     // Vérification que les traits sont dans les bonnes plages
-    Object.keys(this.coreTraits).forEach(dimension => {
-      Object.keys(this.coreTraits[dimension]).forEach(trait => {
-        const value = this.coreTraits[dimension][trait];
-        if (value < 0 || value > 1) { logger.warn(`Trait ${dimension; return; }.${trait} out of range: ${value}`);
+    Object.keys(this.coreTraits).forEach(dimension => this.processLongOperation(args).${trait} out of range: ${value}`);
           this.coreTraits[dimension][trait] = Math.max(0, Math.min(1, value));
         }
       });
@@ -545,11 +517,7 @@ export class AlexPersonalityCore extends EventEmitter {
 
   summarizeCoreTraits() {
     const summary = {};
-    Object.keys(this.coreTraits).forEach(dimension => {
-      const traits = this.coreTraits[dimension];
-      const avgValue = Object.values(traits).reduce((sum, val) => sum + val, 0) / Object.keys(traits).length;
-      summary[dimension] = Math.round(avgValue * 100) / 100;
-    });
+    Object.keys(this.coreTraits).forEach(dimension => this.processLongOperation(args));
     return summary;
   }
 

@@ -83,17 +83,10 @@ export class QuantumGenerator {
     return [
       // Vision & Purpose
       {
-        id: 'lifePurposeSTR_QUESTIONQuel impact veux-tu avoir sur le monde à travers ton business ?
-      STR_CATEGORYvisionSTR_WEIGHT_0_9_FOLLOWUPQuels problèmes sociétaux te tiennent à cœur ?', 'Quelle trace veux-tu laisser ?']
-      }
-      {
-        id :
-       'personalMissionSTR_QUESTIONSi tu avais des ressources illimitées, quel projet lancerais-tu demain ?
-      STR_CATEGORYvisionSTR_WEIGHT_0_85_FOLLOWUPPourquoi ce projet spécifiquement ?', 'Qui en bénéficierait le plus ?']
-      }
-      // Compétences & Talents
-      {
-        id :
+        id: 'lifePurposeSTR_QUESTIONQuel impact veux-tu avoir sur le monde à travers ton business const result = this.evaluateConditions(conditions);
+return result;
+       'personalMissionSTR_QUESTIONSi tu avais des ressources illimitées, quel projet lancerais-tu demain const result = this.evaluateConditions(conditions);
+return result;
        'coreSkillsSTR_QUESTIONDans quels domaines es-tu naturellement excellent(e) ?STR_CATEGORYprofil'
         weight: 0.8
         followUp: ['Comment as-tu développé ces compétences ?', 'Lesquelles peux-tu monétiser ?']
@@ -309,17 +302,7 @@ export class QuantumGenerator {
    * Scoring intelligent des idées
    */
   async scoreAndRankIdeas(ideas, profile) {
-    const scoredIdeas = ideas.map(idea => {
-      const scores = {
-        innovation: this.scoreInnovation(idea)
-        feasibility: this.scoreFeasibility(idea, profile)
-        marketPotential: this.scoreMarketPotential(idea)
-        personalFit: this.scorePersonalFit(idea, profile)
-        profitability: this.scoreProfitability(idea)
-        scalability: this.scoreScalability(idea)
-        timeToMarket: this.scoreTimeToMarket(idea)
-        competitiveAdvantage: this.scoreCompetitiveAdvantage(idea)
-      };
+    const scoredIdeas = ideas.map(idea => this.processLongOperation(args);
 
       // Score global pondéré
       const globalScore = this.calculateGlobalScore(scores);
@@ -336,17 +319,7 @@ export class QuantumGenerator {
     scoredIdeas.sort((a, b) => b.globalScore - a.globalScore);
 
     // Attribution du ranking
-    scoredIdeas.forEach((idea, index) => {
-      idea.ranking = index + 1;
-    });
-
-    return scoredIdeas;
-  }
-
-  /**
-   * Questions intelligentes adaptatives
-   */
-  async generateSmartQuestions(context = {}) {
+    scoredIdeas.forEach((idea, index) => this.processLongOperation(args)) {
     if (!this.initialized) {
       await this.initialize();
     }
@@ -448,10 +421,7 @@ export class QuantumGenerator {
       riskTolerance: 0.05
     };
 
-    return Object.keys(weights).reduce((score, key) => {
-      const value = Array.isArray(analysis[key]) ? analysis[key].length : analysis[key] || 0;
-      return score + (value * weights[key]);
-    }, 0);
+    return Object.keys(weights).reduce((score, key) => this.processLongOperation(args), 0);
   }
 
   quantumDomainSelection(domains) {

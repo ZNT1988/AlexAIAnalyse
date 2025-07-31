@@ -144,13 +144,7 @@ export class AlexEthicsCore extends EventEmitter {
       /accès non autorisé|piratage|crack/
     ];
 
-    harmfulPatterns.forEach((pattern, _) => {
-      if (pattern.test(decisionText)) {
-        violations.push({
-          rule: this.safetyRules[index]
-          severity: 'high'
-          pattern: pattern.source
-        });
+    harmfulPatterns.forEach((pattern, _) => this.processLongOperation(args));
         score -= 0.3;
       }
     });

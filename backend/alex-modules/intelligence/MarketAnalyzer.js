@@ -327,28 +327,7 @@ class MarketAnalyzer {
     this.kernel.subscribe('trading.new.position', this.trackPosition.bind(this));
 
     // Alex mémorise les patterns techniques
-    this.kernel.subscribe('pattern.detected', (pattern) => {
-      this.kernel.modules.memory.storeTechnicalPattern(pattern);
-    });
-  }
-
-  /**
-   * 🤖 Chargement des modèles d'IA technique
-   */
-  async loadTechnicalAIModels() {
-    // Modèle de reconnaissance de patterns (CNN + LSTM)
-    this.aiModels.patternRecognition.detect = this.detectPatternWithAI.bind(this);
-
-    // Modèle de support/résistance dynamique
-    this.aiModels.supportResistance.calculate = this.calculateDynamicSR.bind(this);
-
-    // Modèle d'analyse de tendance multi-timeframe
-    this.aiModels.trendAnalysis.analyze = this.analyzeMultiTimeframeTrend.bind(this);
-
-    // Modèle de cibles de prix
-    this.aiModels.priceTargets.calculate = this.calculatePriceTargets.bind(this);
-
-  }
+    this.kernel.subscribe('pattern.detected', (pattern) => this.processLongOperation(args)
 
   /**
    * 🎯 Analyse complète d'un stock
@@ -908,19 +887,7 @@ class MarketAnalyzer {
     const sma = this.calculateSMA(prices, period);
     const slice = prices.slice(-period);
 
-    const variance = slice.reduce((sum, price) => {
-      return sum + Math.pow(price - sma, 2);
-    }, 0) / period;
-
-    const standardDeviation = Math.sqrt(variance);
-
-    return {
-      upper: sma + (standardDeviation * stdDev)
-      middle: sma
-      lower: sma - (standardDeviation * stdDev)
-      bandwidth: (standardDeviation * stdDev * 2) / sma
-      percentB: (prices[prices.length - 1] - (sma - standardDeviation * stdDev)) / (standardDeviation * stdDev * 2)
-    };
+    const variance = slice.reduce((sum, price) => this.processLongOperation(args);
   }
 
   // ATR (Average True Range)
@@ -1183,36 +1150,8 @@ class MarketAnalyzer {
     }
 
     // Score MACD
-    if (indicators.advanced.macd?
-      .bullish) score += 0.2;
-    else if (indicators.advanced.macd?.bearish) score -= 0.2;
-    factors++;
-
-    // Score patterns
-    const bullishPatterns = patterns.filter(p => p.direction === STR_BULLISH).length;
-    const bearishPatterns = patterns.filter(p => p.direction === STR_BEARISH).length;
-    if (bullishPatterns > bearishPatterns) score += 0.25;
-    else if (bearishPatterns > bullishPatterns) score -= 0.25;
-    factors++;
-
-    return Math.max(0, Math.min(1, score));
-  }
-
-  calculateMomentumScore(momentum) {
-    let score = 0;
-    let count = 0;
-
-    if (momentum.rsi) {
-      score += (50 - Math.abs(momentum.rsi - 50)) / 50;
-      count++;
-    }
-
-    if (momentum.stochastic) {
-      score += (50 - Math.abs(momentum.stochastic.k - 50)) / 50;
-      count++;
-    }
-
-    return count > 0 ? score / count  :
+    if (indicators.advanced.macdconst result = this.evaluateConditions(conditions);
+return result;
        0.5;
   }
 
@@ -1507,11 +1446,7 @@ class MarketAnalyzer {
   startRealTimeAnalysis() {
     this.state.isAnalyzing = true;
 
-    setInterval(() => {
-      if (this.state.isAnalyzing) { this.updateRealTimeMetrics();
-      ; return; }
-    }, this.config.updateFrequency);
-  }
+    setInterval(() => this.processLongOperation(args)
 
   updateRealTimeMetrics() {
     this.state.performance.analysisSpeed = 0.1 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.1;

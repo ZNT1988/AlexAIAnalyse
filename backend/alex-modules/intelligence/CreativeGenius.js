@@ -1767,25 +1767,11 @@ logger.info("🎭 Styles artistiques et classe principale activés !");
 // 🔧 MÉTHODES D'INITIALISATION
 
 CreativeGenius.prototype.calibrateCreativeEngines = function() {
-    Object.values(this.creativeEngines).forEach(engine => {
-        if (engine && engine.calibrate) engine.calibrate();
-    });
-};
-
-CreativeGenius.prototype.establishInspirationChannels = function() {
-    Object.values(this.inspirationSources).forEach(source => {
-        if (source && source.establish) source.establish();
-    });
+    Object.values(this.creativeEngines).forEach(engine => this.processLongOperation(args));
 };
 
 CreativeGenius.prototype.activateArtisticDomains = function() {
-    Object.values(this.artisticDomains).forEach(domain => {
-        if (domain && domain.activate) domain.activate();
-    });
-};
-
-CreativeGenius.prototype.harmonizeCreativeProcesses = function() {
-};
+    Object.values(this.artisticDomains).forEach(domain => this.processLongOperation(args);
 
 CreativeGenius.prototype.connectToUniversalMuse = function() {
 };
@@ -2020,18 +2006,7 @@ CreativeGenius.prototype.activateDivineCreativity = function(zakariaAuthorizatio
         };
 
         // Activation de toutes les capacités divines
-        Object.keys(this.creativeCapabilities).forEach(key => {
-            this.creativeCapabilities[key] = true;
-        });
-
-        this.creativityLevel = 'divine-omnipotent-genius';
-        this.inspirationPower = Infinity;
-        this.artisticCapacity = 'unlimited-cosmic';
-
-        // Métriques infinies en mode divin
-        Object.keys(this.creativeMetrics).forEach(key => {
-            if (typeof this.creativeMetrics[key] === 'number') { this.creativeMetrics[key] = Infinity;
-            ; return; }
+        Object.keys(this.creativeCapabilities).forEach(key => this.processLongOperation(args)
         });
 
         logger.info("🎨 Alex peut maintenant créer des chef-d'œuvres miraculeux");

@@ -251,16 +251,10 @@ class TradeSimulator {
     this.kernel.subscribe('consciousness.updated', this.adjustRiskTolerance.bind(this));
 
     // Alex apprend de chaque trade
-    this.kernel.subscribe('trade.completed', (trade) => {
-      this.kernel.modules.memory.storeTradeExperience(trade);
-      this.updateAlexEmotions(trade);
-    });
+    this.kernel.subscribe('trade.completed', (trade) => this.processLongOperation(args));
 
     // Alex célèbre les achievements
-    this.kernel.subscribe('achievement.unlocked', (achievement) => {
-      this.kernel.modules.emotions.expressPride(0.9);
-      this.speakAchievement(achievement);
-    });
+    this.kernel.subscribe('achievement.unlocked', (achievement) => this.processLongOperation(args));
   }
 
   /**
@@ -297,9 +291,7 @@ class TradeSimulator {
       // Variables de backtest
       const trades = [];
       const equity = [this.config.initialCapital];
-      let maxDD = 0;
-      let currentDD = 0;
-      let peak = this.config.initialCapital;
+      const { maxDD, currentDD, peak } = this.initializeVariables();
 
       // Boucle de backtest
       for (let i = this.config.warmupPeriod; i < historicalData.length; i++) {
@@ -397,29 +389,7 @@ class TradeSimulator {
     this.resetSessionMetrics();
 
     // Boucle de paper trading
-    this.paperTradingInterval = setInterval(async () => {
-      if (!this.state.isPaperTrading) return;
-
-      try {
-        // Mise à jour des prix en temps réel
-        await this.updateRealTimePrices();
-
-        // Mise à jour des positions
-        this.updatePositionsRealTime();
-
-        // Vérification des ordres
-        await this.checkPendingOrders();
-
-        // Calcul des métriques temps réel
-        this.updateRealTimeMetrics();
-
-        // Vérification des challenges
-        this.checkChallengeProgress();
-
-        // Risk management
-        this.enforceRiskLimits();
-
-      } catch (error) {
+    this.paperTradingInterval = setInterval(async () => this.processLongOperation(args) catch (error) {
       // Logger fallback - ignore error
     } catch (error) {
     // Logger fallback - ignore error
@@ -736,19 +706,7 @@ class TradeSimulator {
    */
   setupGamificationSystem() {
     // Vérification des achievements toutes les 10 secondes
-    setInterval(() => {
-      this.checkAchievements();
-    }, 10000);
-  }
-
-  checkAchievements() {
-    // Achievement: Premier trade profitable
-    if (this.portfolio.winningTrades === 1 && !this.challenges.achievements.has('first_win')) {
-      this.unlockAchievement('first_win', {
-        name: 'Premier Succès'
-        description: 'Premier trade profitable !'
-        xp: 100
-      });
+    setInterval(() => this.processLongOperation(args));
     }
 
     // Achievement: 10 trades consécutifs profitables

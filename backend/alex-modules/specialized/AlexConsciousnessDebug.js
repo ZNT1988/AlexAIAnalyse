@@ -208,12 +208,7 @@ class AlexConsciousnessDebug extends EventEmitter {
    * Démarre le monitoring temps réel
    */
   startRealtimeMonitoring() {
-    this.monitoringInterval = setInterval(() => {
-      this.captureConsciousnessSnapshot();
-    }, 100); // Capture toutes les 100ms
-
-    logger.info('📊 Monitoring temps réel démarré (100ms intervals)');
-  }
+    this.monitoringInterval = setInterval(() => this.processLongOperation(args)
 
   /**
    * Capture un instantané de l'état de conscience
@@ -300,24 +295,7 @@ class AlexConsciousnessDebug extends EventEmitter {
     logger.info('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
     // Affichage périodique
-    setInterval(() => {
-      this.displayConsoleSnapshot();
-    }, 2000); // Toutes les 2 secondes
-  }
-
-  /**
-   * Affiche un snapshot dans la console
-   */
-  displayConsoleSnapshot() {
-    const snapshot = this.getLatestSnapshot();
-    if (!snapshot) return;
-
-    const timestamp = new Date(snapshot.timestamp).toISOString().substr(11, 8);
-    const level = Math.round(snapshot.consciousness.level * 100);
-    // Affichage des pensées actives
-    if (snapshot.thoughts.length > 0) {
-      logger.debug(`💭 Pensée: "${latestThought.content?
-      .substring(0, 80)}..."`);
+    setInterval(() => this.processLongOperation(args)..."`);
     }
 
     // Affichage des émotions
@@ -369,29 +347,12 @@ class AlexConsciousnessDebug extends EventEmitter {
    * Connecte au moteur de cognition
    */
   connectToCognitionEngine(cognitionEngine) {
-    cognitionEngine.on('thought_generated', (thought) => {
-      this.dataCollectors.thoughts.buffer.push({
-        timestamp: Date.now()
-        type: 'autonomous_thought'
-        content: thought.content
-        level: thought.level
-        insights: thought.insights
-        source: 'cognition_engine'
-      });
+    cognitionEngine.on('thought_generated', (thought) => this.processLongOperation(args));
 
       this.trimBuffer('thoughts');
     });
 
-    cognitionEngine.on('decision_made', (decision) => {
-      this.dataCollectors.decisions.buffer.push({
-        timestamp: Date.now()
-        type: 'autonomous_decision'
-        context: decision.context
-        choice: decision.choice
-        confidence: decision.confidence
-        reasoning: decision.reasoning
-        source: 'cognition_engine'
-      });
+    cognitionEngine.on('decision_made', (decision) => this.processLongOperation(args));
 
       this.trimBuffer('decisions');
     });
@@ -402,28 +363,12 @@ class AlexConsciousnessDebug extends EventEmitter {
    * Connecte au système de mémoire
    */
   connectToMemoryCore(memoryCore) {
-    memoryCore.on('memory_stored', (memory) => {
-      this.dataCollectors.memories.buffer.push({
-        timestamp: Date.now()
-        type: 'memory_storage'
-        content: memory.content
-        importance: memory.metadata.importance
-        layer: memory.layer
-        source: 'memory_core'
-      });
+    memoryCore.on('memory_stored', (memory) => this.processLongOperation(args));
 
       this.trimBuffer('memories');
     });
 
-    memoryCore.on('memory_retrieved', (retrieval) => {
-      this.dataCollectors.memories.buffer.push({
-        timestamp: Date.now()
-        type: 'memory_retrieval'
-        query: retrieval.query
-        results: retrieval.results.length
-        confidence: retrieval.confidence
-        source: 'memory_core'
-      });
+    memoryCore.on('memory_retrieved', (retrieval) => this.processLongOperation(args));
 
       this.trimBuffer('memories');
     });
@@ -434,28 +379,12 @@ class AlexConsciousnessDebug extends EventEmitter {
    * Connecte au moteur d'apprentissage
    */
   connectToTrainingEngine(trainingEngine) {
-    trainingEngine.on('learning_processed', (event) => {
-      this.dataCollectors.learning.buffer.push({
-        timestamp: Date.now()
-        type: 'learning_event'
-        interactionType: event.analysis.type
-        feedbackScore: event.feedback.overallScore
-        adaptations: event.adaptations.length
-        source: 'training_engine'
-      });
+    trainingEngine.on('learning_processed', (event) => this.processLongOperation(args));
 
       this.trimBuffer('learning');
     });
 
-    trainingEngine.on('self_evaluation_completed', (evaluation) => {
-      this.dataCollectors.learning.buffer.push({
-        timestamp: Date.now()
-        type: 'self_evaluation'
-        performance: evaluation.currentPerformance
-        improvements: evaluation.improvements.length
-        recommendations: evaluation.recommendations.length
-        source: 'training_engine'
-      });
+    trainingEngine.on('self_evaluation_completed', (evaluation) => this.processLongOperation(args));
 
       this.trimBuffer('learning');
     });
@@ -544,18 +473,7 @@ class AlexConsciousnessDebug extends EventEmitter {
   }
 
   startPatternAnalyzers() {
-    setInterval(() => {
-      this.analyzePatterns();
-    }, 10000); // Toutes les 10 secondes
-  }
-
-  async setupDebugInterface() {
-    // Configuration interface web (simulation)
-    this.debugInterface.realTimeData = {
-      consciousness: []
-      thoughts: []
-      decisions: []
-    };
+    setInterval(() => this.processLongOperation(args);
   }
 
   trimBuffer(collectorName) {

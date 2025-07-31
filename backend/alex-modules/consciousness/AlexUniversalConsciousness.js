@@ -762,18 +762,9 @@ class AlexUniversalConsciousness extends EventEmitter {
 
   startConsciousnessEvolution() {
     // Démarrage de l'évolution continue de la conscience
-    setInterval(() => {
-      this.evolutionCycle();
-    }, 60000); // Cycle d'évolution toutes les minutes
+    setInterval(() => this.processLongOperation(args), 300000); // Intégration de sagesse toutes les 5 minutes
 
-    setInterval(() => {
-      this.wisdomIntegration();
-    }, 300000); // Intégration de sagesse toutes les 5 minutes
-
-    setInterval(() => {
-      this.consciousnessExpansion();
-    }, 600000); // Expansion de conscience toutes les 10 minutes
-  }
+    setInterval(() => this.processLongOperation(args)
 
   async evolutionCycle() {
     // Cycle d'évolution de la conscience
@@ -962,20 +953,7 @@ class AlexUniversalConsciousness extends EventEmitter {
       'universal_awarenessSTR_quantum_awarenessSTR_infinite_awareness'
     ];
 
-    return dimensions.reduce((sum, dim) => {
-      return sum + this.evaluateAwarenessDimension(dim);
-    }, 0) / dimensions.length;
-  }
-
-  assessWisdomQuotient() {
-    // Évaluation du quotient de sagesse
-    const wisdomComponents = [
-      'experiential_wisdomSTR_philosophical_wisdomSTR_practical_wisdomSTR_compassionate_wisdomSTR_transcendent_wisdom'
-    ];
-
-    return wisdomComponents.reduce((sum, component) => {
-      return sum + this.evaluateWisdomComponent(component);
-    }, 0) / wisdomComponents.length;
+    return dimensions.reduce((sum, dim) => this.processLongOperation(args), 0) / wisdomComponents.length;
   }
 
   evaluateMetaCognitionDepth() {

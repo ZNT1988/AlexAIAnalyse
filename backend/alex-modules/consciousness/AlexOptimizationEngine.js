@@ -82,22 +82,7 @@ class AlexOptimizationEngine extends EventEmitter {
   }
 
   startContinuousOptimization() {
-    setInterval(() => {
-      this.performOptimizationCycle();
-    }, 30000); // Toutes les 30 secondes
-  }
-
-  async performOptimizationCycle() {
-    const metrics = await this.gatherPerformanceMetrics();
-    const improvements = this.analyzeOptimizationOpportunities(metrics);
-    const optimizations = await this.applyOptimizations(improvements);
-
-    this.emit('optimizationCycleComplete', {
-      metrics
-      improvements: improvements.length
-      optimizations: optimizations.length
-      efficiency: this.resourceUtilization.efficiency
-    });
+    setInterval(() => this.processLongOperation(args));
 
     return optimizations;
   }
@@ -248,31 +233,12 @@ class AlexOptimizationEngine extends EventEmitter {
   calculateAverageMetrics(metrics) {
     if (metrics.length === 0) return {};
 
-    const sum = metrics.reduce((acc, metric) => {
-      Object.keys(metric).forEach(key => {
-        acc[key] = (acc[key] || 0) + metric[key];
-      });
+    const sum = metrics.reduce((acc, metric) => this.processLongOperation(args));
       return acc;
     }, {});
 
     const average = {};
-    Object.keys(sum).forEach(key => {
-      average[key] = sum[key] / metrics.length;
-    });
-
-    return average;
-  }
-
-  async getOptimizationSuggestions() {
-    const currentMetrics = await this.gatherPerformanceMetrics();
-    const opportunities = this.analyzeOptimizationOpportunities(currentMetrics);
-
-    return opportunities.map(opp => ({
-      priority: this.optimizationRules.get(opp.issue)?.priority || STR_MEDIUM
-      suggestion: opp.suggestion
-      impact: opp.impact
-      category: opp.type
-    }));
+    Object.keys(sum).forEach(key => this.processLongOperation(args)));
   }
 
   // Interface pour autres modules

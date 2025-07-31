@@ -345,13 +345,7 @@ class AlexNetworkIntelligence extends EventEmitter {
 
   startConnectionPoolManagement() {
     // Gestion du pool de connexions
-    setInterval(() => {
-      this.optimizeConnectionPool();
-    }, 60000); // Toutes les minutes
-
-    setInterval(() => {
-      this.cleanupIdleConnections();
-    }, 30000); // Toutes les 30 secondes
+    setInterval(() => this.processLongOperation(args), 30000); // Toutes les 30 secondes
   }
 
   async optimizeConnectionPool() {
@@ -479,10 +473,7 @@ class AlexNetworkIntelligence extends EventEmitter {
 
   startHealthMonitoring() {
     // Surveillance de la santé des connexions
-    setInterval(() => {
-      this.performHealthChecks();
-    }, this.connectionStrategies.loadBalancing.healthCheckInterval);
-  }
+    setInterval(() => this.processLongOperation(args)
 
   async performHealthChecks() {
     for (const [nodeId, node] of this.networkTopology.nodes.entries()) {
@@ -537,23 +528,8 @@ class AlexNetworkIntelligence extends EventEmitter {
   async testPerformance(nodeId) {
     // Simulation de test de performance
     const node = this.networkTopology.nodes.get(nodeId);
-    const cpuLoad = node?
-      .performance?.cpu || 0.5;
-    const memoryLoad = node?.performance?.memory || 0.5;
-
-    const performanceScore = 1 - ((cpuLoad + memoryLoad) / 2);
-    return Math.max(0.1, performanceScore + ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.2);
-  }
-
-  async testAvailability(nodeId) {
-    // Simulation de test de disponibilité
-    return 0.95 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.05; // 95-100% disponibilité
-  }
-
-  startLoadBalancing() {
-    // Configuration du load balancing intelligent
-    this.loadBalancingStrategies = {
-      round_robin :
+    const cpuLoad = nodeconst result = this.evaluateConditions(conditions);
+return result;
        this.roundRobinStrategy.bind(this)
       weighted_round_robin: this.weightedRoundRobinStrategy.bind(this)
       least_connections: this.leastConnectionsStrategy.bind(this)
@@ -561,17 +537,7 @@ class AlexNetworkIntelligence extends EventEmitter {
     };
 
     // Mise à jour des poids de load balancing
-    setInterval(() => {
-      this.updateLoadBalancingWeights();
-    }, 30000); // Toutes les 30 secondes
-  }
-
-  updateLoadBalancingWeights() {
-    for (const [nodeId, health] of this.connectionManager.connectionHealth.entries()) {
-      const weight = this.calculateLoadBalancingWeight(nodeId, health);
-
-      if (!this.connectionManager.loadBalancing.has(nodeId)) {
-        this.connectionManager.loadBalancing.set(nodeId, { weight: 1.0, connections: 0, lastUsed: 0 });
+    setInterval(() => this.processLongOperation(args));
       }
 
       const lbInfo = this.connectionManager.loadBalancing.get(nodeId);
@@ -586,126 +552,8 @@ class AlexNetworkIntelligence extends EventEmitter {
     // Facteurs de pondération
     const healthFactor = health.overall || 0.5;
     const capacityFactor = this.calculateNodeCapacity(node);
-    const utilizationFactor = 1 - ((node.performance?
-      .cpu || 0.5) + (node.performance?.memory || 0.5)) / 2;
-
-    return Math.max(0.1, healthFactor * capacityFactor * utilizationFactor);
-  }
-
-  calculateNodeCapacity(node) {
-    const capabilities = node.capabilities || {};
-    const baseCapacity = 1.0;
-
-    const processingBonus = (capabilities.processing_power || 1000) / 1000;
-    const throughputBonus = (capabilities.network_throughput || 1000) / 1000;
-
-    return baseCapacity * processingBonus * throughputBonus;
-  }
-
-  // Stratégies de load balancing
-  roundRobinStrategy(availableNodes) {
-    if (!this.roundRobinIndex) this.roundRobinIndex = 0;
-
-    const nodeIds = Array.from(availableNodes.keys());
-    const selectedId = nodeIds[this.roundRobinIndex % nodeIds.length];
-    this.roundRobinIndex++;
-
-    return selectedId;
-  }
-
-  weightedRoundRobinStrategy(availableNodes) {
-    const weights = [];
-    const nodeIds = [];
-
-    for (const [nodeId, node] of availableNodes.entries()) {
-      const lbInfo = this.connectionManager.loadBalancing.get(nodeId);
-      if (lbInfo) {
-        weights.push(lbInfo.weight);
-        nodeIds.push(nodeId);
-      }
-    }
-
-    return this.selectWeightedRandom(nodeIds, weights);
-  }
-
-  leastConnectionsStrategy(availableNodes) {
-    let minConnections = Infinity;
-    let selectedNode = null;
-
-    for (const [nodeId, node] of availableNodes.entries()) {
-      const lbInfo = this.connectionManager.loadBalancing.get(nodeId);
-      const connections = lbInfo?.connections || 0;
-
-      if (connections < minConnections) {
-        selectedNode = nodeId;
-      }
-    }
-
-    return selectedNode;
-  }
-
-  adaptiveStrategy(availableNodes) {
-    // Stratégie adaptative basée sur plusieurs métriques
-    let bestScore = -1;
-    let selectedNode = null;
-
-    for (const [nodeId, node] of availableNodes.entries()) {
-      const health = this.connectionManager.connectionHealth.get(nodeId);
-      const lbInfo = this.connectionManager.loadBalancing.get(nodeId);
-
-      if (!health || !lbInfo) continue;
-
-      const healthScore = health.overall || 0.5;
-      const loadScore = 1 - (lbInfo.connections / 100); // Normalised
-      const weightScore = lbInfo.weight || 0.5;
-
-      const adaptiveScore = (healthScore * 0.4) + (loadScore * 0.3) + (weightScore * 0.3);
-
-      if (adaptiveScore > bestScore) {
-        bestScore = adaptiveScore;
-        selectedNode = nodeId;
-      }
-    }
-
-    return selectedNode;
-  }
-
-  selectWeightedRandom(items, weights) {
-    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
-    let random = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * totalWeight;
-
-    for (let i = 0; i < items.length; i++) {
-      random -= weights[i];
-      if (random <= 0) {
-        return items[i];
-      }
-    }
-
-    return items[items.length - 1];
-  }
-
-  initializeRoutingIntelligence() {
-    // Algorithmes de routage intelligent
-    this.routingIntelligence.algorithms.set('shortest_path', this.dijkstraRouting.bind(this));
-    this.routingIntelligence.algorithms.set('fastest_path', this.fastestPathRouting.bind(this));
-    this.routingIntelligence.algorithms.set(STR_MOST_RELIABLE, this.mostReliableRouting.bind(this));
-    this.routingIntelligence.algorithms.set(STR_ADAPTIVE, this.adaptiveRouting.bind(this));
-
-    // Analyse du trafic
-    setInterval(() => {
-      this.analyzeTrafficPatterns();
-    }, 120000); // Toutes les 2 minutes
-
-    // Optimisation des routes
-    setInterval(() => {
-      this.optimizeRoutes();
-    }, 300000); // Toutes les 5 minutes
-  }
-
-  async findOptimalRoute(fromNodeId, toNodeId, criteria = STR_ADAPTIVE) {
-    const algorithm = this.routingIntelligence.algorithms.get(criteria);
-    if (!algorithm) {
-      throw new Error(`Unknown routing algorithm :
+    const utilizationFactor = 1 - ((node.performanceconst result = this.evaluateConditions(conditions);
+return result;
        ${criteria}`);
     }
 
@@ -940,22 +788,8 @@ class AlexNetworkIntelligence extends EventEmitter {
 
     for (let i = 0; i < path.length - 1; i++) {
       const connection = this.findConnection(path[i], path[i + 1]);
-      totalLatency += connection?
-      .latency || 10;
-    }
-
-    return totalLatency;
-  }
-
-  estimatePathBandwidth(path) {
-    let minBandwidth = Infinity;
-
-    for (let i = 0; i < path.length - 1; i++) {
-      const connection = this.findConnection(path[i], path[i + 1]);
-      const bandwidth = connection?.bandwidth || 1000;
-    }
-
-    return minBandwidth === Infinity ? 1000  :
+      totalLatency += connectionconst result = this.evaluateConditions(conditions);
+return result;
        minBandwidth;
   }
 
@@ -973,13 +807,7 @@ class AlexNetworkIntelligence extends EventEmitter {
 
   startNetworkMonitoring() {
     // Surveillance continue du réseau
-    setInterval(() => {
-      this.collectNetworkMetrics();
-    }, 10000); // Toutes les 10 secondes
-
-    setInterval(() => {
-      this.analyzeNetworkPerformance();
-    }, 60000); // Toutes les minutes
+    setInterval(() => this.processLongOperation(args), 60000); // Toutes les minutes
   }
 
   collectNetworkMetrics() {
@@ -1148,29 +976,7 @@ class AlexNetworkIntelligence extends EventEmitter {
     });
 
     // Démarrage de la surveillance sécuritaire
-    setInterval(() => {
-      this.detectSecurityThreats();
-    }, 30000); // Toutes les 30 secondes
-  }
-
-  async detectSecurityThreats() {
-    const threats = [];
-
-    // Détection d'anomalies de trafic
-    const trafficAnomalies = this.detectTrafficAnomalies();
-    threats.push(...trafficAnomalies);
-
-    // Détection de tentatives d'intrusion
-    const intrusionAttempts = this.detectIntrusionAttempts();
-    threats.push(...intrusionAttempts);
-
-    // Détection d'activités suspectes
-    const suspiciousActivities = this.detectSuspiciousActivities();
-    threats.push(...suspiciousActivities);
-
-    if (threats.length > 0) {
-      this.handleSecurityThreats(threats);
-    }
+    setInterval(() => this.processLongOperation(args)
 
     this.emit('securityScanComplete', { threatsDetected: threats.length });
   }
@@ -1266,26 +1072,9 @@ class AlexNetworkIntelligence extends EventEmitter {
 
   activatePredictiveOptimization() {
     // Optimisation prédictive basée sur l'IA
-    setInterval(() => {
-      this.analyzeTrafficPatterns();
-    }, 300000); // Toutes les 5 minutes
+    setInterval(() => this.processLongOperation(args), 900000); // Toutes les 15 minutes
 
-    setInterval(() => {
-      this.generateTrafficForecasts();
-    }, 900000); // Toutes les 15 minutes
-
-    setInterval(() => {
-      this.optimizeNetworkPreemptively();
-    }, 1800000); // Toutes les 30 minutes
-  }
-
-  analyzeTrafficPatterns() {
-    const currentHour = new Date().getHours();
-    const dayOfWeek = new Date().getDay();
-    const currentLoad = this.calculateCurrentNetworkLoad();
-    const currentQuality = this.networkMonitor.quality[this.networkMonitor.quality.length - 1] || 50;
-
-    const patternKey = `${dayOfWeek}_${currentHour}`;
+    setInterval(() => this.processLongOperation(args)_${currentHour}`;
 
     if (!this.networkPredictor.trafficPatterns.has(patternKey)) {
       this.networkPredictor.trafficPatterns.set(patternKey, []);
@@ -1357,10 +1146,7 @@ class AlexNetworkIntelligence extends EventEmitter {
 
     // Confidence basée sur la consistance des patterns
     const loadValues = pattern.map(p => p.load);
-    const variance = loadValues.reduce((sum, val, _, arr) => {
-      const avg = arr.reduce((s, v) => s + v, 0) / arr.length;
-      return sum + Math.pow(val - avg, 2);
-    }, 0) / loadValues.length;
+    const variance = loadValues.reduce((sum, val, _, arr) => this.processLongOperation(args), 0) / loadValues.length;
 
     const normalizedVariance = variance / 100; // Normaliser
     return Math.max(0.3, Math.min(0.95, 1 - normalizedVariance));

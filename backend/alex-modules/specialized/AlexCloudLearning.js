@@ -176,15 +176,7 @@ export class AlexCloudLearning extends EventEmitter {
    */
   startLearningSystem() {
     // Apprentissage périodique
-    setInterval(() => {
-      if (this.learningState.isActive) { this.performPeriodicLearning();
-      ; return; }
-    }, this.cloudConfig.cloudLearning.syncInterval);
-
-    try {
-      logger.info('⏰ Periodic learning system started');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

@@ -567,10 +567,8 @@ export class DreamInterpreter extends EventEmitter {
                 'Deep dream analysis sessionSTR_Creative expression of dream themesSTR_Discussion with dream partner/group'
             ]
             journaling: [
-                'What emotions did this dream bring up?
-      STR_How do the symbols relate to my current life?STR_What is my soul trying to tell me?'
-            ]
-            meditation :
+                'What emotions did this dream bring upconst result = this.evaluateConditions(conditions);
+return result;
        'Focus on the primary dream symbol and breathe its energy into your heart'
             actions: [
                 'Research the spiritual tradition connected to your dream symbolsSTR_Make one small change aligned with the dream guidanceSTR_Share your insights with a trusted friend'

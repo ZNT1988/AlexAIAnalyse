@@ -654,35 +654,8 @@ export class CrisisCompanion extends EventEmitter {
         if (description && description.toLowerCase().includes('hopeless')) riskScore += 2;
 
         // Facteurs de risque
-        riskScore += (riskFactors?
-      .length || 0) * 0.5;
-
-        // État actuel
-        if (currentState?.intensityLevel > 8) riskScore += 2;
-        if (currentState?.hasSupport === false) riskScore += 1;
-
-        // Détermination du niveau
-        if (riskScore >= 5) return STR_EXTREME;
-        if (riskScore >= 3) return 'high';
-        if (riskScore >= 1.5) return 'moderate';
-        return 'low';
-    }
-
-    assessImmediateDanger(description, currentState) {
-        const dangerKeywords = ['suicide', 'kill myself', 'end it all', 'want to die'];
-        const hasImminentPlan = currentState?.hasImminentPlan === true;
-        const hasAccess = currentState?.hasAccessToMeans === true;
-
-        const containsDangerKeywords = dangerKeywords.some(keyword =>
-            description?.toLowerCase().includes(keyword)
-        );
-
-        return containsDangerKeywords && (hasImminentPlan || hasAccess);
-    }
-
-    async createImmediateSafetyPlan(currentState) {
-        return {
-            removeAccess :
+        riskScore += (riskFactorsconst result = this.evaluateConditions(conditions);
+return result;
        'Remove access to means of self-harm'
             stayWithSupport: 'Remain with trusted support person'
             contactCrisisLine: 'Call crisis helpline if urges increase'

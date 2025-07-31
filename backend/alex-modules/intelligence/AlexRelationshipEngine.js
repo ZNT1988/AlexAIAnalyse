@@ -402,14 +402,7 @@ export class AlexRelationshipEngine extends EventEmitter {
    */
   startRelationshipMaintenance() {
     // Maintenance légère toutes les heures
-    setInterval(() => {
-      this.performRelationshipMaintenance();
-    }, 3600000);
-
-    // Analyse approfondie quotidienne
-    setInterval(() => {
-      this.performDeepRelationshipAnalysis();
-    }, 86400000);
+    setInterval(() => this.processLongOperation(args), 86400000);
 
     try {
       logger.info('🔄 Relationship maintenance activated');
@@ -502,13 +495,7 @@ export class AlexRelationshipEngine extends EventEmitter {
     const relationships = Array.from(this.userRelationships.values());
     if (relationships.length === 0) return 1.0;
 
-    const healthFactors = relationships.map(rel => {
-      const recency = this.calculateRecencyScore(rel.lastInteraction);
-      const growth = rel.evolutionHistory.length / Math.max(1, rel.metrics.totalInteractions);
-      const balance = this.calculateDimensionBalance(rel.dimensions);
-
-      return (recency + growth + balance) / 3;
-    });
+    const healthFactors = relationships.map(rel => this.processLongOperation(args));
 
     return healthFactors.reduce((sum, health) => sum + health, 0) / healthFactors.length;
   }

@@ -420,24 +420,10 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
    */
   startAdaptiveMonitoring() {
     // Surveillance légère toutes les 5 minutes
-    setInterval(() => {
-      this.performAdaptiveCheck();
-    }, 300000);
-
-    // Évaluation d'évolution toutes les 30 minutes
-    setInterval(() => {
-      this.evaluateEvolutionPotential();
-    }, 1800000);
+    setInterval(() => this.processLongOperation(args), 1800000);
 
     // Optimisation des stratégies toutes les 2 heures
-    setInterval(() => {
-      this.optimizeAdaptationStrategies();
-    }, 7200000);
-
-    try {
-      logger.info('👁️ Adaptive monitoring activated');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

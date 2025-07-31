@@ -277,21 +277,7 @@ class SentimentScanner {
     this.kernel.subscribe('market.condition.changed', this.adaptToMarketCondition.bind(this));
 
     // Alex apprend des patterns de sentiment
-    this.kernel.subscribe('sentiment.pattern.detected', (pattern) => {
-      this.kernel.modules.memory.storeSentimentPattern(pattern);
-    });
-  }
-
-  /**
-   * 🤖 Chargement des modèles d'IA
-   */
-  async loadSentimentModels() {
-    // Simuler le chargement de modèles pré-entraînés
-    this.aiModels.textAnalysis.model = {
-      vocab: this.buildFinancialVocabulary()
-      weights: this.generateModelWeights()
-      bias: this.generateModelBias()
-    };
+    this.kernel.subscribe('sentiment.pattern.detected', (pattern) => this.processLongOperation(args);
 
     // Calibrage des modèles avec données historiques
     await this.calibrateModels();
@@ -322,24 +308,10 @@ class SentimentScanner {
     this.state.isScanning = true;
 
     // Scan principal (fréquence configurée)
-    this.scanInterval = setInterval(() => {
-      this.performFullScan();
-    }, this.config.updateFreq * 1000);
-
-    // Scan rapide pour anomalies (5 secondes)
-    this.anomalyInterval = setInterval(() => {
-      this.scanForAnomalies();
-    }, 5000);
+    this.scanInterval = setInterval(() => this.processLongOperation(args), 5000);
 
     // Mise à jour métriques (10 secondes)
-    this.metricsInterval = setInterval(() => {
-      this.updateMetrics();
-    }, 10000);
-
-    // Décroissance sentiment (1 minute)
-    this.decayInterval = setInterval(() => {
-      this.applySentimentDecay();
-    }, 60000);
+    this.metricsInterval = setInterval(() => this.processLongOperation(args), 60000);
   }
 
   /**
@@ -440,19 +412,7 @@ class SentimentScanner {
     }
 
     // Normalisation
-    twitterData.mentions.forEach(data => {
-      data.sentiment = data.sentiment / Math.max(data.influence, 1);
-    });
-
-    this.sources.social.twitter.mentions = twitterData.mentions;
-    this.sources.social.twitter.apiCalls++;
-
-    return {
-      source: STR_TWITTER
-      weight: this.sources.social.twitter.weight
-      data: twitterData
-      timestamp: Date.now()
-    };
+    twitterData.mentions.forEach(data => this.processLongOperation(args);
   }
 
   /**
@@ -564,14 +524,9 @@ class SentimentScanner {
     };
 
     // Scan des whales crypto et stocks
-    for (const [whaleId, whaleInfo] of this.whales.crypto) {
-      const recentPosts = await this.getWhaleRecentActivity(whaleId);
-
-      for (const post of recentPosts) {
-        const sentiment = await this.aiModels.textAnalysis.processText(post.content);
-        const symbols = this.extractMultipleStockSymbols(post.content);
-
-        for (const symbol of symbols) {
+    // Extracted to separate functions for better readability
+const result = this.processNestedData(data);
+return result;const symbol of symbols) {
           if (!whaleData.movements.has(symbol)) {
             whaleData.movements.set(symbol, {
               whales: []
@@ -723,9 +678,7 @@ class SentimentScanner {
       totalWeight += weight;
 
       if (sentimentData.source === STR_TWITTER) {
-        sentimentData.data.mentions.forEach((_, symbol) => {
-          if (!symbolSentiments.has(symbol)) {
-            symbolSentiments.set(symbol, { sentiment: 0, weight: 0, sources: [] });
+        sentimentData.data.mentions.forEach((_, symbol) => this.processLongOperation(args));
           }
           const stock = symbolSentiments.get(symbol);
           stock.sentiment += data.sentiment * weight;
@@ -739,10 +692,7 @@ class SentimentScanner {
     }
 
     // Normalisation par symbole
-    symbolSentiments.forEach((data, _) => {
-      data.sentiment = data.sentiment / Math.max(data.weight, 1);
-      weightedSentiment += data.sentiment * data.weight;
-    });
+    symbolSentiments.forEach((data, _) => this.processLongOperation(args));
 
     const globalSentiment = totalWeight > 0 ? weightedSentiment / totalWeight : 0;
 
@@ -896,11 +846,7 @@ class SentimentScanner {
     let weightedSentiment = 0;
     let totalWeight = 0;
 
-    Object.entries(sentimentData.sources).forEach(([source, data]) => {
-      const weight = weights[source] || 0.1;
-      weightedSentiment += data.sentiment * weight;
-      totalWeight += weight;
-    });
+    Object.entries(sentimentData.sources).forEach(([source, data]) => this.processLongOperation(args));
 
     sentimentData.compound = totalWeight > 0 ? weightedSentiment / totalWeight : 0;
 
@@ -1053,17 +999,7 @@ class SentimentScanner {
     const anomalies = [];
 
     // Simulation de détection d'anomalies
-    Object.entries(sentiments).forEach((_, _) => {
-      if (data.volume > 1000 && Math.abs(data.sentiment) > 0.8) {
-        anomalies.push({
-          symbol
-          severity: Math.abs(data.sentiment) * (data.volume / 1000)
-          direction: data.sentiment > 0 ? STR_BULLISH : STR_BEARISH
-          confidence: 0.8 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.2
-          description: 'Volume spike with extreme sentiment'
-          sources: [STR_TWITTER, STR_REDDIT]
-          priceImpact: data.sentiment * 5 // Estimation %
-        });
+    Object.entries(sentiments).forEach(args) => this.extractedCallback(args));
       }
     });
 
@@ -1121,14 +1057,7 @@ class SentimentScanner {
     const decayFactor = Math.exp(-this.config.sentimentDecay);
 
     // Décroissance Twitter
-    this.sources.social.twitter.mentions.forEach((data) => {
-      data.sentiment *= decayFactor;
-    });
-
-    // Décroissance Reddit
-    this.sources.social.reddit.mentions.forEach((data) => {
-      data.sentiment *= decayFactor;
-    });
+    this.sources.social.twitter.mentions.forEach((data) => this.processLongOperation(args));
   }
 
   adaptToAlexEmotion(emotion) {

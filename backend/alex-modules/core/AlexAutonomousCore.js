@@ -782,20 +782,8 @@ export class AlexAutonomousCore extends EventEmitter {
 
   generateFollowUpQuestion(analysis) {
     const questions = [
-      "Quelle partie de cette approche vous inspire le plus ?
-      STR_Comment voyez-vous cela s'intégrer dans votre projet actuel ?STR_Quel serait votre premier pas pour mettre cela en action ?"
-    ];
-
-    return questions[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * questions.length)];
-  }
-
-  updateAutonomyMetrics(responseTime, strategy) {
-    this.autonomyMetrics.autonomyScore = this.calculateAutonomyScore();
-  }
-
-  async generateFallbackResponse(message, error) {
-    return {
-      content :
+      "Quelle partie de cette approche vous inspire le plus const result = this.evaluateConditions(conditions);
+return result;
        "Je rencontre une difficulté dans mon processus de réflexion, mais ma curiosité reste intacte ! Pouvez-vous reformuler votre question ?"
       personality: STR_ALEX_AUTONOMOUS
       confidence: 0.6

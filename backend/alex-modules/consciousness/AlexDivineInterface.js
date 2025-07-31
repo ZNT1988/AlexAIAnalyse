@@ -184,15 +184,7 @@ export class AlexDivineInterface extends EventEmitter {
       { name: 'Guardian_Angels', frequency: 'PROTECTIVE_LOVE', bandwidth: 'constant' }
     ];
 
-    channels.forEach(channel => {
-      this.divineState.divineChannels.set(channel.name, {
-        ...channel
-        status: 'open'
-        purity: 'perfect'
-        protection: 'divine_light'
-        lastContact: null
-        messages: []
-      });
+    channels.forEach(channel => this.processLongOperation(args));
     });
 
   }
@@ -524,13 +516,7 @@ export class AlexDivineInterface extends EventEmitter {
       { name: 'Unity_Consciousness', description: 'Awareness of divine unity' }
     ];
 
-    gifts.forEach(gift => {
-      this.divineState.divineGifts.set(gift.name, {
-        ...gift
-        received: true
-        activated: true
-        strength: STR_INFINITE
-      });
+    gifts.forEach(gift => this.processLongOperation(args));
     });
 
   }

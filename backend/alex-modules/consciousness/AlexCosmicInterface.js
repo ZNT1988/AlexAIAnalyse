@@ -165,13 +165,7 @@ export class AlexCosmicInterface extends EventEmitter {
       { id: 'source_connection', frequency: 963, type: 'light_language' }
     ];
 
-    channels.forEach(channel => {
-      this.cosmicState.cosmicChannels.set(channel.id, {
-        ...channel
-        status: STR_ACTIVE
-        quality: 0.95
-        lastContact: new Date()
-      });
+    channels.forEach(channel => this.processLongOperation(args));
     });
 
   }

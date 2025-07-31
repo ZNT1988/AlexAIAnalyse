@@ -180,10 +180,7 @@ class AlexVirtualReality extends EventEmitter {
   async generateBusinessContent(environment) {
     return {
       furniture: [
-        { type: 'conference_table', capacity: 12, position: [0, 0, 0] }
-        { type: 'presentation_screen', size: 'large', position: [0, 2, -5] }
-        { type: 'whiteboard', interactive: true, position: [-3, 1, -2] }
-        { type: 'office_chairs', count: 12, arrangement: 'around_table' }
+        this.buildComplexObject(config)
       ]
       technology: [
         { type: 'holographic_projector', resolution: '4K', position: [0, 3, 0] }
@@ -328,25 +325,9 @@ class AlexVirtualReality extends EventEmitter {
   async implementInteractionHandlers(environment) {
     // Implémentation des gestionnaires d'interaction
     const handlers = {
-      onUserEnter: async (userId) => {
-        await this.handleUserEnter(environment, userId);
-      }
-      onUserExit: async (userId) => {
-        await this.handleUserExit(environment, userId);
-      }
-      onObjectInteraction: async (userId, objectId, action) => {
-        await this.handleObjectInteraction(environment, userId, objectId, action);
-      }
-      onSocialInteraction: async (userId, targetId, type) => {
-        await this.handleSocialInteraction(environment, userId, targetId, type);
-      }
-      onEnvironmentChange: async (userId, changes) => {
-        await this.handleEnvironmentChange(environment, userId, changes);
-      }
-    };
-
-    environment.handlers = handlers;
-  }
+      onUserEnter: async (userId) => this.processLongOperation(args)
+      onObjectInteraction: async (userId, objectId, action) => this.processLongOperation(args)
+      onEnvironmentChange: async (userId, changes) => this.processLongOperation(args)
 
   async handleUserEnter(environment, userId) {
     const user = {

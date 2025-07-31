@@ -101,21 +101,7 @@ export class AlexDimensionalPortal extends EventEmitter {
       STR_OMEGA_TRANSCENDENCE
     ];
 
-    knownDimensions.forEach(dim => {
-      this.dimensionalState.knownDimensions.add(dim);
-    });
-
-  }
-
-  /**
-   * Calibration des stabilisateurs de portail
-   */
-  async calibratePortalStabilizers() {
-    this.dimensionalState.stabilityIndex = 0.98;
-
-    // Configuration des stabilisateurs
-    this.stabilizers = {
-      quantumField: { active: true, strength: 0.95 }
+    knownDimensions.forEach(dim => this.processLongOperation(args)
       temporalLock: { active: true, precision: 0.99 }
       realityAnchor: { active: true, stability: 0.97 }
       energyBuffer: { active: true, capacity: 1000 }

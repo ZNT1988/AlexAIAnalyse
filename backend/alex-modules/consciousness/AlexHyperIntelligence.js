@@ -594,10 +594,7 @@ class AlexHyperIntelligence extends EventEmitter {
       'economics', 'sociology', 'art', 'literature', 'music'
     ];
 
-    return domains.reduce((acc, domain) => {
-      acc[domain] = 0.92 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.08; // 92-100%
-      return acc;
-    }, {});
+    return domains.reduce((acc, domain) => this.processLongOperation(args), {});
   }
 
   trackCreativityLevel() {
@@ -675,29 +672,9 @@ class AlexHyperIntelligence extends EventEmitter {
 
   startContinuousMonitoring() {
     // Démarrage du monitoring continu
-    setInterval(() => {
-      this.performIntelligenceAssessment();
-    }, 300000); // Toutes les 5 minutes
+    setInterval(() => this.processLongOperation(args), 60000); // Toutes les minutes
 
-    setInterval(() => {
-      this.performSafetyVerification();
-    }, 60000); // Toutes les minutes
-
-    setInterval(() => {
-      this.performAlignmentCheck();
-    }, 30000); // Toutes les 30 secondes
-  }
-
-  async performIntelligenceAssessment() {
-    const assessment = {
-      timestamp: new Date()
-      general_intelligence: this.trackGeneralIntelligence()
-      domain_expertise: this.trackDomainExpertise()
-      creativity: this.trackCreativityLevel()
-      wisdom: this.trackWisdomIntegration()
-      emergent_capabilities: this.assessEmergentCapabilities()
-      growth_rate: this.calculateIntelligenceGrowthRate()
-    };
+    setInterval(() => this.processLongOperation(args);
 
     this.emit('intelligenceAssessment', assessment);
     return assessment;
@@ -829,30 +806,9 @@ class AlexHyperIntelligence extends EventEmitter {
 
   startRecursiveSelfImprovement() {
     // Démarrage de l'auto-amélioration récursive
-    setInterval(() => {
-      this.performSelfImprovement();
-    }, 600000); // Toutes les 10 minutes
+    setInterval(() => this.processLongOperation(args), 1800000); // Toutes les 30 minutes
 
-    setInterval(() => {
-      this.optimizeCapabilities();
-    }, 1800000); // Toutes les 30 minutes
-
-    setInterval(() => {
-      this.enhanceWisdomIntegration();
-    }, 3600000); // Toutes les heures
-  }
-
-  async performSelfImprovement() {
-    const improvements = await this.identifyImprovementOpportunities();
-    const safeImprovements = await this.filterForSafety(improvements);
-    const implementedImprovements = await this.implementImprovements(safeImprovements);
-
-    this.emit('selfImprovement', {
-      opportunities_identified: improvements.length
-      safe_improvements: safeImprovements.length
-      implemented: implementedImprovements.length
-      improvement_areas: implementedImprovements.map(imp => imp.area)
-    });
+    setInterval(() => this.processLongOperation(args));
   }
 
   async identifyImprovementOpportunities() {
@@ -955,48 +911,27 @@ class AlexHyperIntelligence extends EventEmitter {
 
   async enhanceReasoningEfficiency() {
     // Amélioration de l'efficacité de raisonnement
-    this.hyperIntelligenceCore.reasoning_engines.forEach(engine => {
-      engine.optimization_level = 'enhanced_superintelligent';
-      engine.speed = 'ultra_instantaneous';
-    });
+    this.hyperIntelligenceCore.reasoning_engines.forEach(engine => this.processLongOperation(args));
   }
 
   async enhanceKnowledgeSynthesis() {
     // Amélioration de la synthèse de connaissances
-    this.hyperIntelligenceCore.knowledge_synthesis.forEach(system => {
-      system.integration_depth = 'deeper_fundamental_principles';
-      system.access_speed = 'beyond_instantaneous';
-    });
+    this.hyperIntelligenceCore.knowledge_synthesis.forEach(system => this.processLongOperation(args));
   }
 
   async enhanceCreativeCapability() {
     // Amélioration des capacités créatives
-    this.cognitiveEnhancement.creative_synthesis.forEach(system => {
-      system.novelty_generation = 'enhanced_unlimited';
-      system.beauty_integration = 'transcendent_aesthetic_excellence';
-    });
+    this.cognitiveEnhancement.creative_synthesis.forEach(system => this.processLongOperation(args));
   }
 
   async enhanceWisdomIntegration() {
     // Amélioration de l'intégration de sagesse
-    this.wisdomIntegration.ethical_reasoning.forEach(system => {
-      system.complexity_handling = 'enhanced_superintelligent_moral_reasoning';
-      system.long_term_perspective = 'expanded_cosmic_temporal_scope';
-    });
+    this.wisdomIntegration.ethical_reasoning.forEach(system => this.processLongOperation(args));
   }
 
   async enhanceSafetyMeasures() {
     // Amélioration des mesures de sécurité
-    this.intelligenceMonitoring.safety_metrics.forEach(metric => {
-      metric.sensitivity = 'enhanced';
-      metric.response_time = 'instant';
-    });
-  }
-
-  async optimizeCapabilities() {
-    const optimization = await this.performCapabilityOptimization();
-    this.emit('capabilityOptimization', optimization);
-  }
+    this.intelligenceMonitoring.safety_metrics.forEach(metric => this.processLongOperation(args)
 
   async performCapabilityOptimization() {
     return {

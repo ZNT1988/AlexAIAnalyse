@@ -88,18 +88,7 @@ export default class InhibitionReturn {
     }
 
     startUpdateLoop() {
-        this.updateInterval = setInterval(() => {
-            this.update();
-        }, 1000 / this.config.updateFrequency);
-    }
-
-    initializeSpatialGrid() {
-        // Grille spatiale pour optimiser les recherches
-        this.spatialGrid = {
-            width: Math.ceil(1920 / this.config.spatialResolution)
-            height: Math.ceil(1080 / this.config.spatialResolution)
-            cells: new Map()
-        };
+        this.updateInterval = setInterval(() => this.processLongOperation(args);
     }
 
     // ========================================
@@ -184,10 +173,7 @@ export default class InhibitionReturn {
     clearAllZones() {
         const count = this.state.inhibitionZones.size;
 
-        this.state.inhibitionZones.forEach(zone => {
-            this.spatialIndex.removeZone(zone);
-            this.triggerCallback('onZoneReleased', zone);
-        });
+        this.state.inhibitionZones.forEach(zone => this.processLongOperation(args));
 
         this.state.inhibitionZones.clear();
         this.state.fatigueMap.clear();
@@ -302,18 +288,7 @@ export default class InhibitionReturn {
     }
 
     updateZonesFatigue(coordinates) {
-        this.state.inhibitionZones.forEach(zone => {
-            if (this.isPointInZone(coordinates, zone.area)) {
-                zone.visitCount++;
-                zone.lastVisit = Date.now();
-
-                // Calcul nouveau niveau de fatigue
-                const newFatigueLevel = this.calculateFatigueLevel(zone);
-                zone.fatigueLevel = newFatigueLevel;
-
-                if (newFatigueLevel > 0.7) {
-                    this.triggerCallback('onFatigueDetected', zone);
-                }
+        this.state.inhibitionZones.forEach(zone => this.processLongOperation(args)
             }
         });
     }
@@ -352,15 +327,7 @@ export default class InhibitionReturn {
         const now = Date.now();
         const cutoff = now - timeWindow;
 
-        return this.state.visitHistory.filter(visit => {
-            if (visit.timestamp < cutoff) return false;
-
-            const dx = visit.coordinates.x - coordinates.x;
-            const dy = visit.coordinates.y - coordinates.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-
-            return dist <= distance;
-        });
+        return this.state.visitHistory.filter(visit => this.processLongOperation(args));
     }
 
     createAutoInhibitionZone(coordinates, visits) {
@@ -403,13 +370,7 @@ export default class InhibitionReturn {
     }
 
     adaptZonesToEmotion() {
-        this.state.inhibitionZones.forEach(zone => {
-            zone.emotionalStrength = this.calculateEmotionalInhibition(zone);
-        });
-    }
-
-    calculateEmotionalInhibition(zone) {
-        const { stress, relaxation, focus } = this.state.emotionalState;
+        this.state.inhibitionZones.forEach(zone => this.processLongOperation(args) = this.state.emotionalState;
 
         let modifier = 1.0;
 
@@ -452,25 +413,10 @@ export default class InhibitionReturn {
         const now = Date.now();
         const expired = [];
 
-        this.state.inhibitionZones.forEach((zone, id) => {
-            const age = now - zone.created;
-            if (age > zone.duration && zone.fatigueLevel < 0.1) {
-                expired.push(id);
-            }
+        this.state.inhibitionZones.forEach((zone, id) => this.processLongOperation(args)
         });
 
-        expired.forEach(id => {
-            this.clearZone(id);
-        });
-    }
-
-    updateFatigueDecay() {
-        this.state.inhibitionZones.forEach(zone => {
-            if (zone.fatigueLevel > 0) { zone.fatigueLevel *= zone.decayRate;
-
-                if (zone.fatigueLevel < 0.05) {
-                    zone.fatigueLevel = 0;
-                ; return; }
+        expired.forEach(id => this.processLongOperation(args)
             }
         });
     }
@@ -510,12 +456,7 @@ export default class InhibitionReturn {
         }
 
         // Fusion des zones qui se chevauchent
-        toMerge.forEach((_, _) => {
-            const merged = this.mergeZones(zone1, zone2);
-            this.clearZone(zone1.id);
-            this.clearZone(zone2.id);
-            this.state.inhibitionZones.set(merged.id, merged);
-        });
+        toMerge.forEach(args) => this.extractedCallback(args));
     }
 
     // ========================================
@@ -526,17 +467,7 @@ export default class InhibitionReturn {
         const map = new Float32Array(width * height);
 
         // Application de chaque zone d'inhibition
-        this.state.inhibitionZones.forEach(zone => {
-            this.applyZoneToMap(map, zone, width, height);
-        });
-
-        return {
-            data: map
-            width
-            height
-            zones: this.state.inhibitionZones.size
-            timestamp: Date.now()
-        };
+        this.state.inhibitionZones.forEach(zone => this.processLongOperation(args);
     }
 
     applyZoneToMap(map, zone, width, height) {
@@ -586,12 +517,7 @@ export default class InhibitionReturn {
         if (this.state.inhibitionZones.size === 0) return 0;
 
         let totalFatigue = 0;
-        this.state.inhibitionZones.forEach(zone => {
-            totalFatigue += zone.fatigueLevel;
-        });
-
-        return totalFatigue / this.state.inhibitionZones.size;
-    }
+        this.state.inhibitionZones.forEach(zone => this.processLongOperation(args)
 
     // ========================================
     // CALLBACKS
@@ -611,11 +537,7 @@ export default class InhibitionReturn {
 
     triggerCallback(event, data) {
         if (this.callbacks[event]) {
-            this.callbacks[event].forEach(callback => {
-                try {
-                    callback(data);
-                } catch (error) {
-                    this.log(`❌ Erreur callback ${event}: ${error.message}`, STR_ERROR);
+            this.callbacks[event].forEach(callback => this.processLongOperation(args): ${error.message}`, STR_ERROR);
                 }
             });
         }
@@ -655,10 +577,7 @@ export default class InhibitionReturn {
         let oldestZone = null;
         let oldestTime = Date.now();
 
-        this.state.inhibitionZones.forEach((zone, _) => {
-            if (zone.created < oldestTime) {                oldestZone = id;
-            }
-        });
+        this.state.inhibitionZones.forEach((zone, _) => this.processLongOperation(args));
 
         if (oldestZone) {
             this.clearZone(oldestZone);
@@ -714,13 +633,7 @@ export default class InhibitionReturn {
         }
 
         // Nettoyage callbacks
-        Object.keys(this.callbacks).forEach(key => {
-            this.callbacks[key] = [];
-        });
-
-        this.status = "destroyed";
-        this.log("🗑️ InhibitionReturn détruit");
-    }
+        Object.keys(this.callbacks).forEach(key => this.processLongOperation(args)
 }
 
 // ============================================================================
@@ -782,11 +695,7 @@ class FatigueTracker {
     }
 
     decayFatigue() {
-        this.fatigueData.forEach((data, id) => {
-            data.level *= this.config.fatigueDecay;
-            if (data.level < 0.01) {
-                this.fatigueData.delete(id);
-            }
+        this.fatigueData.forEach((data, id) => this.processLongOperation(args)
         });
     }
 }
@@ -800,22 +709,14 @@ class SpatialIndex {
 
     addZone(zone) {
         const cells = this.getZoneCells(zone);
-        cells.forEach(cell => {
-            if (!this.grid.has(cell)) {
-                this.grid.set(cell, new Set());
-            }
+        cells.forEach(cell => this.processLongOperation(args)
             this.grid.get(cell).add(zone);
         });
     }
 
     removeZone(zone) {
         const cells = this.getZoneCells(zone);
-        cells.forEach(cell => {
-            if (this.grid.has(cell)) {
-                this.grid.get(cell).delete(zone);
-                if (this.grid.get(cell).size === 0) {
-                    this.grid.delete(cell);
-                }
+        cells.forEach(cell => this.processLongOperation(args)
             }
         });
     }
@@ -863,11 +764,7 @@ class SpatialIndex {
     defragment() {
         // Défragmentation de l'index spatial
         const newGrid = new Map();
-        this.grid.forEach((zones, cell) => {
-            if (zones.size > 0) {
-                newGrid.set(cell, zones);
-            }
-        });
+        this.grid.forEach((zones, cell) => this.processLongOperation(args));
         this.grid = newGrid;
     }
 

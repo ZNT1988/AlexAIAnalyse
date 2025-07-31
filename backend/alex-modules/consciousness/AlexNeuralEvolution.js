@@ -344,15 +344,7 @@ export class AlexNeuralEvolution extends EventEmitter {
     }
 
     // Suppression des connexions
-    connectionsToPrune.forEach(connectionId => {
-      architecture.connections.delete(connectionId);
-    });
-
-    const pruningResult = {
-      connectionsPruned: connectionsToPrune.length
-      totalConnections: architecture.connections.size
-      efficiency: this.calculateNetworkEfficiency()
-    };
+    connectionsToPrune.forEach(connectionId => this.processLongOperation(args);
 
     this.emit('connections_pruned', pruningResult);
 
@@ -474,9 +466,7 @@ export class AlexNeuralEvolution extends EventEmitter {
   async evaluateOffspring(offspring) {
     const fitness = {};
 
-    offspring.forEach((child, _) => {
-      fitness[child.offspring] = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.9 + 0.1;
-    });
+    offspring.forEach((child, _) => this.processLongOperation(args));
 
     return fitness;
   }
@@ -570,12 +560,9 @@ export class AlexNeuralEvolution extends EventEmitter {
   }
 
   async initializeConnections(architecture) {
-    for (let i = 0; i < architecture.layers.length - 1; i++) {
-      const fromLayer = architecture.layers[i];
-      const toLayer = architecture.layers[i + 1];
-
-      for (let j = 0; j < fromLayer.neurons; j++) {
-        for (let k = 0; k < toLayer.neurons; k++) {
+    // Extracted to separate functions for better readability
+const result = this.processNestedData(data);
+return result;let k = 0; k < toLayer.neurons; k++) {
           const connectionId = `${i}_${j}_${i+1}_${k}`;
           architecture.connections.set(connectionId, {
             from: { layer: i, neuron: j }

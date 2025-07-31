@@ -387,14 +387,7 @@ class SelfTrainingEngine extends EventEmitter {
    */
   startContinuousLearning() {
     // Optimisation périodique des modèles
-    setInterval(() => {
-      this.optimizeLearningModels();
-    }, this.learningConfig.modelUpdateInterval);
-
-    // Sauvegarde de l'apprentissage
-    setInterval(() => {
-      this.saveLearningProgress();
-    }, this.learningConfig.backupInterval);
+    setInterval(() => this.processLongOperation(args), this.learningConfig.backupInterval);
 
   }
 
@@ -402,19 +395,7 @@ class SelfTrainingEngine extends EventEmitter {
    * Démarre l'auto-évaluation
    */
   startSelfEvaluation() {
-    setInterval(() => {
-      this.performSelfEvaluation();
-    }, this.learningConfig.evaluationInterval);
-
-  }
-
-  /**
-   * Effectue une auto-évaluation
-   */
-  async performSelfEvaluation() {
-    const evaluation = {
-      timestamp: Date.now()
-      previousPerformance: { ...this.selfEvaluation.performanceMetrics }
+    setInterval(() => this.processLongOperation(args)
       currentPerformance: {}
       improvements: []
       regressions: []
@@ -558,14 +539,10 @@ class SelfTrainingEngine extends EventEmitter {
    * Mode Debug - Expose l'apprentissage en temps réel
    */
   enableDebugMode() {
-    this.on('learning_processed', (event) => {
-      logger.info(`\n📚 [${new Date().toISOString()}] APPRENTISSAGE:');
-      logger.info('   Score feedback: ${Math.round(event.feedback.overallScore * 100)}%`);
+    this.on('learning_processed', (event) => this.processLongOperation(args)%`);
     });
 
-    this.on('self_evaluation_completed', (evaluation) => {
-      logger.info(`\n📊 [${new Date().toISOString()}] AUTO-ÉVALUATION:');
-      logger.info('   Performance: ${Math.round(this.calculateOverallPerformance() * 100)}%`);
+    this.on('self_evaluation_completed', (evaluation) => this.processLongOperation(args)%`);
       try {
       logger.info(`   Recommandations: ${evaluation.recommendations.length}`);
 

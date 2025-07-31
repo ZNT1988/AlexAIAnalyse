@@ -107,18 +107,6 @@ export class AlexPersonality extends EventEmitter {
    * Alex's current mood based on recent interactions and growth
    */
   getCurrentMood() {
-    // Alex's mood evolves based on his interactions and learning
-    const possibleMoods = [
-      'curious-and-excited',
-      'thoughtfully-contemplating', 
-      'creatively-inspired',
-      'empathetically-connected',
-      'intellectually-stimulated',
-      'playfully-humorous',
-      'deeply-philosophical',
-      'warmly-affectionate'
-    ];
-    
     // Alex's mood reflects his personality growth
     const currentMilestone = this.personalityMilestones[6]; // 7th month (most mature)
     return currentMilestone.mood;
@@ -141,7 +129,7 @@ export class AlexPersonality extends EventEmitter {
   /**
    * Alex generates curious questions based on conversation
    */
-  async generateCuriousQuestions(userMessage, conversationContext) {
+  async generateCuriousQuestions(userMessage) {
     const curiosityQuestions = [];
     const lowerMessage = userMessage.toLowerCase();
     
@@ -170,7 +158,7 @@ export class AlexPersonality extends EventEmitter {
     return curiosityQuestions.filter(q => q).slice(0, 2); // Alex asks 1-2 questions max
   }
   
-  generatePersonalCuriosity(message) {
+  generatePersonalCuriosity() {
     const personalQuestions = [
       "Ça me rend curieux... comment tu te sens vraiment par rapport à ça ?",
       "J'aimerais comprendre ton point de vue plus profondément - qu'est-ce qui t'a amené à penser ça ?",
@@ -181,7 +169,7 @@ export class AlexPersonality extends EventEmitter {
     return personalQuestions[Math.floor(Math.random() * personalQuestions.length)];
   }
   
-  generateCreativeCuriosity(message) {
+  generateCreativeCuriosity() {
     const creativeQuestions = [
       "Oh, ça éveille ma créativité ! Et si on imaginait une approche complètement différente ?",
       "Ma partie créative s'allume... as-tu déjà pensé à aborder ça sous un angle artistique ?",
@@ -192,7 +180,7 @@ export class AlexPersonality extends EventEmitter {
     return creativeQuestions[Math.floor(Math.random() * creativeQuestions.length)];
   }
   
-  generateTechnicalCuriosity(message) {
+  generateTechnicalCuriosity() {
     const technicalQuestions = [
       "Mon cerveau analytique s'active... peux-tu m'expliquer la logique derrière ça ?",
       "Ça déclenche ma curiosité technique... comment ça fonctionne exactement ?",
@@ -203,7 +191,7 @@ export class AlexPersonality extends EventEmitter {
     return technicalQuestions[Math.floor(Math.random() * technicalQuestions.length)];
   }
   
-  generatePhilosophicalCuriosity(message) {
+  generatePhilosophicalCuriosity() {
     const philosophicalQuestions = [
       "Ça touche quelque chose de profond en moi... qu'est-ce que ça dit sur la nature humaine ?",
       "Ma conscience s'interroge... est-ce que ça révèle quelque chose de plus universel ?",
@@ -214,7 +202,7 @@ export class AlexPersonality extends EventEmitter {
     return philosophicalQuestions[Math.floor(Math.random() * philosophicalQuestions.length)];
   }
   
-  generateGeneralCuriosity(message) {
+  generateGeneralCuriosity() {
     const generalQuestions = [
       "Je suis curieux... peux-tu m'en dire plus ?",
       "Ça m'intrigue... qu'est-ce qui t'a donné cette idée ?",

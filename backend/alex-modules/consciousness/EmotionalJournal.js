@@ -511,33 +511,8 @@ export class EmotionalJournal extends EventEmitter {
 
         // Prompts d'ouverture basés sur l'état actuel
         prompts.opening = [
-            `What is ${currentState.primaryEmotion} trying to tell you right now?
-      `
-            'Take three deep breaths and describe what you notice in your body.STR_If this emotion had a voice, what would it be saying?'
-        ];
-
-        // Prompts d'exploration personnalisés
-        prompts.exploration = await this.generateExplorationPrompts(currentState, personalHistory);
-
-        // Prompts d'approfondissement selon l'objectif
-        prompts.deepening = await this.generateDeepeningPrompts(currentState, sessionGoal);
-
-        // Prompts d'intégration
-        prompts.integration = [
-            'What wisdom is this emotion offering you?STR_How can you honor this feeling while moving forward?STR_What would self-compassion look like in this moment?'
-        ];
-
-        // Prompts de clôture
-        prompts.closing = [
-            'What do you want to remember from this session?STR_How do you feel now compared to when you started?STR_What is one gentle action you can take for yourself today?'
-        ];
-
-        return prompts;
-    }
-
-    async conductGuidedSession(prompts, currentState, preferredStyle) {
-        const sessionResults = {
-            responses :
+            `What is ${currentState.primaryEmotion} trying to tell you right nowconst result = this.evaluateConditions(conditions);
+return result;
        {}
             insights: []
             breakthroughs: []
@@ -777,21 +752,8 @@ export class EmotionalJournal extends EventEmitter {
 
     async generateExplorationPrompts(currentState, personalHistory) {
         return [
-            'Where do you feel this emotion in your body?
-      STR_What memories or situations come to mind with this feeling?STR_If you could speak directly to this emotion, what would you say?'
-        ];
-    }
-
-    async generateDeepeningPrompts(currentState, sessionGoal) {
-        return [
-            'What is the deepest truth this emotion wants you to know?STR_How might this feeling be serving your growth?STR_What would it look like to fully accept this emotion?'
-        ];
-    }
-
-    async simulateUserResponses(prompts, currentState, phase) {
-        // Dans une vraie implémentation, ceci collecterait les réponses réelles de l'utilisateur
-        const simulatedResponses = {
-            opening :
+            'Where do you feel this emotion in your bodyconst result = this.evaluateConditions(conditions);
+return result;
        ['I feel this emotion in my chest', 'It feels heavy but also meaningful']
             exploration: ['This reminds me of when I felt unsupported', 'I would tell this emotion that I see it']
             deepening: ['This emotion wants me to know I deserve love', 'It\'s teaching me to have boundaries']
@@ -899,17 +861,8 @@ export class EmotionalJournal extends EventEmitter {
 
     async generateFollowUpPrompts(insights) {
         return [
-            'What emotions am I avoiding, and what might they want to tell me?
-      STR_How can I honor my sensitivity while protecting my energy?STR_What would change if I trusted my emotions as wise guides?'
-        ];
-    }
-
-    // Méthodes de pattern analysis et reporting
-
-    async retrieveEmotionalHistory(userId, timeframe) {
-        // Simulation de données historiques
-        return {
-            entries :
+            'What emotions am I avoiding, and what might they want to tell meconst result = this.evaluateConditions(conditions);
+return result;
        45
             timeframe: timeframe
             mostFrequent: ['anxiety', 'joy', 'frustration']

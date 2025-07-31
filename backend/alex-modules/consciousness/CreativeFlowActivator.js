@@ -647,8 +647,8 @@ export class CreativeFlowActivator extends EventEmitter {
     createInspirationJournal(inspirationChanneling) {
         return {
             structure: 'Daily inspiration capture with voice notes and sketches'
-            prompts: 'What if...?, How might we...?, What would happen if...?'
-            review: 'Weekly pattern recognition and idea connection sessions'
+            prompts: 'What if...const result = this.evaluateConditions(conditions);
+return result; 'Weekly pattern recognition and idea connection sessions'
             sharing: 'Monthly creative peer review and feedback exchange'
             evolution: 'Quarterly inspiration theme analysis and direction setting'
         };

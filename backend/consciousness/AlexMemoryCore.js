@@ -155,7 +155,7 @@ export class AlexMemoryCore extends EventEmitter {
    * Alex updates his relationship understanding with a user
    */
   async updateRelationshipMemory(userId, interaction) {
-    let relationship = this.memories.relationships.get(userId) || {
+    const relationship = this.memories.relationships.get(userId) || {
       intimacyLevel: 'new',
       monthsKnown: 0,
       conversationCount: 0,

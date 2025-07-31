@@ -85,8 +85,8 @@ winston.addColors(colors);
  * @description Format de logging avec timestamp, couleurs et structure
  */
 const format = winston.format.combine(
-  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' })
-  winston.format.colorize({ all: true })
+  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+  winston.format.colorize({ all: true }),
   winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
 );
 
@@ -105,8 +105,8 @@ const format = winston.format.combine(
  */
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info', // Default to info to reduce spam
-  levels
-  format
+  levels,
+  format,
   transports: [
     /**
      * @transport Console
@@ -114,30 +114,30 @@ const logger = winston.createLogger({
      */
     new winston.transports.Console({
       format: winston.format.combine(
-        winston.format.colorize()
+        winston.format.colorize(),
         winston.format.simple()
       )
-    })
+    }),
     /**
      * @transport ErrorFile
      * @description Transport fichier dédié aux erreurs critiques
      */
     new winston.transports.File({
-      filename: 'logs/error.log'
-      level: 'error'
+      filename: 'logs/error.log',
+      level: 'error',
       format: winston.format.combine(
-        winston.format.timestamp()
+        winston.format.timestamp(),
         winston.format.json()
       )
-    })
+    }),
     /**
      * @transport CombinedFile
      * @description Transport fichier pour historique complet
      */
     new winston.transports.File({
-      filename: 'logs/combined.log'
+      filename: 'logs/combined.log',
       format: winston.format.combine(
-        winston.format.timestamp()
+        winston.format.timestamp(),
         winston.format.json()
       )
     })

@@ -38,8 +38,8 @@ import enhancedHealthCheck from './utils/enhancedHealthCheck.js';
 // Import performance optimization systems
 import { getRedisCache } from './cache/RedisCache.js';
 import {
-  createCacheMiddleware
-  createCacheInvalidationMiddleware
+  createCacheMiddleware,
+  createCacheInvalidationMiddleware,
   createCacheWarmupMiddleware
 } from './middleware/cacheMiddleware.js';
 
@@ -67,7 +67,7 @@ app.use(limiter);
 app.use(cors({
   origin: process.env.NODE_ENV === STR_PRODUCTION
     ? ['https://hustlefinder.ia']
-    : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5176', 'http://localhost:5177', 'http://localhost:3000']
+    : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5176', 'http://localhost:5177', 'http://localhost:3000'],
   credentials: true
 }));
 
@@ -85,14 +85,14 @@ app.use((req, res, next) => {
 // Initialize Redis cache with intelligent caching strategies
 const cacheMiddleware = createCacheMiddleware({
   defaultTTL: 300, // 5 minutes
-  intelligentTTL: true
-  skipPaths: ['/health', '/api/health', '/api/auth', '/api/system']
+  intelligentTTL: true,
+  skipPaths: ['/health', '/api/health', '/api/auth', '/api/system'],
   varyBy: ['x-user-type', 'authorization']
 });
 
 const cacheInvalidation = createCacheInvalidationMiddleware([
-  'api:GET:/api/ai*'
-  'api:GET:/api/assistant*'
+  'api:GET:/api/ai*',
+  'api:GET:/api/assistant*',
   'api:GET:/api/dashboard*'
 ]);
 

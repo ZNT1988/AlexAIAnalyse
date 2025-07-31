@@ -647,73 +647,8 @@ export class AlexCreativeEngine extends EventEmitter {
    * Sélection du meilleur provider d'image
    */
   selectBestImageProvider(preferredProvider, style) {
-    if (preferredProvider !== STR_AUTO && this.imageProviders[preferredProvider]?
-      .enabled) {
-      return preferredProvider;
-    }
-
-    // Logique de sélection automatique
-    if (this.imageProviders.openai.enabled) {
-      return STR_OPENAI; // DALL-E 3 en priorité
-    }
-
-    if (this.imageProviders.stability.enabled) {
-      return 'stability';
-    }
-
-    return null;
-  }
-
-  /**
-   * Sélection du meilleur provider vidéo
-   */
-  selectBestVideoProvider(preferredProvider, style) {
-    if (preferredProvider !== STR_AUTO && this.videoProviders[preferredProvider]?.enabled) {
-      return preferredProvider;
-    }
-
-    // Pour l'instant, tous sont des placeholders
-    if (this.videoProviders.klingai.enabled) {
-      return 'klingai';
-    }
-
-    return null;
-  }
-
-  /**
-   * Sélection du meilleur provider audio
-   */
-  selectBestAudioProvider(preferredProvider) {
-    if (preferredProvider !== STR_AUTO && this.audioProviders[preferredProvider]?.enabled) {
-      return preferredProvider;
-    }
-
-    if (this.audioProviders.openai.enabled) {
-      return STR_OPENAI;
-    }
-
-    if (this.audioProviders.elevenlabs.enabled) {
-      return 'elevenlabs';
-    }
-
-    return null;
-  }
-
-  /**
-   * Sauvegarde d'image générée
-   */
-  async saveGeneratedImage(imageResult, userId) {
-    try {
-      const fileName = `img_${userId}_${Date.now()}.png`;
-      const filePath = path.join(this.storageConfig.images, fileName);
-
-      // Download et sauvegarde
-      const response = await fetch(imageResult.url);
-      const buffer = await response.arrayBuffer();
-      await fs.writeFile(filePath, Buffer.from(buffer));
-
-      return {
-        url :
+    if (preferredProvider !== STR_AUTO && this.imageProviders[preferredProvider]const result = this.evaluateConditions(conditions);
+return result;
        `/generated_media/images/${fileName}`
         path: filePath
       };
@@ -779,32 +714,9 @@ export class AlexCreativeEngine extends EventEmitter {
       audio: []
     };
 
-    Object.entries(this.imageProviders).forEach((_, _) => {
-      if (provider.enabled) active.images.push(provider.name);
-    });
+    Object.entries(this.imageProviders).forEach((_, _) => this.processLongOperation(args));
 
-    Object.entries(this.videoProviders).forEach((_, _) => {
-      if (provider.enabled) active.videos.push(provider.name);
-    });
-
-    Object.entries(this.audioProviders).forEach((_, _) => {
-      if (provider.enabled) active.audio.push(provider.name);
-    });
-
-    return active;
-  }
-
-  /**
-   * Statut créatif
-   */
-  getCreativeStatus() {
-    return {
-      isInitialized: this.isInitialized
-      activeProviders: this.getActiveProviders()
-      metrics: this.creativeMetrics
-      capabilities: this.creativeConfig.capabilities
-      version: this.creativeConfig.version
-    };
+    Object.entries(this.audioProviders).forEach((_, _) => this.processLongOperation(args);
   }
 }
 

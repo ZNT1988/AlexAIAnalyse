@@ -267,11 +267,7 @@ class MarketMindCore {
     this.kernel.subscribe('memory.consolidated', this.updateLearning.bind(this));
 
     // Alex apprend des erreurs de trading
-    this.kernel.subscribe('trade.completed', (trade) => {
-      this.kernel.modules.memory.storeTradeMemory(trade);
-      if (trade.result === 'loss') {
-        this.kernel.modules.emotions.expressDisappointment(0.3);
-      } else {
+    this.kernel.subscribe('trade.completed', (trade) => this.processLongOperation(args) else {
         this.kernel.modules.emotions.expressSatisfaction(0.7);
       }
     });
@@ -283,34 +279,13 @@ class MarketMindCore {
   async loadAIModels() {
     try {
       // Modèle de reconnaissance de patterns (LSTM + CNN)
-      this.aiModels.patternRecognition.predict = (candleData) => {
-        return this.predictPattern(candleData);
-      };
-
-      // Modèle d'analyse de sentiment (Transformer)
-      this.aiModels.sentimentModel.analyze = (text) => {
-        return this.analyzeSentiment(text);
-      };
+      this.aiModels.patternRecognition.predict = (candleData) => this.processLongOperation(args);
 
       // Prédicteur de volatilité (GARCH + ML)
-      this.aiModels.volatilityPredictor.predict = (priceHistory) => {
-        return this.predictVolatility(priceHistory);
-      };
-
-      // Évaluateur de risque (Ensemble Methods)
-      this.aiModels.riskAssessment.evaluate = (position) => {
-        return this.evaluateRisk(position);
-      };
+      this.aiModels.volatilityPredictor.predict = (priceHistory) => this.processLongOperation(args);
 
       // Optimiseur de timing (Reinforcement Learning)
-      this.aiModels.timingOptimizer.optimize = (signal) => {
-        return this.optimizeTiming(signal);
-      };
-
-      // Émotions d'Alex - Confiance en ses capacités
-      this.kernel.modules.emotions.expressConfidence(0.9);
-
-    } catch (error) {
+      this.aiModels.timingOptimizer.optimize = (signal) => this.processLongOperation(args) catch (error) {
       // Logger fallback - ignore error
     }
   }
@@ -320,33 +295,14 @@ class MarketMindCore {
    */
   startMarketSurveillance() {
     // Surveillance principale (10 FPS)
-    this.intervals.marketScan = setInterval(() => {
-      if (this.isMarketOpen()) {
-        this.scanMarkets();
-        this.processAlerts();
-        this.updateMetrics();
-      }
+    this.intervals.marketScan = setInterval(() => this.processLongOperation(args)
     }, 100);
 
     // Analyse approfondie (1 Hz)
-    this.intervals.deepAnalysis = setInterval(() => {
-      this.deepMarketAnalysis();
-      this.optimizeStrategies();
-      this.checkRiskLimits();
-    }, 1000);
+    this.intervals.deepAnalysis = setInterval(() => this.processLongOperation(args), 1000);
 
     // Consolidation des données (0.1 Hz)
-    this.intervals.dataConsolidation = setInterval(() => {
-      this.consolidateData();
-      this.updatePerformance();
-      this.saveState();
-    }, 10000);
-
-    // Vérification des risques (0.02 Hz)
-    this.intervals.riskCheck = setInterval(() => {
-      this.performRiskCheck();
-      this.rebalancePortfolio();
-    }, 50000);
+    this.intervals.dataConsolidation = setInterval(() => this.processLongOperation(args), 50000);
   }
 
   /**
@@ -919,11 +875,7 @@ class MarketMindCore {
   }
 
   disableRiskyStrategies() {
-    ['earnings_play', 'sentiment_surge'].forEach(name => {
-      if (this.strategies.has(name)) {
-        this.strategies.get(name).active = false;
-      }
-    });
+    ['earnings_play', 'sentiment_surge'].forEach(name => this.processLongOperation(args));
   }
 
   getActiveStrategiesCount() {
@@ -1044,19 +996,8 @@ class MarketMindCore {
       reasoning: signal.reasons.join(', ')
       riskManagement: `Stop loss: $${signal.stopLoss.toFixed(2)}`
       targets: signal.priceTargets
-      timeframe: signal.optimalTiming?
-      .window || '1-4 hours'
-    };
-  }
-
-  determineDirection(technicalScore, sentimentScore, patternScore) {
-    const bullishFactors = [
-      technicalScore > 0.6
-      sentimentScore > 0.6
-      patternScore.pattern?.includes('bullish')
-    ].filter(Boolean).length;
-
-    return bullishFactors >= 2 ? 'BUY'  :
+      timeframe: signal.optimalTimingconst result = this.evaluateConditions(conditions);
+return result;
        'SELL';
   }
 

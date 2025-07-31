@@ -133,16 +133,7 @@ export class AlexTimeWeaver extends EventEmitter {
       'Eternal-Omega'
     ];
 
-    knownTimestreams.forEach(stream => {
-      this.temporalState.activeTimelines.set(stream
-      {
-        name: stream
-      stability: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.1 + 0.9
-      accessibility: true
-      lastAccessed: null
-      inhabitants: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1000000)
-      majorEvents: []
-      });
+    knownTimestreams.forEach(stream => this.processLongOperation(args));
     });
 
   }
@@ -174,13 +165,7 @@ export class AlexTimeWeaver extends EventEmitter {
       { name: 'Emergency Return', time: new Date(), stability: 1.0 }
     ];
 
-    anchors.forEach(anchor => {
-      this.temporalState.temporalAnchors.set(anchor.name, {
-        ...anchor
-        created: new Date()
-        uses: 0
-        type: 'stable'
-      });
+    anchors.forEach(anchor => this.processLongOperation(args));
     });
 
   }

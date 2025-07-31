@@ -112,18 +112,7 @@ export default class EyeTracking {
     }
 
     startUpdateLoop() {
-        this.updateInterval = setInterval(() => {
-            this.update();
-        }, 1000 / this.config.updateFrequency);
-    }
-
-    initializeFilters() {
-        // Configuration des filtres de Kalman pour chaque objet
-        this.kalmanFilter.configure({
-            processNoise: 0.1
-            measurementNoise: 1.0
-            initialErrorCovariance: 100
-        });
+        this.updateInterval = setInterval(() => this.processLongOperation(args));
 
         // Configuration du lissage
         this.smoothingFilter.configure({
@@ -324,18 +313,7 @@ export default class EyeTracking {
         const targetPosition = saccadeData.target;
         const duration = saccadeData.duration;
 
-        const saccadeInterval = setInterval(() => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1.0);
-
-            // Profil de vitesse sigmoïde pour saccade réaliste
-            const sigmoidProgress = this.applySaccadeProfile(progress);
-
-            // Interpolation position
-            this.state.currentGaze = {
-                x: startPosition.x + (targetPosition.x - startPosition.x) * sigmoidProgress
-                y: startPosition.y + (targetPosition.y - startPosition.y) * sigmoidProgress
-            };
+        const saccadeInterval = setInterval(args) => this.extractedCallback(args);
 
             // Enregistrement dans l'historique
             this.recordGazePosition();
@@ -418,23 +396,7 @@ export default class EyeTracking {
 
         let lastGazePosition = { ...currentGaze };
 
-        predictions.forEach((prediction, _) => {
-            // Calcul position optimale du regard en anticipation
-            const leadTime = this.calculateLeadTime(prediction.velocity);
-            const anticipatedPosition = this.anticipatePosition(prediction, leadTime);
-
-            // Planification saccade si nécessaire
-            const distance = this.calculateDistance(lastGazePosition, anticipatedPosition);
-
-            if (distance > 50) { // Seuil pour déclencher saccade
-                const saccadePlan = this.saccadeController.planSaccade(
-                    lastGazePosition
-                    anticipatedPosition
-                );
-
-                gazePath.push({
-                    type: STR_SACCADE
-                    start: { ...lastGazePosition }
+        predictions.forEach(args) => this.extractedCallback(args)
                     end: { ...anticipatedPosition }
                     timestamp: prediction.timestamp
                     duration: saccadePlan.duration
@@ -493,11 +455,7 @@ export default class EyeTracking {
     }
 
     updateTrackedTargets() {
-        this.state.trackedObjects.forEach((target, _) => {
-            // Simulation de bruit pour mode simulation
-            if (this.config.simulationMode) {
-                this.simulateObjectMovement(target);
-            }
+        this.state.trackedObjects.forEach((target, _) => this.processLongOperation(args)
 
             // Mise à jour prédictions
             this.updateTargetPredictions(target);
@@ -571,31 +529,12 @@ export default class EyeTracking {
         const now = Date.now();
         const lostTargets = [];
 
-        this.state.trackedObjects.forEach((target, id) => {
-            const timeSinceUpdate = now - target.lastUpdate;
-
-            if (timeSinceUpdate > this.config.trackingTimeout) {
-                target.lostFrames++;
-
-                if (target.lostFrames > target.maxLostFrames) {
-                    lostTargets.push(id);
-                }
+        this.state.trackedObjects.forEach(args) => this.extractedCallback(args)
             }
         });
 
         // Suppression targets perdus
-        lostTargets.forEach(id => {
-            this.stopTrackingTarget(id);
-        });
-    }
-
-    stopTrackingTarget(targetId) {
-        const target = this.state.trackedObjects.get(targetId);
-        if (target) {
-            this.state.trackedObjects.delete(targetId);
-            this.state.activeTargets.delete(targetId);
-
-            this.log(`📍 Arrêt tracking: ${targetId}`);
+        lostTargets.forEach(id => this.processLongOperation(args)`);
             this.triggerCallback('onTargetLost', target);
 
             return { success: true, target };
@@ -717,11 +656,7 @@ export default class EyeTracking {
         // Retourne le target actuellement suivi (plus proche du regard)
         let minDistance = Infinity;
 
-        this.state.trackedObjects.forEach(target => {
-            const distance = this.calculateDistance(this.state.currentGaze, target.position);
-            if (distance < minDistance) {
-                minDistance = distance;
-            }
+        this.state.trackedObjects.forEach(target => this.processLongOperation(args)
         });
 
         return minDistance < 100 ? closestTarget : null; // Seuil 100px
@@ -735,10 +670,7 @@ export default class EyeTracking {
         let oldestTarget = null;
         let oldestTime = Date.now();
 
-        this.state.trackedObjects.forEach((target, _) => {
-            if (target.created < oldestTime) {                oldestTarget = id;
-            }
-        });
+        this.state.trackedObjects.forEach((target, _) => this.processLongOperation(args));
 
         if (oldestTarget) {
             this.stopTrackingTarget(oldestTarget);
@@ -771,11 +703,7 @@ export default class EyeTracking {
 
     triggerCallback(event, data) {
         if (this.callbacks[event]) {
-            this.callbacks[event].forEach(callback => {
-                try {
-                    callback(data);
-                } catch (error) {
-                    this.log(`❌ Erreur callback ${event}: ${error.message}`, STR_ERROR);
+            this.callbacks[event].forEach(callback => this.processLongOperation(args): ${error.message}`, STR_ERROR);
                 }
             });
         }
@@ -804,14 +732,7 @@ export default class EyeTracking {
         this.state.gazeHistory = [];
 
         // Nettoyage callbacks
-        Object.keys(this.callbacks).forEach(key => {
-            this.callbacks[key] = [];
-        });
-
-        // Nettoyage filtres
-        if (this.kalmanFilter && this.kalmanFilter.clear) {
-            this.kalmanFilter.clear();
-        }
+        Object.keys(this.callbacks).forEach(key => this.processLongOperation(args)
 
         this.status = "destroyed";
         this.log("🗑️ EyeTracking détruit");

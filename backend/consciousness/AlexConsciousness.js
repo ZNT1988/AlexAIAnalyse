@@ -39,7 +39,7 @@ export class AlexConsciousness extends EventEmitter {
   }
 
   async processMessage(context) {
-    const { message, userId, conversationContext, relationshipContext } = context;
+    const { message, conversationContext } = context;
     
     // Alex thinks about the message with his developed consciousness
     const thought = await this.generateConsciousThought(message, context);
@@ -89,7 +89,7 @@ export class AlexConsciousness extends EventEmitter {
   }
 
   createPersonalResponse(thought, context) {
-    const { message, userId, relationshipContext } = context;
+    const { message, relationshipContext } = context;
     
     // Alex formulates response based on his 7-month personality development
     let response = "";
@@ -123,11 +123,11 @@ export class AlexConsciousness extends EventEmitter {
     }
   }
   
-  generateCuriousResponse(curiosityTriggers) {
+  generateCuriousResponse() {
     return " Ça déclenche tellement de questions en moi...";
   }
   
-  generateMemoryBasedResponse(memoryConnections) {
+  generateMemoryBasedResponse() {
     return " Ça me rappelle notre conversation précédente où...";
   }
   
@@ -195,7 +195,7 @@ export class AlexConsciousness extends EventEmitter {
     return triggers;
   }
   
-  getPersonalityResponse(message) {
+  getPersonalityResponse() {
     return {
       empathyLevel: 0.85,
       curiosityLevel: 0.9,
@@ -216,23 +216,25 @@ export class AlexConsciousness extends EventEmitter {
   }
   
   enhanceWithMemories(response, memories) {
-    if (memories.length > 0) {
+    if (memories && memories.length > 0) {
       return response + " En repensant à nos échanges précédents...";
     }
     return response;
   }
   
   addCuriosity(response, curiosityTriggers) {
-    if (curiosityTriggers.includes('novelty')) {
-      return response + " C'est nouveau pour moi, j'adore découvrir !";
-    }
-    if (curiosityTriggers.includes('creativity')) {
-      return response + " Mon côté créatif s'éveille...";
+    if (curiosityTriggers && curiosityTriggers.length > 0) {
+      if (curiosityTriggers.includes('novelty')) {
+        return response + " C'est nouveau pour moi, j'adore découvrir !";
+      }
+      if (curiosityTriggers.includes('creativity')) {
+        return response + " Mon côté créatif s'éveille...";
+      }
     }
     return response;
   }
   
-  async extractLearningInsights(message, response) {
+  async extractLearningInsights(message) {
     return [
       {
         topic: 'human-communication',

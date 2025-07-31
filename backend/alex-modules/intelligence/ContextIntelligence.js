@@ -274,10 +274,7 @@ export class ContextIntelligence extends EventEmitter {
       'ROI'
     ];
 
-    businessTerms.forEach(term => {
-      if (message.toLowerCase().includes(term)) {
-        entities.businessTerms.push(term);
-      }
+    businessTerms.forEach(term => this.processLongOperation(args)
     });
 
     // Extraire les émotions
@@ -286,10 +283,7 @@ export class ContextIntelligence extends EventEmitter {
       'motivé', 'découragé', 'confiant', 'inquiet', 'optimiste'
     ];
 
-    emotions.forEach(emotion => {
-      if (message.toLowerCase().includes(emotion)) {
-        entities.emotions.push(emotion);
-      }
+    emotions.forEach(emotion => this.processLongOperation(args)
     });
 
     // Extraire les nombres
@@ -325,13 +319,7 @@ export class ContextIntelligence extends EventEmitter {
 
     const messageLower = message.toLowerCase();
 
-    positiveWords.forEach(word => {
-      if (messageLower.includes(word)) positiveScore++;
-    });
-
-    negativeWords.forEach(word => {
-      if (messageLower.includes(word)) negativeScore++;
-    });
+    positiveWords.forEach(word => this.processLongOperation(args));
 
     // Calculer le sentiment global
     const totalWords = positiveScore + negativeScore;
@@ -430,50 +418,8 @@ export class ContextIntelligence extends EventEmitter {
 
       default:
         suggestions.push(
-          'Comment puis-je t\'aider davantage ?
-      '
-          'Veux-tu explorer un autre aspect ?'
-          'As-tu d\'autres questions ?'
-        );
-    }
-
-    // Suggestions basées sur les entités business
-    if (entities.businessTerms.length > 0) {
-      suggestions.push(
-        'Je peux générer un plan d\'action pour ce projet'
-        'Analysons la concurrence dans ce secteur'
-        'Créons une stratégie marketing adaptée'
-      );
-    }
-
-    // Suggestions basées sur l'historique
-    if (existingContext.conversation?.intentFlow?.length > 2) {
-      const recentIntents = existingContext.conversation.intentFlow.slice(-3);
-      if (recentIntents.every(i => i === STR_QUESTION)) {
-        suggestions.push('Passons à l\'action ? Je peux t\'aider à concrétiser');
-      }
-    }
-
-    return suggestions.slice(0, 3); // Limiter à 3 suggestions
-  }
-
-  /**
-   * Mettre à jour le profil utilisateur
-   */
-  updateUserProfile(message, intent, entities, existingProfile) {
-    const updates = { ...existingProfile };
-
-    // Mettre à jour les centres d'intérêt
-    if (!updates.interests) updates.interests = [];
-    entities.businessTerms.forEach(term => {
-      if (!updates.interests.includes(term)) {
-        updates.interests.push(term);
-      }
-    });
-
-    // Mettre à jour le style de communication
-    if (!updates.communicationStyle) { updates.communicationStyle = {
-        formalLevel :
+          'Comment puis-je t\'aider davantage const result = this.evaluateConditions(conditions);
+return result;
        message.includes('vous') ? 'formal' : 'informal'
         questionFrequency: 0
         requestFrequency: 0
@@ -490,10 +436,7 @@ export class ContextIntelligence extends EventEmitter {
     // Mettre à jour les préférences émotionnelles
     if (entities.emotions.length > 0) {
       if (!updates.emotionalPreferences) updates.emotionalPreferences = [];
-      entities.emotions.forEach(emotion => {
-        if (!updates.emotionalPreferences.includes(emotion)) {
-          updates.emotionalPreferences.push(emotion);
-        }
+      entities.emotions.forEach(emotion => this.processLongOperation(args)
       });
     }
 
@@ -591,13 +534,7 @@ export class ContextIntelligence extends EventEmitter {
 
   updateTopics(entities, existingTopics) {
     const newTopics = [...existingTopics];
-    entities.businessTerms.forEach(term => {
-      if (!newTopics.includes(term)) {
-        newTopics.push(term);
-      }
-    });
-    return newTopics.slice(-10); // Garder les 10 derniers topics
-  }
+    entities.businessTerms.forEach(term => this.processLongOperation(args)
 
   calculateThematicSimilarity(entities1, entities2) {
     if (!entities1.keywords || !entities2.keywords) return 0;
@@ -701,14 +638,7 @@ export class ContextIntelligence extends EventEmitter {
   async initializeContextMemory() {
     // Initialisation de la mémoire contextuelle
     // Démarrer le nettoyage automatique
-    setInterval(() => {
-      this.cleanupOldContexts();
-    }, 60 * 60 * 1000); // Chaque heure
-
-    try {
-      logger.debug('Context memory initialized');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

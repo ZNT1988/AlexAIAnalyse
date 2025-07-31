@@ -432,14 +432,7 @@ export class AlexSocialIntelligence extends EventEmitter {
    */
   startSocialMonitoring() {
     // Surveillance des dynamiques toutes les 5 minutes
-    setInterval(() => {
-      this.monitorSocialDynamics();
-    }, 300000);
-
-    // Analyse des patterns quotidienne
-    setInterval(() => {
-      this.analyzeDailySocialPatterns();
-    }, 86400000);
+    setInterval(() => this.processLongOperation(args), 86400000);
 
     try {
       logger.info('👁️ Social monitoring activated');

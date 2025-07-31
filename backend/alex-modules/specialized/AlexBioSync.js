@@ -395,22 +395,7 @@ export class AlexBioSync extends EventEmitter {
    * Monitoring de la fréquence cardiaque avec alertes
    */
   monitorHeartRate(userId, monitoring) {
-    setInterval(async () => {
-      if (!monitoring.active) return;
-
-      try {
-        const currentHR = await this.getCurrentHeartRate(userId);
-        const userProfile = await this.getUserBioProfile(userId);
-
-        // Détection de zones anormales
-        if (currentHR > userProfile.maxHeartRate * 0.9) {
-          this.emit('bio_alert', {
-            type: 'heart_rate_too_high'
-            userId
-            value: currentHR
-            severity: STR_HIGH
-            recommendation: 'Prendre une pause immédiate et se reposer'
-          });
+    setInterval(async () => this.processLongOperation(args));
         } else if (currentHR < userProfile.restingHeartRate * 0.8) {
           this.emit('bio_alert', {
             type: 'heart_rate_too_low'
@@ -605,20 +590,9 @@ export class AlexBioSync extends EventEmitter {
 }
 
 // Export des fonctions utilitaires
-export const connectBioDevice = async (deviceInfo, userId) => {
-  const bioSync = new AlexBioSync();
-  return await bioSync.connectBioDevice(deviceInfo, userId);
-};
+export const connectBioDevice = async (deviceInfo, userId) => this.processLongOperation(args);
 
-export const getCurrentBioAdaptation = async (userId) => {
-  const bioSync = new AlexBioSync();
-  return await bioSync.adaptToCurrentState(userId);
-};
-
-export const getOptimalActivities = async (userId) => {
-  const bioSync = new AlexBioSync();
-  return await bioSync.suggestOptimalActivities(userId);
-};
+export const getCurrentBioAdaptation = async (userId) => this.processLongOperation(args);
 
 export const startBioMonitoring = async (userId) => {
   const bioSync = new AlexBioSync();

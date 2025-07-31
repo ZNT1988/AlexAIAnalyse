@@ -29,7 +29,8 @@
       "Bash(java:*)",
       "Bash(docker:*)",
       "Bash(npx eslint:*)",
-      "Bash(sonar-scanner:*)"
+      "Bash(sonar-scanner:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }

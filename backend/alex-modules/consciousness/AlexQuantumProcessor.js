@@ -801,23 +801,7 @@ class AlexQuantumProcessor extends EventEmitter {
 
   startQuantumIntelligenceProcessing() {
     // Traitement intelligent quantique continu
-    setInterval(() => {
-      this.processQuantumIntelligence();
-    }, 1000); // Toutes les secondes
-  }
-
-  async processQuantumIntelligence() {
-    // Traitement de l'intelligence quantique
-    const quantumAdvantage = await this.assessQuantumAdvantage();
-    const interferencePatterrns = await this.analyzeInterferencePatterns();
-    const entanglementUtility = await this.evaluateEntanglementUtility();
-
-    this.quantumIntelligence.current_state = {
-      quantum_advantage: quantumAdvantage
-      interference_quality: interferencePatterrns
-      entanglement_efficiency: entanglementUtility
-      timestamp: new Date()
-    };
+    setInterval(() => this.processLongOperation(args);
 
     this.emit('quantumIntelligenceUpdate', this.quantumIntelligence.current_state);
   }
@@ -843,10 +827,7 @@ class AlexQuantumProcessor extends EventEmitter {
     const superpositions = Array.from(this.quantumSystem.superpositions.values());
     if (superpositions.length === 0) return 0;
 
-    const totalCoherence = superpositions.reduce((sum, sup) => {
-      const qubit = this.quantumSystem.qubits.get(sup.qubit);
-      return sum + (qubit ? this.calculateCoherence(qubit) : 0);
-    }, 0);
+    const totalCoherence = superpositions.reduce((sum, sup) => this.processLongOperation(args), 0);
 
     return totalCoherence / superpositions.length;
   }
@@ -958,20 +939,7 @@ class AlexQuantumProcessor extends EventEmitter {
 
   startQuantumSimulation() {
     // Démarrage de la simulation quantique continue
-    setInterval(() => {
-      this.updateQuantumState();
-    }, 100); // Toutes les 100ms
-  }
-
-  updateQuantumState() {
-    // Mise à jour de l'état quantique
-    for (const [id, qubit] of this.quantumSystem.qubits.entries()) {
-      // Décoherence naturelle
-      this.applyDecoherence(qubit);
-
-      // Fluctuations quantiques
-      this.applyQuantumFluctuations(qubit);
-    }
+    setInterval(() => this.processLongOperation(args)
 
     // Mise à jour des entanglements
     this.updateEntanglements();
@@ -1017,10 +985,7 @@ class AlexQuantumProcessor extends EventEmitter {
         for (const qubitId of entanglement.qubits) {
           const qubit = this.quantumSystem.qubits.get(qubitId);
           if (qubit) {
-            entanglement.qubits.forEach(otherId => {
-              if (otherId !== qubitId) {
-                qubit.entangled_with.delete(otherId);
-              }
+            entanglement.qubits.forEach(otherId => this.processLongOperation(args)
             });
           }
         }

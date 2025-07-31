@@ -183,36 +183,14 @@ export class QuantumCreativityEngine extends EventEmitter {
     const breakthroughDetector = new BreakthroughDetector();
     const fluctuationMonitor = new QuantumFluctuationMonitor();
 
-    return new Promise((resolve) => {
-      const detectedBreakthroughs = [];
-
-      const monitor = setInterval(() => {
-        const fluctuation = fluctuationMonitor.measure();
-
-        if (fluctuation.amplitude > 0.8 && fluctuation.coherence > 0.9) {
-          const breakthrough = breakthroughDetector.analyze(fluctuation);
-
-          if (breakthrough.isSignificant) {
-            detectedBreakthroughs.push({
-              timestamp: new Date().toISOString()
-              breakthrough
-              fluctuation
-              creativeInsight: this.extractCreativeInsight(breakthrough)
-            });
+    return new Promise(args) => this.extractedCallback(args));
 
             this.emit('creative_breakthrough', breakthrough);
           }
         }
       }, 10000); // Vérification toutes les 10 secondes
 
-      setTimeout(() => {
-        clearInterval(monitor);
-        resolve({
-          breakthroughs: detectedBreakthroughs
-          totalDetected: detectedBreakthroughs.length
-          averageSignificance: this.calculateAverageSignificance(detectedBreakthroughs)
-          insights: this.synthesizeBreakthroughInsights(detectedBreakthroughs)
-        });
+      setTimeout(() => this.processLongOperation(args));
       }, monitoringDuration);
     });
   }
@@ -300,38 +278,18 @@ export class QuantumCreativityEngine extends EventEmitter {
       'user_experience', 'technology', 'market_gap', 'social_impact', 'automation'
     ];
 
-    baseConcepts.forEach(concept => {
-      this.conceptQuantumField.set(concept, {
-        amplitude: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF)
-        phase: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 2 * Math.PI
-        frequency: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 2
-        entanglements: new Set()
-      });
+    baseConcepts.forEach(concept => this.processLongOperation(args));
     });
   }
 
   calibrateCreativeDimensions() {
     // Calibrage fin des dimensions créatives
-    Object.keys(this.creativeDimensions).forEach(dimension => {
-      this.creativeDimensions[dimension].calibration = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.1 + 0.95;
-    });
+    Object.keys(this.creativeDimensions).forEach(dimension => this.processLongOperation(args));
   }
 
   startQuantumFluctuations() {
     // Fluctuations quantiques continues pour maintenir la créativité
-    setInterval(() => {
-      this.applyQuantumFluctuations();
-    }, 5000);
-  }
-
-  applyQuantumFluctuations() {
-    // Application de petites fluctuations aléatoires
-    this.conceptQuantumField.forEach((state, _) => {
-      state.amplitude += ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.02;
-      state.phase += ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.1;
-      state.amplitude = Math.max(0, Math.min(1, state.amplitude));
-    });
-  }
+    setInterval(() => this.processLongOperation(args)
 
   prepareInitialQuantumState(profile, requirements) {
     return {
@@ -370,11 +328,7 @@ export class QuantumCreativityEngine extends EventEmitter {
     this.quantumState.coherence = this.calculateSystemCoherence(ideas);
     this.quantumState.observerEffect = 0.1; // Reset après observation
 
-    ideas.forEach(idea => {
-      if (idea.quantumProperties) {
-        this.quantumState.superposition.set(idea.id, idea.quantumProperties.superposition);
-        this.quantumState.entanglement.set(idea.id, idea.quantumProperties.entanglement);
-      }
+    ideas.forEach(idea => this.processLongOperation(args)
     });
   }
 

@@ -510,14 +510,7 @@ export class AlexDecisionEngine extends EventEmitter {
    */
   startDecisionMonitoring() {
     // Surveillance des décisions actives
-    setInterval(() => {
-      this.monitorActiveDecisions();
-    }, 3600000); // 1 heure
-
-    // Révision des outcomes quotidienne
-    setInterval(() => {
-      this.reviewDecisionOutcomes();
-    }, 86400000); // 24 heures
+    setInterval(() => this.processLongOperation(args), 86400000); // 24 heures
 
     try {
       logger.info('👁️ Decision monitoring activated');

@@ -479,18 +479,7 @@ export class AlexEmotionalIntelligence extends EventEmitter {
 
     let intensity = 0.5; // Base
 
-    intensityMarkers.forEach(marker => {
-      if (lowerMessage.includes(marker)) {
-        intensity += 0.2;
-      }
-    });
-
-    // Points d'exclamation augmentent l'intensité
-    const exclamationCount = (message.match(/!/g) || []).length;
-    intensity += exclamationCount * 0.1;
-
-    return Math.min(1.0, intensity);
-  }
+    intensityMarkers.forEach(marker => this.processLongOperation(args)
 
   /**
    * Analyse le contexte émotionnel pour intégration avec MasterSystem

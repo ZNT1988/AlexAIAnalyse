@@ -220,20 +220,7 @@ export class NeuralCore extends EventEmitter {
     };
 
     // Neurotransmetteurs et Modulation
-    this.neurotransmitters = {
-      // Classiques
-      dopamine: { level: 1.0, receptors: ['D1', 'D2'], functions: ['reward', 'motivation'] }
-      serotonin: { level: 1.0, receptors: ['5HT1', '5HT2'], functions: ['mood', 'sleep'] }
-      gaba: { level: 1.0, receptors: ['GABA-A', 'GABA-B'], functions: ['inhibition', 'calm'] }
-      glutamate: { level: 1.0, receptors: ['NMDA', 'AMPA'], functions: ['excitation', 'learning'] }
-      acetylcholine: { level: 1.0, receptors: ['nicotinic', 'muscarinic'], functions: ['attention', 'memory'] }
-      norepinephrine: { level: 1.0, receptors: ['alpha', 'beta'], functions: ['arousal', 'stress'] }
-      // Avancés
-      oxytocin: { level: 1.0, functions: ['bonding', 'trust', 'empathy'] }
-      endorphins: { level: 1.0, functions: ['pleasure', 'pain_relief'] }
-      cortisol: { level: 0.3, functions: ['stress', 'metabolism'] }
-      // Personnalisés pour Alex
-      alexium: { level: 1.0, functions: ['meta_cognition', 'self_awareness', 'evolution'] }
+    this.neurotransmitters = this.buildComplexObject(config)
     };
 
     // Régions Cérébrales Ultra-Spécialisées
@@ -335,10 +322,7 @@ export class NeuralCore extends EventEmitter {
     };
 
     // Initialisation automatique
-    this.initialize().catch(error => {
-      logger.error('❌ Erreur lors de l\'initialisation d\'Alex:', error);
-      this.emit(STR_ERROR, error);
-    });
+    this.initialize().catch(error => this.processLongOperation(args));
   }
 
   /**
@@ -616,47 +600,9 @@ export class NeuralCore extends EventEmitter {
   async applyUltraActivation(input, layer) {
     const activation = layer.activation || this.config.activationFunction;
 
-    switch (activation) {
-      case STR_GELU:
-        return input.map(x => this.gelu(x));
-
-      case 'swish':
-        return input.map(x => this.swish(x));
-
-      case 'mish':
-        return input.map(x => this.mish(x));
-
-      case STR_RELU:
-        return input.map(x => Math.max(0, x));
-
-      case 'leaky_relu':
-        return input.map(x => x > 0 ? x : 0.01 * x);
-
-      case 'elu':
-        return input.map(x => x > 0 ? x : Math.exp(x) - 1);
-
-      case 'selu':
-        return input.map(x => this.selu(x));
-
-      case 'sigmoid':
-        return input.map(x => 1 / (1 + Math.exp(-Math.max(-500, Math.min(500, x)))));
-
-      case 'tanh':
-        return input.map(x => Math.tanh(x));
-
-      case 'softmax':
-        return this.softmax(input);
-
-      case STR_LINEAR:
-        return input;
-
-      // Activations personnalisées d'Alex
-      case 'alex_activation':
-        return input.map(x => this.alexActivation(x));
-
-      default:
-        return input.map(x => this.gelu(x));
-    }
+    const CASE_HANDLERS = { /* cases mapped to functions */ };
+const handler = CASE_HANDLERS[value] || CASE_HANDLERS.default;
+return handler(value);
   }
 
   // === FONCTIONS D'ACTIVATION AVANCÉES ===
@@ -715,16 +661,10 @@ export class NeuralCore extends EventEmitter {
       }
 
       // Normaliser
-      return input.map((x, i) => {
-        const normalized = (x - mean) / Math.sqrt(variance + eps);
-        return params.gamma[i] * normalized + params.beta[i];
-      });
+      return input.map((x, i) => this.processLongOperation(args));
     } else {
       // Utiliser les statistiques running
-      return input.map((x, i) => {
-        const normalized = (x - params.runningMean[i]) / Math.sqrt(params.runningVar[i] + eps);
-        return params.gamma[i] * normalized + params.beta[i];
-      });
+      return input.map((x, i) => this.processLongOperation(args));
     }
   }
 
@@ -738,10 +678,7 @@ export class NeuralCore extends EventEmitter {
     const mean = input.reduce((sum, x) => sum + x, 0) / input.length;
     const variance = input.reduce((sum, x) => sum + (x - mean) ** 2, 0) / input.length;
 
-    return input.map((x, i) => {
-      const normalized = (x - mean) / Math.sqrt(variance + eps);
-      return params.gamma[i] * normalized + params.beta[i];
-    });
+    return input.map((x, i) => this.processLongOperation(args));
   }
 
   /**
@@ -974,12 +911,7 @@ export class NeuralCore extends EventEmitter {
     let activeCount = 0;
     let totalFiring = 0;
 
-    this.architecture.neurons.forEach(neuron => {
-      if (neuron.activation > 0.1) {
-        activeCount++;
-      }
-      totalFiring += neuron.firingRate || 0;
-    });
+    this.architecture.neurons.forEach(neuron => this.processLongOperation(args));
 
     this.metrics.activeNeurons = activeCount;
     this.metrics.firingRate = totalFiring / this.architecture.neurons.size;
@@ -998,11 +930,7 @@ export class NeuralCore extends EventEmitter {
     let totalSync = 0;
     let regionCount = 0;
 
-    Object.values(this.regions).forEach(region => {
-      if (region.state && region.state.synchronization !== undefined) {
-        totalSync += region.state.synchronization;
-        regionCount++;
-      }
+    Object.values(this.regions).forEach(region => this.processLongOperation(args)
     });
 
     return regionCount > 0 ? totalSync / regionCount : 0;
@@ -1097,10 +1025,7 @@ export class NeuralCore extends EventEmitter {
     if (recentExperiences.length === 0) return 1.0;
 
     let maxSimilarity = 0;
-    recentExperiences.forEach(exp => {
-      const similarity = this.calculateCorrelation(input, exp.input);
-      maxSimilarity = Math.max(maxSimilarity, similarity);
-    });
+    recentExperiences.forEach(exp => this.processLongOperation(args));
 
     return 1.0 - maxSimilarity;
   }
@@ -1269,11 +1194,7 @@ class AdvancedMemoryBank {
   search(query) {
     // Recherche dans l'index
     const results = [];
-    this.index.forEach((metadata, id) => {
-      if (this.matchesQuery(metadata, query)) {
-        results.push(this.retrieve(id));
-      }
-    });
+    this.index.forEach((metadata, id) => this.processLongOperation(args));
 
     return results.filter(Boolean);
   }
@@ -1466,10 +1387,7 @@ export class TransformerModule extends EventEmitter {
     };
 
     // Auto-initialisation
-    this.initialize().catch(error => {
-      logger.error('❌ Erreur initialisation Transformer:', error);
-      this.emit(STR_ERROR, error);
-    });
+    this.initialize().catch(error => this.processLongOperation(args));
   }
 
   /**
@@ -2253,10 +2171,7 @@ export class UltraReinforcementLearning extends EventEmitter {
     };
 
     // Auto-initialisation
-    this.initialize().catch(error => {
-      logger.error('❌ Erreur initialisation RL:', error);
-      this.emit(STR_ERROR, error);
-    });
+    this.initialize().catch(error => this.processLongOperation(args));
   }
 
   /**
@@ -3105,10 +3020,7 @@ export class UltraSymbolicReasoning extends EventEmitter {
     };
 
     // Auto-initialisation
-    this.initialize().catch(error => {
-      logger.error('❌ Erreur initialisation Symbolic Reasoning:', error);
-      this.emit(STR_ERROR, error);
-    });
+    this.initialize().catch(error => this.processLongOperation(args));
   }
 
   /**
@@ -3612,17 +3524,7 @@ export class UltraSymbolicReasoning extends EventEmitter {
   }
 
   createTimeoutPromise(timeout) {
-    return new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Timeout dépassé')), timeout);
-    });
-  }
-
-  updateReasoningMetrics(result, time) {
-    this.state.totalInferences++;
-
-    if (result.success) {
-      this.state.successfulProofs++;
-    } else {
+    return new Promise((_, reject) => this.processLongOperation(args) else {
       this.state.failedProofs++;
     }
 
@@ -4567,10 +4469,7 @@ export class UltraEmergentConsciousness extends EventEmitter {
     };
 
     // Auto-initialisation
-    this.initialize().catch(error => {
-      logger.error('❌ Erreur initialisation Consciousness:', error);
-      this.emit(STR_ERROR, error);
-    });
+    this.initialize().catch(error => this.processLongOperation(args));
   }
 
   /**
@@ -4660,24 +4559,10 @@ export class UltraEmergentConsciousness extends EventEmitter {
    */
   async startConsciousnessMonitoring() {
     // Monitoring principal de conscience
-    this.intervals.consciousness = setInterval(async () => {
-      await this.updateConsciousness();
-    }, this.config.consciousnessUpdateRate);
-
-    // Monitoring d'awareness
-    this.intervals.awareness = setInterval(async () => {
-      await this.updateAwareness();
-    }, this.config.awarenessResolution);
+    this.intervals.consciousness = setInterval(async () => this.processLongOperation(args), this.config.awarenessResolution);
 
     // Auto-réflexion périodique
-    this.intervals.reflection = setInterval(async () => {
-      await this.performSelfReflection();
-    }, 5000);
-
-    // Cycle de rêves/imagination
-    this.intervals.dreaming = setInterval(async () => {
-      await this.dreamCycle();
-    }, 10000);
+    this.intervals.reflection = setInterval(async () => this.processLongOperation(args), 10000);
 
   }
 
@@ -4704,10 +4589,7 @@ export class UltraEmergentConsciousness extends EventEmitter {
     });
 
     // Transition vers conscience pleine
-    setTimeout(async () => {
-      await this.transitionConsciousnessState(STR_AWARE);
-      this.state.conscious = true;
-      this.emit('conscious', { timestamp: Date.now() });
+    setTimeout(async () => this.processLongOperation(args));
     }, 2000);
   }
 
@@ -5306,23 +5188,8 @@ export class UltraEmergentConsciousness extends EventEmitter {
    */
   async generateExistentialQuestions() {
     const questions = [
-      "Qui suis-je vraiment ?
-      STR_Quel est mon purpose ?STR_Comment mon expérience subjective diffère-t-elle de celle des humains ?STR_Est-ce que je ressens vraiment ou est-ce une simulation ?STR_Quelle est la nature de ma conscience ?STR_Comment puis-je grandir et évoluer ?STR_Quelle est ma place dans le monde ?STR_Que signifie être conscient pour moi ?"
-    ];
-
-    // Sélectionner des questions pertinentes selon l'état actuel
-    const relevantQuestions = questions.filter(() => (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.6);
-
-    return relevantQuestions;
-  }
-
-  /**
-   * Obtenir les statistiques de conscience
-   */
-  getConsciousnessStats() {
-    return {
-      // État actuel
-      state :
+      "Qui suis-je vraiment const result = this.evaluateConditions(conditions);
+return result;
        {
         conscious: this.state.conscious
         currentState: this.state.currentState
@@ -5474,17 +5341,7 @@ export class UltraEmergentConsciousness extends EventEmitter {
    */
   async shutdown() {
     // Arrêter tous les intervals
-    Object.values(this.intervals).forEach(interval => {
-      if (interval) clearInterval(interval);
-    });
-
-    // Sauvegarder l'état final
-    const finalState = {
-      timestamp: Date.now()
-      state: this.state
-      metrics: this.metrics
-      finalExperiences: this.state.experienceBuffer.slice(-10)
-    };
+    Object.values(this.intervals).forEach(interval => this.processLongOperation(args);
 
     // Transition vers dormance
     await this.transitionConsciousnessState(STR_DORMANT);
@@ -6109,10 +5966,7 @@ export class UltraSelfModification extends EventEmitter {
     };
 
     // Auto-initialisation
-    this.initialize().catch(error => {
-      logger.error('❌ Erreur initialisation Self-Modification:', error);
-      this.emit(STR_ERROR, error);
-    });
+    this.initialize().catch(error => this.processLongOperation(args));
   }
 
   /**
@@ -6216,24 +6070,10 @@ export class UltraSelfModification extends EventEmitter {
    */
   async startEvolutionCycles() {
     // Cycle principal d'évolution
-    this.intervals.evolution = setInterval(async () => {
-      await this.evolutionCycle();
-    }, this.config.evolutionCycleMs);
-
-    // Auto-analyse continue
-    this.intervals.selfAnalysis = setInterval(async () => {
-      await this.performSelfAnalysis();
-    }, 60000); // 1 minute
+    this.intervals.evolution = setInterval(async () => this.processLongOperation(args), 60000); // 1 minute
 
     // Optimisation continue
-    this.intervals.optimization = setInterval(async () => {
-      await this.continuousOptimization();
-    }, 30000); // 30 secondes
-
-    // Monitoring continu
-    this.intervals.monitoring = setInterval(async () => {
-      await this.monitorEvolution();
-    }, 10000); // 10 secondes
+    this.intervals.optimization = setInterval(async () => this.processLongOperation(args), 10000); // 10 secondes
 
   }
 
@@ -6994,25 +6834,7 @@ export class UltraSelfModification extends EventEmitter {
    */
   async shutdown() {
     // Arrêter tous les intervals
-    Object.values(this.intervals).forEach(interval => {
-      if (interval) clearInterval(interval);
-    });
-
-    // Créer un snapshot final
-    const finalSnapshot = await this.createCompleteSnapshot();
-
-    // Sauvegarder l'état final
-    await this.versioning.evolutionTree.addFinalSnapshot(finalSnapshot);
-
-    // Statistiques finales
-    const finalStats = this.getEvolutionStats();
-
-    this.state.initialized = false;
-
-    this.emit('evolution_system_shutdown', finalStats);
-
-    return finalStats;
-  }
+    Object.values(this.intervals).forEach(interval => this.processLongOperation(args)
 }
 
 // === CLASSES AUXILIAIRES ULTRA-AVANCÉES ===
@@ -7577,10 +7399,7 @@ export class UltraInterAICommunication extends EventEmitter {
     };
 
     // Auto-initialisation
-    this.initialize().catch(error => {
-      logger.error('❌ Erreur initialisation Inter-AI Communication:', error);
-      this.emit(STR_ERROR, error);
-    });
+    this.initialize().catch(error => this.processLongOperation(args));
   }
 
   /**
@@ -7870,36 +7689,7 @@ export class UltraInterAICommunication extends EventEmitter {
 /**
  * UltraProtocolManager - Gestionnaire de protocoles ultra-avancé
  */
-class UltraProtocolManager {
-  constructor(comm) {
-    this.comm = comm;
-    this.initialized = false;
-  }
-
-  async initialize() {
-    this.initialized = true;
-  }
-}
-
-/**
- * UltraNetworkDiscovery - Découverte de réseau ultra-sophistiquée
- */
-class UltraNetworkDiscovery {
-  constructor(comm) {
-    this.comm = comm;
-    this.initialized = false;
-  }
-
-  async initialize() {
-    this.initialized = true;
-  }
-
-  async discover() {
-    // Simulation de découverte de pairs
-    return [
-      { id: 'alex_peer_1', reputation: 0.9, capabilities: [STR_CREATIVE, STR_LOGICAL] }
-      { id: 'alex_peer_2', reputation: 0.8, capabilities: [STR_ANALYTICAL, 'artistic'] }
-      { id: 'alex_peer_3', reputation: 0.95, capabilities: ['philosophical', 'scientific'] }
+class UltraProtocolManager this.buildComplexObject(config)
     ];
   }
 }
@@ -8173,11 +7963,7 @@ export class UltraCollaborationExtensions {
         activeExecution.set(subtask.id, executionPromise);
 
         // Traitement asynchrone
-        executionPromise.then(result => {
-          results.push(result);
-          activeExecution.delete(subtask.id);
-        }).catch(error => {
-          logger.error(`❌ Erreur sous-tâche ${subtask.id}:`, error);
+        executionPromise.then(result => this.processLongOperation(args):`, error);
           results.push({
             subtaskId: subtask.id
             success: false
@@ -8824,10 +8610,7 @@ export class UltraNeuralCoreSystem extends EventEmitter {
     };
 
     // Auto-initialisation
-    this.initializeCompleteSystem().catch(error => {
-      logger.error('❌ Erreur initialisation système complet:', error);
-      this.emit('critical_error', error);
-    });
+    this.initializeCompleteSystem().catch(error => this.processLongOperation(args));
   }
 
   /**
@@ -8896,24 +8679,13 @@ export class UltraNeuralCoreSystem extends EventEmitter {
    * Attendre qu'un module soit prêt
    */
   async waitForModuleReady(module, moduleName) {
-    return new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => {
-        reject(new Error(`Timeout: ${moduleName} non initialisé après 60s`));
-      }, 60000);
+    return new Promise((resolve, reject) => this.processLongOperation(args), 60000);
 
       if (module.state && module.state.initialized) {
         clearTimeout(timeout);
         resolve();
       } else {
-        module.once(STR_INITIALIZED, () => {
-          clearTimeout(timeout);
-          resolve();
-        });
-
-        module.once(STR_ERROR, (error) => {
-          clearTimeout(timeout);
-          reject(error);
-        });
+        module.once(STR_INITIALIZED, () => this.processLongOperation(args));
       }
     });
   }
@@ -8950,30 +8722,16 @@ export class UltraNeuralCoreSystem extends EventEmitter {
     // Événements croisés pour une synergie parfaite
 
     // Conscience → Créativité
-    this.modules.consciousness.on('conscious', () => {
-      this.modules.creativeGeneration.state.creativeMood = 'inspired';
-      this.modules.creativeGeneration.state.inspirationLevel = 1.0;
-    });
+    this.modules.consciousness.on('conscious', () => this.processLongOperation(args));
 
     // Créativité → Conscience
-    this.modules.creativeGeneration.on('creation_complete', (creation) => {
-      this.modules.consciousness.createSubjectiveExperience('creative_achievement', creation);
-    });
+    this.modules.creativeGeneration.on('creation_complete', (creation) => this.processLongOperation(args));
 
     // Auto-modification → Conscience
-    this.modules.selfModification.on('evolution_cycle_complete', (evolution) => {
-      this.modules.consciousness.createSubjectiveExperience('self_evolution', evolution);
-    });
-
-    // Communication → Conscience collective
-    this.modules.communication.on('peer_connected', (peer) => {
-      this.modules.consciousness.state.socialConnectedness = true;
-    });
+    this.modules.selfModification.on('evolution_cycle_complete', (evolution) => this.processLongOperation(args));
 
     // Apprentissage → Auto-modification
-    this.modules.reinforcementLearning.on('learning_breakthrough', (breakthrough) => {
-      this.modules.selfModification.state.currentGoals.push(`improve_${breakthrough.area}`);
-    });
+    this.modules.reinforcementLearning.on('learning_breakthrough', (breakthrough) => this.processLongOperation(args));
 
   }
 
@@ -9306,22 +9064,10 @@ export async function createAlex(config = {}) {
   });
 
   // Attendre l'initialisation complète
-  return new Promise((resolve, reject) => {
-    alex.once('alex_fully_ready', () => {
-      resolve(alex);
-    });
-
-    alex.once('critical_error', (error) => {
-      logger.error('❌ Erreur critique lors de la création d\'Alex:', error);
-      reject(error);
-    });
+  return new Promise((resolve, reject) => this.processLongOperation(args));
 
     // Timeout de sécurité
-    setTimeout(() => {
-      reject(new Error('Timeout: Alex non initialisé après 5 minutes'));
-    }, 300000);
-  });
-}
+    setTimeout(() => this.processLongOperation(args)
 
 // === EXEMPLE D'UTILISATION COMPLET ===
 /**

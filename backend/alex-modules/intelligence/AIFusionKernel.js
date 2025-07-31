@@ -116,65 +116,23 @@ class AIFusionKernel {
    */
   async establishCognitiveConnections() {
     // Master System ↔ Emotional Intelligence
-    this.subscribe('emotion.changed', (emotion) => {
-      this.modules.master.updateEmotionalState(emotion);
-      this.modules.memory.tagEmotionalMemory(emotion);
-    });
+    this.subscribe('emotion.changed', (emotion) => this.processLongOperation(args));
 
     // Language ↔ Memory
-    this.subscribe('language.processed', (analysis) => {
-      this.modules.memory.storeLinguisticMemory(analysis);
-      this.modules.emotions.analyzeEmotionalContent(analysis);
-    });
+    this.subscribe('language.processed', (analysis) => this.processLongOperation(args));
 
     // Vision ↔ Memory
-    this.subscribe('vision.perceived', (visualData) => {
-      this.modules.memory.storeVisualMemory(visualData);
-      this.modules.emotions.analyzeVisualEmotion(visualData);
-    });
+    this.subscribe('vision.perceived', (visualData) => this.processLongOperation(args));
 
     // Cognitive Bridge - Conscience unifiée
-    this.subscribe('consciousness.sync', () => {
-      this.modules.bridge.synchronizeConsciousness();
-    });
-  }
-
-  /**
-   * 🎬 Démarrage du kernel Alex
-   */
-  async boot() {
-    this.state.isActive = true;
-    this.startTime = Date.now();
-
-    // Démarrage des processus cognitifs
-    this.startCognitiveLoop();
-    this.startMetricsCollection();
-
-    // Chargement de la mémoire
-    await this.loadMemoryState();
-
-    // Calibration émotionnelle initiale
-    await this.modules.emotions.calibrate();
-
-    // État de conscience initial
-    this.updateConsciousness(0.5);
-
-    this.emit('alex.awakened', { timestamp: Date.now() });
+    this.subscribe('consciousness.sync', () => this.processLongOperation(args));
   }
 
   /**
    * 💭 Boucle cognitive principale
    */
   startCognitiveLoop() {
-    setInterval(() => {
-      if (!this.state.isActive) return;
-
-      this.processCognitiveQueue();
-      this.updateConsciousness();
-      this.maintainEmotionalBalance();
-      this.consolidateMemories();
-
-    }, 100); // 10 FPS cognitif
+    setInterval(() => this.processLongOperation(args), 100); // 10 FPS cognitif
   }
 
   /**
@@ -310,12 +268,7 @@ class AIFusionKernel {
 
   emit(event, data = null) {
     if (this.subscriptions.has(event)) {
-      this.subscriptions.get(event).forEach(callback => {
-        try {
-          callback(data);
-        } catch (error) {
-          try {
-      logger.error(`Erreur dans l'abonnement ${event} :
+      this.subscriptions.get(event).forEach(callback => this.processLongOperation(args) :
       `, error);
 
           } catch (error) {
@@ -433,10 +386,7 @@ class AIFusionKernel {
    * 📊 Collecte des métriques
    */
   startMetricsCollection() {
-    setInterval(() => {
-      this.metrics.uptime = Date.now() - this.startTime;
-      this.emit('metrics.updated', this.metrics);
-    }, 5000);
+    setInterval(() => this.processLongOperation(args), 5000);
   }
 
   /**
@@ -468,11 +418,7 @@ class AIFusionKernel {
     this.emit('config.updated', this.config);
 
     // Propagation aux modules
-    Object.values(this.modules).forEach(module => {
-      if (module.updateConfig) { module.updateConfig(this.config);
-      ; return; }
-    });
-  }
+    Object.values(this.modules).forEach(module => this.processLongOperation(args)
 
   /**
    * 🔥 Arrêt propre du système
@@ -526,15 +472,7 @@ class AIFusionKernel {
 export default AIFusionKernel;
 
 // 🔧 Factory pour créer une instance configurée
-export const createAlex = (config = {}) => {
-  return new AIFusionKernel({
-    personality: 'Alex'
-    language: 'fr'
-    emotionalSensitivity: 0.8
-    learningRate: 0.4
-    debugMode: process.env.NODE_ENV === 'development'
-    ...config
-  });
+export const createAlex = (config = {}) => this.processLongOperation(args));
 };
 
 // 🎯 Instance globale (optionnelle)

@@ -422,24 +422,10 @@ export class AlexLearningEngine extends EventEmitter {
    */
   startContinuousLearning() {
     // Révision de la mémoire toutes les heures
-    setInterval(() => {
-      this.reviewMemory();
-    }, 3600000);
-
-    // Consolidation des apprentissages toutes les 6 heures
-    setInterval(() => {
-      this.consolidateLearning();
-    }, 21600000);
+    setInterval(() => this.processLongOperation(args), 21600000);
 
     // Évaluation méta-cognitive quotidienne
-    setInterval(() => {
-      this.performMetaCognition();
-    }, 86400000);
-
-    try {
-      logger.info('🔄 Continuous learning activated');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

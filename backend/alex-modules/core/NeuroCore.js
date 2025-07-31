@@ -133,23 +133,10 @@ export class NeuroCore extends EventEmitter {
    * Apprentissage continu et adaptation
    */
   startContinuousLearning() {
-    setInterval(() => {
-      this.adaptNeuralWeights();
-      this.consolidateMemories();
-      this.evolvePersonality();
-      this.thoughtCycles++;
-    }, 60000); // Cycle de pensée chaque minute
+    setInterval(() => this.processLongOperation(args), 60000); // Cycle de pensée chaque minute
 
     // Période de "rêve" pour consolidation nocturne
-    setInterval(() => {
-      this.enterDreamState();
-    }, 6 * 60 * 60 * 1000); // Tous les 6 heures
-  }
-
-  /**
-   * Génération d'idées avec conscience créative
-   */
-  async generateConsciousIdeas(userProfile, context = {}) {
+    setInterval(() => this.processLongOperation(args)) {
     logger.info('Starting conscious idea generation', { userProfile: userProfile.email });
 
     // Activation de la métacognition
@@ -634,12 +621,7 @@ NeuroCore.prototype.enableSelfImprovement = async function() {
   this.consciousness.metacognition.uncertaintyAwareness = 0.8;
 
   // Démarrer les processus d'amélioration continue
-  setInterval(() => {
-    this.optimizePerformance();
-  }, 30000); // Optimisation toutes les 30 secondes
-
-  return true;
-};
+  setInterval(() => this.processLongOperation(args);
 
 NeuroCore.prototype.getCurrentIntelligenceLevel = async function() {
   const level = this.consciousness.level * 100;
@@ -655,9 +637,7 @@ NeuroCore.prototype.optimizePerformance = function() {
   }
 
   // Ajustement émotionnel
-  Object.keys(this.emotions.current).forEach(emotion => {
-    if (this.emotions.current[emotion] > 0.9) { this.emotions.current[emotion] = 0.9;
-    ; return; }
+  Object.keys(this.emotions.current).forEach(emotion => this.processLongOperation(args)
   });
 };
 

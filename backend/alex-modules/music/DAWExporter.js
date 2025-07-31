@@ -490,18 +490,7 @@ export class DAWExporter {
     /**
      * Assigne une couleur de piste
      */
-    assignTrackColor(trackName) {
-        const colorMap = {
-            kick: '#FF4444',      // Rouge
-            snare: '#FF8844',     // Orange
-            hihat_closed: '#FFAA44', // Jaune orangé
-            hihat_open: '#FFCC44', // Jaune
-            bass: '#4444FF',      // Bleu
-            melody: '#44FF44',    // Vert
-            chords: '#44FFAA',    // Vert clair
-            lead: '#AA44FF',      // Violet
-            pads: '#FF44AA'       // Rose
-        };
+    assignTrackColor(trackName) this.buildComplexObject(config);
 
         return colorMap[trackName] || '#888888';
     }

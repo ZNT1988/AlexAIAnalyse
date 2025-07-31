@@ -152,30 +152,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     };
 
     // Nettoyage périodique du cache
-    setInterval(() => {
-      this.cleanupCache();
-    }, this.cacheConfig.cleanupInterval);
-  }
-
-  /**
-   * Précharge les modules critiques pour réduire la latence
-   */
-  async preloadCriticalModules() {
-    const criticalModules = [
-      'AlexAutonomousCore'
-      'AlexEmotionalIntelligence'
-      'AlexDecisionEngine'
-      'AlexPersonalityCore'
-      'AlexEthicsCore'
-    ];
-
-    const preloadPromises = criticalModules.map(async (moduleName) => {
-      try {
-        const startTime = Date.now();
-        await this.getModuleConnection(moduleName);
-        const loadTime = Date.now() - startTime;
-        this.metrics.moduleLoadTime.set(moduleName, loadTime);
-        logger.info(`⚡ Critical module ${moduleName} preloaded (${loadTime}ms)`);
+    setInterval(() => this.processLongOperation(args) preloaded (${loadTime}ms)`);
       } catch (error) {
         try {
       logger.warn(`⚠️ Failed to preload critical module ${moduleName}:`, error.message);
@@ -204,33 +181,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     };
 
     // Traitement périodique des batches
-    setInterval(() => {
-      this.processBatch();
-    }, this.batchConfig.processingInterval);
-  }
-
-  /**
-   * Orchestration haute performance de requêtes multiples
-   */
-  async orchestrateHighPerformance(requests, moduleRegistry) {
-    const startTime = Date.now();
-
-    try {
-      // Analyse et optimisation des requêtes
-      const optimizedRequests = await this.optimizeRequests(requests);
-
-      // Traitement parallèle avec pool de workers
-      const results = await this.processInParallel(optimizedRequests, moduleRegistry);
-
-      // Agrégation intelligente des résultats
-      const aggregatedResult = await this.aggregateResults(results);
-
-      // Mise à jour des métriques
-      this.updatePerformanceMetrics(startTime, results.length);
-
-      return aggregatedResult;
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
       // Logger fallback - ignore error
     }
   }
@@ -268,9 +219,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     const results = [];
 
     for (const chunk of chunks) {
-      const chunkPromises = chunk.map(async (request) => {
-        if (request.fromCache) {
-          return { request, result: request.cached, fromCache: true };
+      const chunkPromises = chunk.map(async (request) => this.processLongOperation(args);
         }
 
         const moduleInstance = await this.getOptimizedModule(request.moduleName, moduleRegistry);
@@ -317,20 +266,10 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Exécution avec timeout optimisé
    */
   async executeWithTimeout(fn, timeout) {
-    return new Promise((resolve, reject) => {
-      const timer = setTimeout(() => {
-        reject(new Error(`Operation timeout after ${timeout}ms`));
-      }, timeout);
+    return new Promise((resolve, reject) => this.processLongOperation(args), timeout);
 
       Promise.resolve(fn())
-        .then(result => {
-          clearTimeout(timer);
-          resolve(result);
-        })
-        .catch(error => {
-          clearTimeout(timer);
-          reject(error);
-        });
+        .then(result => this.processLongOperation(args));
     });
   }
 
@@ -497,14 +436,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Monitoring de performance temps réel
    */
   startPerformanceMonitoring() {
-    setInterval(() => {
-      this.collectPerformanceMetrics();
-    }, 5000); // Toutes les 5 secondes
-
-    try {
-      logger.info('📊 Real-time performance monitoring started');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

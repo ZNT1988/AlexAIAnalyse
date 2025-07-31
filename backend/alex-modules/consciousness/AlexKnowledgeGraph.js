@@ -338,12 +338,7 @@ class AlexKnowledgeGraph extends EventEmitter {
 
   startDynamicLearning() {
     // Apprentissage continu du graphe
-    setInterval(() => {
-      this.performInference();
-      this.optimizeStructure();
-      this.updateMetrics();
-    }, 60000); // Toutes les minutes
-  }
+    setInterval(() => this.processLongOperation(args)
 
   async performInference() {
     // Application des règles d'inférence
@@ -538,9 +533,7 @@ class AlexKnowledgeGraph extends EventEmitter {
     // Calcul de similarité basé sur les embeddings
     if (!node1.embedding || !node2.embedding) return 0;
 
-    let dotProduct = 0;
-    let norm1 = 0;
-    let norm2 = 0;
+    const { dotProduct, norm1, norm2 } = this.initializeVariables();
 
     for (let i = 0; i < node1.embedding.length; i++) {
       dotProduct += node1.embedding[i] * node2.embedding[i];
@@ -621,13 +614,9 @@ class AlexKnowledgeGraph extends EventEmitter {
     // Construire les couches
     let currentLayer = new Set([nodeId]);
 
-    for (let d = 0; d < depth; d++) {
-      const nextLayer = new Set();
-
-      for (const layerNodeId of currentLayer) {
-        const layerNode = this.nodes.get(layerNodeId);
-        if (layerNode) {
-          for (const connectedId of layerNode.connections) {
+    // Extracted to separate functions for better readability
+const result = this.processNestedData(data);
+return result;const connectedId of layerNode.connections) {
             if (!map.layers.flat().includes(connectedId) && connectedId !== nodeId) {
               nextLayer.add(connectedId);
             }

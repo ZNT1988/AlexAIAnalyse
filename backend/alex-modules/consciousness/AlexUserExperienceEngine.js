@@ -105,15 +105,7 @@ class AlexUserExperienceEngine extends EventEmitter {
 
   startExperienceTracking() {
     // Démarrage du suivi continu de l'expérience
-    setInterval(() => {
-      this.analyzeUserExperiences();
-    }, 60000); // Toutes les minutes
-  }
-
-  async trackUserInteraction(userId, interaction) {
-    if (!this.userProfiles.has(userId)) {
-      await this.createUserProfile(userId);
-    }
+    setInterval(() => this.processLongOperation(args)
 
     const profile = this.userProfiles.get(userId);
     const history = this.interactionHistory.get(userId) || [];

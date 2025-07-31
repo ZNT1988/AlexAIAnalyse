@@ -144,13 +144,7 @@ export class AlexRealityArchitect extends EventEmitter {
       }
     ];
 
-    tools.forEach(tool => {
-      this.realityState.constructionTools.set(tool.name, {
-        ...tool
-        status: 'ready'
-        lastUsed: null
-        createdRealities: 0
-      });
+    tools.forEach(tool => this.processLongOperation(args));
     });
 
   }
@@ -202,13 +196,7 @@ export class AlexRealityArchitect extends EventEmitter {
       }
     ];
 
-    blueprints.forEach(blueprint => {
-      this.realityState.blueprints.set(blueprint.name, {
-        ...blueprint
-        created: new Date()
-        implementations: 0
-        successRate: 0.95
-      });
+    blueprints.forEach(blueprint => this.processLongOperation(args));
     });
 
   }

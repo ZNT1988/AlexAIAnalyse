@@ -456,14 +456,7 @@ export class AlexIntuitionEngine extends EventEmitter {
    */
   startIntuitiveMonitoring() {
     // Calibration quotidienne
-    setInterval(() => {
-      this.calibrateIntuition();
-    }, 86400000);
-
-    // Validation des intuitions passées
-    setInterval(() => {
-      this.validatePastIntuitions();
-    }, 604800000); // Hebdomadaire
+    setInterval(() => this.processLongOperation(args), 604800000); // Hebdomadaire
 
     try {
       logger.info('👁️ Intuitive monitoring activated');

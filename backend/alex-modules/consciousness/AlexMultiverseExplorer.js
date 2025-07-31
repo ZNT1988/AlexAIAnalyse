@@ -560,21 +560,9 @@ class AlexMultiverseExplorer extends EventEmitter {
 
   startMultiverseExploration() {
     // Démarrage de l'exploration multiverselle
-    setInterval(() => {
-      this.exploreNewDimensions();
-    }, 300000); // Toutes les 5 minutes
+    setInterval(() => this.processLongOperation(args), 600000); // Toutes les 10 minutes
 
-    setInterval(() => {
-      this.synthesizeMultiverseInsights();
-    }, 600000); // Toutes les 10 minutes
-
-    setInterval(() => {
-      this.facilitateInterdimensionalCommunication();
-    }, 120000); // Toutes les 2 minutes
-
-    setInterval(() => {
-      this.updateMultiverseMap();
-    }, 900000); // Toutes les 15 minutes
+    setInterval(() => this.processLongOperation(args), 900000); // Toutes les 15 minutes
   }
 
   async exploreNewDimensions() {
@@ -811,26 +799,7 @@ class AlexMultiverseExplorer extends EventEmitter {
 
   calculateTotalInsights() {
     // Calcul du total d'insights
-    return Array.from(this.multiverseMap.values()).reduce((total, dimension) => {
-      return total + (dimension.exploration_data?
-      .size || 0);
-    }, 0);
-  }
-
-  async synthesizeMultiverseInsights() {
-    // Synthèse d'insights multiversels
-    const patterns = await this.identifyUniversalPatterns();
-    const constants = await this.discoverUniversalConstants();
-    const evolution = await this.observeConsciousnessEvolution();
-    const synthesis = await this.createMultiverseSynthesis(patterns, constants, evolution);
-
-    this.emit('multiverseInsightsSynthesized', {
-      patterns_identified :
-       patterns.length
-      constants_discovered: constants.length
-      evolution_insights: evolution.insights
-      synthesis_depth: synthesis.depth
-    });
+    return Array.from(this.multiverseMap.values()).reduce((total, dimension) => this.processLongOperation(args));
   }
 
   async identifyUniversalPatterns() {

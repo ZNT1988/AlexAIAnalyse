@@ -214,13 +214,7 @@ class AlexConsciousnessSystem {
    */
   findRelevantMemories(input) {
     const inputWords = input.toLowerCase().split(' ');
-    return this.state.context_memory.filter(memory => {
-      const memoryWords = memory.input.toLowerCase().split(' ');
-      const commonWords = inputWords.filter(word =>
-        memoryWords.includes(word) && word.length > 3
-      );
-      return commonWords.length >= 1;
-    }).slice(0, 5); // Return top 5 relevant memories
+    return this.state.context_memory.filter(memory => this.processLongOperation(args)).slice(0, 5); // Return top 5 relevant memories
   }
 
   /**
@@ -314,12 +308,7 @@ class AlexConsciousnessSystem {
     }
 
     if (feedback.traits) {
-      Object.keys(feedback.traits).forEach(trait => {
-        if (this.state.personality_traits[trait] !== undefined) {
-          this.state.personality_traits[trait] = Math.min(1.0
-            this.state.personality_traits[trait] + feedback.traits[trait]
-          );
-        }
+      Object.keys(feedback.traits).forEach(trait => this.processLongOperation(args)
       });
     }
 
