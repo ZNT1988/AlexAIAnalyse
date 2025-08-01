@@ -58,29 +58,7 @@ const STR_X_REQUEST_ID = 'x-request-id';
  * @example
  * // Wrapper async
  * import { asyncHandler } from './errorHandler.js';
- * app.get('/api/users', asyncHandler(async (req, res) => {
- *   const users = await getUsersFromDB();
- *   res.json(users);
- * }));
- */
-
-import logger from '../config/logger.js';
-
-/**
- * @section Custom Error Classes
- * @description Classes d'erreurs personnalisées pour écosystème IA ALEX
- */
-
-/**
- * @class AppError
- * @extends Error
- * @description Classe de base pour toutes les erreurs applicatives HustleFinder IA
- *
- * Classe d'erreur révolutionnaire qui étend Error natif avec propriétés
- * spécialisées pour l'écosystème IA ALEX : codes HTTP, timestamps
- * distinction erreurs opérationnelles vs programmation
- *
- * @param {string} message - Message d'erreur descriptif
+ * app.get('/api/users', asyncHandler(async (req, res) => this.processLongOperation(args) message - Message d'erreur descriptif
  * @param {number} statusCode - Code de statut HTTP approprié
  * @param {boolean} [isOperational=true] - Si erreur opérationnelle (safe à exposer)
  *
@@ -268,24 +246,7 @@ export class ExternalServiceError extends AppError {
  * // Configuration Express
  * app.use(globalErrorHandler);
  */
-export const globalErrorHandler = (err, req, res, next) => {
-  // Set default error properties
-  err.statusCode = err.statusCode || 500;
-  err.status = err.status || STR_ERROR;
-
-  // Log error details
-  const errorLog = {
-    message: err.message
-    statusCode: err.statusCode
-    stack: err.stack
-    url: req.originalUrl
-    method: req.method
-    ip: req.ip
-    userAgent: req.get('User-Agent')
-    userId: req.auth?.userId || 'anonymous'
-    timestamp: new Date().toISOString()
-    requestId: req.headers[STR_X_REQUEST_ID] || 'unknown'
-  };
+export const globalErrorHandler = (err, req, res, next) => this.processLongOperation(args);
 
   // Log based on severity
   if (err.statusCode >= 500) {
@@ -329,16 +290,7 @@ export const globalErrorHandler = (err, req, res, next) => {
  *
  * @private
  */
-const sendDevelopmentError = (err, req, res) => {
-  res.status(err.statusCode).json({
-    status: err.status
-    error: err
-    message: err.message
-    stack: err.stack
-    timestamp: new Date().toISOString()
-    path: req.originalUrl
-    method: req.method
-  });
+const sendDevelopmentError = (err, req, res) => this.processLongOperation(args));
 };
 
 /**
@@ -354,15 +306,7 @@ const sendDevelopmentError = (err, req, res) => {
  *
  * @private
  */
-const sendProductionError = (err, req, res) => {
-  // Only send operational errors to client
-  if (err.isOperational) {
-    const response = {
-      status: err.status || STR_ERROR
-      message: err.message
-      timestamp: new Date().toISOString()
-      requestId: req.headers[STR_X_REQUEST_ID] || generateRequestId()
-    };
+const sendProductionError = (err, req, res) => this.processLongOperation(args);
 
     // Add details for specific error types
     if (err instanceof ValidationError && err.details) {
@@ -394,26 +338,12 @@ const sendProductionError = (err, req, res) => {
  *
  * @example
  * // Sans asyncHandler (verbeux)
- * app.get('/users', async (req, res, next) => {
- *   try {
- *     const users = await getUsers();
- *     res.json(users);
- *   } catch (error) {
- *     next(error);
- *   }
+ * app.get('/users', async (req, res, next) => this.processLongOperation(args)
  * });
  *
  * @example
  * // Avec asyncHandler (propre)
- * app.get('/users', asyncHandler(async (req, res) => {
- *   const users = await getUsers();
- *   res.json(users);
- * }));
- */
-export const asyncHandler = (fn) => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
+ * app.get('/users', asyncHandler(async (req, res) => this.processLongOperation(args);
 };
 
 /**
@@ -440,10 +370,7 @@ export const asyncHandler = (fn) => {
  * app.use(handleSpecificErrors);
  * app.use(globalErrorHandler);
  */
-export const handleSpecificErrors = (err, req, res, next) => {
-  // MongoDB/Mongoose errors
-  if (err.name === 'CastError') {
-    const message = `Invalid ${err.path}: ${err.value}`;
+export const handleSpecificErrors = (err, req, res, next) => this.processLongOperation(args): ${err.value}`;
     err = new ValidationError(message);
   }
 
@@ -507,39 +434,17 @@ export const handleSpecificErrors = (err, req, res, next) => {
  * // Configuration Express (en dernier)
  * app.use(notFoundHandler);
  */
-export const notFoundHandler = (req, res, next) => {
-  const message = `Route ${req.originalUrl} not found`;
-  next(new NotFoundError(message));
-};
-
-/**
- * @function generateRequestId
- * @description Génère un ID unique pour traçabilité des requêtes
- *
- * @returns {string} ID aléatoire alphanummérique de 9 caractères
+export const notFoundHandler = (req, res, next) => this.processLongOperation(args) ID aléatoire alphanummérique de 9 caractères
  * @private
  */
-const generateRequestId = () => {
-  return (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 9);
-};
-
-/**
- * @function healthCheckError
- * @description Gestionnaire d'erreurs spécialisé pour health checks
- *
- * @param {Error} error - Erreur de health check
+const generateRequestId = () => this.processLongOperation(args) error - Erreur de health check
  * @param {string} service - Nom du service en erreur
  * @returns {ExternalServiceError} Erreur formatée
  *
  * @example
  * const dbError = healthCheckError(error, 'PostgreSQL');
  */
-export const healthCheckError = (error, service) => {
-  logger.error(`Health check failed for ${service}`, {
-    service
-    error: error.message
-    timestamp: new Date().toISOString()
-  });
+export const healthCheckError = (error, service) => this.processLongOperation(args));
 
   return new ExternalServiceError(service, error);
 };
@@ -558,12 +463,7 @@ export const healthCheckError = (error, service) => {
  * @example
  * const dbError = databaseErrorHandler(error, 'user creation');
  */
-export const databaseErrorHandler = (error, operation) => {
-  logger.error(`Database operation failed: ${operation}`, {
-    error: error.message
-    operation
-    timestamp: new Date().toISOString()
-  });
+export const databaseErrorHandler = (error, operation) => this.processLongOperation(args));
 
   // Map database errors to appropriate HTTP errors
   if (error.code === 'ECONNREFUSED') {
@@ -591,12 +491,7 @@ export const databaseErrorHandler = (error, operation) => {
  * @example
  * const aiError = aiServiceErrorHandler(error, 'OpenAI GPT-4');
  */
-export const aiServiceErrorHandler = (error, service) => {
-  logger.error(`AI service error: ${service}`, {
-    error: error.message
-    service
-    timestamp: new Date().toISOString()
-  });
+export const aiServiceErrorHandler = (error, service) => this.processLongOperation(args));
 
   return new ExternalServiceError(`AI Service: ${service}`, error);
 };
@@ -616,22 +511,10 @@ export const aiServiceErrorHandler = (error, service) => {
  * import { userSchemas } from '../config/validation.js';
  * app.post('/users', validateSchema(userSchemas.create), createUser);
  */
-export const validateSchema = (schema) => {
-  return (req, res, next) => {
-    const { error, value } = schema.validate(req.body, {
-      abortEarly: false
-      allowUnknown: false
-      stripUnknown: true
-    });
+export const validateSchema = (schema) => this.processLongOperation(args));
 
     if (error) {
-      const details = error.details.reduce((acc, detail) => {
-        acc[detail.path.join('.')] = detail.message;
-        return acc;
-      }, {});
-
-      return next(new ValidationError('Validation failed', details));
-    }
+      const details = error.details.reduce((acc, detail) => this.processLongOperation(args)
 
     req.validatedBody = value;
     next();
@@ -656,20 +539,9 @@ export const validateSchema = (schema) => {
  * // Timeout spécifique pour route lourde
  * app.post('/ai/analyze', requestTimeout(60000), analyzeData);
  */
-export const requestTimeout = (timeoutMs = 30000) => {
-  return (req, res, next) => {
-    const timeout = setTimeout(() => {
-      const error = new AppError('Request timeout', 408);
-      next(error);
-    }, timeoutMs);
+export const requestTimeout = (timeoutMs = 30000) => this.processLongOperation(args), timeoutMs);
 
-    res.on('finish', () => {
-      clearTimeout(timeout);
-    });
-
-    res.on('close', () => {
-      clearTimeout(timeout);
-    });
+    res.on('finish', () => this.processLongOperation(args));
 
     next();
   };

@@ -165,9 +165,7 @@ class HustleFinderCore extends EventEmitter {
 
       // Connect module events if it extends EventEmitter
       if (moduleInstance instanceof EventEmitter) {
-        moduleInstance.on(STR_ERROR, (error) => {
-          logger.error(`Module ${name} error:`, error);
-          this.emit('moduleError', { module: name, error });
+        moduleInstance.on(STR_ERROR, (error) => this.processLongOperation(args));
         });
       }
 
@@ -387,10 +385,8 @@ class HustleFinderCore extends EventEmitter {
         consciousnessLevel: 0.5
         timestamp: new Date().toISOString()
         contextual_suggestions: [
-          'Comment puis-je t\'aider davantage ?
-      STR_Veux-tu explorer un autre aspect ?STR_As-tu d\'autres questions ?'
-        ]
-        user_intent :
+          'Comment puis-je t\'aider davantage const result = this.evaluateConditions(conditions);
+return result;
        requestData.enrichedContext?.intent || STR_GENERAL
         conversation_insights: 'Mode simplifié actif'
         personalized_greeting: 'Salut ! Je suis Alex, ton assistant IA. Comment puis-je t\'aider aujourd\'hui ?
@@ -414,10 +410,8 @@ class HustleFinderCore extends EventEmitter {
         consciousnessLevel: response.consciousnessLevel || 0.5
         timestamp: response.timestamp || new Date().toISOString()
         contextual_suggestions: response.contextual_suggestions || [
-          'Comment puis-je t\'aider davantage ?
-      STR_Veux-tu explorer un autre aspect ?STR_As-tu d\'autres questions ?'
-        ]
-        user_intent :
+          'Comment puis-je t\'aider davantage const result = this.evaluateConditions(conditions);
+return result;
        requestData.enrichedContext?.intent || STR_GENERAL
         conversation_insights: response.conversation_insights || 'Alex est à l\'écoute'
         personalized_greeting: response.personalized_greeting || null
@@ -430,10 +424,8 @@ class HustleFinderCore extends EventEmitter {
         consciousnessLevel: 0.4
         timestamp: new Date().toISOString()
         contextual_suggestions: [
-          'Pouvez-vous préciser votre demande ?
-      STR_Voulez-vous plus d\'informations ?STR_Comment puis-je mieux vous aider ?'
-        ]
-        user_intent :
+          'Pouvez-vous préciser votre demande const result = this.evaluateConditions(conditions);
+return result;
        'help_request'
         conversation_insights: 'Mode fallback actif'
         personalized_greeting: null
@@ -660,12 +652,11 @@ class HustleFinderCore extends EventEmitter {
     logger.info('Shutting down HustleFinder IA Core...');
 
     try {
-      // Shutdown modules that have cleanup methods
-      for (const [name, module] of this.modules) {
-        if (module.shutdown) {
-          try {
-            await module.shutdown();
-            try {
+  const result = await this.safeExecute();
+  return result;
+} catch (error) {
+  return this.handleError(error);
+}
       logger.debug(`Module ${name} shut down successfully`);
 
             } catch (error) {

@@ -89,20 +89,7 @@ export class AlexAutonomyMonitor extends EventEmitter {
       this.isMonitoring = true;
 
       // Monitoring continu toutes les 5 secondes
-      this.monitoringInterval = setInterval(async () => {
-        await this.performAutonomyCheck();
-      }, this.monitorConfig.monitoringInterval);
-
-      // Premier check immédiat
-      await this.performAutonomyCheck();
-
-      logger.info('✅ Real-time autonomy monitoring active');
-
-      this.emit('monitoring_started', {
-        timestamp: new Date()
-        monitoringInterval: this.monitorConfig.monitoringInterval
-        modulesTracked: this.monitoredModules.length
-      });
+      this.monitoringInterval = setInterval(async () => this.processLongOperation(args));
 
     } catch (error) {
       // Logger fallback - ignore error
@@ -292,12 +279,8 @@ export class AlexAutonomyMonitor extends EventEmitter {
    * Calcul des scores d'autonomie globaux
    */
   calculateAutonomyScores(moduleMetrics) {
-    let totalAutonomy = 0;
-    let totalConsciousness = 0;
-    let totalIndependence = 0;
-    let totalLearning = 0;
-    let totalCreativity = 0;
-    let totalDecisionMaking = 0;
+    const { totalAutonomy, totalConsciousness, totalIndependence } = this.initializeVariables();
+    const { totalLearning, totalCreativity, totalDecisionMaking } = this.initializeVariables();
     let activeModules = 0;
 
     // Poids des modules pour le calcul de l'autonomie
@@ -362,33 +345,7 @@ export class AlexAutonomyMonitor extends EventEmitter {
   /**
    * Analyse des tendances
    */
-  async analyzeTrends() {
-    if (this.autonomyMetrics.history.length < 10) return; // Pas assez de données
-
-    const recent = this.autonomyMetrics.history.slice(-10);
-    const older = this.autonomyMetrics.history.slice(-20, -10);
-
-    if (older.length === 0) return;
-
-    // Calcul des moyennes
-    const recentAvg = {
-      autonomy: recent.reduce((sum, item) => sum + item.autonomyLevel, 0) / recent.length
-      consciousness: recent.reduce((sum, item) => sum + item.consciousnessLevel, 0) / recent.length
-      learning: recent.reduce((sum, item) => sum + item.localLearningProgress, 0) / recent.length
-    };
-
-    const olderAvg = {
-      autonomy: older.reduce((sum, item) => sum + item.autonomyLevel, 0) / older.length
-      consciousness: older.reduce((sum, item) => sum + item.consciousnessLevel, 0) / older.length
-      learning: older.reduce((sum, item) => sum + item.localLearningProgress, 0) / older.length
-    };
-
-    // Détermination des tendances
-    this.autonomyMetrics.trends = {
-      autonomyTrend: this.getTrend(recentAvg.autonomy, olderAvg.autonomy)
-      consciousnessTrend: this.getTrend(recentAvg.consciousness, olderAvg.consciousness)
-      learningTrend: this.getTrend(recentAvg.learning, olderAvg.learning)
-    };
+  async analyzeTrends() this.buildComplexObject(config);
   }
 
   /**
@@ -449,10 +406,7 @@ export class AlexAutonomyMonitor extends EventEmitter {
     }
 
     // Log des alertes critiques
-    alerts.forEach(alert => {
-      if (alert.severity === 'critical') {
-        try {
-      logger.error(`🚨 Critical Alert: ${alert.message}`);
+    alerts.forEach(alert => this.processLongOperation(args)`);
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -520,9 +474,7 @@ export class AlexAutonomyMonitor extends EventEmitter {
     this.autonomyMetrics.achievements.push(...achievements);
 
     // Log des achievements
-    achievements.forEach(achievement => {
-      try {
-      logger.info(`🏆 Achievement Unlocked: ${achievement.title} - ${achievement.description}`);
+    achievements.forEach(achievement => this.processLongOperation(args)`);
 
       } catch (error) {
     // Logger fallback - ignore error

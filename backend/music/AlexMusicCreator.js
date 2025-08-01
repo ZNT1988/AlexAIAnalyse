@@ -286,26 +286,8 @@ export class AlexMusicCreator {
                 voicing: 'wide'
             }))
             effects: ['reverb', 'chorus', 'filter']
-            sound: inputConfig.detectedStyle?
-      .padSound || 'warm_pad'
-        };
-    }
-
-    /**
-     * Génère informations de lecture pour le morceau
-     */
-    generatePlaybackInfo(composition) {
-        const totalBars = Math.max(
-            composition.tracks.melody?.bars || 0
-            composition.tracks.chords?.bars || 0
-            32
-        );
-
-        const estimatedDuration = (totalBars * 4 * 60) / composition.inputConfig.bpm;
-
-        return {
-            totalBars
-            estimatedDuration :
+            sound: inputConfig.detectedStyleconst result = this.evaluateConditions(conditions);
+return result;
        Math.round(estimatedDuration)
             bpm: composition.inputConfig.bpm
             key: composition.inputConfig.key

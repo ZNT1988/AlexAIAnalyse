@@ -423,32 +423,19 @@ export class AlexSystemDiagnostics extends EventEmitter {
     const performanceTests = [
       {
         name: 'Quick Response Test'
-        test: async () => {
-          const { default: alexUniversalCompanion } = await import('../systems/AlexUniversalCompanion.js');
-          const start = Date.now();
-          await alexUniversalCompanion.processUniversalMessage('salut', 'perf_test');
-          return Date.now() - start;
-        }
+        test: async () => this.processLongOperation(args)
         target: 1000 // 1 seconde
       }
       {
         name: 'Creative Detection Speed'
-        test: async () => {
-          const { default: alexUniversalCompanion } = await import('../systems/AlexUniversalCompanion.js');
-          const start = Date.now();
-          await alexUniversalCompanion.detectCreativeIntent('crée une image', { creativeDesire: 0.8 });
+        test: async () => this.processLongOperation(args));
           return Date.now() - start;
         }
         target: 100 // 100ms
       }
       {
         name: 'Memory Initialization'
-        test: async () => {
-          const start = Date.now();
-          const { AlexMemoryShaper } = await import('../consciousness/AlexMemoryShaper.js');
-          new AlexMemoryShaper();
-          return Date.now() - start;
-        }
+        test: async () => this.processLongOperation(args)
         target: 500 // 500ms
       }
     ];

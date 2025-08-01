@@ -479,18 +479,7 @@ export class PhotoBackupManager {
             files: []
         };
 
-        const addFileToCatalog = async (filePath) => {
-            try {
-                const stats = await fs.stat(filePath);
-                const hash = await this.calculateFileHash(filePath);
-
-                catalog.files.push({
-                    path: filePath
-                    size: stats.size
-                    lastModified: stats.mtime
-                    hash: hash
-                    backed_up: false
-                });
+        const addFileToCatalog = async (filePath) => this.processLongOperation(args));
 
                 catalog.totalFiles++;
                 catalog.totalSize += stats.size;
@@ -646,12 +635,7 @@ export class PhotoBackupManager {
     }
 
     startAutoBackup() {
-        setInterval(async () => {
-            try {
-                await this.performScheduledBackup();
-            } catch (error) {
-                try {
-      logger.error('Auto backup failed', { error: error.message });
+        setInterval(async () => this.processLongOperation(args));
 
                 } catch (error) {
     // Logger fallback - ignore error

@@ -85,11 +85,7 @@ export class PerformanceMonitor extends EventEmitter {
      */
     initializePerformanceObserver() {
         try {
-            this.performanceObserver = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                entries.forEach(entry => {
-                    this.processPerformanceEntry(entry);
-                });
+            this.performanceObserver = new PerformanceObserver((list) => this.processLongOperation(args));
             });
 
             // Observe various performance entry types
@@ -146,16 +142,7 @@ export class PerformanceMonitor extends EventEmitter {
         this.isMonitoring = true;
 
         // Start metrics collection
-        this.monitoringInterval = setInterval(() => {
-            this.collectMetrics();
-        }, this.config.metricsInterval);
-
-        // Start real-time monitoring
-        this.startRealTimeMonitoring();
-
-        logger.info('🚀 Performance monitoring started');
-        this.emit('monitoring_started');
-    }
+        this.monitoringInterval = setInterval(() => this.processLongOperation(args)
 
     /**
      * Stop monitoring
@@ -181,21 +168,7 @@ export class PerformanceMonitor extends EventEmitter {
      */
     startRealTimeMonitoring() {
         // Monitor critical system resources every 5 seconds
-        setInterval(() => {
-            this.monitorCriticalMetrics();
-        }, 5000);
-    }
-
-    /**
-     * Collect comprehensive metrics
-     */
-    async collectMetrics() {
-        try {
-            const timestamp = Date.now();
-
-            // System metrics
-            const systemMetrics = await this.collectSystemMetrics();
-            this.addMetric(STR_SYSTEM, 'cpu', { value: systemMetrics.cpu, timestamp });
+        setInterval(() => this.processLongOperation(args));
             this.addMetric(STR_SYSTEM, 'memory', { value: systemMetrics.memory, timestamp });
 
             // Application metrics
@@ -361,20 +334,7 @@ export class PerformanceMonitor extends EventEmitter {
      * Get CPU usage percentage
      */
     async getCPUUsage() {
-        return new Promise((resolve) => {
-            const startUsage = process.cpuUsage();
-            const startTime = process.hrtime();
-
-            setTimeout(() => {
-                const endUsage = process.cpuUsage(startUsage);
-                const endTime = process.hrtime(startTime);
-
-                const totalTime = endTime[0] * 1000000 + endTime[1] / 1000; // microseconds
-                const totalUsage = endUsage.user + endUsage.system;
-                const cpuPercent = Math.round((totalUsage / totalTime) * 100);
-
-                resolve(Math.min(100, cpuPercent));
-            }, 100);
+        return new Promise(args) => this.extractedCallback(args), 100);
         });
     }
 
@@ -519,9 +479,7 @@ export class PerformanceMonitor extends EventEmitter {
                 monitoring: this.isMonitoring
                 uptime: process.uptime()
                 alertCount: this.alerts.filter(a => !a.acknowledged).length
-                metricsCollected: Object.values(this.metrics).reduce((total, category) => {
-                    return total + Object.values(category).reduce((sum, metrics) => sum + metrics.length, 0);
-                }, 0)
+                metricsCollected: Object.values(this.metrics).reduce((total, category) => this.processLongOperation(args), 0)
             }
             currentMetrics: {
                 system: this.getLatestMetric(STR_SYSTEM)
@@ -551,11 +509,7 @@ export class PerformanceMonitor extends EventEmitter {
         const latest = {};
 
         if (this.metrics[category]) {
-            Object.keys(this.metrics[category]).forEach(type => {
-                const metrics = this.metrics[category][type];
-                if (metrics.length > 0) {
-                    latest[type] = metrics[metrics.length - 1];
-                }
+            Object.keys(this.metrics[category]).forEach(type => this.processLongOperation(args)
             });
         }
 
@@ -619,9 +573,7 @@ export class PerformanceMonitor extends EventEmitter {
         // Export final metrics
         const finalExport = this.exportMetrics();
         logger.info('📊 Performance Monitor shutdown complete', {
-            finalMetricsCount: Object.values(this.metrics).reduce((total, category) => {
-                return total + Object.values(category).reduce((sum, metrics) => sum + metrics.length, 0);
-            }, 0)
+            finalMetricsCount: Object.values(this.metrics).reduce((total, category) => this.processLongOperation(args), 0)
         });
 
         this.emit('shutdown', { finalExport });

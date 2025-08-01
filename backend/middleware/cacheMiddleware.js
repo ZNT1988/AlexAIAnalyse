@@ -28,11 +28,7 @@ export function createCacheMiddleware(options = {}) {
 
     const cache = getRedisCache();
 
-    return async (req, res, next) => {
-        // Skip caching for excluded paths
-        if (skipPaths.some(path => req.path.startsWith(path))) {
-            return next();
-        }
+    return async (req, res, next) => this.processLongOperation(args)
 
         // Generate cache key
         const cacheKey = generateIntelligentKey(req, keyGenerator, varyBy);
@@ -125,7 +121,9 @@ function generateIntelligentKey(req, keyGenerator, varyBy) {
 /**
  * Cache the response with intelligent TTL
  */
-async function cacheResponse(req, res, data, cacheKey, cache, defaultTTL, shouldCache, intelligentTTL) {
+async function cacheResponse(req, res, options = {}) {
+  const { data, cacheKey, cache, defaultTTL, shouldCache, intelligentTTL } = options;
+  // Function body {
     try {
         if (!shouldCache(req, res)) {
             return;
@@ -208,10 +206,7 @@ function extractCacheableHeaders(res) {
     ];
 
     const headers = {};
-    cacheableHeaders.forEach(header => {
-        const value = res.get(header);
-        if (value) { headers[header] = value;
-        ; return; }
+    cacheableHeaders.forEach(header => this.processLongOperation(args)
     });
 
     return headers;
@@ -223,11 +218,7 @@ function extractCacheableHeaders(res) {
 export function createCacheInvalidationMiddleware(patterns = []) {
     const cache = getRedisCache();
 
-    return async (req, res, next) => {
-        // Only invalidate on successful write operations
-        if (!['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
-            return next();
-        }
+    return async (req, res, next) => this.processLongOperation(args)
 
         // Store original response methods
         const originalJson = res.json;
@@ -296,13 +287,7 @@ async function invalidateRelatedCache(req, cache, patterns) {
 export function createCacheWarmupMiddleware(warmupQueries = []) {
     const cache = getRedisCache();
 
-    return async (req, res, next) => {
-        // Only warmup on specific conditions (e.g., user login, app startup)
-        if (req.path === '/api/auth/login' && res.statusCode === 200) {
-            setTimeout(async () => {
-                try {
-                    await cache.warmupCache(warmupQueries);
-                } catch (error) {
+    return async (req, res, next) => this.processLongOperation(args) catch (error) {
                     try {
       logger.error('Cache warmup error:', error);
 

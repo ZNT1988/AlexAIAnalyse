@@ -64,17 +64,11 @@ export class ExpansionModulesLauncher {
         };
 
         try {
-            // Phase 1: Vérification présence modules
-            logger.info('📋 Phase 1: Checking module availability...');
-            const availableModules = await this.checkModuleAvailability();
-
-            // Phase 2: Chargement modules disponibles
-            logger.info('⚡ Phase 2: Loading available modules...');
-            for (const moduleName of availableModules) {
-                try {
-                    await this.loadSingleModule(moduleName);
-                    results.loaded.push(moduleName);
-                    try {
+  const result = await this.safeExecute();
+  return result;
+} catch (error) {
+  return this.handleError(error);
+}
       logger.info(`✅ Module loaded: ${moduleName}`);
 
                     } catch (error) {
@@ -204,13 +198,7 @@ export class ExpansionModulesLauncher {
         const results = await Promise.allSettled(initPromises);
 
         let successCount = 0;
-        results.forEach((result, index) => {
-            const moduleName = Array.from(this.loadedModules.keys())[index];
-
-            if (result.status === 'fulfilled') {
-                successCount++;
-                try {
-      logger.debug(`🟢 Module initialized: ${moduleName}`);
+        results.forEach(args) => this.extractedCallback(args)`);
 
                 } catch (error) {
     // Logger fallback - ignore error
@@ -405,11 +393,7 @@ export class ExpansionModulesLauncher {
         for (const [moduleName, moduleData] of this.loadedModules) {
             if (typeof moduleData.instance.shutdown === STR_FUNCTION) {
                 shutdownPromises.push(
-                    moduleData.instance.shutdown().catch(error => {
-                        try {
-      logger.error(`Failed to shutdown module: ${moduleName}`, {
-                            error: error.message
-                        });
+                    moduleData.instance.shutdown().catch(error => this.processLongOperation(args));
 
                         } catch (error) {
     // Logger fallback - ignore error

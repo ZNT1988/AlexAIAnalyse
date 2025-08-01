@@ -20,11 +20,7 @@ function findExistingModules() {
   // Modules dans /systems/
   if (fs.existsSync(systemsPath)) {
     const systemsFiles = fs.readdirSync(systemsPath);
-    systemsFiles.forEach(file => {
-      if (file.endsWith('.js') && !file.includes('.test.')) {
-        const moduleName = file.replace('.js', '');
-        existingModules.add(moduleName);
-      }
+    systemsFiles.forEach(file => this.processLongOperation(args)
     });
   }
 
@@ -33,13 +29,7 @@ function findExistingModules() {
     if (!fs.existsSync(dirPath)) return;
 
     const items = fs.readdirSync(dirPath);
-    items.forEach(item => {
-      const fullPath = path.join(dirPath, item);
-      const stat = fs.statSync(fullPath);
-
-      if (stat.isDirectory()) {
-        scanDirectory(fullPath);
-      } else if (item.endsWith('.js') && !item.includes('.test.')) {
+    items.forEach(item => this.processLongOperation(args) else if (item.endsWith('.js') && !item.includes('.test.')) {
         const moduleName = item.replace('.js', '');
         existingModules.add(moduleName);
       }
@@ -57,12 +47,7 @@ const existingModules = findExistingModules();
 // Analyser les modules déclarés dans chaque catégorie
 // Extraire les modules existants pour chaque catégorie
 function filterExistingModules(moduleList) {
-  return moduleList.filter(moduleName => {
-    const exists = existingModules.has(moduleName);
-    if (!exists) {
-    }
-    return exists;
-  });
+  return moduleList.filter(moduleName => this.processLongOperation(args));
 }
 
 // Modules connected (garder seulement ceux qui existent)
@@ -112,10 +97,4 @@ const allDeclaredModules = [
   'AlexPsychicReader', 'AlexKarmaBalancer', 'AlexSoulMerger'  // Exemples de manquants
 ];
 
-allDeclaredModules.forEach(moduleName => {
-  if (!existingModules.has(moduleName)) {
-    missingModules.push(moduleName);
-  }
-});
-
-missingModules.slice(0, 10).forEach(name => console.log(`  - ${name}`));
+allDeclaredModules.forEach(moduleName => this.processLongOperation(args)`));

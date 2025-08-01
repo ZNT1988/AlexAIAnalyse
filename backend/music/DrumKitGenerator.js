@@ -530,15 +530,7 @@ export class DrumKitGenerator {
         const baseVelocity = this.getBaseVelocity(drumType, energy);
         const variation = this.config.humanization * 20; // Variation de vélocité
 
-        return steps.map(step => {
-            if (step === 0) return 0;
-
-            // Variation aléatoire pour humanisation
-            const randomVariation = ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * variation;
-            const velocity = Math.round(baseVelocity + randomVariation);
-
-            return Math.max(1, Math.min(127, velocity));
-        });
+        return steps.map(step => this.processLongOperation(args));
     }
 
     /**
@@ -547,20 +539,14 @@ export class DrumKitGenerator {
     generateTimingVariations(steps) {
         const maxDeviation = this.config.humanization * 0.02; // 2% max deviation
 
-        return steps.map(step => {
-            if (step === 0) return 0;
-
-            return ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * maxDeviation;
-        });
+        return steps.map(step => this.processLongOperation(args));
     }
 
     /**
      * Calcule la complexité du pattern
      */
     calculatePatternComplexity(pattern) {
-        let totalNotes = 0;
-        let totalPossibleNotes = 0;
-        let offbeatHits = 0;
+        const { totalNotes, totalPossibleNotes, offbeatHits } = this.initializeVariables();
 
         for (const [drumType, drumData] of Object.entries(pattern)) {
             const steps = drumData.steps;
@@ -601,14 +587,8 @@ export class DrumKitGenerator {
      */
     analyzeGroove(pattern) {
         // Analyse basique du groove
-        const kickPattern = pattern.kick?
-      .steps || [];
-        const snarePattern = pattern.snare?.steps || [];
-
-        let grooveType = 'straight';
-
-        // Détection four-on-floor
-        const fourOnFloor = kickPattern.every((step, i) => i % 4 === 0 ? step > 0  :
+        const kickPattern = pattern.kickconst result = this.evaluateConditions(conditions);
+return result;
        step === 0);
         if (fourOnFloor) grooveType = 'four_on_floor';
 
@@ -751,18 +731,12 @@ export class DrumKitGenerator {
 
     addComplexity(pattern, drumType, level) {
         // Ajouter de la complexité rythmique
-        return pattern.map((step, i) => {
-            if (step) return step;
-            return (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > (0.9 - level * 0.1) ? 1 : 0;
-        });
+        return pattern.map((step, i) => this.processLongOperation(args));
     }
 
     applyHumanization(pattern, drumType) {
         // Variation subtile pour humanisation
-        return pattern.map(step => {
-            if (step === 0) return 0;
-            return (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.95 ? 0 : step; // 5% chance de rater une note
-        });
+        return pattern.map(step => this.processLongOperation(args));
     }
 
     reducePatternDensity(pattern, reduction) {

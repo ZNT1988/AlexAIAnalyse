@@ -16,10 +16,10 @@ import EmotionalIntelligence from '../components/time/EmotionalIntelligence.js';
 import MemoryPalace from '../components/time/MemoryPalace.js';
 import CognitiveBridge from './CognitiveBridge.js';
 const logger = {
-  info: (msg, ...args) => console.log(`[${new Date().toISOString()}] INFO:', msg, ...args)
-  warn: (msg, ...args) => console.warn('[${new Date().toISOString()}] WARN:', msg, ...args)
-  error: (msg, ...args) => console.error('[${new Date().toISOString()}] ERROR:', msg, ...args)
-  debug: (msg, ...args) => console.debug('[${new Date().toISOString()}] DEBUG:`, msg, ...args)
+  info: (msg, ...args) => console.log(`[${new Date().toISOString()}] INFO:`, msg, ...args),
+  warn: (msg, ...args) => console.warn(`[${new Date().toISOString()}] WARN:`, msg, ...args),
+  error: (msg, ...args) => console.error(`[${new Date().toISOString()}] ERROR:`, msg, ...args),
+  debug: (msg, ...args) => console.debug(`[${new Date().toISOString()}] DEBUG:`, msg, ...args)
 };
 
 class AIFusionKernel {
@@ -113,7 +113,6 @@ class AIFusionKernel {
 
     } catch (error) {
       // Logger fallback - ignore error
-    }`);
     }
   }
 
@@ -205,17 +204,17 @@ class AIFusionKernel {
 
       // 🧠 Décision du master system
       const response = await this.modules.master.generateResponse({
-        language: languageAnalysis
-        visual: visualAnalysis
-        emotional: emotionalContext
+        language: languageAnalysis,
+        visual: visualAnalysis,
+        emotional: emotionalContext,
         memory: await this.modules.memory.recall(input.text)
       });
 
       // 💾 Stockage en mémoire
       await this.modules.memory.store({
-        input
-        response
-        context: emotionalContext
+        input,
+        response,
+        context: emotionalContext,
         timestamp: Date.now()
       });
 
@@ -261,10 +260,10 @@ class AIFusionKernel {
     }
 
     const factors = {
-      activity: this.state.activeProcesses.size / 10
-      memory: this.modules.memory?.getMemoryDensity() || 0
-      emotion: this.modules.emotions?.getEmotionalComplexity() || 0
-      cognitive: 1 - (this.state.cognitiveLoad / 100)
+      activity: this.state.activeProcesses.size / 10,
+      memory: this.modules.memory?.getMemoryDensity() || 0,
+      emotion: this.modules.emotions?.getEmotionalComplexity() || 0,
+      cognitive: 1 - (this.state.cognitiveLoad / 100),
       time: Math.min(this.getUptime() / 3600000, 1) // 1h max
     };
 
@@ -295,8 +294,8 @@ class AIFusionKernel {
    */
   calculateCognitiveLoad() {
     const factors = [
-      this.cognitiveQueue.length * 10
-      this.state.activeProcesses.size * 5
+      this.cognitiveQueue.length * 10,
+      this.state.activeProcesses.size * 5,
       this.modules.emotions?
       .getEmotionalIntensity() * 20 || 0
     ];
@@ -339,8 +338,8 @@ class AIFusionKernel {
    */
   addCognitiveTask(task) {
     this.cognitiveQueue.push({
-      ...task
-      id: Date.now() + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF)
+      ...task,
+      id: Date.now() + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF),
       timestamp: Date.now()
     });
   }
@@ -410,11 +409,11 @@ class AIFusionKernel {
       }
     } catch (error) {
       try {
-      logger.warn('Impossible de charger l\'état mémoire:', error);
-
-      } catch (error) {
-    // Logger fallback - ignore error
-  }}
+        logger.warn('Impossible de charger l\'état mémoire:', error);
+      } catch (logError) {
+        // Logger fallback - ignore error
+      }
+    }
   }
 
   /**
@@ -428,11 +427,11 @@ class AIFusionKernel {
       }
     } catch (error) {
       try {
-      logger.warn('Impossible de sauvegarder l\'état mémoire:', error);
-
-      } catch (error) {
-    // Logger fallback - ignore error
-  }}
+        logger.warn('Impossible de sauvegarder l\'état mémoire:', error);
+      } catch (logError) {
+        // Logger fallback - ignore error
+      }
+    }
   }
 
   /**
@@ -457,11 +456,11 @@ class AIFusionKernel {
    */
   getSystemState() {
     return {
-      state: { ...this.state }
-      metrics: { ...this.metrics }
-      config: { ...this.config }
-      modules: Object.keys(this.modules)
-      uptime: this.getUptime()
+      state: { ...this.state },
+      metrics: { ...this.metrics },
+      config: { ...this.config },
+      modules: Object.keys(this.modules),
+      uptime: this.getUptime(),
       cognitiveLoad: this.calculateCognitiveLoad()
     };
   }
@@ -475,8 +474,9 @@ class AIFusionKernel {
 
     // Propagation aux modules
     Object.values(this.modules).forEach(module => {
-      if (module.updateConfig) { module.updateConfig(this.config);
-      ; return; }
+      if (module.updateConfig) {
+        module.updateConfig(this.config);
+      }
     });
   }
 
@@ -491,8 +491,9 @@ class AIFusionKernel {
 
     // Arrêt des modules
     for (const [name, module] of Object.entries(this.modules)) {
-      if (module.shutdown) { await module.shutdown();
-      ; return; }
+      if (module.shutdown) {
+        await module.shutdown();
+      }
     }
 
     this.emit('alex.shutdown', { timestamp: Date.now() });
@@ -503,10 +504,10 @@ class AIFusionKernel {
    */
   async chat(message, options = {}) {
     const input = {
-      text: message
-      timestamp: Date.now()
-      user: options.user || 'anonymous'
-      media: options.media
+      text: message,
+      timestamp: Date.now(),
+      user: options.user || 'anonymous',
+      media: options.media,
       context: options.context
     };
 
@@ -518,11 +519,11 @@ class AIFusionKernel {
    */
   getMentalState() {
     return {
-      consciousness: this.state.consciousness
-      mood: this.state.currentMood
-      cognitiveLoad: this.state.cognitiveLoad
-      attention: this.state.attentionFocus
-      uptime: this.getUptime()
+      consciousness: this.state.consciousness,
+      mood: this.state.currentMood,
+      cognitiveLoad: this.state.cognitiveLoad,
+      attention: this.state.attentionFocus,
+      uptime: this.getUptime(),
       isThinking: this.isProcessing
     };
   }
@@ -534,10 +535,10 @@ export default AIFusionKernel;
 // 🔧 Factory pour créer une instance configurée
 export const createAlex = (config = {}) => {
   return new AIFusionKernel({
-    personality: 'Alex'
-    language: 'fr'
-    emotionalSensitivity: 0.8
-    learningRate: 0.4
+    personality: 'Alex',
+    language: 'fr',
+    emotionalSensitivity: 0.8,
+    learningRate: 0.4,
     debugMode: process.env.NODE_ENV === 'development'
     ...config
   });

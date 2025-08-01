@@ -25,14 +25,7 @@ try {
   // Liste des modules défaillants
   const failedModules = moduleStatus.registry.systemState.failedModules || [];
   if (failedModules.length > 0) {
-    failedModules.forEach((moduleName, index) => {
-    });
-  } else {
-  }
-  // Modules chargés avec succès
-  const loadedModules = moduleStatus.registry.systemState.loadedModules || [];
-  loadedModules.slice(0, 10).forEach((moduleName, index) => {
-  });
+    failedModules.forEach((moduleName, index) => this.processLongOperation(args));
   if (loadedModules.length > 10) {
   }
 

@@ -56,11 +56,7 @@ class PhotoStyleTransfer {
 
     async processStyleTransformation(imageData) {
         // Simulate processing delay
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve(imageData);
-            }, 100);
-        });
+        return new Promise(resolve => this.processLongOperation(args));
     }
 
     async getAvailableStyles() {

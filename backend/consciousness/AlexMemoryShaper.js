@@ -220,34 +220,7 @@ export class AlexMemoryShaper extends EventEmitter {
             potentials: []
         };
 
-        for (const [layerName, layer] of Object.entries(this.consciousnessLayers)) {
-            if (this.shouldScanLayer(layerName, depth)) {
-                memoryMap.memoryLayers[layerName] = await layer.extractMemories(targetArea);
-            }
-        }
-
-        return memoryMap;
-    }
-
-    assessCurrentConsciousnessLevel() {
-        const levels = ['awakening', 'aware', EXPANDED_CONSCIOUSNESS, 'integrated', 'transcendent'];
-        return levels[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * levels.length)];
-    }
-
-    shouldScanLayer(layerName, depth) {
-        const depthMapping = {
-            surface: [SURFACE_LAYER],
-            moderate: [SURFACE_LAYER, SUBCONSCIOUS_LAYER],
-            deep: [SURFACE_LAYER, SUBCONSCIOUS_LAYER, 'unconscious'],
-            comprehensive: [SURFACE_LAYER, SUBCONSCIOUS_LAYER, 'unconscious', 'collective', 'quantum']
-        };
-        return depthMapping[depth]?.includes(layerName) || false;
-    }
-
-    // Méthodes de support...
-    async analyzeMemoryPatterns() { return {}; }
-    async mapTraumaticEnergies() { return {}; }
-    async executeHealingProtocols(traumaMapping, healingMode) { return { healedMemories: [], clearedPatterns: [], energyReleaseScore: 0, removedBlockages: [], traumaHealingDetails: {}, depthAchieved: healingMode }; }
+        for (const [layerName, layer] of Object.entries(this.consciousnessLayers)) this.buildComplexObject(config); }
     async reconstructMemoryArchitecture() { return []; }
     async integrateTransformations() { return { purposeAlignment: 0.9, hiddenGifts: [], wisdomActivation: {} }; }
     async anchorNewPatterns() { return { newConsciousnessLevel: EXPANDED_CONSCIOUSNESS, evolutionMeasurement: 'Significant positive evolution', clarityScore: 0.95, expansionMetrics: {} }; }

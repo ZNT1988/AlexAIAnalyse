@@ -13,15 +13,7 @@ import logger from '../config/logger.js';
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
 const STR_USER_AGENT = 'User-Agent';
 
-export const createAdvancedRateLimit = () => {
-  return rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: (req) => {
-      // Different limits based on user type
-      if (req.auth?
-      .userId) {
-        return 200; // Authenticated users get higher limits
-      }
+export const createAdvancedRateLimit = () => this.processLongOperation(args)
       return 50; // Anonymous users
     }
     message :
@@ -32,41 +24,18 @@ export const createAdvancedRateLimit = () => {
     }
     standardHeaders: true
     legacyHeaders: false
-    skip: (req) => {
-      // Skip for health checks and internal services
-      return req.path === '/health' || req.ip === '127.0.0.1';
-    }
-    onLimitReached: (req, res, options) => {
-      logger.warn(`Rate limit exceeded for IP: ${req.ip}`, {
-        ip: req.ip
-        userAgent: req.get(STR_USER_AGENT)
-        path: req.path
-        timestamp: new Date().toISOString()
-      });
+    skip: (req) => this.processLongOperation(args)
+    onLimitReached: (req, res, options) => this.processLongOperation(args));
     }
   });
 };
 
 // Speed limiting for suspicious patterns
-export const createSpeedLimit = () => {
-  return slowDown({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    delayAfter: 100, // Allow 100 requests per windowMs without delay
-    delayMs: 500, // Add 500ms delay per request after delayAfter
-    maxDelayMs: 20000, // Max delay of 20 seconds
-    skipFailedRequests: false
-    skipSuccessfulRequests: false
-  });
+export const createSpeedLimit = () => this.processLongOperation(args));
 };
 
 // Request validation and sanitization
-export const validateRequest = (req, res, next) => {
-  // Check request size
-  if (req.get('content-length') > 10 * 1024 * 1024) { // 10MB limit
-    return res.status(413).json({
-      error: 'Request too large'
-      maxSize: '10MB'
-    });
+export const validateRequest = (req, res, next) => this.processLongOperation(args));
   }
 
   // Validate Content-Type for POST/PUT requests
@@ -91,14 +60,7 @@ export const validateRequest = (req, res, next) => {
 };
 
 // API Key validation for external integrations
-export const validateApiKey = (req, res, next) => {
-  const apiKey = req.headers['x-api-key'];
-
-  if (!apiKey) {
-    return res.status(401).json({
-      error: 'API key required'
-      header: 'X-API-Key'
-    });
+export const validateApiKey = (req, res, next) => this.processLongOperation(args));
   }
 
   // In production, validate against database
@@ -120,17 +82,7 @@ export const validateApiKey = (req, res, next) => {
 };
 
 // Request signature validation for webhooks
-export const validateSignature = (secret) => {
-  return (req, res, next) => {
-    const signature = req.headers['x-signature'];
-    const payload = JSON.stringify(req.body);
-
-    const expectedSignature = crypto
-      .createHmac('sha256', secret)
-      .update(payload)
-      .digest('hex');
-
-    if (!signature || signature !== `sha256=${expectedSignature}`) {
+export const validateSignature = (secret) => this.processLongOperation(args)`) {
       return res.status(401).json({
         error: 'Invalid signature'
       });
@@ -141,12 +93,7 @@ export const validateSignature = (secret) => {
 };
 
 // IP whitelist for admin endpoints
-export const createIPWhitelist = (allowedIPs = []) => {
-  return (req, res, next) => {
-    const clientIP = req.ip || req.connection.remoteAddress;
-
-    if (allowedIPs.length > 0 && !allowedIPs.includes(clientIP)) {
-      logger.warn(`Unauthorized IP access attempt: ${clientIP}`, {
+export const createIPWhitelist = (allowedIPs = []) => this.processLongOperation(args)`, {
         path: req.path
         userAgent: req.get(STR_USER_AGENT)
       });
@@ -162,47 +109,11 @@ export const createIPWhitelist = (allowedIPs = []) => {
 };
 
 // Request logging for security monitoring
-export const securityLogger = (req, res, next) => {
-  const startTime = Date.now();
-
-  // Log suspicious patterns
-  const suspiciousPatterns = [
-    /union.*select/i
-    /script.*alert/i
-    /<script/i
-    /javascript:/i
-    /\.\.\/\.\.\//
-    /\/etc\/passwd/
-    /\/proc\/self\/environ/
-  ];
-
-  const url = req.originalUrl || req.url;
-  const body = JSON.stringify(req.body);
-
-  const isSuspicious = suspiciousPatterns.some(pattern =>
-    pattern.test(url) || pattern.test(body)
-  );
-
-  if (isSuspicious) {
-    logger.warn('Suspicious request detected', {
-      ip: req.ip
-      method: req.method
-      url: url
-      userAgent: req.get(STR_USER_AGENT)
-      body: body.substring(0, 500) // Log first 500 chars
-    });
+export const securityLogger = (req, res, next) => this.processLongOperation(args));
   }
 
   // Log all requests for security audit
-  res.on('finish', () => {
-    const duration = Date.now() - startTime;
-
-    logger.info('Request completed', {
-      ip: req.ip
-      method: req.method
-      url: url
-      statusCode: res.statusCode
-      duration: `${duration}ms`
+  res.on('finish', () => this.processLongOperation(args)ms`
       userAgent: req.get(STR_USER_AGENT)
       userId: req.auth?.userId || 'anonymous'
     });

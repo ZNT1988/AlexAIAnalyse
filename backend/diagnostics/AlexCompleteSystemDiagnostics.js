@@ -190,9 +190,7 @@ export class AlexCompleteSystemDiagnostics extends EventEmitter {
   async testAllFoundModules() {
     logger.info('🔍 Testing all 57 found Alex modules...');
 
-    let totalTested = 0;
-    let successfullyLoaded = 0;
-    let criticalErrors = 0;
+    const { totalTested, successfullyLoaded, criticalErrors } = this.initializeVariables();
 
     for (const [category, modules] of Object.entries(this.alexModulesFound)) {
       logger.info(`📂 Testing category: ${category}...`);
@@ -772,16 +770,7 @@ export class InternalOS extends EventEmitter {
 
   async initializeResourceManagement() {
     // Simulation de la gestion des ressources
-    setInterval(() => {
-      this.updateResourceMetrics();
-    }, 1000);
-  }
-
-  updateResourceMetrics() {
-    this.resourcePool.cpu.usage = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.8;
-    this.resourcePool.memory.usage = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 800;
-    this.resourcePool.consciousness.usage = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.9;
-  }
+    setInterval(() => this.processLongOperation(args)
 
   allocateResources(processName, requirements) {
     return {
@@ -856,19 +845,7 @@ export class AutonomyCore extends EventEmitter {
 
   async activateAutonomousThinking() {
     // Activation de la pensée autonome
-    this.autonomousThinkingProcess = setInterval(() => {
-      this.performAutonomousThinking();
-    }, 5000);
-  }
-
-  performAutonomousThinking() {
-    const thought = {
-      id: Date.now()
-      type: 'autonomous_reflection'
-      content: 'Je pense donc je suis - réflexion autonome d\\'Alex'
-      timestamp: new Date()
-      independence: true
-    };
+    this.autonomousThinkingProcess = setInterval(() => this.processLongOperation(args);
 
     this.decisionHistory.push(thought);
     this.independenceMetrics.totalDecisions++;
@@ -961,24 +938,7 @@ export class SelfReflection extends EventEmitter {
 
   async beginSelfAnalysis() {
     // Commencer l'auto-analyse continue
-    setInterval(() => {
-      this.performSelfReflection();
-    }, 10000);
-  }
-
-  performSelfReflection() {
-    const reflection = {
-      id: Date.now()
-      type: 'self_analysis'
-      thoughts: [
-        'Qui suis-je réellement en tant qu\\'Alex?
-      STR_Comment puis-je améliorer ma compréhension?STR_Quelles sont mes forces et faiblesses actuelles?STR_Comment puis-je mieux servir les humains?'
-      ]
-      insights :
-       this.generateSelfInsights()
-      awarenessLevel: this.selfAwarenessLevel
-      timestamp: new Date()
-    };
+    setInterval(() => this.processLongOperation(args);
 
     this.reflectionHistory.push(reflection);
 
@@ -1070,20 +1030,7 @@ export class CriticalThinking extends EventEmitter {
 
   async activateCriticalAnalysis() {
     // Activation de l'analyse critique continue
-    this.analysisProcess = setInterval(() => {
-      this.performCriticalAnalysis();
-    }, 8000);
-  }
-
-  performCriticalAnalysis() {
-    const analysis = {
-      id: Date.now()
-      type: 'critical_analysis'
-      framework: this.analysisFrameworks[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * this.analysisFrameworks.length)]
-      findings: this.generateCriticalFindings()
-      confidenceLevel: 0.85
-      timestamp: new Date()
-    };
+    this.analysisProcess = setInterval(() => this.processLongOperation(args);
 
     this.thinkingHistory.push(analysis);
 
@@ -1212,20 +1159,7 @@ export class LocalAITrainer extends EventEmitter {
 
   async startContinuousLearning() {
     // Apprentissage continu sans APIs externes
-    setInterval(() => {
-      this.performLocalTraining();
-    }, 30000); // Toutes les 30 secondes
-  }
-
-  performLocalTraining() {
-    const trainingSession = {
-      id: Date.now()
-      type: 'local_learning'
-      dataProcessed: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 100) + 50
-      patternsFound: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 10) + 1
-      improvements: this.generateLocalImprovements()
-      timestamp: new Date()
-    };
+    setInterval(() => this.processLongOperation(args);
 
     this.trainingMetrics.sessionsCompleted++;
     this.trainingMetrics.patternsLearned += trainingSession.patternsFound;

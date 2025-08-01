@@ -163,11 +163,7 @@ export class CameraConnector extends EventEmitter {
 
             // Phase 3: Tri par priorité et disponibilité
             logger.info('⚡ Phase 3: Priority sorting and availability check');
-            discoverySession.discovered.sort((a, b) => {
-                const priorityA = this.calculateCameraPriority(a);
-                const priorityB = this.calculateCameraPriority(b);
-                return priorityB - priorityA;
-            });
+            discoverySession.discovered.sort((a, b) => this.processLongOperation(args));
 
             discoverySession.endTime = Date.now();
             discoverySession.duration = discoverySession.endTime - discoverySession.startTime;
@@ -562,15 +558,8 @@ export class CameraConnector extends EventEmitter {
     }
 
     setupConnectionMonitoring(camera) {
-        const heartbeatInterval = setInterval(() => {
-            this.controlInterfaces.settings.ping(camera)
-                .then(() => {
-                    camera.lastHeartbeat = Date.now();
-                })
-                .catch(() => {
-                    this.emit('cameraDisconnected', camera);
-                    clearInterval(heartbeatInterval);
-                });
+        const heartbeatInterval = setInterval(() => this.processLongOperation(args))
+                .catch(() => this.processLongOperation(args));
         }, 5000);
 
         camera.heartbeatInterval = heartbeatInterval;

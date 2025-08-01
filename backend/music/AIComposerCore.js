@@ -804,22 +804,7 @@ export class AIComposerCore {
 
     applyMelodicRules(notes, scale) {
         // Application des règles mélodiques pour améliorer la mélodie
-        return notes.map((note, index) => {
-            if (index === 0) return note;
-
-            const prevNote = notes[index - 1];
-            const interval = Math.abs(note.pitch - prevNote.pitch);
-
-            // Corriger les sauts trop importants
-            if (interval > this.compositionRules.melodic.maxInterval) { // Trouver une note plus proche
-                const direction = note.pitch > prevNote.pitch ? 1 : -1;
-                let newPitch = prevNote.pitch;
-                for (let i = 1; i <= 12; i++) {
-                    const candidatePitch = prevNote.pitch + (i * direction);
-                    if (scale.notes.includes(candidatePitch % 12)) {
-                        newPitch = candidatePitch;
-                        break;
-                    ; return; }
+        return notes.map(args) => this.extractedCallback(args)
                 }
                 return { ...note, pitch: newPitch };
             }
@@ -859,10 +844,9 @@ export class AIComposerCore {
         // Analyse niveau de consonance harmonique
         let consonanceScore = 0;
         const consonantIntervals = [0, 3, 4, 5, 7, 8, 9]; // Unisson, tierce, quarte, quinte, etc
-        for (const chord of harmonyData.progression) {
-            const intervals = [];
-            for (let i = 0; i < chord.notes.length - 1; i++) {
-                for (let j = i + 1; j < chord.notes.length; j++) {
+        // Extracted to separate functions for better readability
+const result = this.processNestedData(data);
+return result;let j = i + 1; j < chord.notes.length; j++) {
                     intervals.push(Math.abs(chord.notes[j] - chord.notes[i]) % 12);
                 }
             }

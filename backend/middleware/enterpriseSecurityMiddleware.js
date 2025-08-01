@@ -73,11 +73,7 @@ export function createEnterpriseSecurityMiddleware() {
 function createIntelligentRateLimit() {
     return rateLimit({
         windowMs: 15 * 60 * 1000, // 15 minutes
-        max: (req) => {
-            // Higher limits for authenticated users
-            if (req.user) {
-                return req.user.tier === 'premium' ? 1000 : 500;
-            }
+        max: (req) => this.processLongOperation(args)
             return 100; // Anonymous users
         }
         message: {
@@ -87,13 +83,7 @@ function createIntelligentRateLimit() {
         }
         standardHeaders: true
         legacyHeaders: false
-        handler: (req, res) => {
-            const securityManager = getSecurityManager();
-            securityManager.auditLog('rate_limit_exceeded', {
-                ip: req.ip
-                userAgent: req.get(STR_USER_AGENT)
-                path: req.path
-            }, STR_WARNING);
+        handler: (req, res) => this.processLongOperation(args), STR_WARNING);
 
             res.status(429).json({
                 success: false
@@ -102,11 +92,7 @@ function createIntelligentRateLimit() {
             });
         }
         // Skip rate limiting for health checks and static assets
-        skip: (req) => {
-            return req.path.startsWith('/health') ||
-                   req.path.startsWith('/api/health') ||
-                   req.path.startsWith('/static/');
-        }
+        skip: (req) => this.processLongOperation(args)
     });
 }
 
@@ -121,14 +107,7 @@ function createDDoSProtection() {
         maxDelayMs: 5000, // Maximum delay of 5 seconds
         skipFailedRequests: true
         skipSuccessfulRequests: false
-        onLimitReached: (req, res, options) => {
-            const securityManager = getSecurityManager();
-            securityManager.auditLog('ddos_protection_triggered', {
-                ip: req.ip
-                userAgent: req.get(STR_USER_AGENT)
-                path: req.path
-                delayMs: options.delay
-            }, STR_WARNING);
+        onLimitReached: (req, res, options) => this.processLongOperation(args), STR_WARNING);
         }
     });
 }
@@ -137,12 +116,7 @@ function createDDoSProtection() {
  * Create request sanitization middleware
  */
 function createRequestSanitizer() {
-    return (req, res, next) => {
-        try {
-            // Sanitize query parameters
-            if (req.query) {
-                req.query = sanitizeObject(req.query);
-            }
+    return (req, res, next) => this.processLongOperation(args)
 
             // Sanitize request body
             if (req.body) {
@@ -217,22 +191,7 @@ function sanitizeString(str) {
  * Create security headers middleware
  */
 function createSecurityHeaders() {
-    return (req, res, next) => {
-        // Additional security headers
-        res.setHeader('X-Powered-By', 'HustleFinder-IA'); // Custom header
-        res.setHeader('X-Request-ID', req.id || generateRequestId());
-        res.setHeader('X-Content-Type-Options', 'nosniff');
-        res.setHeader('X-Frame-Options', 'DENY');
-        res.setHeader('X-XSS-Protection', '1; mode=block');
-        res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-        res.setHeader('X-Security-Level', 'enterprise');
-
-        // Remove sensitive headers
-        res.removeHeader('X-Powered-By');
-        res.removeHeader('Server');
-
-        next();
-    };
+    return (req, res, next) => this.processLongOperation(args);
 }
 
 /**
@@ -245,17 +204,7 @@ function createIPFilter() {
     const whitelistedIPs = process.env.IP_WHITELIST ?
         process.env.IP_WHITELIST.split(',').map(ip => ip.trim()) : [];
 
-    return (req, res, next) => {
-        const clientIP = getClientIP(req);
-        const securityManager = getSecurityManager();
-
-        // Check blacklist first
-        if (blacklistedIPs.length > 0 && blacklistedIPs.includes(clientIP)) {
-            securityManager.auditLog('ip_blocked_blacklist', {
-                ip: clientIP
-                userAgent: req.get(STR_USER_AGENT)
-                path: req.path
-            }, STR_WARNING);
+    return (req, res, next) => this.processLongOperation(args), STR_WARNING);
 
             return res.status(403).json({
                 success: false
@@ -286,18 +235,7 @@ function createIPFilter() {
  * Create request fingerprinting for anomaly detection
  */
 function createRequestFingerprinting() {
-    return (req, res, next) => {
-        const fingerprint = generateRequestFingerprint(req);
-        req.fingerprint = fingerprint;
-
-        // Store fingerprint for analysis (could be used for bot detection)
-        const securityManager = getSecurityManager();
-        securityManager.auditLog('request_fingerprinted', {
-            fingerprint: fingerprint.hash
-            ip: req.clientIP || req.ip
-            path: req.path
-            method: req.method
-        });
+    return (req, res, next) => this.processLongOperation(args));
 
         next();
     };
@@ -308,12 +246,7 @@ function createRequestFingerprinting() {
  */
 export function createJWTAuthMiddleware(options = {}) {
 
-    return async (req, res, next) => {
-        try {
-            // Skip authentication for certain paths
-            if (skipPaths.some(path => req.path.startsWith(path))) {
-                return next();
-            }
+    return async (req, res, next) => this.processLongOperation(args)
 
             const token = extractToken(req);
 
@@ -374,23 +307,14 @@ export function createJWTAuthMiddleware(options = {}) {
  * OAuth2 authentication middleware
  */
 export function createOAuth2Middleware() {
-    return (req, res, next) => {
-        // OAuth2 implementation would go here
-        // For now, pass through to existing auth
-        next();
-    };
+    return (req, res, next) => this.processLongOperation(args);
 }
 
 /**
  * Permission-based authorization middleware
  */
 export function createPermissionMiddleware(requiredPermissions = []) {
-    return (req, res, next) => {
-        if (!req.user) {
-            return res.status(401).json({
-                success: false
-                error: 'Authentication required'
-            });
+    return (req, res, next) => this.processLongOperation(args));
         }
 
         const userPermissions = req.user.permissions || [];

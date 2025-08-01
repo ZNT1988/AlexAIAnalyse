@@ -76,19 +76,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Request logging
-app.use((req, res, next) => {
-  logger.info(`${req.method} ${req.path} - IP: ${req.ip}`);
-  next();
-});
-
-// ⚡ PERFORMANCE OPTIMIZATION: Ultra-Fast Caching
-// Initialize Redis cache with intelligent caching strategies
-const cacheMiddleware = createCacheMiddleware({
-  defaultTTL: 300, // 5 minutes
-  intelligentTTL: true,
-  skipPaths: ['/health', '/api/health', '/api/auth', '/api/system'],
-  varyBy: ['x-user-type', 'authorization']
-});
+app.use((req, res, next) => this.processLongOperation(args));
 
 const cacheInvalidation = createCacheInvalidationMiddleware([
   'api:GET:/api/ai*',
@@ -110,31 +98,11 @@ app.use(cacheInvalidation);
 app.use(cacheWarmup);
 
 // Health check endpoints
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    status: 'OK',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime()
-  });
+app.get('/health', (req, res) => this.processLongOperation(args));
 });
 
 // Enhanced health check with diagnostics
-app.get('/api/health/detailed', async (req, res) => {
-  try {
-    const healthReport = await enhancedHealthCheck.performFullCheck();
-
-    // Add cache health to the report
-    const cache = getRedisCache();
-    const cacheHealth = await cache.healthCheck();
-
-    const enhancedReport = {
-      ...healthReport,
-      cache: cacheHealth,
-      performance: {
-        cacheStats: cache.getStats(),
-        ultraFastCaching: cacheHealth.status === 'healthy',
-        targetResponseTime: '<200ms'
-      }
+app.get('/api/health/detailed', async (req, res) => this.processLongOperation(args)
     };
 
     res.status(enhancedReport.status === 'healthy' ? 200 : 503).json(enhancedReport);
@@ -148,22 +116,7 @@ app.get('/api/health/detailed', async (req, res) => {
 });
 
 // ⚡ Cache performance endpoint
-app.get('/api/cache/stats', async (req, res) => {
-  try {
-    const cache = getRedisCache();
-    const stats = cache.getStats();
-    const health = await cache.healthCheck();
-
-    res.json({
-      success: true,
-      cacheStats: stats,
-      health: health,
-      optimizations: {
-        ultraFastCaching: true,
-        intelligentTTL: true,
-        quantumInspiredCaching: true,
-        targetResponseTime: '<200ms',
-        actualAvgResponseTime: `${stats.avgResponseTime.toFixed(2)}ms`
+app.get('/api/cache/stats', async (req, res) => this.processLongOperation(args)ms`
       }
     });
   } catch (error) {
@@ -178,17 +131,7 @@ app.get('/api/cache/stats', async (req, res) => {
 // Alex Master System endpoints removed (now handled by alex-ultimate.js routes)
 
 // Recovery endpoint
-app.post('/api/system/recover', async (req, res) => {
-  try {
-      logger.info('🔧 Manual recovery triggered...');
-    const success = await systemRecovery.detectAndRecover();
-    const report = systemRecovery.getRecoveryReport();
-
-    res.json({
-      success,
-      report,
-      message: success ? '✅ Recovery completed' : '❌ Recovery failed'
-    });
+app.post('/api/system/recover', async (req, res) => this.processLongOperation(args));
   } catch (error) {
     logger.error('Error in system recovery:', error);
     res.status(500).json({ 
@@ -222,11 +165,7 @@ async function setupProtectedRoutes() {
     app.use('/api/monitoring', monitoringRoutes);
 
     // Add 404 handler after all routes
-    app.use('*', (req, res) => {
-      res.status(404).json({
-        error: 'Route not found',
-        path: req.originalUrl
-      });
+    app.use('*', (req, res) => this.processLongOperation(args));
     });
 
     // Log authentication status
@@ -254,17 +193,7 @@ async function setupProtectedRoutes() {
 
 // Global error handler
 // eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  logger.error('Unhandled error:', err);
-
-  // Don't expose error details in production
-  const message = process.env.NODE_ENV === STR_PRODUCTION
-    ? 'Internal server error'
-    : err.message;
-
-  res.status(err.status || 500).json({
-    error: message,
-    ...(process.env.NODE_ENV !== STR_PRODUCTION && { stack: err.stack })
+app.use(args) => this.extractedCallback(args))
   });
 });
 
@@ -295,9 +224,7 @@ async function startServer() {
     await alexMasterSystem.initialize();
     logger.info('✅ Alex Master System ready - AI Brain operational');
 
-    app.listen(PORT, () => {
-      logger.info(`🚀 HustleFinder Backend running on port ${PORT}');
-      logger.info('Environment: ${process.env.NODE_ENV || 'development'}');
+    app.listen(PORT, () => this.processLongOperation(args)');
       logger.info('Health check: http://localhost:${PORT}/health');
       logger.info('Authentication: ${isUsingMockAuth() ? 'MOCK (dev)' : 'CLERK (prod)'}`);
     });
@@ -307,16 +234,7 @@ async function startServer() {
 }
 
 // Handle graceful shutdown
-process.on('SIGTERM', async () => {
-  logger.info('SIGTERM received, shutting down gracefully');
-  try {
-    // Shutdown Alex first
-    alexMasterSystem.shutdown();
-    logger.info('Alex Master System shutdown complete');
-
-    const cache = getRedisCache();
-    await cache.shutdown();
-  } catch (error) {
+process.on('SIGTERM', async () => this.processLongOperation(args) catch (error) {
     try {
       logger.error('Error during shutdown:', error);
 
@@ -326,16 +244,7 @@ process.on('SIGTERM', async () => {
   process.exit(0);
 });
 
-process.on('SIGINT', async () => {
-  logger.info('SIGINT received, shutting down gracefully');
-  try {
-    // Shutdown Alex first
-    alexMasterSystem.shutdown();
-    logger.info('Alex Master System shutdown complete');
-
-    const cache = getRedisCache();
-    await cache.shutdown();
-  } catch (error) {
+process.on('SIGINT', async () => this.processLongOperation(args) catch (error) {
     try {
       logger.error('Error during shutdown:', error);
 

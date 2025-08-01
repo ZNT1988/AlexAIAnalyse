@@ -103,22 +103,7 @@ export async function createAuthMiddleware() {
      * @param {Object} res - Réponse Express
      * @param {Function} next - Fonction next Express
      */
-    return (req, res, next) => {
-      // Create mock auth object with ALEX-compatible user data
-      req.auth = {
-        userId: 'test_user_123'
-        sessionClaims: {
-          email: 'test@hustlefinder.com'
-          firstName: 'Test'
-          lastName: 'User'
-          imageUrl: ''
-          // ALEX-specific fields for consciousness tracking
-          alexConsciousnessLevel: 0.75
-          alexPreferences: {
-            theme: 'cosmic'
-            language: 'fr'
-            spiritualMode: true
-          }
+    return (req, res, next) => this.processLongOperation(args)
         }
       };
 

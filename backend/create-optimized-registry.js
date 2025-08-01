@@ -30,23 +30,7 @@ function scanAllModules() {
     { path: './music/STR_PREFIX../music/', priority: 3 }
   ];
 
-  scanPaths.forEach((_, prefix, _) => {
-    if (!fs.existsSync(scanPath)) return;
-
-    const files = fs.readdirSync(scanPath);
-    files.forEach(file => {
-      if (file.endsWith('.js') && !file.includes('.test.') && !file.includes('.bak')) {
-        const moduleName = file.replace('.js', '');
-        const fullPath = prefix + file;
-
-        // Garder seulement le module avec la plus haute priorité (plus bas chiffre)
-        if (!moduleMap.has(moduleName) || moduleMap.get(moduleName).priority > priority) {
-          moduleMap.set(moduleName, {
-            name: moduleName
-            path: fullPath
-            priority: priority
-            category: categorizeModule(moduleName)
-          });
+  scanPaths.forEach(args) => this.extractedCallback(args));
         }
       }
     });
@@ -82,11 +66,7 @@ function categorizeModule(moduleName) {
 const allModules = scanAllModules();
 // Grouper par catégorie
 const categories = {};
-allModules.forEach((module, _) => {
-  const category = module.category;
-  if (!categories[category]) categories[category] = [];
-  categories[category].push(module);
-});
+allModules.forEach((module, _) => this.processLongOperation(args));
 
 // Afficher les résultats
 let totalOptimized = 0;
@@ -140,13 +120,7 @@ class UniversalModuleRegistry extends EventEmitter {
   // Générer les catégories
   for (const [category, modules] of Object.entries(categories)) {
     code += `      ${category}: [\n`;
-    modules.forEach(module => {
-      code += `        '${module.name}',\n`;
-    });
-    code += '      ],\n\n';
-  }
-
-  code += `    };
+    modules.forEach(module => this.processLongOperation(args);
 
     // 🗺️ MAPPING DES CHEMINS RÉELS
     this.modulePaths = new Map([
@@ -154,15 +128,7 @@ class UniversalModuleRegistry extends EventEmitter {
 
   // Générer le mapping des chemins
   for (const [category, modules] of Object.entries(categories)) {
-    modules.forEach(module => {
-      code += `      ['${module.name}', '${module.path}'],\n`;
-    });
-  }
-
-  code += `    ]);
-
-    this.isInitialized = false;
-    logger.info('🚀 UniversalModuleRegistry OPTIMISÉ initializing - ${Object.values(categories).reduce((sum, arr) => sum + arr.length, 0)} modules détectés');
+    modules.forEach(module => this.processLongOperation(args) modules détectés');
   }
 
   /**
@@ -352,13 +318,7 @@ class UniversalModuleRegistry extends EventEmitter {
   startHealthMonitoring() {
     logger.info('💓 Health monitoring started for all modules');
 
-    setInterval(() => {
-      try {
-        this.emit('health_check', {
-          timestamp: new Date().toISOString()
-          totalLoaded: this.systemState.totalLoaded
-          totalFailed: this.systemState.totalFailed
-        });
+    setInterval(args) => this.extractedCallback(args));
       } catch (error) {
         try {
       logger.error('Heart rate monitoring error', { error });
@@ -379,10 +339,7 @@ class UniversalModuleRegistry extends EventEmitter {
 
   getModulesByCategory(category) {
     return Array.from(this.loadedModules.entries())
-      .filter((_) => {
-        const entry = this.moduleRegistry.get(name);
-        return entry && entry.category === category;
-      })
+      .filter((_) => this.processLongOperation(args))
       .map(([name, instance]) => ({ name, instance }));
   }
 }

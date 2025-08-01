@@ -433,16 +433,7 @@ export class CalendarIntegrationManager extends EventEmitter {
 
   startPeriodicSync() {
     // Synchronisation périodique (toutes les 15 minutes)
-    setInterval(() => {
-      this.performPeriodicSync();
-    }, 15 * 60 * 1000);
-  }
-
-  async performPeriodicSync() {
-    for (const [key, connection] of this.userConnections) {
-      try {
-        await this.syncUserCalendar(connection.userId, connection.provider);
-      } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
         try {
       logger.error('Periodic sync failed', { key, error });
 
