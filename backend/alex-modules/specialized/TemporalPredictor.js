@@ -433,17 +433,7 @@ export class TemporalPredictionEngine extends EventEmitter {
     // Logger fallback - ignore error
   }}
   startContinuousForecasting() {
-    setInterval(() => {
-      this.updateForecastModels();
-    }, 3600000); // Mise à jour horaire
-  }
-
-  updateForecastModels() {
-    // Mise à jour continue des modèles de prévision
-    try {
-      logger.debug('Updating forecast models');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

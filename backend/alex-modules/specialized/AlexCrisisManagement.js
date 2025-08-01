@@ -237,14 +237,7 @@ export class AlexCrisisManagement extends EventEmitter {
    */
   startCrisisMonitoring() {
     // Surveillance continue des signaux de détresse
-    setInterval(() => {
-      this.monitorCrisisTrends();
-    }, 300000); // 5 minutes
-
-    try {
-      logger.info('👁️ Crisis monitoring started');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 
@@ -477,15 +470,8 @@ export class AlexCrisisManagement extends EventEmitter {
    */
   generateEmotionalCrisisResponse(detection) {
     const responses = [
-      "Je sens que tu traverses un moment vraiment difficile. Tu n'es pas seul(e) dans cette épreuve. Peux-tu me dire ce qui se passe en ce moment ?
-      STR_Je comprends que la douleur soit intense. Ta vie a de la valeur et ton ressenti est important. Parle-moi de ce que tu vis.STR_Il faut beaucoup de courage pour exprimer ce que tu ressens. Je suis là pour t'écouter sans jugement. Que puis-je faire pour t'aider maintenant ?STR_Je vois que tu souffres beaucoup. C'est important que tu aies parlé. Y a-t-il quelqu'un de confiance près de toi en ce moment ?"
-    ];
-
-    return responses[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * responses.length)];
-  }
-
-  generateAnxietyCrisisResponse(detection) {
-    return 'Je vois que l'anxiété est très présente en ce moment. Respirons ensemble  :
+      "Je sens que tu traverses un moment vraiment difficile. Tu n'es pas seul(e) dans cette épreuve. Peux-tu me dire ce qui se passe en ce moment const result = this.evaluateConditions(conditions);
+return result;
        inspire profondément pendant 4 secondes... retiens ton souffle 4 secondes... expire lentement pendant 6 secondes. Tu es en sécurité. Concentre-toi sur le moment présent.';
   }
 
@@ -540,14 +526,7 @@ export class AlexCrisisManagement extends EventEmitter {
    */
   startCrisisMonitoring() {
     // Vérification d'état toutes les minutes
-    setInterval(() => {
-      this.checkCrisisStates();
-    }, 60000);
-
-    // Suivi des utilisateurs sous surveillance
-    setInterval(() => {
-      this.monitorTrackedUsers();
-    }, 300000); // 5 minutes
+    setInterval(() => this.processLongOperation(args), 300000); // 5 minutes
 
     try {
       logger.info('👁️ Crisis monitoring activated');
@@ -607,25 +586,7 @@ export class AlexCrisisManagement extends EventEmitter {
     this.alertState.monitoringUsers.add(userId);
 
     // Planification du suivi
-    setTimeout(() => {
-      this.performFollowUp(userId, crisisType);
-    }, 3600000); // Suivi dans 1 heure
-  }
-
-  /**
-   * Obtention du statut de gestion de crise
-   */
-  getCrisisManagementStatus() {
-    return {
-      initialized: this.isInitialized
-      alertLevel: this.alertState.level
-      activeCrises: this.alertState.activeCrises.size
-      monitoringUsers: this.alertState.monitoringUsers.size
-      totalDetections: this.crisisHistory.length
-      recentCrises: this.getRecentCrises()
-      interventionEffectiveness: this.calculateInterventionEffectiveness()
-      availableResources: Object.keys(this.emergencyResources).length
-    };
+    setTimeout(() => this.processLongOperation(args);
   }
 
   getRecentCrises() {

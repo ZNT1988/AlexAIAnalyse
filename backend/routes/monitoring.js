@@ -34,45 +34,45 @@ router.get('/status', async (req, res) => {
         const securityStatus = securityManager.getSecurityStatus();
 
         const status = {
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
             status: 'operational'
             version: process.env.npm_package_version || '1.0.0'
             // Core system health
-            system: {
+            system: {,
                 uptime: process.uptime()
-                memory: process.memoryUsage()
+                memory: process.memoryUsage(),
                 cpu: summary.currentMetrics.system.cpu?.value || 0
-                nodeVersion: process.version
+                nodeVersion: process.version,
                 platform: process.platform
             }
             // Performance metrics
-            performance: {
+            performance: {,
                 monitoring: summary.summary.monitoring
-                avgResponseTime: summary.performance.avgResponseTime
+                avgResponseTime: summary.performance.avgResponseTime,
                 requestsPerSecond: summary.performance.requestsPerSecond
-                errorRate: summary.performance.errorRate
+                errorRate: summary.performance.errorRate,
                 targets: summary.targets
             }
             // Cache status
-            cache: {
+            cache: {,
                 status: cacheHealth.status
-                connected: cacheHealth.connected
+                connected: cacheHealth.connected,
                 hitRate: summary.currentMetrics.cache?.hitRate || 0
                 avgResponseTime: cacheHealth.responseTime || 0
             }
             // Security status
-            security: {
+            security: {,
                 status: securityStatus.status
-                activeSessions: securityStatus.activeSessions
+                activeSessions: securityStatus.activeSessions,
                 auditingEnabled: securityStatus.auditingEnabled
                 oauth2Enabled: securityStatus.oauth2Enabled
             }
             // Alert summary
-            alerts: {
+            alerts: {,
                 active: summary.summary.alertCount
-                recent: summary.alerts.slice(-5).map(alert => ({
+                recent: summary.alerts.slice(-5).map(alert => ({,
                     severity: alert.severity
-                    message: alert.message
+                    message: alert.message,
                     timestamp: alert.timestamp
                 }))
             }
@@ -81,14 +81,14 @@ router.get('/status', async (req, res) => {
         // Add detailed info for authenticated users
         if (req.user) {
             status.detailed = {
-                metricsCollected: summary.summary.metricsCollected
+                metricsCollected: summary.summary.metricsCollected,
                 performanceEntries: summary.performance
                 systemDetails: summary.currentMetrics.system
             };
         }
 
         res.json({
-            success: true
+            success: true,
             data: status
         });
 
@@ -128,18 +128,18 @@ router.get('/metrics', async (req, res) => {
             // Get all metrics summary
             const summary = performanceMonitor.getPerformanceSummary();
             metrics = {
-                summary: summary.summary
+                summary: summary.summary,
                 current: summary.currentMetrics
-                performance: summary.performance
+                performance: summary.performance,
                 targets: summary.targets
             };
         }
 
         res.json({
-            success: true
+            success: true,
             data: {
-                metrics
-                timeRange: {
+                metrics,
+                timeRange: {,
                     start: new Date(startTime).toISOString()
                     end: new Date(now).toISOString()
                     range
@@ -177,14 +177,14 @@ router.get('/alerts', (req, res) => {
         alerts = alerts.slice(-parseInt(limit));
 
         res.json({
-            success: true
+            success: true,
             data: {
-                alerts
-                summary: {
+                alerts,
+                summary: {,
                     total: alerts.length
-                    critical: alerts.filter(a => a.severity === 'critical').length
+                    critical: alerts.filter(a => a.severity === 'critical').length,
                     warning: alerts.filter(a => a.severity === 'warning').length
-                    info: alerts.filter(a => a.severity === 'info').length
+                    info: alerts.filter(a => a.severity === 'info').length,
                     unacknowledged: alerts.filter(a => !a.acknowledged).length
                 }
             }
@@ -207,14 +207,14 @@ router.post('/alerts/:id/acknowledge', (req, res) => {
         performanceMonitor.acknowledgeAlert(alertId);
 
         res.json({
-            success: true
+            success: true,
             message: 'Alert acknowledged successfully'
         });
 
     } catch (error) {
         logger.error('Error acknowledging alert:', error);
         res.status(500).json({
-            success: false
+            success: false,
             error: 'Failed to acknowledge alert'
         });
     }
@@ -234,45 +234,45 @@ router.get('/performance', async (req, res) => {
         const performance = {
             timestamp: new Date().toISOString()
             // Response time analysis
-            responseTime: {
+            responseTime: {,
                 current: summary.performance.avgResponseTime
                 target: 200, // <200ms target
                 status: summary.performance.avgResponseTime < 200 ? 'excellent' :
                        summary.performance.avgResponseTime < 500 ? 'good' : 'needs_improvement'
             }
             // Throughput analysis
-            throughput: {
+            throughput: {,
                 requestsPerSecond: summary.performance.requestsPerSecond
-                totalRequests: summary.performance.throughput
+                totalRequests: summary.performance.throughput,
                 efficiency: summary.performance.requestsPerSecond > 10 ? 'high' : 'medium'
             }
             // Cache performance
-            cache: {
+            cache: {,
                 hitRate: cacheStats.hitRate
-                avgResponseTime: cacheStats.avgResponseTime
+                avgResponseTime: cacheStats.avgResponseTime,
                 status: cacheStats.hitRate > 80 ? 'excellent' :
                        cacheStats.hitRate > 60 ? 'good' : 'needs_improvement'
-                connected: cacheStats.connected
+                connected: cacheStats.connected,
                 type: cacheStats.type || 'redis'
             }
             // System resources
-            system: {
+            system: {,
                 cpu: summary.currentMetrics.system.cpu?.value || 0
-                memory: summary.currentMetrics.system.memory?.value || 0
+                memory: summary.currentMetrics.system.memory?.value || 0,
                 uptime: process.uptime()
                 loadStatus: (summary.currentMetrics.system.cpu?.value || 0) < 70 ? 'healthy' : 'high'
             }
             // Performance score calculation
-            score: calculatePerformanceScore({
+            score: calculatePerformanceScore({,
                 responseTime: summary.performance.avgResponseTime
-                cacheHitRate: cacheStats.hitRate
+                cacheHitRate: cacheStats.hitRate,
                 cpu: summary.currentMetrics.system.cpu?.value || 0
                 errorRate: summary.performance.errorRate
             })
         };
 
         res.json({
-            success: true
+            success: true,
             data: performance
         });
 
@@ -291,7 +291,7 @@ router.post('/start', (req, res) => {
     try {
         if (performanceMonitor.isMonitoring) {
             return res.json({
-                success: true
+                success: true,
                 message: 'Performance monitoring already running'
             });
         }
@@ -299,7 +299,7 @@ router.post('/start', (req, res) => {
         performanceMonitor.startMonitoring();
 
         res.json({
-            success: true
+            success: true,
             message: 'Performance monitoring started successfully'
         });
 
@@ -319,14 +319,14 @@ router.post('/stop', (req, res) => {
         performanceMonitor.stopMonitoring();
 
         res.json({
-            success: true
+            success: true,
             message: 'Performance monitoring stopped successfully'
         });
 
     } catch (error) {
         logger.error('Error stopping monitoring:', error);
         res.status(500).json({
-            success: false
+            success: false,
             error: 'Failed to stop monitoring'
         });
     }

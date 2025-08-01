@@ -1,10 +1,12 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
 const STR_CHAT = 'chat';
-const STR_ = '
-        ';
-const STR_ = '
-          ';
+const STR_ANALYSIS = 'analysis';
+const STR_GENERATION = 'generation';
+const STR_CONSCIOUSNESS = 'consciousness';
+const STR_ALEX = 'alex';
+const STR_GROWTH = 'growth';
+const STR_SOULPRINT = 'soulprint';
 /**
  * @fileoverview AI Routes - Routes IA Harmonisées avec Nouvelle Architecture
  * API endpoints pour l'IA ALEX utilisant la nouvelle architecture centralisée
@@ -25,9 +27,9 @@ const router = express.Router();
 
 // Validation schema
 const aiRequestSchema = Joi.object({
-  message: Joi.string().required().max(10000)
-  type: Joi.string().valid(STR_CHAT, STR_ANALYSIS, STR_GENERATION, 'trading', STR_CONSCIOUSNESS).default(STR_CHAT)
-  context: Joi.object().optional()
+  message: Joi.string().required().max(10000),
+  type: Joi.string().valid(STR_CHAT, STR_ANALYSIS, STR_GENERATION, 'trading', STR_CONSCIOUSNESS).default(STR_CHAT),
+  context: Joi.object().optional(),
   model: Joi.string().valid(STR_ALEX, STR_CONSCIOUSNESS, STR_GROWTH, STR_SOULPRINT).default(STR_ALEX)
 });
 
@@ -46,20 +48,17 @@ async function getUserId(clerkId) {
 async function logInteraction(userId, interactionType, inputText, outputText, modelUsed, responseTime) {
   try {
       logger.info('AI Interaction logged', {
-      userId
-      interactionType
-      modelUsed
-      responseTime
-      inputLength: inputText?.length || 0
-      outputLength: outputText?
-      .length || 0
+      userId,
+      interactionType,
+      modelUsed,
+      responseTime,
+      inputLength: inputText?.length || 0,
+      outputLength: outputText?.length || 0
     });
     // In the new architecture, detailed logging is handled by the core system
   } catch (error) {
-      // Logger fallback - ignore error
-    } catch (error) {
     // Logger fallback - ignore error
-  }}
+  }
 }
 
 /**
@@ -73,16 +72,13 @@ router.post('/chat', asyncHandler(async (req, res) => {
   // Validate input
   const { error, value } = aiRequestSchema.validate(req.body);
   if (error) {
-    return res.status(400).json({ error :
-       error.details[0].message });
+    return res.status(400).json({ error: error.details[0].message });
   }
 
-  const userId = await getUserId(req.auth?
-      .userId);
+  const userId = await getUserId(req.auth?.userId);
   const { message, type, context, model } = value;
 
-  logger.info('AI chat request', { userId, type, model, messageLength :
-       message.length });
+  logger.info('AI chat request', { userId, type, model, messageLength: message.length });
 
   // Map model to request type for new architecture
   let requestType;
@@ -106,13 +102,13 @@ router.post('/chat', asyncHandler(async (req, res) => {
   const alexUniversalCompanion = (await import('../systems/AlexUniversalCompanion.js')).default;
 
   const result = await alexUniversalCompanion.processUniversalMessage(
-    message
-    userId
+    message,
+    userId,
     {
-      type: requestType
-      originalContext: context || {}
-      requestType: type
-      model: model
+      type: requestType,
+      originalContext: context || {},
+      requestType: type,
+      model: model,
       timestamp: new Date().toISOString()
     }
   );
@@ -121,11 +117,11 @@ router.post('/chat', asyncHandler(async (req, res) => {
 
   // Log the interaction
   await logInteraction(
-    userId
-    type
-    message
-    result.content
-    model
+    userId,
+    type,
+    message,
+    result.content,
+    model,
     responseTime
   );
 
@@ -133,28 +129,28 @@ router.post('/chat', asyncHandler(async (req, res) => {
     response: JSON.stringify(result)
     type
     model
-    response_time_ms: result.metrics?.responseTime || responseTime
+    response_time_ms: result.metrics?.responseTime || responseTime,
     context: result.userAnalysis || null
-    suggestions: result.contextual_suggestions || []
+    suggestions: result.contextual_suggestions || [],
     confidence: result.confidence || null
-    metadata: {
+    metadata: {,
       responseTime: result.metrics?.responseTime || responseTime
-      timestamp: result.timestamp
+      timestamp: result.timestamp,
       version: "6.0.0-Universal-Companion"
-      contextAnalysis: {
+      contextAnalysis: {,
         overall: result.contextRelevance || 0.8
-        intent: result.cognitiveInsights?.[0]?.type || 'autonomous_thinking'
+        intent: result.cognitiveInsights?.[0]?.type || 'autonomous_thinking',
         continuity: result.memoryIntegration || 0.8
-        entities: 0.7
+        entities: 0.7,
         autonomyLevel: result.autonomyLevel || 0.8
         cognitionDepth: result.metrics?.cognitionDepth || 0.7
       }
-      userProfile: {
+      userProfile: {,
         interests: []
         communicationStyle: { formalLevel: "informal" }
         lastUpdate: Date.now()
       }
-      cached: false
+      cached: false,
       ultraFast: result.metrics?.isUltraFast || false
     }
     success: !result.error
@@ -169,8 +165,7 @@ router.post('/chat', asyncHandler(async (req, res) => {
 router.post('/analyze-idea', asyncHandler(async (req, res) => {
   const startTime = Date.now();
 
-  const userId = await getUserId(req.auth?
-      .userId);
+  const userId = await getUserId(req.auth?.userId);
   const { idea_text, focus_areas } = req.body;
 
   if (!idea_text) {
@@ -183,11 +178,11 @@ router.post('/analyze-idea', asyncHandler(async (req, res) => {
   // Process through new HustleFinderCore with analysis context
   const core = getHustleFinderCore();
   const result = await core.processRequest({
-    type: STR_ALEX
+    type: STR_ALEX,
     query: `Analyse cette idée business en détail: ${idea_text}`
-    context: {
+    context: {,
       analysis_type: 'business_idea'
-      focus_areas: focus_areas || []
+      focus_areas: focus_areas || [],
       detailed_analysis: true
     }
     userId
@@ -197,9 +192,9 @@ router.post('/analyze-idea', asyncHandler(async (req, res) => {
   await logInteraction(userId, STR_ANALYSIS, idea_text, JSON.stringify(result.data), STR_ALEX, responseTime);
 
   res.json({
-    analysis: result.data
+    analysis: result.data,
     response_time_ms: responseTime
-    metadata: result.metadata
+    metadata: result.metadata,
     success: result.success
   });
 }));
@@ -212,8 +207,7 @@ router.post('/analyze-idea', asyncHandler(async (req, res) => {
 router.post('/trading-insights', asyncHandler(async (req, res) => {
   const startTime = Date.now();
 
-  const userId = await getUserId(req.auth?
-      .userId);
+  const userId = await getUserId(req.auth?.userId);
   const { market_data, preferences } = req.body;
 
   logger.info('AI trading insights request', { userId });
@@ -223,9 +217,9 @@ router.post('/trading-insights', asyncHandler(async (req, res) => {
   const result = await core.processRequest({
     type :
        STR_ALEX
-    query: 'Fournis des insights de trading basés sur les données de marché'
+    query: 'Fournis des insights de trading basés sur les données de marché',
     context: {
-      analysis_type: 'trading_insights'
+      analysis_type: 'trading_insights',
       market_data: market_data || {}
       user_preferences: preferences || {}
       financial_analysis: true
@@ -237,9 +231,9 @@ router.post('/trading-insights', asyncHandler(async (req, res) => {
   await logInteraction(userId, 'trading', JSON.stringify(market_data), JSON.stringify(result.data), STR_ALEX, responseTime);
 
   res.json({
-    insights: result.data
+    insights: result.data,
     response_time_ms: responseTime
-    metadata: result.metadata
+    metadata: result.metadata,
     success: result.success
   });
 }));
@@ -252,8 +246,7 @@ router.post('/trading-insights', asyncHandler(async (req, res) => {
 router.post('/generate', asyncHandler(async (req, res) => {
   const startTime = Date.now();
 
-  const userId = await getUserId(req.auth?
-      .userId);
+  const userId = await getUserId(req.auth?.userId);
   const { prompt, content_type, parameters } = req.body;
 
   if (!prompt) {
@@ -266,11 +259,11 @@ router.post('/generate', asyncHandler(async (req, res) => {
   // Process through new HustleFinderCore with generation context
   const core = getHustleFinderCore();
   const result = await core.processRequest({
-    type: STR_ALEX
+    type: STR_ALEX,
     query: prompt
-    context: {
+    context: {,
       task_type: 'content_generation'
-      content_type: content_type || 'general'
+      content_type: content_type || 'general',
       parameters: parameters || {}
       creative_mode: true
     }
@@ -278,14 +271,13 @@ router.post('/generate', asyncHandler(async (req, res) => {
   });
 
   const responseTime = Date.now() - startTime;
-  await logInteraction(userId, STR_GENERATION, prompt, result.data?
-      .message || JSON.stringify(result.data), STR_ALEX, responseTime);
+  await logInteraction(userId, STR_GENERATION, prompt, result.data?.message || JSON.stringify(result.data), STR_ALEX, responseTime);
 
   res.json({
     generated_content :
        result.data?.message || result.data?.content || JSON.stringify(result.data)
     metadata: result.metadata || {}
-    response_time_ms: responseTime
+    response_time_ms: responseTime,
     success: result.success
   });
 }));
@@ -304,11 +296,10 @@ router.get('/consciousness', asyncHandler(async (req, res) => {
 
   // Try to get detailed consciousness state if NeuroCore is available
   let consciousnessState = {
-    level: systemStatus.metrics?.consciousnessLevel || 0.75
+    level: systemStatus.metrics?.consciousnessLevel || 0.75,
     status: 'active'
-    modules_active: systemStatus.modules?.active || []
-    uptime: systemStatus.metrics?
-      .uptime || 0
+    modules_active: systemStatus.modules?.active || [],
+    uptime: systemStatus.metrics?.uptime || 0
   };
 
   // If we have NeuroCore module, get detailed state
@@ -317,13 +308,12 @@ router.get('/consciousness', asyncHandler(async (req, res) => {
       const result = await core.processRequest({
         type :
        STR_CONSCIOUSNESS
-        query: 'Get current consciousness state'
+        query: 'Get current consciousness state',
         context: { system_query: true }
         userId: 'system'
       });
 
-      if (result.success && result.data?
-      .consciousness_level) {
+      if (result.success && result.data?.consciousness_level) {
         consciousnessState = {
           ...consciousnessState
           detailed_state :
@@ -331,16 +321,15 @@ router.get('/consciousness', asyncHandler(async (req, res) => {
         };
       }
     } catch (error) {
-      // Logger fallback - ignore error
-    } catch (error) {
     // Logger fallback - ignore error
-  }}
+  }
+}
   }
 
   res.json({
-    consciousness_state: consciousnessState
+    consciousness_state: consciousnessState,
     timestamp: new Date().toISOString()
-    system_info: {
+    system_info: {,
       version: systemStatus.version
       initialized: systemStatus.initialized
     }
@@ -353,8 +342,7 @@ router.get('/consciousness', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.get('/history', asyncHandler(async (req, res) => {
-  const userId = await getUserId(req.auth?
-      .userId);
+  const userId = await getUserId(req.auth?.userId);
   const { type } = req.query;
   logger.info('AI history request', { userId, limit, offset, type });
 
@@ -364,17 +352,17 @@ router.get('/history', asyncHandler(async (req, res) => {
     interactions :
        [
       {
-        interaction_type: STR_CHAT
+        interaction_type: STR_CHAT,
         input_text: 'Previous conversation...'
-        output_text: 'AI response using new architecture'
+        output_text: 'AI response using new architecture',
         model_used: STR_ALEX
-        response_time_ms: 150
+        response_time_ms: 150,
         created_at: new Date().toISOString()
       }
     ]
-    total: 1
+    total: 1,
     limit: parseInt(limit)
-    offset: parseInt(offset)
+    offset: parseInt(offset),
     note: 'History tracking enhanced in new architecture'
   });
 }));
@@ -385,8 +373,7 @@ router.get('/history', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.get('/stats', asyncHandler(async (req, res) => {
-  const userId = await getUserId(req.auth?
-      .userId);
+  const userId = await getUserId(req.auth?.userId);
 
   logger.info('AI stats request', { userId });
 
@@ -406,19 +393,17 @@ router.get('/stats', asyncHandler(async (req, res) => {
       { model_used: STR_ALEX, count: Math.floor((systemStatus.metrics?.totalRequests || 0) * 0.7) }
       { model_used: STR_CONSCIOUSNESS, count: Math.floor((systemStatus.metrics?.totalRequests || 0) * 0.3) }
     ]
-    average_response_time_ms: systemStatus.metrics?.averageResponseTime || 0
+    average_response_time_ms: systemStatus.metrics?.averageResponseTime || 0,
     daily_usage_last_30_days: [
       { date: new Date().toISOString().split('T')[0], count: systemStatus.metrics?.totalRequests || 0 }
     ]
-    system_metrics: {
+    system_metrics: {,
       consciousness_level: systemStatus.metrics?.consciousnessLevel || 0.75
-      success_rate: systemStatus.metrics?
-      .totalRequests > 0
+      success_rate: systemStatus.metrics?.totalRequests > 0
         ? ((systemStatus.metrics?.successfulResponses || 0) / systemStatus.metrics.totalRequests * 100).toFixed(2) + '%'
          :
        '100%'
-      uptime: systemStatus.metrics?
-      .uptime || 0
+      uptime: systemStatus.metrics?.uptime || 0
     }
   });
 }));
@@ -438,11 +423,10 @@ router.get('/health', asyncHandler(async (req, res) => {
   const systems = {
     core :
        systemStatus.initialized
-    alex: systemStatus.modules?.active?.includes('alexCore') || false
+    alex: systemStatus.modules?.active?.includes('alexCore') || false,
     consciousness: systemStatus.modules?.active?.includes('neuroCore') || false
-    growth: systemStatus.modules?.active?.includes('growthSystem') || false
-    soulprint: systemStatus.modules?
-      .active?.includes('soulPrint') || false
+    growth: systemStatus.modules?.active?.includes('growthSystem') || false,
+    soulprint: systemStatus.modules?.active?.includes('soulPrint') || false
   };
 
   // Perform quick health tests
@@ -465,13 +449,13 @@ router.get('/health', asyncHandler(async (req, res) => {
   const allHealthy = Object.values(healthTests).every(status => status);
 
   res.json({
-    status: allHealthy ? 'healthy' : 'partial'
+    status: allHealthy ? 'healthy' : 'partial',
     systems: healthTests
-    system_info: {
+    system_info: {,
       version: systemStatus.version
-      uptime: systemStatus.metrics?.uptime || 0
+      uptime: systemStatus.metrics?.uptime || 0,
       total_modules: systemStatus.modules?.total || 0
-      active_modules: systemStatus.modules?.active?.length || 0
+      active_modules: systemStatus.modules?.active?.length || 0,
       consciousness_level: systemStatus.metrics?.consciousnessLevel || 0.75
     }
     timestamp: new Date().toISOString()
@@ -491,9 +475,9 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
 
   res.json({
     capabilities
-    system_info: {
+    system_info: {,
       architecture: 'HustleFinderCore v3.0'
-      total_modules: capabilities.total_modules
+      total_modules: capabilities.total_modules,
       integration_status: capabilities.integration_status
     }
     timestamp: new Date().toISOString()
@@ -506,19 +490,17 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/generate-ideas', asyncHandler(async (req, res) => {
-  const userId = await getUserId(req.auth?
-      .userId);
+  const userId = await getUserId(req.auth?.userId);
   const { prompt, preferences = {} } = req.body;
 
   logger.info('AI ideas generation request', { userId, prompt :
-       prompt?
-      .slice(0, 50) });
+       prompt?.slice(0, 50) });
 
   if (!prompt || prompt.trim().length === 0) {
     return res.status(400).json({
       success :
        false
-      error: 'Prompt is required'
+      error: 'Prompt is required',
       message: 'Veuillez fournir un prompt pour générer des idées'
     });
   }
@@ -526,13 +508,13 @@ router.post('/generate-ideas', asyncHandler(async (req, res) => {
   try {
     const core = getHustleFinderCore();
     const result = await core.processRequest({
-      type: STR_GENERATION
+      type: STR_GENERATION,
       query: `Génère des idées créatives et viables basées sur: ${prompt}`
-      context: {
+      context: {,
         task_type: 'idea_generation'
-        generation_prompt: prompt
+        generation_prompt: prompt,
         user_preferences: preferences
-        creativity_level: preferences.creativity || STR_HIGH
+        creativity_level: preferences.creativity || STR_HIGH,
         business_focus: preferences.industry || 'general'
       }
       userId
@@ -543,34 +525,34 @@ router.post('/generate-ideas', asyncHandler(async (req, res) => {
       {
         title: `Innovation ${prompt.split(' ')[0]}'
         description: 'Concept innovant basé sur votre demande: ${prompt}`
-        category: preferences.industry || 'innovation'
+        category: preferences.industry || 'innovation',
         viabilityScore: 0.8
-        originalityScore: 0.9
+        originalityScore: 0.9,
         implementationDifficulty: 'medium'
-        marketPotential: STR_HIGH
+        marketPotential: STR_HIGH,
         keyFeatures: ['Feature 1', 'Feature 2', 'Feature 3']
-        targetAudience: 'Entrepreneurs et innovateurs'
+        targetAudience: 'Entrepreneurs et innovateurs',
         estimatedTimeToMarket: '6-12 mois'
       }
     ];
 
     res.json({
-      success: true
+      success: true,
       message: `${generatedIdeas.length} idées générées avec succès`
-      ideas: generatedIdeas
+      ideas: generatedIdeas,
       generationMetrics: {
-        promptProcessed: prompt
+        promptProcessed: prompt,
         preferencesApplied: Object.keys(preferences).length
-        creativityLevel: preferences.creativity || STR_HIGH
+        creativityLevel: preferences.creativity || STR_HIGH,
         averageViability: generatedIdeas.reduce((sum, idea) => sum + idea.viabilityScore, 0) / generatedIdeas.length
         averageOriginality: generatedIdeas.reduce((sum, idea) => sum + idea.originalityScore, 0) / generatedIdeas.length
       }
       suggestions: [
         'Développer davantage l\'idée qui vous inspire le plusSTR_Valider le marché avant l\'implémentationSTR_Chercher des partenaires complémentaires'
       ]
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
       metadata: {
-        responseTime: Date.now()
+        responseTime: Date.now(),
         version: '1.0.0'
         generationEngine: 'AlexIdeaGenerator'
       }
@@ -580,7 +562,7 @@ router.post('/generate-ideas', asyncHandler(async (req, res) => {
       // Logger fallback - ignore error
     });
     res.status(500).json({
-      success: false
+      success: false,
       error: 'Génération d\'idées échouée'
       message: 'Une erreur est survenue lors de la génération d\'idées'
     });
@@ -600,7 +582,7 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
 
   if (!analysisData) {
     return res.status(400).json({
-      success: false
+      success: false,
       error: 'Analysis data is required'
       message: 'Veuillez fournir les données à analyser'
     });
@@ -609,13 +591,13 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
   try {
     const core = getHustleFinderCore();
     const result = await core.processRequest({
-      type: STR_ANALYSIS
+      type: STR_ANALYSIS,
       query: 'Effectue une analyse de marché approfondie basée sur les données fournies'
-      context: {
+      context: {,
         task_type: 'market_analysis'
-        analysis_data: analysisData
+        analysis_data: analysisData,
         analysis_depth: 'comprehensive'
-        include_trends: true
+        include_trends: true,
         include_competitors: true
         include_opportunities: true
       }
@@ -624,12 +606,11 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
 
     // Structure de l'analyse de marché
     const marketAnalysis = {
-      overview: {
+      overview: {,
         marketSize: result.data?.market_size || 'Estimation en cours...'
-        growthRate: result.data?.growth_rate || '12% annuel estimé'
+        growthRate: result.data?.growth_rate || '12% annuel estimé',
         maturityLevel: result.data?.maturity || 'Marché en développement'
-        keyTrends: result.data?
-      .trends || [
+        keyTrends: result.data?.trends || [
           'Digitalisation accéléréeSTR_Demande pour l\'automatisationSTR_Focus sur l\'expérience utilisateur'
         ]
       }
@@ -640,29 +621,25 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
           { name: 'Concurrent B', marketShare: '20%STR_STRENGTHMarketing' }
           { name: 'Concurrent C', marketShare: '15%STR_STRENGTHPrix' }
         ]
-        competitiveAdvantages: result.data?
-      .advantages || [
+        competitiveAdvantages: result.data?.advantages || [
           'Technologie différencianteSTR_Approche client personnaliséeSTR_Expertise sectorielle'
         ]
         threatLevel :
        result.data?.threat_level || 'Modéré'
       }
-      opportunities: {
-        marketGaps: result.data?
-      .gaps || [
+      opportunities: {,
+        marketGaps: result.data?.gaps || [
           'Segment des PME sous-exploitéSTR_Intégration IA insuffisante chez les concurrentsSTR_Demande croissante pour les solutions complètes'
         ]
         entryStrategies :
-       result.data?
-      .strategies || [
+       result.data?.strategies || [
           'Positionnement premium avec forte valeur ajoutéeSTR_Partenariats stratégiques avec acteurs établisSTR_Focus sur une niche avant expansion'
         ]
         timingScore :
        result.data?.timing_score || 0.85
       }
-      risks: {
-        marketRisks: result.data?
-      .risks || [
+      risks: {,
+        marketRisks: result.data?.risks || [
           'Évolution réglementaire rapideSTR_Guerre des prix potentielleSTR_Changement des habitudes consommateur'
         ]
         mitigationStrategies :
@@ -670,7 +647,7 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
           'Veille réglementaire activeSTR_Différenciation par la valeur plutôt que le prixSTR_Adaptation continue aux besoins clients'
         ]
       }
-      recommendations: {
+      recommendations: {,
         immediate: [
           'Valider les hypothèses par une étude terrainSTR_Identifier et contacter les early adoptersSTR_Développer un MVP avec les fonctionnalités essentielles'
         ]
@@ -684,9 +661,9 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
     };
 
     res.json({
-      success: true
+      success: true,
       message: 'Analyse de marché complétée avec succès'
-      analysis: marketAnalysis
+      analysis: marketAnalysis,
       confidence: result.data?.confidence_score || 0.82
       sources: [
         'Données publiques sectoriellesSTR_Analyse concurrentielle automatiséeSTR_Modèles prédictifs IASTR_Base de connaissances Alex'
@@ -694,9 +671,9 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
       nextSteps: [
         'Approfondir l\'analyse de la concurrenceSTR_Valider les opportunités identifiéesSTR_Élaborer un plan de go-to-market'
       ]
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
       metadata: {
-        responseTime: Date.now()
+        responseTime: Date.now(),
         version: '1.0.0'
         analysisEngine: 'AlexMarketAnalyzer'
       }
@@ -706,7 +683,7 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
       // Logger fallback - ignore error
     });
     res.status(500).json({
-      success: false
+      success: false,
       error: 'Analyse de marché échouée'
       message: 'Une erreur est survenue lors de l\'analyse de marché'
     });
@@ -718,17 +695,17 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
  */
 router.use((error, req, res, next) => {
   logger.error('AI route error:', {
-    error: error.message
+    error: error.message,
     stack: error.stack
-    path: req.path
+    path: req.path,
     method: req.method
     userId: req.auth?.userId
   });
 
   res.status(error.statusCode || 500).json({
-    success: false
+    success: false,
     error: error.message || 'Internal AI system error'
-    path: req.path
+    path: req.path,
     timestamp: new Date().toISOString()
   });
 });

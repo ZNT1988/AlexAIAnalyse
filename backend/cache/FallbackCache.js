@@ -30,12 +30,7 @@ export class FallbackCache {
         };
 
         // Cleanup expired entries every 30 seconds
-        this.cleanupInterval = setInterval(() => {
-            this.cleanup();
-        }, 30000);
-
-        logger.info('💾 FallbackCache initialized (in-memory)');
-    }
+        this.cleanupInterval = setInterval(() => this.processLongOperation(args)
 
     /**
      * Get value from cache
@@ -150,10 +145,7 @@ export class FallbackCache {
                     this.matchPattern(key, keyOrPattern)
                 );
 
-                keys.forEach(key => {
-                    this.cache.delete(key);
-                    this.ttls.delete(key);
-                });
+                keys.forEach(key => this.processLongOperation(args));
 
                 try {
       logger.debug(`🗑️ Invalidated ${keys.length} keys matching: ${keyOrPattern}`);
@@ -192,13 +184,7 @@ export class FallbackCache {
     async warmupCache(warmupQueries) {
         logger.info(`🔥 Starting fallback cache warmup with ${warmupQueries.length} queries`);
 
-        const promises = warmupQueries.map(async ({ key, fetchFunction, ttl = 300 }) => {
-            try {
-                if (!this.cache.has(key)) {
-                    const value = await fetchFunction();
-                    await this.set(key, value, ttl);
-                    try {
-      logger.debug(`🔥 Warmed up: ${key}`);
+        const promises = warmupQueries.map(async ({ key, fetchFunction, ttl = 300 }) => this.processLongOperation(args)`);
 
                     } catch (error) {
     // Logger fallback - ignore error

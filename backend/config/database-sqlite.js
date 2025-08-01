@@ -62,11 +62,7 @@ const STR_TEST_HUSTLEFINDER_COM = 'test@hustlefinder.com';
  * @example
  * // Transaction complexe
  * import { withTransaction } from './database-sqlite.js';
- * const result = await withTransaction(async (queryFn) => {
- *   await queryFn(STR_INSERT_INTO_USERS_EMAIL_VALUES, [STR_NEW_USER_COM]);
- *   await queryFn('INSERT INTO projects (title) VALUES (?)', ['New Project']);
- *   return { success :
-       true };
+ * const result = await withTransaction(async (queryFn) => this.processLongOperation(args);
  * });
  */
 
@@ -120,14 +116,7 @@ if (!fs.existsSync(dbDir)) {
  * Connexion principale à la base SQLite avec callback de statut
  * pour logging des erreurs de connexion et confirmation de succès
  */
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    try {
-      logger.error('Error opening SQLite database:', err.message);
-
-    } catch (error) {
-    // Logger fallback - ignore error
-  }} else {
+const db = new sqlite3.Database(dbPath, (err) => this.processLongOperation(args)} else {
     try {
       logger.info('Connected to SQLite database at:', dbPath);
 
@@ -171,13 +160,8 @@ const db = new sqlite3.Database(dbPath, (err) => {
  *
  * @example
  * // Requête UPDATE avec changes count
- * const update = await query('UPDATE projects SET status = ?
-      WHERE id = ?', ['completed', 123]);
- * logger.info('Updated ${update.changes} projects`);
- */
-const query = (sql, params = []) => {
-  return new Promise((resolve, reject) => {
-    const method = sql.trim().toLowerCase().startsWith('select') ? 'all'  :
+ * const update = await query('UPDATE projects SET status = const result = this.evaluateConditions(conditions);
+return result;
        'run';
 
     db[method](sql, params, function(err, result) {
@@ -403,18 +387,8 @@ async function createBasicSchema() {
 async function insertTestData() {
   try {
     // Check if test user already exists
-    const existingUser = await query('SELECT id FROM users WHERE email = ?
-      ', [STR_TEST_HUSTLEFINDER_COM]);
-
-    if (existingUser.rows.length === 0) {
-      // Insert test user
-      const userResult = await query(
-        'INSERT INTO users (clerk_id, email, first_name, last_name) VALUES (?, ?, ?, ?)'
-        ['test_user_123', STR_TEST_HUSTLEFINDER_COM, 'Test', 'User']
-      );
-
-      const userId = userResult.lastID;
-      logger.info('Test user created with ID :
+    const existingUser = await query('SELECT id FROM users WHERE email = const result = this.evaluateConditions(conditions);
+return result;
       ', userId);
 
       // Insert test ideas
@@ -424,23 +398,8 @@ async function insertTestData() {
       );
 
       await query(
-        'INSERT INTO ideas (user_id, title, content, category, match_score) VALUES (?, ?, ?, ?, ?)STR_USERIDE-commerce durable', 'Plateforme de vente en ligne spécialisée dans les produits éco-responsables', 'business', 75]
-      );
-
-      // Insert test project
-      await query(
-        'INSERT INTO projects (user_id, title, description, status, priority, budget) VALUES (?, ?, ?, ?, ?, ?)STR_USERIDProjet Trading Bot', 'Développement d\'un bot de trading automatisé', STR_ACTIVE, 5, 10000]
-      );
-
-      try {
-      logger.info('Test data inserted successfully');
-
-      } catch (error) {
-      // Logger fallback - ignore error
-    }}
-  } catch (error) {
-    try {
-      logger.warn('Could not insert test data :
+        'INSERT INTO ideas (user_id, title, content, category, match_score) VALUES (const result = this.evaluateConditions(conditions);
+return result;
       ', error.message);
 
     } catch (error) {
@@ -504,22 +463,11 @@ export async function testConnection() {
  *
  * @example
  * // Transaction utilisateur + projet
- * const result = await withTransaction(async (queryFn) => {
- *   const user = await queryFn(STR_INSERT_INTO_USERS_EMAIL_VALUES, [STR_NEW_USER_COM]);
- *   await queryFn('INSERT INTO projects (user_id, title) VALUES (?, ?)', [user.lastID, 'New Project']);
- *   return { userId: user.lastID, success: true };
+ * const result = await withTransaction(async (queryFn) => this.processLongOperation(args);
  * });
  */
 export async function withTransaction(callback) {
-  return new Promise((resolve, reject) => {
-    db.serialize(() => {
-      db.run('BEGIN TRANSACTION');
-
-      try {
-        const result = callback(query);
-        db.run('COMMIT');
-        resolve(result);
-      } catch (error) {
+  return new Promise((resolve, reject) => this.processLongOperation(args) catch (error) {
         db.run('ROLLBACK');
         reject(error);
       }
@@ -545,25 +493,10 @@ export async function withTransaction(callback) {
  *
  * @example
  * // Shutdown propre application
- * process.on('SIGTERM', async () => {
- *   await closeDatabase();
- *   process.exit(0);
- * });
- *
- * @example
- * // Fermeture en fin de tests
- * afterAll(async () => {
- *   await closeDatabase();
- * });
+ * process.on('SIGTERM', async () => this.processLongOperation(args));
  */
 export async function closeDatabase() {
-  return new Promise((resolve) => {
-    db.close((err) => {
-      if (err) {
-        try {
-      logger.error('Error closing SQLite database:', err.message);
-
-        } catch (error) {
+  return new Promise((resolve) => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }} else {
         try {

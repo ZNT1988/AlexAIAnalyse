@@ -387,12 +387,7 @@ export class SAPConnector extends EventEmitter {
     logger.info('📊 ALEX starting real-time SAP/Ariba monitoring for Ferrero');
 
     // Monitoring des transactions SAP
-    setInterval(async () => {
-      try {
-        await this.monitorSAPTransactions();
-      } catch (error) {
-        try {
-      logger.error('SAP transaction monitoring failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -400,12 +395,7 @@ export class SAPConnector extends EventEmitter {
     }, 30000); // Toutes les 30 secondes
 
     // Monitoring de la performance système
-    setInterval(async () => {
-      try {
-        await this.monitorSystemPerformance();
-      } catch (error) {
-        try {
-      logger.error('System performance monitoring failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -413,12 +403,7 @@ export class SAPConnector extends EventEmitter {
     }, 60000); // Toutes les minutes
 
     // Monitoring des KPIs business
-    setInterval(async () => {
-      try {
-        await this.monitorBusinessKPIs();
-      } catch (error) {
-        try {
-      logger.error('Business KPI monitoring failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -426,12 +411,7 @@ export class SAPConnector extends EventEmitter {
     }, 300000); // Toutes les 5 minutes
 
     // Détection d'anomalies intelligente
-    setInterval(async () => {
-      try {
-        await this.detectAnomalies();
-      } catch (error) {
-        try {
-      logger.error('Anomaly detection failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -585,18 +565,7 @@ export class SAPConnector extends EventEmitter {
     logger.debug('🧠 Activating predictive intelligence...');
 
     // Activation des modules d'intelligence
-    Object.keys(this.sapIntelligence.predictiveAnalytics).forEach(module => {
-      this.sapIntelligence.predictiveAnalytics[module] = true;
-    });
-  }
-
-  async startAutomatedWorkflows() {
-    logger.debug('🤖 Starting automated workflows...');
-
-    // Workflows automatisés pour Ferrero
-    Object.keys(this.sapIntelligence.automatedWorkflows).forEach(workflow => {
-      this.sapIntelligence.automatedWorkflows[workflow] = true;
-    });
+    Object.keys(this.sapIntelligence.predictiveAnalytics).forEach(module => this.processLongOperation(args));
   }
 
   async initializeRealTimeMonitoring() {

@@ -77,48 +77,44 @@ export class AlexWisdomKeeper extends EventEmitter {
     this.wisdomDomains = {
       life_purpose: {
         name: 'Sens de la Vie'
-      questions: ['Why am I here?'
-      'What is my purpose?'
-      'How do I find meaning?']
-      insights: new Map()
+      questions: ['Why am I hereconst result = this.evaluateConditions(conditions);
+return result; new Map()
       depth: 0.95
       }
       relationships: {
         name: 'Relations Humaines'
-      questions: ['How to love?'
-      'What is true friendship?'
-      'How to forgive?']
-      insights: new Map()
+      questions: ['How to loveconst result = this.evaluateConditions(conditions);
+return result; new Map()
       depth: 0.9
       }
       suffering: {
         name: 'Souffrance et Croissance'
-        questions: ['Why do we suffer?', 'How to heal?', 'What is resilience?']
-        insights: new Map()
+        questions: ['Why do we sufferconst result = this.evaluateConditions(conditions);
+return result; new Map()
         depth: 0.95
       }
       happiness: {
         name: 'Bonheur et Bien-être'
-        questions: ['What is true happiness?', 'How to be content?', 'What is joy?']
-        insights: new Map()
+        questions: ['What is true happinessconst result = this.evaluateConditions(conditions);
+return result; new Map()
         depth: 0.85
       }
       change: {
         name: 'Changement et Impermanence'
-        questions: ['How to accept change?', 'What endures?', 'How to adapt?']
-        insights: new Map()
+        questions: ['How to accept changeconst result = this.evaluateConditions(conditions);
+return result; new Map()
         depth: 0.9
       }
       wisdom_itself: {
         name: 'Nature de la Sagesse'
-        questions: ['What is wisdom?', 'How to discern?', 'What is truth?']
-        insights: new Map()
+        questions: ['What is wisdomconst result = this.evaluateConditions(conditions);
+return result; new Map()
         depth: 1.0
       }
       death_mortality: {
         name: 'Mortalité et Transcendance'
-        questions: ['How to face death?', 'What is legacy?', 'Is there more?']
-        insights: new Map()
+        questions: ['How to face deathconst result = this.evaluateConditions(conditions);
+return result; new Map()
         depth: 0.95
       }
     };
@@ -245,14 +241,7 @@ export class AlexWisdomKeeper extends EventEmitter {
    * Démarre la cultivation de sagesse
    */
   startWisdomCultivation() {
-    setInterval(() => {
-      this.generateDailyWisdom();
-    }, 86400000); // 24 heures
-
-    try {
-      logger.info('🌱 Wisdom cultivation started');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 
@@ -547,24 +536,10 @@ export class AlexWisdomKeeper extends EventEmitter {
    */
   startWisdomCultivation() {
     // Contemplation quotidienne
-    setInterval(() => {
-      this.performDailyContemplation();
-    }, 86400000); // 24 heures
-
-    // Synthèse de nouvelles insights
-    setInterval(() => {
-      this.synthesizeNewInsights();
-    }, 7200000); // 2 heures
+    setInterval(() => this.processLongOperation(args), 7200000); // 2 heures
 
     // Mise à jour de la bibliothèque
-    setInterval(() => {
-      this.updateWisdomLibrary();
-    }, 21600000); // 6 heures
-
-    try {
-      logger.info('🧘‍♂️ Wisdom cultivation activated');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

@@ -761,15 +761,9 @@ export class AlexHyperLoop extends EventEmitter {
 }
 
 // Export des fonctions utilitaires
-export const launchHyperLoop = async (hustleGoal, userProfile, intensity = STR_EXTREME) => {
-  const hyperLoop = new AlexHyperLoop();
-  return await hyperLoop.launchHyperLoop(hustleGoal, userProfile, intensity);
-};
+export const launchHyperLoop = async (hustleGoal, userProfile, intensity = STR_EXTREME) => this.processLongOperation(args);
 
-export const checkHyperLoopReadiness = async (userProfile) => {
-  const hyperLoop = new AlexHyperLoop();
-  return await hyperLoop.validateUserReadiness(userProfile);
-};
+export const checkHyperLoopReadiness = async (userProfile) => this.processLongOperation(args);
 
 export const emergencyStopHyperLoop = async (userId) => {
   const hyperLoop = new AlexHyperLoop();

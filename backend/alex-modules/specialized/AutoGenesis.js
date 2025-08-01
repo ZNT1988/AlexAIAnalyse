@@ -304,30 +304,12 @@ ${defaultImplementation}
    * Génération du code de test pour une fonction
    */
   generateTestCode(moduleName, funcDef) {
-    return `  describe('${funcDef.name}', () => {
-    it('should execute ${funcDef.name} successfully', () => {
-      const result = ${moduleName}.${funcDef.name}();
+    return `  describe('${funcDef.name}', () => this.processLongOperation(args)();
       expect(result).toBeDefined();
       // TODO: Add more specific assertions based on function behavior
     });
 
-    it('should handle edge cases for ${funcDef.name}', () => {
-      // TODO: Add edge case testing
-      expect(true).toBe(true);
-    });
-  });`;
-  }
-
-  /**
-   * Intégration automatique dans AlexMasterSystem
-   */
-  async integrateIntoMasterSystem(moduleName) {
-    try {
-      // Lecture du fichier AlexMasterSystem
-      let masterSystemContent = '';
-      try {
-        masterSystemContent = await fs.readFile(this.config.masterSystemPath, 'utf8');
-      } catch (error) {
+    it('should handle edge cases for ${funcDef.name}', () => this.processLongOperation(args) catch (error) {
         return;
       }
 
@@ -520,10 +502,7 @@ ${defaultImplementation}
 
 import {{MODULE_NAME}} from '{{REQUIRE_PATH}}';
 
-describe('{{MODULE_NAME}}', () => {
-  describe('Module Structure', () => {
-    it('should be properly defined', () => {
-      expect({{MODULE_NAME}}).toBeDefined();
+describe('{{MODULE_NAME}}', () => this.processLongOperation(args)}).toBeDefined();
       expect(typeof {{MODULE_NAME}}).toBe('object');
     });
   });
@@ -572,21 +551,7 @@ module.exports = new AutoGenesis();
 
 // Auto-initialisation si exécuté directement
 if (require.main === module) {
-  (async () => {
-    try {
-      const autoGenesis = module.exports;
-      await autoGenesis.initialize();
-
-      logger.info('='.repeat(60));
-
-      // Simulation de création autonome
-      const result = await autoGenesis.simulateNeedDetection();
-
-      logger.info(JSON.stringify(result, null, 2));
-
-      logger.info(JSON.stringify(autoGenesis.getGenesisStatus(), null, 2));
-
-    } catch (error) {
+  (async () => this.processLongOperation(args) catch (error) {
       // Logger fallback - ignore error
     } catch (error) {
     // Logger fallback - ignore error

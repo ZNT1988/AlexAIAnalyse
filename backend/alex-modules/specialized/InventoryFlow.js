@@ -514,12 +514,7 @@ export class InventoryFlow extends EventEmitter {
     logger.info('📊 ALEX starting continuous inventory monitoring for Ferrero');
 
     // Monitoring inventaire temps réel (toutes les 5 minutes)
-    setInterval(async () => {
-      try {
-        await this.updateRealTimeInventory();
-      } catch (error) {
-        try {
-      logger.error('Real-time inventory update failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -527,12 +522,7 @@ export class InventoryFlow extends EventEmitter {
     }, 300000);
 
     // Vérification alertes (toutes les 2 minutes)
-    setInterval(async () => {
-      try {
-        await this.checkInventoryAlerts();
-      } catch (error) {
-        try {
-      logger.error('Inventory alerts check failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -540,12 +530,7 @@ export class InventoryFlow extends EventEmitter {
     }, 120000);
 
     // Prédictions automatiques (toutes les heures)
-    setInterval(async () => {
-      try {
-        await this.runAutomaticPredictions();
-      } catch (error) {
-        try {
-      logger.error('Automatic predictions failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -553,12 +538,7 @@ export class InventoryFlow extends EventEmitter {
     }, 3600000);
 
     // Optimisation nocturne (1x par jour à 2h00)
-    setInterval(async () => {
-      const now = new Date();
-      if (now.getHours() === 2 && now.getMinutes() === 0) {
-        try {
-          await this.runNightlyOptimization();
-        } catch (error) {
+    setInterval(async () => this.processLongOperation(args) catch (error) {
           try {
       logger.error('Nightly optimization failed', { error });
 

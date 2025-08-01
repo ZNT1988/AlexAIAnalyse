@@ -476,14 +476,7 @@ export class AlexStrategicThinking extends EventEmitter {
    */
   startStrategicMonitoring() {
     // Surveillance des tendances quotidienne
-    setInterval(() => {
-      this.monitorStrategicTrends();
-    }, 86400000);
-
-    // Révision stratégique hebdomadaire
-    setInterval(() => {
-      this.weeklyStrategicReview();
-    }, 604800000);
+    setInterval(() => this.processLongOperation(args), 604800000);
 
     try {
       logger.info('📡 Strategic monitoring activated');

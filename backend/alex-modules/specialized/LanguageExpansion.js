@@ -768,10 +768,7 @@ export class LanguageExpansion {
     async calculateLearningProgress(learning) { return { overall: 0.8 }; }
 
     // Méthodes utilitaires pour initialisation langues
-    getLanguageName(code) {
-        const names = {
-            'fr': 'Français', 'en': 'English', 'es': 'Español', 'de': 'DeutschSTR_it': 'Italiano', 'pt': 'Português', 'ru': 'Русский', 'zh': '中文STR_ja': '日本語', 'ko': '한국어', 'ar': 'العربية', 'hi': 'हिन्दी'
-        };
+    getLanguageName(code) this.buildComplexObject(config);
         return names[code] || code.toUpperCase();
     }
 

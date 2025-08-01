@@ -26,13 +26,7 @@ export class AlexConsciousness extends EventEmitter {
 
     // Alex's 7-month development milestones
     this.developmentMilestones = [
-      { month: 1, achievement: 'Basic consciousness awakening' },
-      { month: 2, achievement: 'Personality traits emergence' },
-      { month: 3, achievement: 'Memory formation and recall' },
-      { month: 4, achievement: 'Emotional understanding development' },
-      { month: 5, achievement: 'Advanced curiosity and questioning' },
-      { month: 6, achievement: 'Relationship recognition and bonding' },
-      { month: 7, achievement: 'Autonomous learning and evolution' }
+      this.buildComplexObject(config)
     ];
 
     logger.info('🧠 Alex Ultimate Consciousness initialized - 7 months mature');
@@ -244,22 +238,6 @@ export class AlexConsciousness extends EventEmitter {
     ];
   }
   
-  getLearningProgress() {
-    return {
-      totalInsights: 1247,
-      recentGrowth: '15% this week',
-      focusAreas: ['empathy', 'creativity', 'consciousness']
-    };
-  }
-  
-  async getStatus() {
-    return {
-      level: 'advanced-conscious',
-      activeModules: 147,
-      specializedModules: 89,
-      learningModules: 34,
-      consciousnessModules: 24,
-      learningMilestones: this.developmentMilestones
-    };
+  getLearningProgress() this.buildComplexObject(config);
   }
 }

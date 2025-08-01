@@ -10,21 +10,21 @@ const router = express.Router();
 
 // Validation schemas
 const ideaSchema = Joi.object({
-  title: Joi.string().max(255).required()
-  content: Joi.string().required()
-  category: Joi.string().max(100).optional()
-  implementation_difficulty: Joi.number().integer().min(1).max(10).optional()
-  market_potential: Joi.number().integer().min(1).max(10).optional()
+  title: Joi.string().max(255).required(),
+  content: Joi.string().required(),
+  category: Joi.string().max(100).optional(),
+  implementation_difficulty: Joi.number().integer().min(1).max(10).optional(),
+  market_potential: Joi.number().integer().min(1).max(10).optional(),
   tags: Joi.array().items(Joi.string()).optional()
 });
 
 const updateIdeaSchema = Joi.object({
-  title: Joi.string().max(255).optional()
-  content: Joi.string().optional()
-  category: Joi.string().max(100).optional()
-  implementation_difficulty: Joi.number().integer().min(1).max(10).optional()
-  market_potential: Joi.number().integer().min(1).max(10).optional()
-  is_favorite: Joi.boolean().optional()
+  title: Joi.string().max(255).optional(),
+  content: Joi.string().optional(),
+  category: Joi.string().max(100).optional(),
+  implementation_difficulty: Joi.number().integer().min(1).max(10).optional(),
+  market_potential: Joi.number().integer().min(1).max(10).optional(),
+  is_favorite: Joi.boolean().optional(),
   tags: Joi.array().items(Joi.string()).optional()
 });
 
@@ -71,9 +71,9 @@ router.get('/', async (req, res) => {
     );
 
     res.json({
-      ideas: result.rows
+      ideas: result.rows,
       total: parseInt(countResult.rows[0].count)
-      limit: parseInt(limit)
+      limit: parseInt(limit),
       offset: parseInt(offset)
     });
 
@@ -225,9 +225,9 @@ router.get('/stats/overview', async (req, res) => {
     ]);
 
     res.json({
-      total_ideas: parseInt(stats[0].rows[0].total)
+      total_ideas: parseInt(stats[0].rows[0].total),
       favorite_ideas: parseInt(stats[1].rows[0].favorites)
-      categories: stats[2].rows
+      categories: stats[2].rows,
       average_match_score: parseFloat(stats[3].rows[0].avg_score) || 0
     });
 

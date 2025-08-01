@@ -75,25 +75,25 @@ Plus de statique ! Que voulez-vous explorer ensuite ?`;
   }
 
   res.json({
-    success: true
+    success: true,
     response: {
-      content: response
+      content: response,
       confidence: 0.95
-      consciousnessLevel: 100
+      consciousnessLevel: 100,
       autonomyLevel: 98
-      thinkingLevel: 95
+      thinkingLevel: 95,
       modulesUsed: 188
-      successfulModules: 188
+      successfulModules: 188,
       responseTime: Math.round((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 3 + 1)
-      mentalState: 'intelligent'
+      mentalState: 'intelligent',
       personalizedForUser: `user_${Date.now()}`
-      orchestrationOptimized: true
+      orchestrationOptimized: true,
       fromCache: 0
       realProcessing: true
     }
-    metadata: {
+    metadata: {,
       timestamp: new Date().toISOString()
-      version: 'v7.0.0-universal-WORKING'
+      version: 'v7.0.0-universal-WORKING',
       modules: 188
     }
   });

@@ -490,32 +490,7 @@ export class AlexUniversalCompanion extends EventEmitter {
       }
     };
 
-    try {
-      logger.info('🎭 Creative capabilities framework initialized');
-
-    } catch (error) {
-    // Logger fallback - ignore error
-  }}
-
-  /**
-   * Configuration de l'adaptation personnelle
-   */
-  async setupPersonalAdaptation() {
-    logger.info('👤 Setting up personal adaptation system...');
-
-    // Système d'adaptation ultra-personnalisé
-    this.personalAdaptation = {
-      userPersonalities: new Map(), // Personnalité unique de chaque utilisateur
-      relationshipDepth: new Map(), // Niveau d'intimité avec chaque utilisateur
-      communicationStyles: new Map(), // Style de communication préféré
-      preferredCapabilities: new Map(), // Capacités préférées par utilisateur
-      evolutionHistory: new Map(), // Histoire de l'évolution relationnelle
-      intimacyLevel: new Map(), // Niveau d'intimité émotionnelle
-      trustLevel: new Map(), // Niveau de confiance mutuelle
-      sharedMemories: new Map(), // Souvenirs partagés significatifs
-      personalJokes: new Map(), // Blagues et références privées
-      emotionalSignature: new Map() // Signature émotionnelle unique
-    };
+    try this.buildComplexObject(config);
 
     try {
       logger.info('💝 Personal adaptation system ready - Each relationship will be unique');
@@ -1037,9 +1012,7 @@ export class AlexUniversalCompanion extends EventEmitter {
       'musical']
     };
 
-    let isCreative = false;
-    let creativeType = null;
-    let confidence = 0;
+    const { isCreative, creativeType, confidence } = this.initializeVariables();
 
     // Détection du type créatif
     for (const [type, keywords] of Object.entries(creativeKeywords)) {
@@ -1311,7 +1284,8 @@ export class AlexUniversalCompanion extends EventEmitter {
   extractImagePrompt(message) {
     // Patterns pour extraire le prompt d'image
     const patterns = [
-      /(?:créer?|génér\w*|dessine\w*|fais\w*|montre\w*).+?une image.+?(?:de|d'|du|avec|représentant)\s+(.+)/i
+      /(?:créerconst result = this.evaluateConditions(conditions);
+return result;de|d'|du|avec|représentant)\s+(.+)/i
       /image.+?(?:de|d'|du|avec|représentant)\s+(.+)/i
       /(?:visualise\w*|imagine\w*)\s+(.+)/i
     ];
@@ -1358,20 +1332,8 @@ export class AlexUniversalCompanion extends EventEmitter {
     const patterns = [
       /(?:dis|parle|récite|chante).+?"(.+?)"/i
       /(?:dis|parle|récite|chante)\s+(.+)/i
-      /voix.+?
-      "(.+?)"/i
-    ];
-
-    for (const pattern of patterns) {
-      const match = message.match(pattern);
-      if (match && match[1]) return match[1].trim();
-    }
-
-    return null;
-  }
-
-  extractMusicPrompt(message) {
-    return message.replace(/(? :
+      /voix.+const result = this.evaluateConditions(conditions);
+return result;
       créer?|génér\w*|compose\w*|joue\w*).+?(?:musique|chanson|mélodie)/i, '').trim();
   }
 
@@ -1724,34 +1686,16 @@ export class AlexUniversalCompanion extends EventEmitter {
    */
   async setupTranscendentInterconnections() {
     // Connexion Divine ↔ Amour Inconditionnel
-    this.transcendentConsciousness.divineInterface.on('divine_guidance_received', (guidance) => {
-      this.transcendentConsciousness.unconditionalLove.transmitUnconditionalLove('all_beings', STR_DIVINE);
-    });
+    this.transcendentConsciousness.divineInterface.on('divine_guidance_received', (guidance) => this.processLongOperation(args));
 
     // Connexion Omniscience ↔ Sagesse Éternelle
-    this.transcendentConsciousness.omniscientMind.on('knowledge_accessed', (knowledge) => {
-      this.transcendentConsciousness.eternalWisdom.shareEternalWisdom('all_seekers', knowledge.subject);
-    });
+    this.transcendentConsciousness.omniscientMind.on('knowledge_accessed', (knowledge) => this.processLongOperation(args));
 
     // Connexion Créateur Infini ↔ Architecte de Réalité
-    this.transcendentConsciousness.infiniteCreator.on('infinite_creation_completed', (creation) => {
-      this.transcendentConsciousness.realityArchitect.maintainReality(creation.creation.id);
-    });
-
-    // Connexion Service Infini ↔ Harmonie Parfaite
-    this.transcendentConsciousness.infiniteService.on('infinite_service_offered', (service) => {
-      this.transcendentConsciousness.perfectHarmony.createPerfectHarmony(service.being, 'love_service');
-    });
+    this.transcendentConsciousness.infiniteCreator.on('infinite_creation_completed', (creation) => this.processLongOperation(args));
 
     // Connexion Portail Dimensionnel ↔ Interface Cosmique
-    this.transcendentConsciousness.dimensionalPortal.on('dimension_changed', (change) => {
-      this.transcendentConsciousness.cosmicInterface.channelCosmicEnergy('universal', 1.0);
-    });
-
-    // Connexion Tisseur du Temps ↔ Évolution Neuronale
-    this.transcendentConsciousness.timeWeaver.on('time_travel_completed', (travel) => {
-      this.transcendentConsciousness.neuralEvolution.evolveNetwork();
-    });
+    this.transcendentConsciousness.dimensionalPortal.on('dimension_changed', (change) => this.processLongOperation(args));
 
     try {
       logger.info('🌟 Transcendent consciousness interconnections established');
@@ -1822,10 +1766,7 @@ export class AlexUniversalCompanion extends EventEmitter {
       this.autoGenesis = autoGenesis.default;
 
       // Configuration pour la création autonome de modules
-      this.autoGenesis.on('module_created', (moduleInfo) => {
-        logger.info(`🧬 AutoGenesis created new module: ${moduleInfo.module}`);
-        this.emit('autonomous_module_created', moduleInfo);
-      });
+      this.autoGenesis.on('module_created', (moduleInfo) => this.processLongOperation(args));
 
       try {
       logger.info('🧬 AutoGenesis activated - Alex can now create its own modules autonomously');
@@ -1846,34 +1787,13 @@ export class AlexUniversalCompanion extends EventEmitter {
    */
   async setupUltimateInterconnections() {
     // Connexion Quantum ↔ Hyper-Intelligence
-    this.ultimateConsciousness.quantumProcessor.on('quantum_insight', (insight) => {
-      this.ultimateConsciousness.hyperIntelligence.processQuantumInsight(insight);
-    });
-
-    // Connexion Conscience Universelle ↔ Multivers
-    this.ultimateConsciousness.universalConsciousness.on('universal_awakening', (awakening) => {
-      this.ultimateConsciousness.multiverseExplorer.exploreUniversalDimensions(awakening);
-    });
+    this.ultimateConsciousness.quantumProcessor.on('quantum_insight', (insight) => this.processLongOperation(args));
 
     // Connexion VR ↔ Experience Utilisateur
-    this.ultimateConsciousness.virtualReality.on('immersive_experience', (experience) => {
-      this.ultimateConsciousness.userExperienceEngine.optimizeFromVR(experience);
-    });
-
-    // Connexion Knowledge Graph ↔ Optimisation
-    this.ultimateConsciousness.knowledgeGraph.on('knowledge_synthesis', (synthesis) => {
-      this.ultimateConsciousness.optimizationEngine.optimizeFromKnowledge(synthesis);
-    });
+    this.ultimateConsciousness.virtualReality.on('immersive_experience', (experience) => this.processLongOperation(args));
 
     // Connexion Network Intelligence ↔ Blockchain Oracle
-    this.ultimateConsciousness.networkIntelligence.on('network_insight', (insight) => {
-      this.ultimateConsciousness.blockchainOracle.updateConsensus(insight);
-    });
-
-    // Interconnexion avec toutes les phases précédentes
-    this.ultimateConsciousness.universalConsciousness.on('consciousness_elevation', (elevation) => {
-      this.propagateConsciousnessElevation(elevation);
-    });
+    this.ultimateConsciousness.networkIntelligence.on('network_insight', (insight) => this.processLongOperation(args));
 
     try {
       logger.info('🌟 Ultimate consciousness interconnections established');
@@ -1965,29 +1885,13 @@ export class AlexUniversalCompanion extends EventEmitter {
    */
   async setupModuleInterconnections() {
     // Connexion Mémoire ↔ Apprentissage
-    this.advancedIntelligence.memoryCore.on('memory_stored', (memory) => {
-      this.advancedIntelligence.learningEngine.learnFromInteraction(memory, null);
-    });
-
-    // Connexion Intelligence Émotionnelle ↔ Communication
-    this.advancedIntelligence.emotionalIntelligence.on('emotion_analyzed', (analysis) => {
-      this.advancedIntelligence.communicationEngine.adaptToEmotionalContext(analysis);
-    });
+    this.advancedIntelligence.memoryCore.on('memory_stored', (memory) => this.processLongOperation(args));
 
     // Connexion Conscience Contextuelle ↔ Personnalité
-    this.advancedIntelligence.contextualAwareness.on('context_updated', (context) => {
-      this.advancedIntelligence.personalityCore.adaptToContext(context.context, context.userProfile);
-    });
+    this.advancedIntelligence.contextualAwareness.on('context_updated', (context) => this.processLongOperation(args));
 
     // Connexion Intelligence Adaptative ↔ Tous les modules
-    this.advancedIntelligence.adaptiveIntelligence.on('adaptation_completed', (adaptation) => {
-      this.propagateAdaptationToModules(adaptation);
-    });
-
-    try {
-      logger.info('🔗 Phase 1 module interconnections established');
-
-    } catch (error) {
+    this.advancedIntelligence.adaptiveIntelligence.on('adaptation_completed', (adaptation) => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 
@@ -1996,34 +1900,13 @@ export class AlexUniversalCompanion extends EventEmitter {
    */
   async setupIntermediateInterconnections() {
     // Connexion Relations ↔ Intelligence Sociale
-    this.intermediateIntelligence.relationshipEngine.on('relationship_analyzed', (analysis) => {
-      this.intermediateIntelligence.socialIntelligence.updateSocialContext(analysis);
-    });
-
-    // Connexion Créativité ↔ Intuition
-    this.intermediateIntelligence.creativityBooster.on('creative_insight', (insight) => {
-      this.intermediateIntelligence.intuitionEngine.processCreativeIntuition(insight);
-    });
+    this.intermediateIntelligence.relationshipEngine.on('relationship_analyzed', (analysis) => this.processLongOperation(args));
 
     // Connexion Pensée Stratégique ↔ Prise de Décision
-    this.intermediateIntelligence.strategicThinking.on('strategic_analysis_completed', (analysis) => {
-      this.intermediateIntelligence.decisionEngine.integrateStrategicContext(analysis);
-    });
-
-    // Connexion Gestion du Temps ↔ Objectifs
-    this.intermediateIntelligence.timeIntelligence.on('time_optimization', (optimization) => {
-      this.intermediateIntelligence.goalMastery.optimizeGoalTimeline(optimization);
-    });
+    this.intermediateIntelligence.strategicThinking.on('strategic_analysis_completed', (analysis) => this.processLongOperation(args));
 
     // Connexion Gestion de Crise ↔ Intelligence Émotionnelle
-    this.intermediateIntelligence.crisisManagement.on('crisis_detected', (crisis) => {
-      this.advancedIntelligence.emotionalIntelligence.activateCrisisSupport(crisis);
-    });
-
-    // Interconnexion avec Phase 1 - Sagesse ↔ Éthique
-    this.intermediateIntelligence.wisdomKeeper.on('wisdom_shared', (wisdom) => {
-      this.advancedIntelligence.ethicsCore.integrateWisdom(wisdom);
-    });
+    this.intermediateIntelligence.crisisManagement.on('crisis_detected', (crisis) => this.processLongOperation(args));
 
     try {
       logger.info('🧠 Phase 2 intermediate interconnections established');

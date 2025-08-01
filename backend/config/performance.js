@@ -179,17 +179,10 @@ class PerformanceOptimizer {
       }
 
       // Handle worker events
-      cluster.on('exit', (worker, code, signal) => {
-        logger.warn(`Worker ${worker.process.pid} died with code ${code} and signal ${signal}`);
-        this.forkWorker();
-      });
+      cluster.on('exit', (worker, code, signal) => this.processLongOperation(args));
 
       // Graceful shutdown
-      process.on('SIGTERM', () => {
-        logger.info('Master received SIGTERM, shutting down workers');
-        for (const worker of Object.values(cluster.workers)) {
-          worker.kill('SIGTERM');
-        }
+      process.on('SIGTERM', () => this.processLongOperation(args)
       });
 
       return true; // This is the master process
@@ -205,13 +198,7 @@ class PerformanceOptimizer {
     const worker = cluster.fork();
 
     // Monitor worker memory usage
-    setInterval(() => {
-      worker.send({ type: 'memory-check' });
-    }, 60000); // Check every minute
-
-    worker.on('message', (message) => {
-      if (message.type === 'memory-usage' && message.memory > this.config.clustering.maxMemory * 1024 * 1024) {
-        logger.warn(`Worker ${worker.process.pid} memory usage: ${Math.round(message.memory / 1024 / 1024)}MB, restarting...`);
+    setInterval(() => this.processLongOperation(args) memory usage: ${Math.round(message.memory / 1024 / 1024)}MB, restarting...`);
         worker.kill('SIGTERM');
       }
     });
@@ -222,43 +209,20 @@ class PerformanceOptimizer {
    */
   setupPerformanceMonitoring() {
     if (cluster.isWorker) {
-      process.on('message', (message) => {
-        if (message.type === 'memory-check') {
-          const memUsage = process.memoryUsage();
-          process.send({
-            type: 'memory-usage'
-            memory: memUsage.rss
-            heap: memUsage.heapUsed
-          });
+      process.on('message', (message) => this.processLongOperation(args));
         }
       });
     }
 
     // Garbage collection monitoring
     if (global.gc && this.config.memory.gcInterval > 0) {
-      setInterval(() => {
-        const memBefore = process.memoryUsage();
-        global.gc();
-        const memAfter = process.memoryUsage();
-
-        const freedMemory = memBefore.heapUsed - memAfter.heapUsed;
-        if (freedMemory > 10 * 1024 * 1024) { // Log if more than 10MB freed
-          logger.debug(`GC freed ${Math.round(freedMemory / 1024 / 1024); return; }MB`);
+      setInterval(args) => this.extractedCallback(args)MB`);
         }
       }, this.config.memory.gcInterval);
     }
 
     // Memory usage alerts
-    setInterval(() => {
-      const memUsage = process.memoryUsage();
-      const heapUsedMB = memUsage.heapUsed / 1024 / 1024;
-      const heapTotalMB = memUsage.heapTotal / 1024 / 1024;
-      const heapPercent = heapUsedMB / heapTotalMB;
-
-      this.metrics.peakMemoryUsage = Math.max(this.metrics.peakMemoryUsage, heapUsedMB);
-
-      if (heapPercent > this.config.memory.heapThreshold) {
-        logger.warn(`High memory usage: ${Math.round(heapUsedMB)}MB (${Math.round(heapPercent * 100)}%)`);
+    setInterval(() => this.processLongOperation(args)MB (${Math.round(heapPercent * 100)}%)`);
       }
     }, 30000); // Check every 30 seconds
   }
@@ -274,11 +238,7 @@ class PerformanceOptimizer {
     return compression({
       level: this.config.compression.level
       threshold: this.config.compression.threshold
-      filter: (req, res) => {
-        // Don't compress responses with this request header
-        if (req.headers['x-no-compression']) {
-          return false;
-        }
+      filter: (req, res) => this.processLongOperation(args)
 
         // Use compression filter function
         return compression.filter(req, res);
@@ -290,25 +250,7 @@ class PerformanceOptimizer {
    * Request optimization middleware
    */
   requestOptimizer() {
-    return (req, res, next) => {
-      const startTime = process.hrtime();
-
-      // Add request ID for tracing
-      req.requestId = this.generateRequestId();
-      res.setHeader('X-Request-ID', req.requestId);
-
-      // Performance headers
-      res.setHeader('X-Powered-By', 'HustleFinderIA');
-      res.setHeader('X-Response-Time-Start', Date.now().toString());
-
-      // Override res.json to add performance metrics
-      const originalJson = res.json;
-      res.json = (data) => {
-        const [seconds, nanoseconds] = process.hrtime(startTime);
-        const responseTime = seconds * 1000 + nanoseconds / 1000000;
-
-        // Add performance headers
-        res.setHeader('X-Response-Time', `${responseTime.toFixed(2)}ms`);
+    return (req, res, next) => this.processLongOperation(args)ms`);
         res.setHeader('X-Worker-ID', process.pid.toString());
 
         // Update metrics
@@ -330,14 +272,7 @@ class PerformanceOptimizer {
     return {
       query
       params
-      measure: () => {
-        const [seconds, nanoseconds] = process.hrtime(startTime);
-        const duration = seconds * 1000 + nanoseconds / 1000000;
-
-        this.metrics.dbQueries++;
-
-        if (duration > 1000) { // Log slow queries
-          logger.warn(`Slow database query: ${duration.toFixed(2)}ms`, {
+      measure: () => this.processLongOperation(args)ms`, {
             query: query.substring(0, 100)
             duration
           });
@@ -354,11 +289,7 @@ class PerformanceOptimizer {
   getCacheOptimizer() {
     return {
       // Smart cache key generation
-      generateKey: (prefix, params) => {
-        const sortedParams = Object.keys(params).sort().reduce((result, key) => {
-          result[key] = params[key];
-          return result;
-        }, {});
+      generateKey: (prefix, params) => this.processLongOperation(args), {});
 
         const hash = require('crypto')
           .createHash('md5')
@@ -369,9 +300,7 @@ class PerformanceOptimizer {
         return `${prefix}:${hash}`;
       }
       // Adaptive TTL based on access patterns
-      getAdaptiveTTL: (baseKey, baseTTL = 300000) => {
-        const accessCount = cache.get(`${baseKey}:access_count') || 0;
-        const lastAccess = cache.get('${baseKey}:last_access') || 0;
+      getAdaptiveTTL: (baseKey, baseTTL = 300000) => this.processLongOperation(args):last_access') || 0;
         const now = Date.now();
 
         // More frequently accessed items get longer TTL
@@ -387,17 +316,10 @@ class PerformanceOptimizer {
         return Math.min(adaptiveTTL, 3600000); // Max 1 hour
       }
       // Batch cache operations
-      mget: async (keys) => {
-        const results = {};
-        for (const key of keys) {
-          results[key] = cache.get(key);
-        }
+      mget: async (keys) => this.processLongOperation(args)
         return results;
       }
-      mset: async (entries, ttl) => {
-        for (const [key, value] of Object.entries(entries)) {
-          cache.set(key, value, ttl);
-        }
+      mset: async (entries, ttl) => this.processLongOperation(args)
       }
     };
   }
@@ -406,20 +328,7 @@ class PerformanceOptimizer {
    * Response optimization
    */
   optimizeResponse() {
-    return (req, res, next) => {
-      // ETags for caching
-      res.setHeader('Cache-Control', 'public, max-age=300'); // 5 minutes
-
-      // Optimize JSON responses
-      const originalJson = res.json;
-      res.json = (data) => {
-        // Remove null/undefined values to reduce payload
-        const optimizedData = this.removeNullValues(data);
-
-        // Add compression hints
-        if (JSON.stringify(optimizedData).length > 1024) {
-          res.setHeader('Content-Encoding', 'gzip');
-        }
+    return (req, res, next) => this.processLongOperation(args)
 
         return originalJson.call(res, optimizedData);
       };

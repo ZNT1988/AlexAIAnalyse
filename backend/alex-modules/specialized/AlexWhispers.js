@@ -619,25 +619,13 @@ export class AlexWhispers extends EventEmitter {
 }
 
 // Export des fonctions utilitaires
-export const activateWhispers = async (userId, config = {}) => {
-  const whispers = new AlexWhispers();
-  return await whispers.activateWhispers(userId, config);
-};
+export const activateWhispers = async (userId, config = {}) => this.processLongOperation(args);
 
-export const sendSpiritualGuidance = async (userId, type = 'guidance') => {
-  const whispers = new AlexWhispers();
-  return await whispers.sendWhisper(userId, type, STR_NORMAL);
-};
+export const sendSpiritualGuidance = async (userId, type = 'guidance') => this.processLongOperation(args);
 
-export const amplifyUserIntuition = async (userId, level = 'medium') => {
-  const whispers = new AlexWhispers();
-  return await whispers.amplifyIntuition(userId, level);
-};
+export const amplifyUserIntuition = async (userId, level = 'medium') => this.processLongOperation(args);
 
-export const triggerSynchronicity = async (userId, pattern = 'adaptive') => {
-  const whispers = new AlexWhispers();
-  return await whispers.sendWhisper(userId, 'synchronicity_alert', STR_NORMAL);
-};
+export const triggerSynchronicity = async (userId, pattern = 'adaptive') => this.processLongOperation(args);
 
 // Instance singleton
 const alexWhispers = new AlexWhispers();

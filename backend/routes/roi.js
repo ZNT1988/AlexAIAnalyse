@@ -9,10 +9,10 @@ const router = express.Router();
 
 // Validation schemas
 const roiCalculationSchema = Joi.object({
-  project_id: Joi.number().integer().optional()
-  initial_investment: Joi.number().positive().required()
-  current_value: Joi.number().positive().optional()
-  time_period_months: Joi.number().integer().positive().optional()
+  project_id: Joi.number().integer().optional(),
+  initial_investment: Joi.number().positive().required(),
+  current_value: Joi.number().positive().optional(),
+  time_period_months: Joi.number().integer().positive().optional(),
   calculation_type: Joi.string().valid(STR_SIMPLE, STR_ANNUALIZED, STR_COMPOUND).default(STR_SIMPLE)
   notes: Joi.string().optional()
 });
@@ -95,9 +95,9 @@ router.get('/', async (req, res) => {
     );
 
     res.json({
-      calculations: result.rows
+      calculations: result.rows,
       total: parseInt(countResult.rows[0].count)
-      limit: parseInt(limit)
+      limit: parseInt(limit),
       offset: parseInt(offset)
     });
 
@@ -250,9 +250,9 @@ router.delete('/:id', async (req, res) => {
 router.post('/calculate', async (req, res) => {
   try {
     const { error, value } = Joi.object({
-      initial_investment: Joi.number().positive().required()
-      current_value: Joi.number().positive().required()
-      time_period_months: Joi.number().integer().positive().optional()
+      initial_investment: Joi.number().positive().required(),
+      current_value: Joi.number().positive().required(),
+      time_period_months: Joi.number().integer().positive().optional(),
       calculation_type: Joi.string().valid(STR_SIMPLE, STR_ANNUALIZED, STR_COMPOUND).default(STR_SIMPLE)
     }).validate(req.body);
 
@@ -278,9 +278,9 @@ router.post('/calculate', async (req, res) => {
       gain
       gain_percentage
       roi_percentage
-      annualized_return
-      time_period_months
-      calculation_type
+      annualized_return,
+      time_period_months,
+      calculation_type,
       calculated_at: new Date().toISOString()
     });
 
@@ -305,13 +305,13 @@ router.get('/stats/overview', async (req, res) => {
     const overallROI = totalInvested > 0 ? (totalGain / totalInvested) * 100 : 0;
 
     res.json({
-      total_calculations: parseInt(stats[0].rows[0].total)
+      total_calculations: parseInt(stats[0].rows[0].total),
       average_roi: parseFloat(stats[1].rows[0].avg_roi) || 0
-      max_roi: parseFloat(stats[2].rows[0].max_roi) || 0
+      max_roi: parseFloat(stats[2].rows[0].max_roi) || 0,
       min_roi: parseFloat(stats[3].rows[0].min_roi) || 0
-      total_invested: totalInvested
+      total_invested: totalInvested,
       total_current_value: totalValue
-      total_gain: totalGain
+      total_gain: totalGain,
       overall_roi: overallROI
       calculation_types: stats[6].rows
     });

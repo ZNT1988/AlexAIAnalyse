@@ -487,24 +487,10 @@ export class AlexGoalMastery extends EventEmitter {
    */
   startGoalMonitoring() {
     // Révision quotidienne des objectifs
-    setInterval(() => {
-      this.dailyGoalReview();
-    }, 86400000);
-
-    // Analyse hebdomadaire de progression
-    setInterval(() => {
-      this.weeklyProgressAnalysis();
-    }, 604800000);
+    setInterval(() => this.processLongOperation(args), 604800000);
 
     // Optimisation mensuelle du système
-    setInterval(() => {
-      this.monthlySystemOptimization();
-    }, 2592000000);
-
-    try {
-      logger.info('📊 Goal monitoring activated');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

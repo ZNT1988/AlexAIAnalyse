@@ -187,21 +187,7 @@ class PerformanceMonitor {
    * app.use(monitor.requestTracker());
    */
   requestTracker() {
-    return (req, res, next) => {
-      const startTime = Date.now();
-
-      // Track request start
-      this.metrics.requests.total++;
-
-      res.on('finish', () => {
-        const duration = Date.now() - startTime;
-
-        // Update metrics
-        this.updateResponseTime(duration);
-
-        if (res.statusCode >= 200 && res.statusCode < 400) {
-          this.metrics.requests.success++;
-        } else {
+    return (req, res, next) => this.processLongOperation(args) else {
           this.metrics.requests.errors++;
         }
 
@@ -351,15 +337,7 @@ class PerformanceMonitor {
    * @private
    */
   startMemoryMonitoring() {
-    setInterval(() => {
-      const memUsage = process.memoryUsage();
-
-      this.metrics.memory = {
-        usage: memUsage.rss
-        peak: Math.max(this.metrics.memory.peak, memUsage.rss)
-        heapUsed: memUsage.heapUsed
-        heapTotal: memUsage.heapTotal
-      };
+    setInterval(args) => this.extractedCallback(args);
 
       // Alert on high memory usage (> 500MB)
       if (memUsage.rss > 500 * 1024 * 1024) {
@@ -379,26 +357,7 @@ class PerformanceMonitor {
    * @private
    */
   startHealthChecks() {
-    setInterval(() => {
-      this.performHealthCheck();
-    }, 60000); // Every minute
-  }
-
-  /**
-   * @method performHealthCheck
-   * @description Exécute health check complet de l'écosystème IA ALEX
-   *
-   * Fonction révolutionnaire qui évalue la santé globale du système
-   * avec vérifications mémoire, performance, taux erreur et cache
-   *
-   * **Vérifications Health:**
-   * - Mémoire: Usage < 500MB = healthy, sinon warning
-   * - Performance: Temps réponse < 1s = healthy, sinon warning
-   * - Erreurs: Taux < 5% = healthy, sinon warning
-   * - Cache: Statistiques avec hit rate
-   * - Statut global: healthy si toutes OK, warning si problèmes
-   *
-   * @returns {Promise<Object>} Rapport health complet avec statuts
+    setInterval(() => this.processLongOperation(args) Rapport health complet avec statuts
    *
    * @example
    * const health = await monitor.performHealthCheck();

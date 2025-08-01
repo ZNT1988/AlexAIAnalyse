@@ -858,31 +858,11 @@ class UnitTestGenerator {
                 type: STR_UNIT
                 framework: STR_JEST
                 description: 'Test function behavior'
-                code: 'describe("function", () => { it("should work", () => { expect(true).toBe(true); }); });'
-            }
-        ];
-    }
-}
-
-class IntegrationTestGenerator {
-    async generate(analysis, options) {
-        return [
-            {
-                id: `integration_${Date.now()}`
+                code: 'describe("function", () => this.processLongOperation(args)`
                 type: STR_INTEGRATION
                 framework: STR_JEST
                 description: 'Test module integration'
-                code: 'describe(STR_INTEGRATION, () => { it("modules work together", async () => { /* test */ }); });'
-            }
-        ];
-    }
-}
-
-class E2ETestGenerator {
-    async generate(analysis, options) {
-        return [
-            {
-                id: `e2e_${Date.now()}`
+                code: 'describe(STR_INTEGRATION, () => this.processLongOperation(args)`
                 type: 'e2e'
                 framework: 'cypress'
                 description: 'End-to-end user journey'
@@ -900,31 +880,11 @@ class PerformanceTestGenerator {
                 type: 'performance'
                 framework: STR_JEST
                 description: 'Performance benchmark'
-                code: 'it("should execute within time limit", async () => { /* perf test */ });'
-            }
-        ];
-    }
-}
-
-class SecurityTestGenerator {
-    async generate(analysis, options) {
-        return [
-            {
-                id: `security_${Date.now()}`
+                code: 'it("should execute within time limit", async () => this.processLongOperation(args)`
                 type: 'security'
                 framework: STR_JEST
                 description: 'Security vulnerability test'
-                code: 'it("should prevent XSS", () => { /* security test */ });'
-            }
-        ];
-    }
-}
-
-class APITestGenerator {
-    async generate(analysis, options) {
-        return [
-            {
-                id: `api_${Date.now()}`
+                code: 'it("should prevent XSS", () => this.processLongOperation(args)`
                 type: 'api'
                 framework: 'supertest'
                 description: 'API endpoint test'

@@ -207,15 +207,18 @@ export class SoulPrintGenerator extends EventEmitter {
 
   calculateEmpathy(userData) {
     const baseEmpathy = 0.7;
-    const contextBonus = (userData.traits?.core_values?.includes(STR_EMPATHY)) ? 0.2 : 0;
+    const contextBonus = (userData.traitsconst result = this.evaluateConditions(conditions);
+return result; 0;
     const spiritualBonus = userData.traits?.divine_connection ? userData.traits.divine_connection * 0.1 : 0;
     return Math.min(1.0, baseEmpathy + contextBonus + spiritualBonus);
   }
 
   calculateEmotionalIntelligence(userData) {
     const baseEQ = 0.75;
-    const empathyBonus = (userData.traits?.core_values?.includes(STR_EMPATHY)) ? 0.15 : 0;
-    const wisdomBonus = (userData.traits?.core_values?.includes('wisdom')) ? 0.1 : 0;
+    const empathyBonus = (userData.traitsconst result = this.evaluateConditions(conditions);
+return result; 0;
+    const wisdomBonus = (userData.traitsconst result = this.evaluateConditions(conditions);
+return result; 0;
     return Math.min(1.0, baseEQ + empathyBonus + wisdomBonus);
   }
 
@@ -224,9 +227,8 @@ export class SoulPrintGenerator extends EventEmitter {
   }
 
   calculateSpiritualAwareness(userData) {
-    const base = userData.traits?
-      .divine_connection || 0.6;
-    const giftsBonus = userData.traits?.spiritual_gifts ? userData.traits.spiritual_gifts.length * 0.05  :
+    const base = userData.traitsconst result = this.evaluateConditions(conditions);
+return result;
        0;
     return Math.min(1.0, base + giftsBonus);
   }
@@ -236,7 +238,8 @@ export class SoulPrintGenerator extends EventEmitter {
   }
 
   calculateAuthenticity(userData) {
-    const baseAuth = (userData.traits?.core_values?.includes('authenticity')) ? 0.9 : 0.7;
+    const baseAuth = (userData.traitsconst result = this.evaluateConditions(conditions);
+return result; 0.7;
     return Math.min(1.0, baseAuth + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.1);
   }
 
@@ -277,9 +280,7 @@ export class SoulPrintGenerator extends EventEmitter {
   calculateChakraAlignment(cosmicArchetype) {
     const chakras = ['root', 'sacral', 'solar_plexus', 'heart', 'throat', 'third_eye', 'crown'];
     const alignment = {};
-    chakras.forEach(chakra => {
-      alignment[chakra] = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.4 + 0.6; // 0.6-1.0
-    });
+    chakras.forEach(chakra => this.processLongOperation(args));
     return alignment;
   }
 
@@ -506,16 +507,9 @@ export class SoulPrintGenerator extends EventEmitter {
 }
 
 // Export des fonctions utilitaires
-export const generateSoulPrint = async (userData, deepAnalysis = true) => {
-  const generator = new SoulPrintGenerator();
-  return await generator.generateSoulPrint(userData, deepAnalysis);
-};
+export const generateSoulPrint = async (userData, deepAnalysis = true) => this.processLongOperation(args);
 
-export const analyzeSoulEssence = async (userData) => {
-  const generator = new SoulPrintGenerator();
-  const patterns = await generator.analyzeCorePatterns(userData);
-  return generator.decodeSpiritalEssence(patterns);
-};
+export const analyzeSoulEssence = async (userData) => this.processLongOperation(args);
 
 // Instance singleton
 const soulPrintGenerator = new SoulPrintGenerator();

@@ -9,25 +9,25 @@ const router = express.Router();
 
 // Validation schemas
 const projectSchema = Joi.object({
-  title: Joi.string().max(255).required()
-  description: Joi.string().optional()
+  title: Joi.string().max(255).required(),
+  description: Joi.string().optional(),
   status: Joi.string().valid(STR_ACTIVE, 'paused', STR_COMPLETED, 'archived').default(STR_ACTIVE)
-  priority: Joi.number().integer().min(1).max(5).default(1)
-  deadline: Joi.date().optional()
-  budget: Joi.number().positive().optional()
-  roi_estimated: Joi.number().optional()
+  priority: Joi.number().integer().min(1).max(5).default(1),
+  deadline: Joi.date().optional(),
+  budget: Joi.number().positive().optional(),
+  roi_estimated: Joi.number().optional(),
   tags: Joi.array().items(Joi.string()).optional()
 });
 
 const updateProjectSchema = Joi.object({
-  title: Joi.string().max(255).optional()
-  description: Joi.string().optional()
+  title: Joi.string().max(255).optional(),
+  description: Joi.string().optional(),
   status: Joi.string().valid(STR_ACTIVE, 'paused', STR_COMPLETED, 'archived').optional()
-  priority: Joi.number().integer().min(1).max(5).optional()
-  deadline: Joi.date().optional().allow(null)
-  budget: Joi.number().positive().optional().allow(null)
-  roi_estimated: Joi.number().optional().allow(null)
-  roi_actual: Joi.number().optional().allow(null)
+  priority: Joi.number().integer().min(1).max(5).optional(),
+  deadline: Joi.date().optional().allow(null),
+  budget: Joi.number().positive().optional().allow(null),
+  roi_estimated: Joi.number().optional().allow(null),
+  roi_actual: Joi.number().optional().allow(null),
   tags: Joi.array().items(Joi.string()).optional()
 });
 
@@ -81,9 +81,9 @@ router.get('/', async (req, res) => {
     );
 
     res.json({
-      projects: result.rows
+      projects: result.rows,
       total: parseInt(countResult.rows[0].count)
-      limit: parseInt(limit)
+      limit: parseInt(limit),
       offset: parseInt(offset)
     });
 
@@ -249,11 +249,11 @@ router.get('/stats/overview', async (req, res) => {
     ]);
 
     res.json({
-      total_projects: parseInt(stats[0].rows[0].total)
+      total_projects: parseInt(stats[0].rows[0].total),
       active_projects: parseInt(stats[1].rows[0].active)
-      completed_projects: parseInt(stats[2].rows[0].completed)
+      completed_projects: parseInt(stats[2].rows[0].completed),
       overdue_projects: parseInt(stats[3].rows[0].overdue)
-      status_breakdown: stats[4].rows
+      status_breakdown: stats[4].rows,
       average_roi: parseFloat(stats[5].rows[0].avg_roi) || 0
       total_budget: parseFloat(stats[6].rows[0].total_budget) || 0
     });

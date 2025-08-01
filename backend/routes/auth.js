@@ -8,26 +8,26 @@ const router = express.Router();
 
 // Constants
 const ERROR_MESSAGES = {
-  USER_NOT_FOUND: 'User not found'
-  FETCH_PROFILE_FAILED: 'Failed to fetch user profile'
-  UPDATE_PROFILE_FAILED: 'Failed to update user profile'
-  FETCH_PREFERENCES_FAILED: 'Failed to fetch preferences'
-  UPDATE_PREFERENCES_FAILED: 'Failed to update preferences'
-  DELETE_ACCOUNT_FAILED: 'Failed to delete account'
+  USER_NOT_FOUND: 'User not found',
+  FETCH_PROFILE_FAILED: 'Failed to fetch user profile',
+  UPDATE_PROFILE_FAILED: 'Failed to update user profile',
+  FETCH_PREFERENCES_FAILED: 'Failed to fetch preferences',
+  UPDATE_PREFERENCES_FAILED: 'Failed to update preferences',
+  DELETE_ACCOUNT_FAILED: 'Failed to delete account',
   VALIDATION_ERROR: 'Invalid input data'
 };
 
 // Validation schemas
 const updateProfileSchema = Joi.object({
-  firstName: Joi.string().min(1).max(50).required()
+  firstName: Joi.string().min(1).max(50).required(),
   lastName: Joi.string().min(1).max(50).required()
 });
 
 const updatePreferencesSchema = Joi.object({
   theme: Joi.string().valid('light', 'dark', 'cosmic').optional()
-  language: Joi.string().min(2).max(5).optional()
-  timezone: Joi.string().max(50).optional()
-  notifications_enabled: Joi.boolean().optional()
+  language: Joi.string().min(2).max(5).optional(),
+  timezone: Joi.string().max(50).optional(),
+  notifications_enabled: Joi.boolean().optional(),
   ai_assistance_level: Joi.number().min(0).max(1).optional()
 });
 
@@ -46,11 +46,10 @@ router.get('/profile', requireAuth(), async (req, res) => {
       // User not in database yet, create them
       const userInfo = {
         clerkId
-        email: req.auth.sessionClaims?.email || ''
+        email: req.auth.sessionClaims?.email || '',
         firstName: req.auth.sessionClaims?.firstName || ''
-        lastName: req.auth.sessionClaims?.lastName || ''
-        imageUrl: req.auth.sessionClaims?
-      .imageUrl || ''
+        lastName: req.auth.sessionClaims?.lastName || '',
+        imageUrl: req.auth.sessionClaims?.imageUrl || ''
       };
 
       const createResult = await query(
@@ -82,7 +81,7 @@ router.put('/profile', requireAuth(), async (req, res) => {
     const { error, value } = updateProfileSchema.validate(req.body);
     if (error) {
       return res.status(400).json({
-        error: ERROR_MESSAGES.VALIDATION_ERROR
+        error: ERROR_MESSAGES.VALIDATION_ERROR,
         details: error.details[0].message
       });
     }
@@ -153,7 +152,7 @@ router.put('/preferences', requireAuth(), async (req, res) => {
     const { error, value } = updatePreferencesSchema.validate(req.body);
     if (error) {
       return res.status(400).json({
-        error: ERROR_MESSAGES.VALIDATION_ERROR
+        error: ERROR_MESSAGES.VALIDATION_ERROR,
         details: error.details[0].message
       });
     }

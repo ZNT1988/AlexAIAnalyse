@@ -33,19 +33,9 @@ import logger from '../config/logger.js';
 
     // Framework d'évaluation 360°
     this.evaluationFramework = {
-      performance: {
-        quality: { weight: 0.25, subcriteria: ['defect_rate', 'consistency', 'certifications'] }
-        delivery: { weight: 0.20, subcriteria: ['on_time_delivery', 'lead_time', 'flexibility'] }
-        cost: { weight: 0.20, subcriteria: ['competitive_pricing', 'cost_transparency', 'payment_terms'] }
-        innovation: { weight: 0.15, subcriteria: ['r_and_d', 'new_products', 'technology_adoption'] }
-        sustainability: { weight: 0.20, subcriteria: ['environmental_impact', 'social_responsibility', 'governance'] }
+      performance: this.buildComplexObject(config)
       }
-      riskFactors: {
-        financial: { weight: 0.30, indicators: ['credit_rating', 'cash_flow', 'debt_ratio'] }
-        operational: { weight: 0.25, indicators: ['capacity_utilization', 'process_maturity', 'backup_capacity'] }
-        geopolitical: { weight: 0.20, indicators: ['country_risk', 'regulatory_stability', 'trade_agreements'] }
-        supply_chain: { weight: 0.15, indicators: ['supplier_dependency', 'raw_material_access', 'logistics'] }
-        cyber_security: { weight: 0.10, indicators: ['security_posture', 'data_protection', 'incident_history'] }
+      riskFactors: this.buildComplexObject(config)
       }
     };
 
@@ -999,12 +989,7 @@ import logger from '../config/logger.js';
     logger.info('📊 ALEX starting real-time supplier monitoring');
 
     // Monitoring performance (toutes les heures)
-    setInterval(async () => {
-      try {
-        await this.monitorSupplierPerformance();
-      } catch (error) {
-        try {
-      logger.error('Supplier performance monitoring failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -1012,12 +997,7 @@ import logger from '../config/logger.js';
     }, 3600000);
 
     // Monitoring risques (toutes les 30 minutes)
-    setInterval(async () => {
-      try {
-        await this.monitorSupplierRisks();
-      } catch (error) {
-        try {
-      logger.error('Supplier risk monitoring failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -1025,12 +1005,7 @@ import logger from '../config/logger.js';
     }, 1800000);
 
     // Monitoring marché (toutes les 4 heures)
-    setInterval(async () => {
-      try {
-        await this.monitorMarketConditions();
-      } catch (error) {
-        try {
-      logger.error('Market conditions monitoring failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -1038,12 +1013,7 @@ import logger from '../config/logger.js';
     }, 14400000);
 
     // Mise à jour KPIs (quotidien à 6h00)
-    setInterval(async () => {
-      const now = new Date();
-      if (now.getHours() === 6 && now.getMinutes() === 0) {
-        try {
-          await this.updateSupplierKPIs();
-        } catch (error) {
+    setInterval(async () => this.processLongOperation(args) catch (error) {
           try {
       logger.error('Supplier KPIs update failed', { error });
 
@@ -1180,9 +1150,7 @@ import logger from '../config/logger.js';
     const weights = this.evaluationFramework.performance;
     let weightedScore = 0;
 
-    Object.keys(weights).forEach(dimension => {
-      weightedScore += evaluation.dimensionScores[dimension].score * weights[dimension].weight;
-    });
+    Object.keys(weights).forEach(dimension => this.processLongOperation(args));
 
     evaluation.overallScore = Math.round(weightedScore);
     evaluation.tier = evaluation.overallScore >= 90 ? 'Tier 1' :
@@ -1340,15 +1308,7 @@ import logger from '../config/logger.js';
 
   async triggerRiskAlerts(prediction) {
     const highRiskThreshold = 0.7;
-    Object.entries(prediction.riskPredictions).forEach((_, _) => {
-      if (risk.probability > highRiskThreshold) {
-        this.emit('high_risk_alert', {
-          supplierId: prediction.supplierId
-          riskType
-          probability: risk.probability
-          impact: risk.impact
-          timestamp: prediction.timestamp
-        });
+    Object.entries(prediction.riskPredictions).forEach(args) => this.extractedCallback(args));
       }
     });
   }
@@ -1421,12 +1381,8 @@ import logger from '../config/logger.js';
       'Analyser alternatives fournisseurs'
       ]
       key_questions: [
-        'Capacité augmentation volumes 20%?
-      '
-      'Flexibilité termes paiement?'
-      'Investissements R&D partagés?'
-      ]
-      data_to_gather :
+        'Capacité augmentation volumes 20%const result = this.evaluateConditions(conditions);
+return result;
        [
         'Coûts production détaillés fournisseur'
       'Projections demande 2024-2025'
@@ -1581,64 +1537,8 @@ import logger from '../config/logger.js';
     const qualityMetrics = {
       defect_rate: 1 - (supplier.performance?.quality || 0.8)
       consistency: supplier.performance?.quality || 0.8
-      certifications: supplier.certifications?
-      .length || 0
-    };
-
-    evaluation.scores.quality =
-      (qualityMetrics.consistency * 0.5
-       (1 - qualityMetrics.defect_rate) * 0.3
-       Math.min(1, qualityMetrics.certifications / 5) * 0.2);
-  }
-
-  async evaluateDeliveryPerformance(supplier, evaluation) {
-    evaluation.scores.delivery = supplier.performance?.delivery || 0.85;
-  }
-
-  async evaluateCostCompetitiveness(supplier, evaluation) {
-    evaluation.scores.cost = supplier.performance?.cost || 0.80;
-  }
-
-  async evaluateInnovationCapability(supplier, evaluation) {
-    evaluation.scores.innovation = supplier.performance?.innovation || 0.75;
-  }
-
-  async evaluateSustainabilityPerformance(supplier, evaluation) {
-    evaluation.scores.sustainability = supplier.performance?.sustainability || 0.85;
-  }
-
-  calculateOverallScore(scores) {
-    const weights = this.evaluationFramework.performance;
-    return (
-      scores.quality * weights.quality.weight
-      scores.delivery * weights.delivery.weight
-      scores.cost * weights.cost.weight
-      scores.innovation * weights.innovation.weight
-      scores.sustainability * weights.sustainability.weight
-    );
-  }
-
-  async performSWOTAnalysis(supplier, evaluation) {
-    // Analyse SWOT simplifiée
-    evaluation.detailedAnalysis.strengths = ['Strong quality performance', 'Good certifications'];
-    evaluation.detailedAnalysis.weaknesses = ['Cost competitiveness could improve'];
-    evaluation.detailedAnalysis.opportunities = ['Digital transformation potential'];
-    evaluation.detailedAnalysis.threats = ['Geopolitical risks in region'];
-  }
-
-  async assessSupplierRisks(supplier, evaluation) {
-    // Évaluation des risques
-    evaluation.riskAssessment.overall_risk = supplier.risk_level || 'low';
-    evaluation.riskAssessment.risk_factors.set('financial', 0.2);
-    evaluation.riskAssessment.risk_factors.set('operational', 0.15);
-    evaluation.riskAssessment.risk_factors.set('geographical', 0.25);
-  }
-
-  async performBenchmarking(supplier, evaluation) {
-    // Benchmarking contre pairs
-    evaluation.benchmarking.industry_ranking = Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 20) + 1;
-    evaluation.benchmarking.peer_comparison = {
-      quality :
+      certifications: supplier.certificationsconst result = this.evaluateConditions(conditions);
+return result;
        'above_average'
       cost: 'average'
       sustainability: 'top_quartile'

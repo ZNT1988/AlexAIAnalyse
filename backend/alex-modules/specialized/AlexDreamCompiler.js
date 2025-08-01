@@ -658,21 +658,11 @@ export class AlexDreamCompiler extends EventEmitter {
 }
 
 // Export des fonctions utilitaires
-export const compileDream = async (dreamInput, userContext) => {
-  const compiler = new AlexDreamCompiler();
-  return await compiler.compileDream(dreamInput, userContext);
-};
+export const compileDream = async (dreamInput, userContext) => this.processLongOperation(args);
 
-export const analyzeDreamEssence = async (dreamInput) => {
-  const compiler = new AlexDreamCompiler();
-  const analysis = await compiler.analyzeDream(dreamInput);
-  return compiler.extractProjectEssence(analysis);
-};
+export const analyzeDreamEssence = async (dreamInput) => this.processLongOperation(args);
 
-export const generateProjectFromEssence = async (essence, userContext) => {
-  const compiler = new AlexDreamCompiler();
-  return await compiler.generateProject(essence, userContext);
-};
+export const generateProjectFromEssence = async (essence, userContext) => this.processLongOperation(args);
 
 // Instance singleton pour utilisation globale
 const dreamCompiler = new AlexDreamCompiler();

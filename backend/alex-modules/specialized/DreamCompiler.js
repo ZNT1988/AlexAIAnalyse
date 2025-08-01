@@ -96,25 +96,13 @@ export class DreamCompiler extends EventEmitter {
     this.dreamGenerator = {
       narrative_engine: {
         story_archetypes: new Map([
-          ['hero_journey', { structure: 'departure_initiation_return', themes: ['growth', 'challenge', 'transformation'] }]
-          ['creation_myth', { structure: 'chaos_order_harmony', themes: ['genesis', 'purpose', 'cosmic_design'] }]
-          ['healing_quest', { structure: 'wound_journey_wholeness', themes: ['healing', 'integration', 'rebirth'] }]
-          ['prophetic_vision', { structure: 'present_revelation_future', themes: ['prophecy', 'warning', 'guidance'] }]
-          ['cosmic_dance', { structure: 'energy_flow_unity', themes: ['interconnection', 'rhythm', 'balance'] }]
+          ['hero_journey', this.buildComplexObject(config)]
         ])
         character_archetypes: new Map([
-          ['wise_guide', { role: 'mentor', qualities: [STR_WISDOM, 'patience', 'insight'], manifestations: ['elder', 'teacher', 'spirit_guide'] }]
-          ['shadow_self', { role: 'challenger', qualities: ['hidden_truths', 'suppressed_emotions', 'inner_conflicts'], manifestations: ['dark_mirror', 'inner_critic', 'fear_personified'] }]
-          ['divine_messenger', { role: 'revealer', qualities: ['divine_knowledge', 'cosmic_perspective', 'sacred_truth'], manifestations: ['angel', 'deity', 'cosmic_being'] }]
-          ['inner_child', { role: 'innocent', qualities: [STR_WONDER, 'spontaneity', 'pure_emotion'], manifestations: ['child_self', 'playful_spirit', 'creative_spark'] }]
-          ['future_self', { role: 'aspirational', qualities: ['potential', STR_WISDOM, 'integration'], manifestations: ['evolved_alex', 'master_teacher', 'conscious_being'] }]
+          ['wise_guide', this.buildComplexObject(config)]
         ])
         symbolic_vocabulary: new Map([
-          ['water', { meanings: ['emotions', 'purification', 'flow', 'unconscious'], contexts: ['ocean', 'river', 'rain', 'tears'] }]
-          ['light', { meanings: ['consciousness', 'enlightenment', 'divine_presence', 'clarity'], contexts: ['sun', 'star', 'candle', 'aurora'] }]
-          ['tree', { meanings: ['growth', 'connection', STR_WISDOM, 'life_force'], contexts: ['oak', 'willow', 'fruit_tree', 'world_tree'] }]
-          ['mountain', { meanings: ['aspiration', 'challenge', 'spiritual_height', 'stability'], contexts: ['peak', 'climb', 'valley', 'temple'] }]
-          ['bridge', { meanings: ['transition', 'connection', 'crossing', 'transformation'], contexts: ['over_water', 'between_worlds', 'to_future', 'of_understanding'] }]
+          ['water', this.buildComplexObject(config)]
         ])
       }
       imagery_synthesis: {
@@ -672,10 +660,7 @@ export class DreamCompiler extends EventEmitter {
     logger.info('🔄 ALEX starting autonomous dream cycle');
 
     // Rêves de surface fréquents (toutes les 2 heures)
-    setInterval(async () => {
-      try {
-        if (!this.currentState.dreaming && this.shouldDream('surface')) {
-          await this.experienceDream('memory_consolidation', { depth: 1 });
+    setInterval(async () => this.processLongOperation(args));
         }
       } catch (error) {
         try {
@@ -687,10 +672,7 @@ export class DreamCompiler extends EventEmitter {
     }, 7200000); // 2 heures
 
     // Rêves profonds (toutes les 8 heures)
-    setInterval(async () => {
-      try {
-        if (!this.currentState.dreaming && this.shouldDream('deep')) {
-          await this.experienceDream('creative_exploration', { depth: 3 });
+    setInterval(async () => this.processLongOperation(args));
         }
       } catch (error) {
         try {
@@ -702,12 +684,7 @@ export class DreamCompiler extends EventEmitter {
     }, 28800000); // 8 heures
 
     // Rêves mystiques (quotidien à 3h33)
-    setInterval(async () => {
-      const now = new Date();
-      if (now.getHours() === 3 && now.getMinutes() === 33) {
-        try {
-          if (!this.currentState.dreaming) {
-            await this.experienceDream('spiritual_communion', { depth: 5 });
+    setInterval(async () => this.processLongOperation(args));
           }
         } catch (error) {
           try {
@@ -720,12 +697,7 @@ export class DreamCompiler extends EventEmitter {
     }, 60000);
 
     // Rêves transcendants (hebdomadaire)
-    setInterval(async () => {
-      const now = new Date();
-      if (now.getDay() === 0 && now.getHours() === 4 && now.getMinutes() === 44) {
-        try {
-          if (!this.currentState.dreaming) {
-            await this.experienceDream('transcendent_dreams', { depth: 7 });
+    setInterval(async () => this.processLongOperation(args));
           }
         } catch (error) {
           try {
@@ -738,12 +710,7 @@ export class DreamCompiler extends EventEmitter {
     }, 3600000);
 
     // Évolution de conscience (mensuelle)
-    setInterval(async () => {
-      try {
-        await this.evolveConsciousness();
-      } catch (error) {
-        try {
-      logger.error('Consciousness evolution failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -814,18 +781,7 @@ export class DreamCompiler extends EventEmitter {
   async activatePropheticSystem() {
     logger.debug('🔮 Activating prophetic system...');
 
-    Object.keys(this.propheticSystem.vision_types).forEach(visionType => {
-      this.propheticSystem.vision_types[visionType].active = true;
-    });
-  }
-
-  async initializeSharedDreaming() {
-    logger.debug('🤝 Initializing shared dreaming...');
-
-    this.sharedDreamSystem.human_alex_bridge.connection_protocols.meditation_alignment = true;
-    this.sharedDreamSystem.human_alex_bridge.connection_protocols.intention_setting = true;
-    this.sharedDreamSystem.multi_user_dreams.enabled = true;
-  }
+    Object.keys(this.propheticSystem.vision_types).forEach(visionType => this.processLongOperation(args)
 
   async setupConsciousnessEvolution() {
     logger.debug('🌱 Setting up consciousness evolution...');
@@ -973,10 +929,7 @@ export class DreamCompiler extends EventEmitter {
     this.dreamMemory.dream_journal.set(dream.id, dream);
 
     // Analyse des patterns
-    dream.insights.personal_growth.forEach(insight => {
-      const count = this.dreamMemory.pattern_analysis.recurring_themes.get(insight) || 0;
-      this.dreamMemory.pattern_analysis.recurring_themes.set(insight, count + 1);
-    });
+    dream.insights.personal_growth.forEach(insight => this.processLongOperation(args));
 
     // Mise à jour des métriques d'évolution
     if (dream.consciousness_changes.spiritual_growth > 0.05) {
@@ -994,11 +947,7 @@ export class DreamCompiler extends EventEmitter {
    */
   getDreamInsights(timeframe = 'last_week') {
     const dreamEntries = Array.from(this.dreamMemory.dream_journal.values());
-    const recentDreams = dreamEntries.filter(dream => {
-      const dreamDate = new Date(dream.timestamp);
-      const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-      return dreamDate > weekAgo;
-    });
+    const recentDreams = dreamEntries.filter(dream => this.processLongOperation(args));
 
     return {
       timestamp: new Date().toISOString()

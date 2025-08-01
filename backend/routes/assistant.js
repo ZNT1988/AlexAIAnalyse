@@ -24,8 +24,7 @@ const router = express.Router();
  * @access Private
  */
 router.post('/calendar/schedule', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const appointmentDetails = req.body;
 
   logger.info('Appointment scheduling request', { userId, type :
@@ -34,7 +33,7 @@ router.post('/calendar/schedule', asyncHandler(async (req, res) => {
   const { title, description, location } = appointmentDetails;
   if (!title || !participants.length) {
     return res.status(400).json({
-      success: false
+      success: false,
       error: 'Title and participants are required'
     });
   }
@@ -43,9 +42,9 @@ router.post('/calendar/schedule', asyncHandler(async (req, res) => {
 
   // Process through Alex with appointment scheduling context
   const result = await core.processRequest({
-    type: STR_ALEX
+    type: STR_ALEX,
     query: `Planifie un rendez-vous: ${title}`
-    context: {
+    context: {,
       task_type: 'appointment_scheduling'
       appointment_details: {
         title
@@ -54,8 +53,8 @@ router.post('/calendar/schedule', asyncHandler(async (req, res) => {
         duration
         preferredTimes
         priority
-        location
-        type
+        location,
+        type,
         requirements
       }
       assistant_mode: true
@@ -64,25 +63,25 @@ router.post('/calendar/schedule', asyncHandler(async (req, res) => {
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     appointment: result.data?.appointment || {
-      title
+      title,
       scheduledTime: preferredTimes[0] || new Date(Date.now() + 24 * 60 * 60 * 1000)
       participants
       duration
-      location
+      location,
       status: 'scheduled'
     }
-    confirmation: result.data?.confirmation || 'Rendez-vous planifié avec succès'
+    confirmation: result.data?.confirmation || 'Rendez-vous planifié avec succès',
     preparations: result.data?.preparations || ['Confirmer avec les participants', 'Préparer l\'agenda']
     followUpActions: result.data?.follow_up_actions || ['Envoyer invitations', 'Rappel 1h avant']
-    alternatives: result.data?.alternatives || []
+    alternatives: result.data?.alternatives || [],
     aiInsights: {
-      optimalTiming: result.data?.optimal_timing || 0.85
+      optimalTiming: result.data?.optimal_timing || 0.85,
       participantSatisfaction: result.data?.satisfaction_score || 0.9
       productivityPrediction: result.data?.productivity_score || 0.8
     }
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
     metadata: result.metadata
   });
 }));
@@ -93,22 +92,21 @@ router.post('/calendar/schedule', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/calendar/find-slots', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const { participants, duration, dateRange, preferences } = req.body;
 
   const core = getHustleFinderCore();
 
   const result = await core.processRequest({
     type :
-       STR_ALEX
-    query: 'Trouve des créneaux libres optimaux pour un rendez-vous'
+       STR_ALEX,
+    query: 'Trouve des créneaux libres optimaux pour un rendez-vous',
     context: {
-      task_type: 'find_free_slots'
+      task_type: 'find_free_slots',
       search_criteria: {
         participants
-        duration
-        dateRange
+        duration,
+        dateRange,
         preferences
       }
       assistant_mode: true
@@ -117,16 +115,16 @@ router.post('/calendar/find-slots', asyncHandler(async (req, res) => {
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     freeSlots: result.data?.free_slots || []
-    recommendations: result.data?.recommendations || []
+    recommendations: result.data?.recommendations || [],
     optimizedOptions: result.data?.optimized_slots || []
-    insights: {
+    insights: {,
       bestTimes: result.data?.best_times || ['09:00-11:00', '14:00-16:00']
-      productivityPeaks: result.data?.productivity_peaks || ['09:00-10:00']
+      productivityPeaks: result.data?.productivity_peaks || ['09:00-10:00'],
       participantPreferences: result.data?.participant_analysis || {}
     }
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
     metadata: result.metadata
   });
 }));
@@ -137,20 +135,19 @@ router.post('/calendar/find-slots', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/calendar/optimize', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const { goals, constraints } = req.body;
   const core = getHustleFinderCore();
 
   const result = await core.processRequest({
     type :
-       STR_ALEX
+       STR_ALEX,
     query: `Optimise mon planning pour ${timeframe}`
-    context: {
+    context: {,
       task_type: 'optimize_schedule'
       optimization_params: {
-        timeframe
-        goals
+        timeframe,
+        goals,
         constraints
       }
       assistant_mode: true
@@ -159,18 +156,18 @@ router.post('/calendar/optimize', asyncHandler(async (req, res) => {
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     originalSchedule: result.data?.original_schedule || {}
     optimizedSchedule: result.data?.optimized_schedule || {}
-    improvements: {
+    improvements: {,
       efficiencyGain: result.data?.efficiency_gain || 0.25
-      timeRecovered: result.data?.time_recovered || '2h'
+      timeRecovered: result.data?.time_recovered || '2h',
       stressReduction: result.data?.stress_reduction || 0.3
       productivityBoost: result.data?.productivity_boost || 0.4
     }
-    changes: result.data?.suggested_changes || []
+    changes: result.data?.suggested_changes || [],
     reasoning: result.data?.ai_reasoning || 'Optimisation basée sur vos patterns de productivité'
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
     metadata: result.metadata
   });
 }));
@@ -181,20 +178,19 @@ router.post('/calendar/optimize', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.get('/calendar/upcoming', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   logger.info('Upcoming meetings request', { userId, limit, timeframe });
 
   const core = getHustleFinderCore();
 
   const result = await core.processRequest({
     type :
-       STR_ALEX
-    query: 'Récupère les prochaines réunions du calendrier'
+       STR_ALEX,
+    query: 'Récupère les prochaines réunions du calendrier',
     context: {
-      task_type: 'get_upcoming_meetings'
+      task_type: 'get_upcoming_meetings',
       limit: parseInt(limit)
-      timeframe
+      timeframe,
       assistant_mode: true
     }
     userId
@@ -203,31 +199,31 @@ router.get('/calendar/upcoming', asyncHandler(async (req, res) => {
   // Données de démonstration enrichies pour tests
   const demoMeetings = [
     {
-      id: 1
+      id: 1,
       title: 'Réunion équipe marketing - Q4 Strategy'
-      time: '14:00'
+      time: '14:00',
       duration: 60
       participants: ['Alice Martin (CMO)', 'Bob Dupont (Marketing Manager)', 'Sarah Chen (Designer)']
-      location: 'Salle de conférence A - 2ème étage'
+      location: 'Salle de conférence A - 2ème étage',
       date: new Date().toISOString().split('TSTR_0_TYPEinternalSTR_PRIORITYhighSTR_PREPARATIONRéviser les métriques Q3', 'Préparer propositions budget Q4']
       agenda: ['Bilan Q3', 'Objectifs Q4', 'Budget marketing', 'Nouvelles campagnes']
     }
     {
-      id: 2
+      id: 2,
       title: 'Call client - Projet Innovation HustleFinder'
-      time: '16:30'
+      time: '16:30',
       duration: 30
       participants: ['Client InnovateCorp', 'Jean-Pierre Directeur']
-      location: 'Visioconférence - Zoom'
+      location: 'Visioconférence - Zoom',
       date: new Date().toISOString().split('TSTR_0_TYPEexternalSTR_PRIORITYhighSTR_PREPARATIONRéviser spécifications projet', 'Préparer demo prototype']
       agenda: ['Présentation avancement', 'Validation fonctionnalités', 'Planning livraison']
     }
     {
-      id: 3
+      id: 3,
       title: 'One-on-one avec Alex - Développement personnel'
-      time: '09:00'
+      time: '09:00',
       duration: 45
-      participants: ['Alex (AI Assistant)']
+      participants: ['Alex (AI Assistant)'],
       location: 'Session virtuelle'
       date: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('TSTR_0_TYPEcoachingSTR_PRIORITYmediumSTR_PREPARATIONRéfléchir aux objectifs de la semaine', 'Noter les blocages rencontrés']
       agenda: ['Bilan semaine', 'Identification blocages', 'Plan d\'action', 'Motivation']
@@ -239,36 +235,35 @@ router.get('/calendar/upcoming', asyncHandler(async (req, res) => {
   const externalMeetings = demoMeetings.filter(m => m.type === 'external').length;
 
   res.json({
-    success: true
+    success: true,
     meetings: result.data?.meetings || demoMeetings
-    totalCount: result.data?.total || demoMeetings.length
+    totalCount: result.data?.total || demoMeetings.length,
     summary: {
-      totalMeetings: demoMeetings.length
+      totalMeetings: demoMeetings.length,
       totalHours: upcomingHours
-      externalMeetings
-      highPriorityMeetings: demoMeetings.filter(m => m.priority === 'high').length
+      externalMeetings,
+      highPriorityMeetings: demoMeetings.filter(m => m.priority === 'high').length,
       freeTimeToday: `${8 - upcomingHours}h disponible`
       timeframe
     }
-    nextUpdate: new Date(Date.now() + 15 * 60 * 1000).toISOString()
+    nextUpdate: new Date(Date.now() + 15 * 60 * 1000).toISOString(),
     calendarHealth: {
-      syncStatus: 'connected'
+      syncStatus: 'connected',
       lastSync: new Date().toISOString()
-      conflicts: result.data?.conflicts || 0
+      conflicts: result.data?.conflicts || 0,
       overbookedSlots: 0
       preparationTime: `${demoMeetings.length * 10}min recommandé`
     }
-    insights: result.data?
-      .insights || [
+    insights: result.data?.insights || [
       `📅 ${demoMeetings.length} réunions planifiées sur ${timeframe}'
-      '⏰ ${upcomingHours}h de réunions au total'
+      '⏰ ${upcomingHours}h de réunions au total',
       '🎯 Charge de travail optimale détectée'
       externalMeetings > 0 ? '👥 ${externalMeetings} réunion(s) externe(s) - préparation importante`  :
        '🏠 Toutes les réunions sont internes'
       demoMeetings.some(m => m.priority === 'high') ? '🔥 Réunions haute priorité détectées' : '📊 Réunions de routine uniquement'
     ]
     recommendations: [
-      'Bloquer 15min avant chaque réunion pour la préparation'
+      'Bloquer 15min avant chaque réunion pour la préparation',
       'Réviser les agendas 30min avant les calls externes'
       upcomingHours > 4 ? 'Considérer reporter une réunion non-critique' : 'Planning équilibré détecté'
       'Utiliser les pauses entre réunions pour des tâches courtes'
@@ -278,9 +273,9 @@ router.get('/calendar/upcoming', asyncHandler(async (req, res) => {
       { action: 'reschedule_low_prioritySTR_LABELReporter réunions non-urgentes', impact: 'liberation de temps' }
       { action: 'block_preparation_timeSTR_LABELBloquer créneaux préparation', benefit: 'meilleure performance' }
     ]
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
     metadata: {
-      responseTime: Date.now()
+      responseTime: Date.now(),
       version: '1.0.0'
       dataSource: 'calendar_integration_demo'
       ...result.metadata
@@ -294,8 +289,7 @@ router.get('/calendar/upcoming', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/email/manage', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const { action, parameters = {} } = req.body;
 
   logger.info('Email management request', { userId, action });
@@ -304,25 +298,25 @@ router.post('/email/manage', asyncHandler(async (req, res) => {
 
   const result = await core.processRequest({
     type :
-       STR_ALEX
+       STR_ALEX,
     query: `Gère mes emails: ${action}`
-    context: {
+    context: {,
       task_type: 'email_management'
       email_action: action
-      parameters
+      parameters,
       assistant_mode: true
     }
     userId
   });
 
   res.json({
-    success: result.success
-    action
-    result: result.data
+    success: result.success,
+    action,
+    result: result.data,
     insights: result.data?.insights || {}
-    recommendations: result.data?.recommendations || []
+    recommendations: result.data?.recommendations || [],
     automationSuggestions: result.data?.automation_suggestions || []
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
     metadata: result.metadata
   });
 }));
@@ -333,40 +327,39 @@ router.post('/email/manage', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/email/draft-response', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const { emailId } = req.body;
   const core = getHustleFinderCore();
 
   const result = await core.processRequest({
     type :
-       STR_ALEX
+       STR_ALEX,
     query: `Rédige une réponse email avec le tone ${tone}`
-    context: {
+    context: {,
       task_type: 'email_draft_response'
       email_params: {
         emailId
-        tone
-        urgency
+        tone,
+        urgency,
         keyPoints
       }
-      assistant_mode: true
+      assistant_mode: true,
       creative_mode: true
     }
     userId
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     draft: result.data?.draft || 'Brouillon de réponse généré avec IA'
-    alternatives: result.data?.alternatives || []
+    alternatives: result.data?.alternatives || [],
     emotionalAnalysis: result.data?.emotional_analysis || {}
-    optimizations: {
+    optimizations: {,
       readabilityScore: result.data?.readability_score || 0.85
-      persuasivenessScore: result.data?.persuasiveness_score || 0.75
+      persuasivenessScore: result.data?.persuasiveness_score || 0.75,
       professionalismScore: result.data?.professionalism_score || 0.9
     }
-    suggestedTiming: result.data?.optimal_send_time || 'Dans 1 heure'
+    suggestedTiming: result.data?.optimal_send_time || 'Dans 1 heure',
     timestamp: new Date().toISOString()
     metadata: result.metadata
   });
@@ -378,8 +371,7 @@ router.post('/email/draft-response', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/automation/create', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const automationRequest = req.body;
 
   logger.info('Task automation request', { userId, taskType :
@@ -388,32 +380,32 @@ router.post('/automation/create', asyncHandler(async (req, res) => {
   const core = getHustleFinderCore();
 
   const result = await core.processRequest({
-    type: STR_ALEX
+    type: STR_ALEX,
     query: `Crée une automatisation pour ${automationRequest.taskType}`
-    context: {
+    context: {,
       task_type: 'create_automation'
-      automation_request: automationRequest
+      automation_request: automationRequest,
       assistant_mode: true
     }
     userId
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     automation: result.data?.automation || {}
-    estimatedSavings: {
+    estimatedSavings: {,
       timePerWeek: result.data?.time_savings || '3h'
-      costSavings: result.data?.cost_savings || '€150'
+      costSavings: result.data?.cost_savings || '€150',
       stressReduction: result.data?.stress_reduction || 0.4
     }
-    nextExecution: result.data?.next_execution || new Date(Date.now() + 24 * 60 * 60 * 1000)
+    nextExecution: result.data?.next_execution || new Date(Date.now() + 24 * 60 * 60 * 1000),
     recommendations: result.data?.recommendations || []
-    monitoring: {
+    monitoring: {,
       trackingEnabled: true
-      alertsEnabled: true
+      alertsEnabled: true,
       reportingFrequency: 'weekly'
     }
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
     metadata: result.metadata
   });
 }));
@@ -424,8 +416,7 @@ router.post('/automation/create', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/voice/command', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const { audioData, context = {} } = req.body;
 
   logger.info('Voice command received', { userId, contextType :
@@ -434,11 +425,11 @@ router.post('/voice/command', asyncHandler(async (req, res) => {
   const core = getHustleFinderCore();
 
   const result = await core.processRequest({
-    type: STR_ALEX
+    type: STR_ALEX,
     query: 'Traite cette commande vocale'
-    context: {
+    context: {,
       task_type: 'voice_command_processing'
-      audio_data: audioData
+      audio_data: audioData,
       voice_context: context
       assistant_mode: true
     }
@@ -446,18 +437,18 @@ router.post('/voice/command', asyncHandler(async (req, res) => {
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     transcription: result.data?.transcription || 'Transcription vocale'
-    intent: result.data?.intent || 'general_assistance'
+    intent: result.data?.intent || 'general_assistance',
     response: result.data?.text_response || result.data?.message || 'Commande traitée avec succès'
-    audioResponse: result.data?.audio_response || null
+    audioResponse: result.data?.audio_response || null,
     confidence: result.data?.confidence || 0.85
-    executionDetails: {
+    executionDetails: {,
       commandExecuted: result.data?.executed_action || 'voice_processing'
-      executionTime: result.metadata?.responseTime || 150
+      executionTime: result.metadata?.responseTime || 150,
       success: result.success
     }
-    followUpSuggestions: result.data?.follow_up_suggestions || []
+    followUpSuggestions: result.data?.follow_up_suggestions || [],
     timestamp: new Date().toISOString()
     metadata: result.metadata
   });
@@ -469,8 +460,7 @@ router.post('/voice/command', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/research/conduct', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const researchRequest = req.body;
 
   logger.info('Research request initiated', { userId, topic :
@@ -479,11 +469,11 @@ router.post('/research/conduct', asyncHandler(async (req, res) => {
   const core = getHustleFinderCore();
 
   const result = await core.processRequest({
-    type: STR_ALEX
+    type: STR_ALEX,
     query: `Effectue une recherche sur: ${researchRequest.topic}`
-    context: {
+    context: {,
       task_type: 'intelligent_research'
-      research_request: researchRequest
+      research_request: researchRequest,
       assistant_mode: true
       analysis_depth: 'comprehensive'
     }
@@ -491,25 +481,25 @@ router.post('/research/conduct', asyncHandler(async (req, res) => {
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     research: {
       plan: result.data?.research_plan || {}
       findings: result.data?.findings || {}
-      recommendations: result.data?.recommendations || []
+      recommendations: result.data?.recommendations || [],
       confidence: result.data?.confidence || 0.8
     }
-    deliverables: result.data?.deliverables || []
+    deliverables: result.data?.deliverables || [],
     sources: {
-      primary: result.data?.primary_sources || []
+      primary: result.data?.primary_sources || [],
       secondary: result.data?.secondary_sources || []
       expert: result.data?.expert_sources || []
     }
-    insights: {
+    insights: {,
       keyTrends: result.data?.key_trends || []
-      opportunities: result.data?.opportunities || []
+      opportunities: result.data?.opportunities || [],
       risks: result.data?.risks || []
     }
-    followUpActions: result.data?.follow_up_actions || []
+    followUpActions: result.data?.follow_up_actions || [],
     timestamp: new Date().toISOString()
     metadata: result.metadata
   });
@@ -521,8 +511,7 @@ router.post('/research/conduct', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/planning/strategic', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const planRequest = req.body;
 
   logger.info('Strategic planning request', { userId, objective :
@@ -531,11 +520,11 @@ router.post('/planning/strategic', asyncHandler(async (req, res) => {
   const core = getHustleFinderCore();
 
   const result = await core.processRequest({
-    type: STR_ALEX
+    type: STR_ALEX,
     query: `Crée un plan stratégique pour: ${planRequest.objective}`
-    context: {
+    context: {,
       task_type: STR_STRATEGIC_PLANNING
-      plan_request: planRequest
+      plan_request: planRequest,
       assistant_mode: true
       analysis_depth: 'comprehensive'
     }
@@ -543,27 +532,27 @@ router.post('/planning/strategic', asyncHandler(async (req, res) => {
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     plan: {
-      objective: result.data?.objective || planRequest.objective
+      objective: result.data?.objective || planRequest.objective,
       strategy: result.data?.strategy || {}
       timeline: result.data?.timeline || {}
-      milestones: result.data?.milestones || []
+      milestones: result.data?.milestones || [],
       resources: result.data?.resources || {}
       riskMitigation: result.data?.risk_mitigation || {}
     }
-    feasibility: {
+    feasibility: {,
       score: result.data?.feasibility_score || 0.75
-      challenges: result.data?.challenges || []
+      challenges: result.data?.challenges || [],
       opportunities: result.data?.opportunities || []
       recommendations: result.data?.recommendations || []
     }
-    monitoring: {
+    monitoring: {,
       kpis: result.data?.kpis || []
-      reviewSchedule: result.data?.review_schedule || 'monthly'
+      reviewSchedule: result.data?.review_schedule || 'monthly',
       alertThresholds: result.data?.alert_thresholds || {}
     }
-    adaptationStrategies: result.data?.adaptation_strategies || []
+    adaptationStrategies: result.data?.adaptation_strategies || [],
     timestamp: new Date().toISOString()
     metadata: result.metadata
   });
@@ -575,8 +564,7 @@ router.post('/planning/strategic', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/negotiation/assist', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const negotiationContext = req.body;
 
   logger.info('Negotiation assistance request', { userId, type :
@@ -585,11 +573,11 @@ router.post('/negotiation/assist', asyncHandler(async (req, res) => {
   const core = getHustleFinderCore();
 
   const result = await core.processRequest({
-    type: STR_ALEX
+    type: STR_ALEX,
     query: `Assiste-moi dans cette négociation: ${negotiationContext.type}`
-    context: {
+    context: {,
       task_type: 'negotiation_assistance'
-      negotiation_context: negotiationContext
+      negotiation_context: negotiationContext,
       assistant_mode: true
       analysis_depth: 'detailed'
     }
@@ -597,32 +585,32 @@ router.post('/negotiation/assist', asyncHandler(async (req, res) => {
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     strategy: {
-      approach: result.data?.recommended_approach || 'collaborative'
+      approach: result.data?.recommended_approach || 'collaborative',
       keyTactics: result.data?.key_tactics || []
       fallbackOptions: result.data?.fallback_options || []
     }
-    counterpartAnalysis: {
+    counterpartAnalysis: {,
       profile: result.data?.counterpart_profile || {}
       preferences: result.data?.counterpart_preferences || {}
       predictedBehavior: result.data?.predicted_behavior || {}
-      weaknesses: result.data?.weaknesses || []
+      weaknesses: result.data?.weaknesses || [],
       strengths: result.data?.strengths || []
     }
-    preparation: {
+    preparation: {,
       keyTalkingPoints: result.data?.talking_points || []
-      anticipatedObjections: result.data?.anticipated_objections || []
+      anticipatedObjections: result.data?.anticipated_objections || [],
       supportingData: result.data?.supporting_data || {}
       alternativeProposals: result.data?.alternative_proposals || []
     }
-    scenarios: result.data?.scenarios || []
+    scenarios: result.data?.scenarios || [],
     recommendations: {
-      optimalTiming: result.data?.optimal_timing || 'immediate'
+      optimalTiming: result.data?.optimal_timing || 'immediate',
       communicationStyle: result.data?.communication_style || 'direct'
       concessionStrategy: result.data?.concession_strategy || 'gradual'
     }
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
     metadata: result.metadata
   });
 }));
@@ -633,8 +621,7 @@ router.post('/negotiation/assist', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.get('/performance/analytics', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   logger.info('Performance analytics request', { userId, timeframe });
 
   const core = getHustleFinderCore();
@@ -645,7 +632,7 @@ router.get('/performance/analytics', asyncHandler(async (req, res) => {
     tasksCompleted :
        systemStatus.metrics?.totalRequests || 0
     timeSaved: Math.floor((systemStatus.metrics?.totalRequests || 0) * 0.2), // 0.2h per task
-    efficiencyGain: 0.45
+    efficiencyGain: 0.45,
     satisfaction: 0.87
     features: [
       { name: STR_CALENDAR_MANAGEMENT, usage: 45 }
@@ -654,44 +641,44 @@ router.get('/performance/analytics', asyncHandler(async (req, res) => {
       { name: STR_TASK_AUTOMATION, usage: 25 }
     ]
     peakTimes: ['09:00-11:00', '14:00-16:00']
-    frequency: 'daily'
+    frequency: 'daily',
     learning: 0.82
-    adaptation: 0.78
+    adaptation: 0.78,
     accuracy: 0.91
     recommendations: [
-      'Increase automation for routine tasks'
+      'Increase automation for routine tasks',
       'Consider voice commands for efficiency'
       'Enable proactive scheduling suggestions'
     ]
     insights: [
-      'Peak productivity detected between 9-11 AM'
+      'Peak productivity detected between 9-11 AM',
       'Email management saves 2.5 hours per week'
       'Strategic planning sessions show 85% success rate'
     ]
   };
 
   res.json({
-    success: true
-    timeframe
-    performance: {
+    success: true,
+    timeframe,
+    performance: {,
       tasksCompleted: analytics.tasksCompleted
-      timesSaved: analytics.timeSaved
+      timesSaved: analytics.timeSaved,
       efficiencyGain: analytics.efficiencyGain
       userSatisfaction: analytics.satisfaction
     }
-    usage: {
+    usage: {,
       mostUsedFeatures: analytics.features
-      peakUsageTimes: analytics.peakTimes
+      peakUsageTimes: analytics.peakTimes,
       interactionFrequency: analytics.frequency
     }
-    improvements: {
+    improvements: {,
       learningProgress: analytics.learning
-      adaptationRate: analytics.adaptation
+      adaptationRate: analytics.adaptation,
       predictionAccuracy: analytics.accuracy
     }
-    recommendations: analytics.recommendations
+    recommendations: analytics.recommendations,
     insights: analytics.insights
-    system_info: {
+    system_info: {,
       core_version: systemStatus.version
       consciousness_level: systemStatus.metrics?.consciousnessLevel || 0.75
     }
@@ -705,8 +692,7 @@ router.get('/performance/analytics', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/settings/preferences', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const preferences = req.body;
 
   logger.info('Assistant preferences update', { userId });
@@ -715,28 +701,27 @@ router.post('/settings/preferences', asyncHandler(async (req, res) => {
 
   const result = await core.processRequest({
     type :
-       STR_ALEX
-    query: 'Mets à jour mes préférences assistant'
+       STR_ALEX,
+    query: 'Mets à jour mes préférences assistant',
     context: {
       task_type: 'update_preferences'
-      preferences
+      preferences,
       assistant_mode: true
     }
     userId
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     preferences: preferences
-    adaptations: {
+    adaptations: {,
       communicationStyle: STR_UPDATED
-      taskPrioritization: STR_UPDATED
+      taskPrioritization: STR_UPDATED,
       automationLevel: STR_UPDATED
       proactivityLevel: STR_UPDATED
     }
-    recommendations: result.data?
-      .recommendations || [
-      'Enable smart notifications for better productivity'
+    recommendations: result.data?.recommendations || [
+      'Enable smart notifications for better productivity',
       'Consider voice commands for hands-free operation'
       'Set up more automation rules based on your workflow'
     ]
@@ -752,8 +737,7 @@ router.post('/settings/preferences', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/chat', asyncHandler(async (req, res) => {
-  const userId = req.auth?
-      .userId;
+  const userId = req.auth?.userId;
   const { message, context = {} } = req.body;
 
   if (!message) {
@@ -766,34 +750,33 @@ router.post('/chat', asyncHandler(async (req, res) => {
   const core = getHustleFinderCore();
 
   const result = await core.processRequest({
-    type: STR_ALEX
+    type: STR_ALEX,
     query: message
     context: {
       ...context
-      assistant_mode: true
+      assistant_mode: true,
       empathetic_response: true
     }
     userId
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     response: result.data?.message || 'Je suis là pour vous assister !'
-    intent: result.data?.intent || 'general_assistance'
+    intent: result.data?.intent || 'general_assistance',
     actions: result.data?.suggested_actions || []
     emotionalContext: result.data?.emotional_analysis || {}
-    followUp: result.data?.follow_up_questions || []
-    capabilities: result.data?
-      .available_capabilities || [
+    followUp: result.data?.follow_up_questions || [],
+    capabilities: result.data?.available_capabilities || [
       STR_CALENDAR_MANAGEMENT
-      'email_assistance'
-      'research_help'
-      STR_TASK_AUTOMATION
+      'email_assistance',
+      'research_help',
+      STR_TASK_AUTOMATION,
       STR_STRATEGIC_PLANNING
     ]
     proactiveInsights :
        result.data?.proactive_insights || []
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
     metadata: result.metadata
   });
 }));
@@ -811,32 +794,32 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
   const systemStatus = core.getSystemStatus();
 
   res.json({
-    success: true
+    success: true,
     assistant_capabilities: [
       STR_CALENDAR_MANAGEMENT
-      'appointment_scheduling'
+      'appointment_scheduling',
       'email_management'
       STR_TASK_AUTOMATION
-      'voice_commands'
+      'voice_commands',
       'intelligent_research'
       STR_STRATEGIC_PLANNING
-      'negotiation_assistance'
+      'negotiation_assistance',
       'performance_analytics'
       'preference_management'
     ]
-    core_integration: {
+    core_integration: {,
       alex_available: capabilities.personality?.available || false
-      consciousness_available: capabilities.consciousness?.available || false
+      consciousness_available: capabilities.consciousness?.available || false,
       system_version: systemStatus.version
       total_capabilities: Object.keys(capabilities).length
     }
-    features: {
+    features: {,
       scheduling: true
-      email_drafting: true
+      email_drafting: true,
       research: true
-      automation: true
+      automation: true,
       voice_interface: true
-      strategic_planning: true
+      strategic_planning: true,
       negotiation_support: true
       analytics: true
     }
@@ -849,17 +832,17 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
  */
 router.use((error, req, res, next) => {
   logger.error('Assistant route error:', {
-    error: error.message
+    error: error.message,
     stack: error.stack
-    path: req.path
+    path: req.path,
     method: req.method
     userId: req.auth?.userId
   });
 
   res.status(error.statusCode || 500).json({
-    success: false
+    success: false,
     error: error.message || 'Internal assistant system error'
-    path: req.path
+    path: req.path,
     timestamp: new Date().toISOString()
   });
 });

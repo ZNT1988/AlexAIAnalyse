@@ -57,24 +57,10 @@ export class LocalAITrainer extends EventEmitter {
 
   async startContinuousLearning() {
     // Apprentissage continu sans APIs externes
-    setInterval(() => {
-      this.performLocalTraining();
-    }, 30000); // Toutes les 30 secondes
-
-    // Apprentissage avancé toutes les 5 minutes
-    setInterval(() => {
-      this.performAdvancedLearning();
-    }, 300000);
+    setInterval(() => this.processLongOperation(args), 300000);
 
     // Optimisation des patterns toutes les 10 minutes
-    setInterval(() => {
-      this.optimizeLearningPatterns();
-    }, 600000);
-
-    try {
-      logger.info('🚀 Multi-layer continuous learning activated');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

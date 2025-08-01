@@ -413,24 +413,10 @@ export class AlexTimeIntelligence extends EventEmitter {
    */
   startTemporalMonitoring() {
     // Surveillance en temps réel
-    setInterval(() => {
-      this.monitorCurrentTimeState();
-    }, 300000); // 5 minutes
-
-    // Analyse quotidienne
-    setInterval(() => {
-      this.performDailyTimeAnalysis();
-    }, 86400000); // 24 heures
+    setInterval(() => this.processLongOperation(args), 86400000); // 24 heures
 
     // Optimisation hebdomadaire
-    setInterval(() => {
-      this.performWeeklyTimeOptimization();
-    }, 604800000); // 7 jours
-
-    try {
-      logger.info('👁️ Temporal monitoring activated');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

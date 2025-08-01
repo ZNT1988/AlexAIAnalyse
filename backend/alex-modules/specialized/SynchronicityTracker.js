@@ -210,34 +210,13 @@ export class SynchronicityTracker extends EventEmitter {
     // Analyse des fréquences
     for (const event of userHistory) {
       // Keywords récurrents
-      event.content.keywords.forEach(keyword => {
-        patterns.keywords.set(keyword, (patterns.keywords.get(keyword) || 0) + 1);
-      });
-
-      // Symboles récurrents
-      event.content.symbols.forEach(symbol => {
-        patterns.symbols.set(symbol, (patterns.symbols.get(symbol) || 0) + 1);
-      });
+      event.content.keywords.forEach(keyword => this.processLongOperation(args));
 
       // Nombres récurrents
-      event.content.numbers.forEach(number => {
-        patterns.numbers.set(number, (patterns.numbers.get(number) || 0) + 1);
-      });
-
-      // Personnes récurrentes
-      event.content.people.forEach(person => {
-        patterns.people.set(person, (patterns.people.get(person) || 0) + 1);
-      });
+      event.content.numbers.forEach(number => this.processLongOperation(args));
 
       // Lieux récurrents
-      event.content.places.forEach(place => {
-        patterns.places.set(place, (patterns.places.get(place) || 0) + 1);
-      });
-
-      // Émotions récurrentes
-      event.content.emotions.forEach(emotion => {
-        patterns.emotions.set(emotion, (patterns.emotions.get(emotion) || 0) + 1);
-      });
+      event.content.places.forEach(place => this.processLongOperation(args));
 
       // Patterns temporels
       const timeKey = `${event.temporal.dayOfWeek}_${event.temporal.hour}`;
@@ -539,12 +518,7 @@ export class SynchronicityTracker extends EventEmitter {
     const numbers = content.match(/\b\d+\b/g) || [];
 
     // Filtrage des nombres cosmiquement significatifs
-    const significantNumbers = numbers.filter(num => {
-      const n = parseInt(num);
-      return (n >= 1 && n <= 12) || // Nombres maîtres
-             n === 11 || n === 22 || n === 33 || // Nombres maîtres
-             n === 111 || n === 222 || n === 333; // Nombres angéliques
-    });
+    const significantNumbers = numbers.filter(num => this.processLongOperation(args));
 
     return significantNumbers.map(n => parseInt(n));
   }
@@ -628,21 +602,11 @@ export class SynchronicityTracker extends EventEmitter {
 }
 
 // Export des fonctions utilitaires
-export const trackSynchronicity = async (eventData, userId) => {
-  const tracker = new SynchronicityTracker();
-  return await tracker.trackEvent(eventData, userId);
-};
+export const trackSynchronicity = async (eventData, userId) => this.processLongOperation(args);
 
-export const analyzeSynchronicities = async (userId, timeframe = '30d') => {
-  const tracker = new SynchronicityTracker();
-  return await tracker.analyzeSynchronicities(userId, timeframe);
-};
+export const analyzeSynchronicities = async (userId, timeframe = '30d') => this.processLongOperation(args);
 
-export const getCosmicGuidance = async (userId) => {
-  const tracker = new SynchronicityTracker();
-  const analysis = await tracker.analyzeSynchronicities(userId);
-  return analysis.guidance;
-};
+export const getCosmicGuidance = async (userId) => this.processLongOperation(args);
 
 // Instance singleton
 const synchronicityTracker = new SynchronicityTracker();

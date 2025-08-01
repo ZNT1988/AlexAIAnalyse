@@ -98,8 +98,8 @@ const cacheInvalidation = createCacheInvalidationMiddleware([
 
 const cacheWarmup = createCacheWarmupMiddleware([
   {
-    key: 'api:GET:/api/dashboard:popular'
-    fetchFunction: async () => ({ popular: true, cached: true })
+    key: 'api:GET:/api/dashboard:popular',
+    fetchFunction: async () => ({ popular: true, cached: true }),
     ttl: 600
   }
 ]);
@@ -112,8 +112,8 @@ app.use(cacheWarmup);
 // Health check endpoints
 app.get('/health', (req, res) => {
   res.status(200).json({
-    status: 'OK'
-    timestamp: new Date().toISOString()
+    status: 'OK',
+    timestamp: new Date().toISOString(),
     uptime: process.uptime()
   });
 });
@@ -128,18 +128,21 @@ app.get('/api/health/detailed', async (req, res) => {
     const cacheHealth = await cache.healthCheck();
 
     const enhancedReport = {
-      ...healthReport
-      cache: cacheHealth
+      ...healthReport,
+      cache: cacheHealth,
       performance: {
-        cacheStats: cache.getStats()
-        ultraFastCaching: cacheHealth.status === 'healthy'
+        cacheStats: cache.getStats(),
+        ultraFastCaching: cacheHealth.status === 'healthy',
         targetResponseTime: '<200ms'
       }
     };
 
     res.status(enhancedReport.status === 'healthy' ? 200 : 503).json(enhancedReport);
   } catch (error) {
-      // Logger fallback - ignore error
+    logger.error('Error in enhanced health check:', error);
+    res.status(503).json({ 
+      status: 'error', 
+      message: 'Health check failed' 
     });
   }
 });
@@ -152,19 +155,22 @@ app.get('/api/cache/stats', async (req, res) => {
     const health = await cache.healthCheck();
 
     res.json({
-      success: true
-      cacheStats: stats
-      health: health
+      success: true,
+      cacheStats: stats,
+      health: health,
       optimizations: {
-        ultraFastCaching: true
-        intelligentTTL: true
-        quantumInspiredCaching: true
-        targetResponseTime: '<200ms'
+        ultraFastCaching: true,
+        intelligentTTL: true,
+        quantumInspiredCaching: true,
+        targetResponseTime: '<200ms',
         actualAvgResponseTime: `${stats.avgResponseTime.toFixed(2)}ms`
       }
     });
   } catch (error) {
-      // Logger fallback - ignore error
+    logger.error('Error in cache stats:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to get cache stats' 
     });
   }
 });
@@ -179,12 +185,15 @@ app.post('/api/system/recover', async (req, res) => {
     const report = systemRecovery.getRecoveryReport();
 
     res.json({
-      success
-      report
+      success,
+      report,
       message: success ? '✅ Recovery completed' : '❌ Recovery failed'
     });
   } catch (error) {
-      // Logger fallback - ignore error
+    logger.error('Error in system recovery:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Recovery failed' 
     });
   }
 });
@@ -215,7 +224,7 @@ async function setupProtectedRoutes() {
     // Add 404 handler after all routes
     app.use('*', (req, res) => {
       res.status(404).json({
-        error: 'Route not found'
+        error: 'Route not found',
         path: req.originalUrl
       });
     });
@@ -254,7 +263,7 @@ app.use((err, req, res, next) => {
     : err.message;
 
   res.status(err.status || 500).json({
-    error: message
+    error: message,
     ...(process.env.NODE_ENV !== STR_PRODUCTION && { stack: err.stack })
   });
 });

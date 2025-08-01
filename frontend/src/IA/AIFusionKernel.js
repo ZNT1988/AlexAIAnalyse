@@ -26,33 +26,33 @@ class AIFusionKernel {
   constructor(config = {}) {
     // 🔧 Configuration du kernel
     this.config = {
-      personality: 'Alex'
-      language: 'fr'
-      emotionalSensitivity: 0.7
-      learningRate: 0.3
-      memoryRetention: 0.9
-      creativityLevel: 0.8
-      debugMode: false
+      personality: 'Alex',
+      language: 'fr',
+      emotionalSensitivity: 0.7,
+      learningRate: 0.3,
+      memoryRetention: 0.9,
+      creativityLevel: 0.8,
+      debugMode: false,
       ...config
     };
 
     // 🧠 État global du système
     this.state = {
-      isActive: false
-      consciousness: 0
-      currentMood: 'neutral'
-      activeProcesses: new Set()
-      lastInteraction: null
-      cognitiveLoad: 0
+      isActive: false,
+      consciousness: 0,
+      currentMood: 'neutral',
+      activeProcesses: new Set(),
+      lastInteraction: null,
+      cognitiveLoad: 0,
       attentionFocus: null
     };
 
     // 📊 Métriques de performance
     this.metrics = {
-      uptime: 0
-      interactions: 0
-      learningEvents: 0
-      emotionalEvents: 0
+      uptime: 0,
+      interactions: 0,
+      learningEvents: 0,
+      emotionalEvents: 0,
       memoryOperations: 0
     };
 
@@ -79,33 +79,33 @@ class AIFusionKernel {
     try {
       // Initialisation séquentielle des modules
       this.modules.master = new AlexMasterSystem({
-        kernel: this
-        emotionalSensitivity: this.config.emotionalSensitivity
+        kernel: this,
+        emotionalSensitivity: this.config.emotionalSensitivity,
       });
 
       this.modules.language = new LanguageProcessor({
-        kernel: this
-        defaultLanguage: this.config.language
+        kernel: this,
+        defaultLanguage: this.config.language,
       });
 
       this.modules.emotions = new EmotionalIntelligence({
-        kernel: this
-        sensitivity: this.config.emotionalSensitivity
+        kernel: this,
+        sensitivity: this.config.emotionalSensitivity,
       });
 
       this.modules.memory = new MemoryPalace({
-        kernel: this
-        retention: this.config.memoryRetention
+        kernel: this,
+        retention: this.config.memoryRetention,
       });
 
       this.modules.vision = new VisualCortex({
-        kernel: this
-        attentionModel: 'focused'
+        kernel: this,
+        attentionModel: 'focused',
       });
 
       this.modules.bridge = new CognitiveBridge({
-        kernel: this
-        modules: this.modules
+        kernel: this,
+        modules: this.modules,
       });
 
       // Configuration des interconnexions

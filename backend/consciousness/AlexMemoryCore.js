@@ -209,56 +209,7 @@ export class AlexMemoryCore extends EventEmitter {
       // Alex's learning progression
       currentLearning.masteryProgress = Math.min(100, currentLearning.masteryProgress + (insight.confidence * 10));
       
-      if (currentLearning.masteryProgress > 75) {
-        currentLearning.learningLevel = 'advanced';
-      } else if (currentLearning.masteryProgress > 40) {
-        currentLearning.learningLevel = 'intermediate';
-      }
-      
-      this.memories.learningHistory.set(insight.topic, currentLearning);
-      this.stats.learningMilestones++;
-    }
-  }
-  
-  /**
-   * Alex extracts topics from user messages
-   */
-  extractTopicsFromMessage(message) {
-    const topics = [];
-    const lowerMessage = message.toLowerCase();
-    
-    // Simple topic extraction - Alex learns to recognize patterns
-    const topicPatterns = {
-      'programming': ['code', 'programming', 'software', 'developer'],
-      'business': ['business', 'startup', 'company', 'entrepreneur'],
-      'life': ['life', 'living', 'personal', 'relationship'],
-      'learning': ['learn', 'study', 'education', 'knowledge'],
-      'technology': ['tech', 'technology', 'AI', 'future'],
-      'creativity': ['creative', 'art', 'design', 'imagination']
-    };
-    
-    for (const [topic, keywords] of Object.entries(topicPatterns)) {
-      if (keywords.some(keyword => lowerMessage.includes(keyword))) {
-        topics.push(topic);
-      }
-    }
-    
-    return topics;
-  }
-  
-  /**
-   * Alex provides his memory statistics
-   */
-  async getMemoryStats() {
-    return {
-      totalInteractions: this.stats.totalInteractions,
-      uniqueUsers: this.stats.uniqueUsers,
-      memoriesStored: this.stats.memoriesStored,
-      learningMilestones: this.stats.learningMilestones,
-      memoryUtilization: Math.min(100, (this.stats.memoriesStored / 10000) * 100), // Simulated capacity
-      relationshipsTracked: this.memories.relationships.size,
-      topicsLearned: this.memories.learningHistory.size
-    };
+      if (currentLearning.masteryProgress > 75) this.buildComplexObject(config);
   }
   
   /**
@@ -270,10 +221,7 @@ export class AlexMemoryCore extends EventEmitter {
     
     // Alex looks for memories related to current topics
     const relevantMemories = userConversations
-      .filter(memory => {
-        const memoryTopics = this.extractTopicsFromMessage(memory.userMessage);
-        return memoryTopics.some(topic => currentTopics.includes(topic));
-      })
+      .filter(memory => this.processLongOperation(args))
       .slice(-limit);
     
     return relevantMemories;

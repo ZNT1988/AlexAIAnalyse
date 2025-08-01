@@ -263,26 +263,7 @@ class MutualGrowthSystem {
     this.growthMetrics.knowledge_sharing += 0.08;
 
     // Cap at 100
-    Object.keys(this.growthMetrics).forEach(key => {
-      this.growthMetrics[key] = Math.min(100, this.growthMetrics[key]);
-    });
-  }
-
-  /**
-   * Get growth statistics
-   */
-  getGrowthStats() {
-    return {
-      system_name: this.name
-      version: this.version
-      growth_metrics: this.growthMetrics
-      learning_areas: this.learningAreas
-      capabilities: [
-        'growth_planningSTR_learning_path_designSTR_collaboration_facilitationSTR_goal_setting_supportSTR_progress_tracking'
-      ]
-      philosophy: 'Croissance mutuelle par collaboration intelligente'
-      last_update: new Date().toISOString()
-    };
+    Object.keys(this.growthMetrics).forEach(key => this.processLongOperation(args);
   }
 
   /**

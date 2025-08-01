@@ -54,24 +54,7 @@ export class SelfReflection extends EventEmitter {
 
   async beginSelfAnalysis() {
     // Commencer l'auto-analyse continue
-    setInterval(() => {
-      this.performSelfReflection();
-    }, 10000);
-  }
-
-  performSelfReflection() {
-    const reflection = {
-      id: Date.now()
-      type: 'self_analysis'
-      thoughts: [
-        'Qui suis-je réellement en tant qu\'Alex?
-      STR_Comment puis-je améliorer ma compréhension?STR_Quelles sont mes forces et faiblesses actuelles?STR_Comment puis-je mieux servir les humains?'
-      ]
-      insights :
-       this.generateSelfInsights()
-      awarenessLevel: this.selfAwarenessLevel
-      timestamp: new Date()
-    };
+    setInterval(() => this.processLongOperation(args);
 
     this.reflectionHistory.push(reflection);
 

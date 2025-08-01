@@ -197,12 +197,7 @@ export class PurchasePredictor extends EventEmitter {
       }
       risk_assessment: {
         enabled: true
-        categories: {
-          supplier_risk: { weight: 0.3, models: ['financial_health', 'operational_stability'] }
-          market_risk: { weight: 0.25, models: ['price_volatility', 'demand_fluctuation'] }
-          geopolitical_risk: { weight: 0.2, models: ['political_stability', 'trade_agreements'] }
-          operational_risk: { weight: 0.15, models: ['logistics_disruption', 'quality_issues'] }
-          regulatory_risk: { weight: 0.1, models: ['compliance_changes', 'sustainability_requirements'] }
+        categories: this.buildComplexObject(config)
         }
         early_warning: {
           enabled: true
@@ -812,12 +807,7 @@ export class PurchasePredictor extends EventEmitter {
     logger.info('📊 ALEX starting real-time purchasing monitoring');
 
     // Monitoring des prix marché (toutes les 15 minutes)
-    setInterval(async () => {
-      try {
-        await this.updateMarketPrices();
-      } catch (error) {
-        try {
-      logger.error('Market prices update failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -825,12 +815,7 @@ export class PurchasePredictor extends EventEmitter {
     }, 900000);
 
     // Surveillance des stocks et déclencheurs (toutes les 5 minutes)
-    setInterval(async () => {
-      try {
-        await this.monitorStockTriggers();
-      } catch (error) {
-        try {
-      logger.error('Stock triggers monitoring failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -838,12 +823,7 @@ export class PurchasePredictor extends EventEmitter {
     }, 300000);
 
     // Analyse des opportunités marché (toutes les heures)
-    setInterval(async () => {
-      try {
-        await this.analyzeMarketOpportunities();
-      } catch (error) {
-        try {
-      logger.error('Market opportunities analysis failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -851,12 +831,7 @@ export class PurchasePredictor extends EventEmitter {
     }, 3600000);
 
     // Évaluation des risques fournisseurs (toutes les 30 minutes)
-    setInterval(async () => {
-      try {
-        await this.assessSupplierRisks();
-      } catch (error) {
-        try {
-      logger.error('Supplier risks assessment failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -864,12 +839,7 @@ export class PurchasePredictor extends EventEmitter {
     }, 1800000);
 
     // Prédictions automatiques (toutes les 4 heures)
-    setInterval(async () => {
-      try {
-        await this.runAutomaticPredictions();
-      } catch (error) {
-        try {
-      logger.error('Automatic predictions failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -877,12 +847,7 @@ export class PurchasePredictor extends EventEmitter {
     }, 14400000);
 
     // Optimisation nocturne (1x par jour à 3h00)
-    setInterval(async () => {
-      const now = new Date();
-      if (now.getHours() === 3 && now.getMinutes() === 0) {
-        try {
-          await this.runNightlyOptimization();
-        } catch (error) {
+    setInterval(async () => this.processLongOperation(args) catch (error) {
           try {
       logger.error('Nightly optimization failed', { error });
 
@@ -913,32 +878,7 @@ export class PurchasePredictor extends EventEmitter {
 
   getTotalItemCount() {
     let count = 0;
-    Object.values(this.purchaseCategories).forEach(category => {
-      count += Object.keys(category.items).length;
-    });
-    return count;
-  }
-
-  async loadHistoricalPurchaseData() {
-    logger.debug('📚 Loading historical purchase data...');
-
-    // Simulation de chargement des données historiques
-    const categories = Object.keys(this.purchaseCategories);
-    for (const category of categories) {
-      const items = Object.keys(this.purchaseCategories[category].items);
-      for (const item of items) {
-        const historical = [];
-
-        // Génération de 2 ans de données historiques
-        for (let i = 730; i >= 0; i--) {
-          const date = new Date();
-          date.setDate(date.getDate() - i);
-
-          historical.push({
-            date: date.toISOString()
-            quantity: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1000) + 100
-            price: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 5000 + 1000
-            supplier: `supplier_${Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 3) + 1}`
+    Object.values(this.purchaseCategories).forEach(category => this.processLongOperation(args)`
             quality_score: 0.8 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.2
           });
         }
@@ -954,19 +894,13 @@ export class PurchasePredictor extends EventEmitter {
     logger.debug('🧠 Initializing prediction models...');
 
     // Configuration des modèles de prédiction
-    Object.keys(this.predictionEngines.demand_forecasting.models).forEach(model => {
-      this.predictionEngines.demand_forecasting.models[model].initialized = true;
-      try {
-      logger.debug(`✅ ${model} model initialized`);
+    Object.keys(this.predictionEngines.demand_forecasting.models).forEach(model => this.processLongOperation(args) model initialized`);
 
       } catch (error) {
     // Logger fallback - ignore error
   }});
 
-    Object.keys(this.predictionEngines.price_prediction.models).forEach(model => {
-      this.predictionEngines.price_prediction.models[model].initialized = true;
-      try {
-      logger.debug(`✅ ${model} price model initialized`);
+    Object.keys(this.predictionEngines.price_prediction.models).forEach(model => this.processLongOperation(args) price model initialized`);
 
       } catch (error) {
     // Logger fallback - ignore error
@@ -992,10 +926,7 @@ export class PurchasePredictor extends EventEmitter {
     logger.debug('⚡ Activating purchase optimizer...');
 
     // Activation des algorithmes d'optimisation
-    Object.keys(this.purchaseOptimizer.optimization_algorithms).forEach(algo => {
-      if (this.purchaseOptimizer.optimization_algorithms[algo].enabled) {
-        try {
-      logger.debug(`✅ ${algo} optimizer activated`);
+    Object.keys(this.purchaseOptimizer.optimization_algorithms).forEach(algo => this.processLongOperation(args) optimizer activated`);
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -1071,21 +1002,7 @@ export class PurchasePredictor extends EventEmitter {
     // Simulation des prédictions par modèle
     const models = this.predictionEngines.demand_forecasting.models;
 
-    Object.keys(models).forEach(modelName => {
-      const model = models[modelName];
-      const dailyForecast = [];
-
-      for (let day = 1; day <= prediction.timeHorizon; day++) {
-        const baseValue = 100;
-        const seasonality = Math.sin(day * 2 * Math.PI / 365) * 20;
-        const noise = ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 10;
-        const trend = day * 0.1;
-
-        dailyForecast.push({
-          day
-          value: Math.max(0, baseValue + seasonality + noise + trend)
-          confidence: model.accuracy
-        });
+    Object.keys(models).forEach(modelName => this.processLongOperation(args));
       }
 
       prediction.model_predictions[modelName] = {
@@ -1104,13 +1021,7 @@ export class PurchasePredictor extends EventEmitter {
       let weightedSum = 0;
       let totalWeight = 0;
 
-      Object.keys(models).forEach(modelName => {
-        const model = models[modelName];
-        const dayPrediction = prediction.model_predictions[modelName].values.find(v => v.day === day);
-        if (dayPrediction) {
-          weightedSum += dayPrediction.value * model.weight;
-          totalWeight += model.weight;
-        }
+      Object.keys(models).forEach(modelName => this.processLongOperation(args)
       });
 
       finalForecast.push({
@@ -1251,16 +1162,7 @@ export class PurchasePredictor extends EventEmitter {
     const lowStockItems = [];
 
     // Simulation de vérification des stocks
-    Object.entries(this.purchaseCategories).forEach((_, _) => {
-      Object.entries(categoryData.items).forEach(([item, itemData]) => {
-        const currentStock = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 100;
-        if (currentStock < itemData.minimum_stock) { lowStockItems.push({
-            category
-            item
-            current_stock: currentStock
-            minimum_stock: itemData.minimum_stock
-            urgency: currentStock < itemData.minimum_stock * 0.5 ? STR_HIGH : STR_MEDIUM
-          ; return; });
+    Object.entries(this.purchaseCategories).forEach(args) => this.extractedCallback(args));
         }
       });
     });
@@ -1324,9 +1226,7 @@ export class PurchasePredictor extends EventEmitter {
     // Prédictions automatiques pour tous les items critiques
     const criticalItems = [];
 
-    Object.entries(this.purchaseCategories).forEach((_, _) => {
-      Object.entries(categoryData.items).forEach(([item, itemData]) => {
-        if (itemData.criticality === STR_HIGH) { criticalItems.push(`${category; return; }_${item}`);
+    Object.entries(this.purchaseCategories).forEach((_, _) => this.processLongOperation(args)_${item}`);
         }
       });
     });

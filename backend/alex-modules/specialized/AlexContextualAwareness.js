@@ -465,24 +465,10 @@ export class AlexContextualAwareness extends EventEmitter {
    */
   startContextualMonitoring() {
     // Surveillance légère toutes les minutes
-    setInterval(() => {
-      this.performContextualCheck();
-    }, 60000);
-
-    // Analyse approfondie toutes les 15 minutes
-    setInterval(() => {
-      this.performDeepContextualAnalysis();
-    }, 900000);
+    setInterval(() => this.processLongOperation(args), 900000);
 
     // Prédictions contextuelles toutes les 30 minutes
-    setInterval(() => {
-      this.predictContextualChanges();
-    }, 1800000);
-
-    try {
-      logger.info('👁️ Contextual monitoring activated');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

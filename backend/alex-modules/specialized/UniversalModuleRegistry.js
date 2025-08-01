@@ -450,14 +450,7 @@ export class UniversalModuleRegistry extends EventEmitter {
    * Démarre le monitoring de santé des modules
    */
   startHealthMonitoring() {
-    setInterval(() => {
-      this.performHealthCheck();
-    }, 300000); // 5 minutes
-
-    try {
-      logger.info('💓 Health monitoring started for all modules');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

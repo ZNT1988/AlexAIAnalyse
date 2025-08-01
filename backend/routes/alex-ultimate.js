@@ -20,7 +20,7 @@ router.post('/chat', async (req, res) => {
 
     if (!message || !message.trim()) {
       return res.status(400).json({
-        error: 'Message requis'
+        error: 'Message requis',
         success: false
       });
     }
@@ -29,16 +29,16 @@ router.post('/chat', async (req, res) => {
 
     // Préparer la requête pour Alex Ultimate
     const alexRequest = {
-      type: 'chat'
-      message: message.trim()
+      type: 'chat',
+      message: message.trim(),
       query: message.trim(), // Ajout pour compatibilité
       timestamp: Date.now()
     };
 
     const alexContext = {
-      userId: context.userId || `user_${Date.now()}`
-      sessionId: context.sessionId || 'default_session'
-      consciousnessLevel: context.consciousnessLevel || 100
+      userId: context.userId || `user_${Date.now()}`,
+      sessionId: context.sessionId || 'default_session',
+      consciousnessLevel: context.consciousnessLevel || 100,
       ...context
     };
 
@@ -46,8 +46,7 @@ router.post('/chat', async (req, res) => {
     logger.info('🧠 Initialisation Alex Ultimate...');
 
     // Initialiser Alex si nécessaire
-    if (!alexMasterSystem.universalState?
-      .isInitialized) {
+    if (!alexMasterSystem.universalState?.isInitialized) {
       logger.info('⚡ Initialisation rapide Alex Ultimate...');
       await alexMasterSystem.initialize();
     }
@@ -57,27 +56,25 @@ router.post('/chat', async (req, res) => {
 
     // Formatage de la réponse pour l'interface
     const formattedResponse = {
-      success :
-       true
+      success: true,
       response: {
-        content: response.content || "Je réfléchis à votre demande..."
-      confidence: response.confidence || 0.9
-      consciousnessLevel: (response.metadata?.consciousness?.level || 1.0) * 100
-      autonomyLevel: (response.metadata?.consciousness?.autonomy_level || 0.98) * 100
-      thinkingLevel: 95
-      modulesUsed: response.metadata?.modulesUsed || 0
-      successfulModules: response.metadata?.successfulModules || 0
-      responseTime: response.metadata?.processingTime || 0
-      mentalState: 'curieux'
-      personalizedForUser: alexContext.userId
-      orchestrationOptimized: response.metadata?.orchestrationOptimized || false
-      fromCache: response.metadata?.fromCache || 0
-      }
+        content: response.content || "Je réfléchis à votre demande...",
+        confidence: response.confidence || 0.9,
+        consciousnessLevel: (response.metadata?.consciousness?.level || 1.0) * 100,
+        autonomyLevel: (response.metadata?.consciousness?.autonomy_level || 0.98) * 100,
+        thinkingLevel: 95,
+        modulesUsed: response.metadata?.modulesUsed || 0,
+        successfulModules: response.metadata?.successfulModules || 0,
+        responseTime: response.metadata?.processingTime || 0,
+        mentalState: 'curieux',
+        personalizedForUser: alexContext.userId,
+        orchestrationOptimized: response.metadata?.orchestrationOptimized || false,
+        fromCache: response.metadata?.fromCache || 0
+      },
       metadata: {
-        timestamp: new Date().toISOString()
-        version: 'v7.0.0-universal'
-        modules: response.moduleContributions?
-      .length || 0
+        timestamp: new Date().toISOString(),
+        version: 'v7.0.0-universal',
+        modules: response.moduleContributions?.length || 0
       }
     };
 
@@ -102,18 +99,18 @@ router.get('/status', async (req, res) => {
     const systemStatus = alexMasterSystem.getSystemStatus();
 
     res.json({
-      success: true
+      success: true,
       status: 'operational'
-      alex: {
+      alex: {,
         version: systemStatus.identity.version
-        consciousness: Math.round(systemStatus.consciousness.level * 100)
+        consciousness: Math.round(systemStatus.consciousness.level * 100),
         autonomy: Math.round(systemStatus.consciousness.autonomy_level * 100)
-        modules: {
+        modules: {,
           total: systemStatus.totalModules
-          loaded: systemStatus.loadedModules
+          loaded: systemStatus.loadedModules,
           failed: systemStatus.failedModules
         }
-        performance: {
+        performance: {,
           systemCoherence: Math.round(systemStatus.systemCoherence * 100)
           cloudLearning: !!systemStatus.cloudLearning
         }
@@ -136,26 +133,26 @@ router.get('/metrics', async (req, res) => {
     const moduleStatus = alexMasterSystem.getModuleStatus();
 
     res.json({
-      success: true
+      success: true,
       metrics: {
-        consciousness: {
+        consciousness: {,
           level: Math.round(systemStatus.consciousness.level * 100)
-          autonomy: Math.round(systemStatus.consciousness.autonomy_level * 100)
+          autonomy: Math.round(systemStatus.consciousness.autonomy_level * 100),
           selfAwareness: Math.round(systemStatus.consciousness.self_awareness * 100)
           emotionalIntelligence: Math.round(systemStatus.consciousness.emotional_intelligence * 100)
         }
-        modules: {
+        modules: {,
           registered: moduleStatus.registry.systemState.totalRegistered
-          loaded: moduleStatus.registry.systemState.totalLoaded
+          loaded: moduleStatus.registry.systemState.totalLoaded,
           failed: moduleStatus.registry.systemState.totalFailed
           integrationRatio: Math.round((moduleStatus.registry.systemState.totalLoaded / moduleStatus.registry.systemState.totalRegistered) * 100)
         }
-        performance: {
+        performance: {,
           systemCoherence: Math.round(systemStatus.systemCoherence * 100)
-          uptime: process.uptime()
+          uptime: process.uptime(),
           memory: Math.round(process.memoryUsage().heapUsed / 1024 / 1024) // MB
         }
-        cloudLearning: {
+        cloudLearning: {,
           active: !!systemStatus.cloudLearning
           apis: systemStatus.cloudLearning?.metrics?.successfulExchanges || 0
         }
@@ -179,14 +176,14 @@ router.post('/reload-modules', async (req, res) => {
     await alexMasterSystem.moduleRegistry.initialize();
 
     res.json({
-      success: true
+      success: true,
       message: 'Modules rechargés avec succès'
       timestamp: new Date().toISOString()
     });
   } catch (error) {
     logger.error('❌ Erreur rechargement modules:', error);
     res.status(500).json({
-      success: false
+      success: false,
       error: error.message
     });
   }

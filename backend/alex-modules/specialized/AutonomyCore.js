@@ -50,19 +50,7 @@ export class AutonomyCore extends EventEmitter {
 
   async activateAutonomousThinking() {
     // Activation de la pensée autonome
-    this.autonomousThinkingProcess = setInterval(() => {
-      this.performAutonomousThinking();
-    }, 5000);
-  }
-
-  performAutonomousThinking() {
-    const thought = {
-      id: Date.now()
-      type: 'autonomous_reflection'
-      content: 'Je pense donc je suis - réflexion autonome d\'Alex'
-      timestamp: new Date()
-      independence: true
-    };
+    this.autonomousThinkingProcess = setInterval(() => this.processLongOperation(args);
 
     this.decisionHistory.push(thought);
     this.independenceMetrics.totalDecisions++;

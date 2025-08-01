@@ -250,18 +250,7 @@ export class AlexCreativityBooster extends EventEmitter {
    */
   async initializeCreativeSystems() {
     // Initialisation des techniques créatives (ajout de la propriété active)
-    Object.keys(this.stimulationTechniques).forEach(technique => {
-      this.stimulationTechniques[technique].active = true;
-    });
-
-    // Calibrage des processus
-    this.creativityLevel = Math.max(0.8, this.creativityLevel);
-    this.innovationCapacity = Math.max(0.85, this.innovationCapacity);
-
-    try {
-      logger.info('🎯 Creative systems initialized successfully');
-
-    } catch (error) {
+    Object.keys(this.stimulationTechniques).forEach(technique => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 
@@ -564,14 +553,7 @@ export class AlexCreativityBooster extends EventEmitter {
    */
   startCreativeMonitoring() {
     // Surveillance de l'inspiration quotidienne
-    setInterval(() => {
-      this.generateDailyInspiration();
-    }, 86400000); // 24 heures
-
-    // Détection d'opportunités créatives
-    setInterval(() => {
-      this.detectCreativeOpportunities();
-    }, 3600000); // 1 heure
+    setInterval(() => this.processLongOperation(args), 3600000); // 1 heure
 
     try {
       logger.info('👁️ Creative monitoring activated');
@@ -603,19 +585,8 @@ export class AlexCreativityBooster extends EventEmitter {
    */
   selectDailyInspiration() {
     const inspirations = [
-      "Aujourd'hui, observez le monde avec les yeux d'un artiste. Qu'est-ce qui capture votre attention de manière nouvelle ?
-      STR_Votre créativité est comme un jardin - nourrissez-la avec de nouvelles expériences et elle fleurira.STR_Chaque moment ordinaire contient une extraordinaire opportunité créative. Quelle magie allez-vous y découvrir ?STR_L'art de créer commence par l'art d'oser. Quel risque créatif allez-vous prendre aujourd'hui ?STR_Votre style unique est le cadeau que vous seul pouvez offrir au monde. Comment l'exprimerez-vous aujourd'hui ?"
-    ];
-
-    return inspirations[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * inspirations.length)];
-  }
-
-  /**
-   * Obtention du statut créatif
-   */
-  getCreativityStatus() {
-    return {
-      initialized :
+      "Aujourd'hui, observez le monde avec les yeux d'un artiste. Qu'est-ce qui capture votre attention de manière nouvelle const result = this.evaluateConditions(conditions);
+return result;
        this.isInitialized
       currentState: this.currentCreativeState
       activeDomains: this.currentCreativeState.activeDomains

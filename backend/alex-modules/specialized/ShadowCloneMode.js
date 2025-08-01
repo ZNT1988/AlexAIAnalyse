@@ -618,26 +618,13 @@ export class ShadowCloneMode extends EventEmitter {
 }
 
 // Export des fonctions utilitaires
-export const createShadowClone = async (userId, config = {}) => {
-  const shadowClone = new ShadowCloneMode();
-  return await shadowClone.createShadowClone(userId, config);
-};
+export const createShadowClone = async (userId, config = {}) => this.processLongOperation(args);
 
-export const activateClone = async (cloneId) => {
-  const shadowClone = new ShadowCloneMode();
-  const clone = shadowClone.activeClones.get(shadowClone.getCloneUserId(cloneId));
-  return await shadowClone.activateShadowClone(clone);
-};
+export const activateClone = async (cloneId) => this.processLongOperation(args);
 
-export const executeCloneActions = async (cloneId) => {
-  const shadowClone = new ShadowCloneMode();
-  return await shadowClone.executeAutonomousActions(cloneId);
-};
+export const executeCloneActions = async (cloneId) => this.processLongOperation(args);
 
-export const getDailyReport = async (userId, date = new Date()) => {
-  const shadowClone = new ShadowCloneMode();
-  return await shadowClone.generateDailyReport(userId, date);
-};
+export const getDailyReport = async (userId, date = new Date()) => this.processLongOperation(args);
 
 // Instance singleton
 const shadowCloneMode = new ShadowCloneMode();

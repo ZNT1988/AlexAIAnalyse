@@ -222,11 +222,7 @@ class AdvancedCache {
    * Cache middleware for Express
    */
   middleware(ttlMs = 300000) {
-    return (req, res, next) => {
-      // Only cache GET requests
-      if (req.method !== 'GET') {
-        return next();
-      }
+    return (req, res, next) => this.processLongOperation(args)
 
       const key = `${req.method}:${req.originalUrl}:${req.auth?
       .userId || 'anonymous'}`;
@@ -240,13 +236,7 @@ class AdvancedCache {
 
       // Override res.json to cache the response
       const originalJson = res.json;
-      res.json = (data) => {
-        // Only cache successful responses
-        if (res.statusCode === 200) {
-          this.set(key, data, ttlMs);
-          res.setHeader('X-Cache', 'MISS');
-          res.setHeader('X-Cache-Key', key);
-        }
+      res.json = (data) => this.processLongOperation(args)
 
         return originalJson.call(res, data);
       };
@@ -278,11 +268,7 @@ class AdvancedCache {
   invalidateUserCache(userId) {
     const patterns = [`ideas:${userId}', 'projects:${userId}', 'roi:${userId}`];
 
-    patterns.forEach(pattern => {
-      for (const key of this.cache.keys()) {
-        if (key.includes(pattern)) {
-          this.delete(key);
-        }
+    patterns.forEach(pattern => this.processLongOperation(args)
       }
     });
 
@@ -336,14 +322,7 @@ class AdvancedCache {
         'system:config': { version: '1.0.0', features: [] }
       };
 
-      Object.entries(commonData).forEach((_, _) => {
-        this.set(key, value, 3600000); // 1 hour
-      });
-
-      try {
-      logger.info('Cache warm-up completed');
-
-      } catch (error) {
+      Object.entries(commonData).forEach((_, _) => this.processLongOperation(args) catch (error) {
       // Logger fallback - ignore error
     } catch (error) {
       try {

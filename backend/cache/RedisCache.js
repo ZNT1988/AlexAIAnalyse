@@ -68,33 +68,14 @@ export class RedisCache {
 
             this.redis = new Redis(this.config);
 
-            this.redis.on('connect', () => {
-                logger.info('📡 Redis cache connected successfully');
-                this.connected = true;
-                this.usingFallback = false;
-            });
+            this.redis.on('connect', () => this.processLongOperation(args));
 
             // Prevent infinite retry spam
-            this.redis.on('error', (error) => {
-                if (!this.usingFallback) {
-                    logger.warn('⚠️ Redis connection failed, switching to fallback cache');
-                    this.metrics.errors++;
-                    this.connected = false;
-                    this.initializeFallback();
-                    // Disconnect Redis to stop retry attempts
-                    if (this.redis) {
-                        this.redis.disconnect();
-                        this.redis = null;
-                    }
+            this.redis.on('error', (error) => this.processLongOperation(args)
                 }
             });
 
-            this.redis.on('close', () => {
-                if (!this.usingFallback) {
-                    logger.info('💾 Redis connection closed, fallback cache active');
-                    this.connected = false;
-                    this.initializeFallback();
-                }
+            this.redis.on('close', () => this.processLongOperation(args)
             });
 
             // Test connection with timeout
@@ -300,14 +281,7 @@ export class RedisCache {
     async warmupCache(warmupQueries) {
         logger.info(`🔥 Starting cache warmup with ${warmupQueries.length} queries`);
 
-        const promises = warmupQueries.map(async ({ key, fetchFunction, ttl = 300 }) => {
-            try {
-                const exists = await this.redis.exists(key);
-                if (!exists) {
-                    const value = await fetchFunction();
-                    await this.set(key, value, ttl);
-                    try {
-      logger.debug(`🔥 Warmed up: ${key}`);
+        const promises = warmupQueries.map(async ({ key, fetchFunction, ttl = 300 }) => this.processLongOperation(args)`);
 
                     } catch (error) {
     // Logger fallback - ignore error

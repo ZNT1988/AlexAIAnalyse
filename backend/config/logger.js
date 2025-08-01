@@ -53,41 +53,7 @@
 import winston from 'winston';
 
 /**
- * @constant {Object} levels
- * @description Niveaux de logging hiérarchiques pour classification des événements
- * @readonly
- */
-const levels = {
-  error: 0,    // Erreurs critiques système
-  warn: 1,     // Avertissements importants
-  info: 2,     // Informations générales
-  http: 3,     // Requêtes HTTP et API
-  debug: 4,    // Debugging détaillé
-};
-
-/**
- * @constant {Object} colors
- * @description Codes couleur pour les différents niveaux de logging
- * @readonly
- */
-const colors = {
-  error: 'red',      // Rouge pour erreurs critiques
-  warn: 'yellow',    // Jaune pour avertissements
-  info: 'green',     // Vert pour informations
-  http: 'magenta',   // Magenta pour requêtes HTTP
-  debug: 'white',    // Blanc pour debugging
-};
-
-winston.addColors(colors);
-
-/**
- * @constant {winston.Logform.Format} format
- * @description Format de logging avec timestamp, couleurs et structure
- */
-const format = winston.format.combine(
-  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-  winston.format.colorize({ all: true }),
-  winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
+ * @constant this.buildComplexObject(config) ${info.level}: ${info.message}`)
 );
 
 /**

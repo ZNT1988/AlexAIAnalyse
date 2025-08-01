@@ -749,12 +749,7 @@ export class TechnicalDocReader extends EventEmitter {
     logger.info('📊 ALEX starting continuous documentation monitoring');
 
     // Surveillance des nouveaux documents (toutes les 15 minutes)
-    setInterval(async () => {
-      try {
-        await this.monitorNewDocuments();
-      } catch (error) {
-        try {
-      logger.error('New documents monitoring failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -762,12 +757,7 @@ export class TechnicalDocReader extends EventEmitter {
     }, 900000);
 
     // Vérification des mises à jour (toutes les heures)
-    setInterval(async () => {
-      try {
-        await this.checkDocumentUpdates();
-      } catch (error) {
-        try {
-      logger.error('Document updates check failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -775,12 +765,7 @@ export class TechnicalDocReader extends EventEmitter {
     }, 3600000);
 
     // Validation conformité (quotidienne à 2h00)
-    setInterval(async () => {
-      const now = new Date();
-      if (now.getHours() === 2 && now.getMinutes() === 0) {
-        try {
-          await this.runDailyComplianceCheck();
-        } catch (error) {
+    setInterval(async () => this.processLongOperation(args) catch (error) {
           try {
       logger.error('Daily compliance check failed', { error });
 
@@ -791,12 +776,7 @@ export class TechnicalDocReader extends EventEmitter {
     }, 60000);
 
     // Nettoyage cache et optimisation (hebdomadaire)
-    setInterval(async () => {
-      const now = new Date();
-      if (now.getDay() === 0 && now.getHours() === 3) { // Dimanche 3h00
-        try {
-          await this.performWeeklyMaintenance();
-        } catch (error) {
+    setInterval(async () => this.processLongOperation(args) catch (error) {
           try {
       logger.error('Weekly maintenance failed', { error });
 
@@ -833,17 +813,7 @@ export class TechnicalDocReader extends EventEmitter {
     this.analysisEngines.ocr_engine.status = 'ready';
 
     // Configuration NLP
-    Object.keys(this.analysisEngines.nlp_engine.models).forEach(model => {
-      this.analysisEngines.nlp_engine.models[model].loaded = true;
-    });
-
-    // Configuration Computer Vision
-    this.analysisEngines.computer_vision.initialized = true;
-
-    try {
-      logger.debug('✅ Analysis engines initialized');
-
-    } catch (error) {
+    Object.keys(this.analysisEngines.nlp_engine.models).forEach(model => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

@@ -320,27 +320,7 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
     };
   }
 
-  identifyPsychologicalNeeds(emotionalProfile) {
-    const needs = [];
-
-    if (emotionalProfile.emotionalBalance.anxiety > 0.6) {
-      needs.push({ need: 'security', priority: STR_HIGH, interventions: ['reassurance', 'structured_planning'] });
-    }
-
-    if (emotionalProfile.cognitiveLoad > 0.7) {
-      needs.push({ need: 'clarity', priority: STR_HIGH, interventions: ['simplification', 'step_by_step_guidance'] });
-    }
-
-    if (emotionalProfile.emotionalResilience < 0.5) {
-      needs.push({ need: 'support', priority: STR_MEDIUM, interventions: ['encouragement', 'success_stories'] });
-    }
-
-    return needs;
-  }
-
-  determineOptimalTone(emotionalState) {
-    if (emotionalState.dominantEmotions.includes(STR_ANXIETY)) {
-      return { tone: 'calm', warmth: STR_HIGH, assertiveness: 'low' };
+  identifyPsychologicalNeeds(emotionalProfile) this.buildComplexObject(config);
     }
     if (emotionalState.dominantEmotions.includes('excitement')) {
       return { tone: 'enthusiastic', warmth: STR_HIGH, assertiveness: STR_MEDIUM };
@@ -384,19 +364,7 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
     // Logger fallback - ignore error
   }}
   startEmotionalMonitoring() {
-    setInterval(() => {
-      this.updateEmotionalState();
-    }, 30000);
-  }
-
-  updateEmotionalState() {
-    // Mise à jour continue de l'état émotionnel du système
-    Object.keys(this.emotionalSpectrum).forEach(emotion => {
-      const variation = ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.1;
-      this.emotionalSpectrum[emotion].intensity = Math.max(0, Math.min(1
-        this.emotionalSpectrum[emotion].intensity + variation
-      ));
-    });
+    setInterval(() => this.processLongOperation(args));
   }
 
   storeEmotionalExperience(userId, analysis) {

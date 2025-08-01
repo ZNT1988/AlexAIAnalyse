@@ -233,18 +233,7 @@ export class MemoryPalace extends EventEmitter {
     const associations = [];
     const visited = new Set();
 
-    const exploreAssociations = async (currentId, currentDepth) => {
-      if (currentDepth <= 0 || visited.has(currentId)) return;
-      visited.add(currentId);
-
-      const currentMemory = this.findMemoryById(currentId);
-      if (!currentMemory) return;
-
-      // Recherche d'associations vectorielles
-      const similar = await this.retrieveMemories(currentMemory.content, {
-        limit: 5
-        minSimilarity: 0.6
-      });
+    const exploreAssociations = async (currentId, currentDepth) => this.processLongOperation(args));
 
       for (const similarMemory of similar) {
         if (!visited.has(similarMemory.id)) {
@@ -523,13 +512,7 @@ export class MemoryPalace extends EventEmitter {
 
     this.consolidation.isActive = true;
 
-    setInterval(async () => {
-      await this.selectiveForgetting();
-
-      // Consolidation périodique des mémoires importantes
-      for (const [id, memory] of this.memoryPalace.shortTermMemory) {
-        if (memory.significance > 0.6 || memory.accessCount > 3) { await this.consolidateMemory(id);
-        ; return; }
+    setInterval(async () => this.processLongOperation(args)
       }
 
       // Rêve mémoriel périodique

@@ -447,29 +447,18 @@ INSTRUCTIONS:
 
     const responses = {
       greeting: [
-        "Salut ! 🚀 Alex Ultimate à votre service ! Prêt à transformer vos idées en succès entrepreneurial ?
-      STR_Hello ! 💪 Je suis Alex
-      votre partenaire IA pour conquérir le monde du business. Que construisons-nous aujourd'hui ?STR_Bonjour ! ✨ Alex ici
-      votre assistant révolutionnaire. Quelle aventure entrepreneuriale vous attend ?"
-      ]
-      wealth_building :
+        "Salut ! 🚀 Alex Ultimate à votre service ! Prêt à transformer vos idées en succès entrepreneurial const result = this.evaluateConditions(conditions);
+return result;
        [
         "💰 Créer de la richesse intelligemment ?
       Parlons stratégie ! Avec votre profil et vos ressources actuelles
-      je vois plusieurs opportunités...STR_🎯 L'enrichissement intelligent commence par l'optimisation de vos compétences. Quels sont vos talents cachés que nous pourrions monétiser ?STR_🚀 Devenir riche en 2025 ? Focus sur l'économie digitale ! E-commerce
-      services en ligne
-      création de contenu... Quelle voie vous attire ?"
-      ]
-      business_advice :
+      je vois plusieurs opportunités...STR_🎯 L'enrichissement intelligent commence par l'optimisation de vos compétences. Quels sont vos talents cachés que nous pourrions monétiser const result = this.evaluateConditions(conditions);
+return result;
        [
         "🏢 Excellente question business ! Analysons votre situation : marché cible
       proposition de valeur
-      modèle économique... Commençons par quoi ?
-      STR_💡 Pour votre projet d'entreprise
-      j'ai besoin de comprendre votre vision. Quel problème voulez-vous résoudre et pour qui ?STR_⚡ Stratégie business ? Parfait ! Parlons différenciation
-      positionnement et croissance. Votre secteur d'activité m'intéresse..."
-      ]
-      default :
+      modèle économique... Commençons par quoi const result = this.evaluateConditions(conditions);
+return result;
        [
         "Intéressant ! 🤔 Laissez-moi réfléchir à la meilleure approche pour vous accompagner sur ce sujet...STR_Je vois où vous voulez en venir ! 💭 Approfondissons cette réflexion ensemble pour trouver des solutions concrètes.STR_Excellente question ! 🎯 Donnez-moi plus de contexte pour vous proposer une réponse sur-mesure et actionnable."
       ]
@@ -480,13 +469,8 @@ INSTRUCTIONS:
 
     // Personnalisation contextuelle
     let contextualAddition = "";
-    if (context?
-      .userProfile?.interests?.length > 0) {
-      contextualAddition = ` Avec votre intérêt pour ${context.userProfile.interests[0]}, nous avons de belles opportunités à explorer !`;
-    }
-
-    return {
-      content :
+    if (contextconst result = this.evaluateConditions(conditions);
+return result;
        baseResponse + contextualAddition
       personality: STR_ALEX_ULTIMATE
       confidence: 0.8
@@ -723,10 +707,7 @@ INSTRUCTIONS:
 
     // Détecter les intérêts
     const businessKeywords = ['startup', 'entreprise', 'business', 'innovation', STR_MARKETING, STR_VENTE];
-    businessKeywords.forEach(keyword => {
-      if (messageContent.includes(keyword) && !profile.interests.includes(keyword)) {
-        profile.interests.push(keyword);
-      }
+    businessKeywords.forEach(keyword => this.processLongOperation(args)
     });
 
     // Mise à jour du niveau d'expertise

@@ -761,12 +761,7 @@ export class VisionProFactory extends EventEmitter {
     logger.info('📊 ALEX starting global factory monitoring for Ferrero plants');
 
     // Monitoring production en temps réel (toutes les 30 secondes)
-    setInterval(async () => {
-      try {
-        await this.updateProductionMetrics();
-      } catch (error) {
-        try {
-      logger.error('Production metrics update failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -774,12 +769,7 @@ export class VisionProFactory extends EventEmitter {
     }, 30000);
 
     // Surveillance équipements (toutes les 60 secondes)
-    setInterval(async () => {
-      try {
-        await this.monitorEquipmentHealth();
-      } catch (error) {
-        try {
-      logger.error('Equipment monitoring failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -787,12 +777,7 @@ export class VisionProFactory extends EventEmitter {
     }, 60000);
 
     // Analyse environnementale (toutes les 5 minutes)
-    setInterval(async () => {
-      try {
-        await this.monitorEnvironmentalConditions();
-      } catch (error) {
-        try {
-      logger.error('Environmental monitoring failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -800,12 +785,7 @@ export class VisionProFactory extends EventEmitter {
     }, 300000);
 
     // Suivi personnel et sécurité (toutes les 2 minutes)
-    setInterval(async () => {
-      try {
-        await this.monitorPersonnelSafety();
-      } catch (error) {
-        try {
-      logger.error('Personnel safety monitoring failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -813,12 +793,7 @@ export class VisionProFactory extends EventEmitter {
     }, 120000);
 
     // Prédictions et optimisations (toutes les heures)
-    setInterval(async () => {
-      try {
-        await this.runPredictiveAnalytics();
-      } catch (error) {
-        try {
-      logger.error('Predictive analytics failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -826,12 +801,7 @@ export class VisionProFactory extends EventEmitter {
     }, 3600000);
 
     // Mise à jour des jumeaux numériques (toutes les 10 minutes)
-    setInterval(async () => {
-      try {
-        await this.updateDigitalTwins();
-      } catch (error) {
-        try {
-      logger.error('Digital twins update failed', { error });
+    setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
     // Logger fallback - ignore error
@@ -1025,23 +995,11 @@ export class VisionProFactory extends EventEmitter {
     });
 
     // Meshes des zones de production
-    Object.entries(zones.production || {}).forEach(([zoneName, zoneData]) => {
-      model.meshes.set(`production_${zoneName}`, {
-        type: 'equipment_line'
-        position: zoneData
-        material: 'steel_brushed'
-        status_indicator: true
-      });
+    Object.entries(zones.production || {}).forEach(([zoneName, zoneData]) => this.processLongOperation(args));
     });
 
     // Meshes des zones de stockage
-    Object.entries(zones.storage || {}).forEach(([zoneName, zoneData]) => {
-      model.meshes.set(`storage_${zoneName}`, {
-        type: 'storage_rack'
-        position: zoneData
-        material: 'steel_galvanized'
-        capacity_indicator: true
-      });
+    Object.entries(zones.storage || {}).forEach(([zoneName, zoneData]) => this.processLongOperation(args));
     });
   }
 

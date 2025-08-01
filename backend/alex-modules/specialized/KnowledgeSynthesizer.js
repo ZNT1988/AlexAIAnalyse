@@ -775,27 +775,14 @@ export class KnowledgeSynthesizer {
         for (const normalizedData of collection.normalized) {
             // Extraction concepts
             const concepts = await this.analyzers.conceptual.extract(normalizedData);
-            concepts.forEach(concept => {
-                if (analysis.concepts.has(concept.id)) {
-                    // Merger avec concept existant
-                    const existing = analysis.concepts.get(concept.id);
-                    analysis.concepts.set(concept.id, this.mergeConcepts(existing, concept));
-                } else {
+            concepts.forEach(concept => this.processLongOperation(args) else {
                     analysis.concepts.set(concept.id, concept);
                 }
             });
 
             // Extraction relations
             const relations = await this.analyzers.relational.extract(normalizedData, analysis.concepts);
-            relations.forEach(relation => {
-                analysis.relations.set(relation.id, relation);
-            });
-
-            // Analyse contextuelle
-            const contexts = await this.analyzers.contextual.extract(normalizedData);
-            contexts.forEach(context => {
-                analysis.contexts.set(context.id, context);
-            });
+            relations.forEach(relation => this.processLongOperation(args));
         }
 
         // Calculer qualité globale

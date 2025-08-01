@@ -617,21 +617,11 @@ export class DarkSideDecoder extends EventEmitter {
 }
 
 // Export des fonctions utilitaires
-export const decodeDarkSide = async (userData, depth = 'comprehensive') => {
-  const decoder = new DarkSideDecoder();
-  return await decoder.decodeDarkSide(userData, depth);
-};
+export const decodeDarkSide = async (userData, depth = 'comprehensive') => this.processLongOperation(args);
 
-export const identifyBlockages = async (userData) => {
-  const decoder = new DarkSideDecoder();
-  const analysis = await decoder.decodeDarkSide(userData, 'blockages_only');
-  return analysis.shadows.behavioral;
-};
+export const identifyBlockages = async (userData) => this.processLongOperation(args);
 
-export const generateHealingPlan = async (shadowAnalysis) => {
-  const decoder = new DarkSideDecoder();
-  return decoder.createTransformationPlan(shadowAnalysis.architecture, shadowAnalysis.antidotes);
-};
+export const generateHealingPlan = async (shadowAnalysis) => this.processLongOperation(args);
 
 // Instance singleton
 const darkSideDecoder = new DarkSideDecoder();

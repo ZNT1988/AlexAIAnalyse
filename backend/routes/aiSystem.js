@@ -59,18 +59,17 @@ async function getUserId(clerkId) {
  * @access Private
  */
 router.get('/status', asyncHandler(async (req, res) => {
-  logger.info('AI System status requested', { userId: req.auth?
-      .userId });
+  logger.info('AI System status requested', { userId: req.auth?.userId });
 
   const core = getHustleFinderCore();
   const systemStatus = core.getSystemStatus();
 
   res.json({
     success :
-       true
-    data: systemStatus
+       true,
+    data: systemStatus,
     message: 'Système IA ALEX opérationnel'
-    uptime: process.uptime()
+    uptime: process.uptime(),
     timestamp: new Date().toISOString()
   });
 }));
@@ -81,16 +80,15 @@ router.get('/status', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.get('/capabilities', asyncHandler(async (req, res) => {
-  logger.info('AI System capabilities requested', { userId: req.auth?
-      .userId });
+  logger.info('AI System capabilities requested', { userId: req.auth?.userId });
 
   const core = getHustleFinderCore();
   const capabilities = core.getAvailableCapabilities();
 
   res.json({
     success :
-       true
-    data: capabilities
+       true,
+    data: capabilities,
     message: 'Capacités système ALEX disponibles'
     timestamp: new Date().toISOString()
   });
@@ -102,8 +100,7 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/activate', asyncHandler(async (req, res) => {
-  const userId = await getUserId(req.auth?
-      .userId);
+  const userId = await getUserId(req.auth?.userId);
   const context = req.body.context || {};
 
   logger.info('Full system session activation requested', { userId });
@@ -113,10 +110,10 @@ router.post('/activate', asyncHandler(async (req, res) => {
 
   res.json({
     success :
-       true
-    session: sessionData
+       true,
+    session: sessionData,
     capabilities: core.getAvailableCapabilities()
-    message: 'Session complète ALEX activée avec succès'
+    message: 'Session complète ALEX activée avec succès',
     timestamp: new Date().toISOString()
   });
 }));
@@ -128,8 +125,7 @@ router.post('/activate', asyncHandler(async (req, res) => {
  */
 router.post('/process', asyncHandler(async (req, res) => {
   const { type, query, context, mode, parameters } = req.body;
-  const userId = await getUserId(req.auth?
-      .userId);
+  const userId = await getUserId(req.auth?.userId);
 
   // Support legacy 'query' field name
   const userQuery = query;
@@ -138,21 +134,21 @@ router.post('/process', asyncHandler(async (req, res) => {
   if (!userQuery) {
     return res.status(400).json({
       success :
-       false
-      error: 'Query is required'
+       false,
+      error: 'Query is required',
       timestamp: new Date().toISOString()
     });
   }
 
   logger.info('AI System processing request', {
-    userId
-    type
-    mode
+    userId,
+    type,
+    mode,
     queryLength: userQuery.length
   });
 
   const requestData = {
-    type: type || mode || 'general'
+    type: type || mode || 'general',
     query: userQuery
     context: context || parameters || {}
     userId
@@ -162,19 +158,19 @@ router.post('/process', asyncHandler(async (req, res) => {
   const result = await core.processRequest(requestData);
 
   logger.info('AI System request processed successfully', {
-    userId
-    type: requestData.type
+    userId,
+    type: requestData.type,
     responseTime: result.metadata?.responseTime
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     result: result.data
-    data: result.data
+    data: result.data,
     metadata: result.metadata
-    processing_time: result.metadata?.responseTime
+    processing_time: result.metadata?.responseTime,
     modules_used: result.metadata?.modulesUsed
-    message: 'Requête traitée par le système IA ALEX'
+    message: 'Requête traitée par le système IA ALEX',
     timestamp: new Date().toISOString()
   });
 }));
@@ -190,7 +186,7 @@ router.post('/consciousness', asyncHandler(async (req, res) => {
 
   if (!query) {
     return res.status(400).json({
-      success: false
+      success: false,
       error: 'Query is required for consciousness processing'
       timestamp: new Date().toISOString()
     });
@@ -200,7 +196,7 @@ router.post('/consciousness', asyncHandler(async (req, res) => {
 
   const requestData = {
     type: 'consciousness'
-    query
+    query,
     context: context || {}
     userId
   };
@@ -209,9 +205,9 @@ router.post('/consciousness', asyncHandler(async (req, res) => {
   const result = await core.processRequest(requestData);
 
   res.json({
-    success: result.success
+    success: result.success,
     data: result.data
-    metadata: result.metadata
+    metadata: result.metadata,
     message: 'Analyse de conscience ALEX complétée'
     timestamp: new Date().toISOString()
   });
@@ -228,7 +224,7 @@ router.post('/growth', asyncHandler(async (req, res) => {
 
   if (!query) {
     return res.status(400).json({
-      success: false
+      success: false,
       error: 'Query is required for growth processing'
       timestamp: new Date().toISOString()
     });
@@ -238,7 +234,7 @@ router.post('/growth', asyncHandler(async (req, res) => {
 
   const requestData = {
     type: 'growth'
-    query
+    query,
     context: context || {}
     userId
   };
@@ -247,9 +243,9 @@ router.post('/growth', asyncHandler(async (req, res) => {
   const result = await core.processRequest(requestData);
 
   res.json({
-    success: result.success
+    success: result.success,
     data: result.data
-    metadata: result.metadata
+    metadata: result.metadata,
     message: 'Analyse de croissance ALEX complétée'
     timestamp: new Date().toISOString()
   });
@@ -262,15 +258,14 @@ router.post('/growth', asyncHandler(async (req, res) => {
  */
 router.post('/soulprint', asyncHandler(async (req, res) => {
   const { context } = req.body;
-  const userId = await getUserId(req.auth?
-      .userId);
+  const userId = await getUserId(req.auth?.userId);
 
   logger.info('Soul print generation requested', { userId });
 
   const requestData = {
     type :
        'soulprint'
-    query: 'Generate soul print analysis'
+    query: 'Generate soul print analysis',
     context: context || {}
     userId
   };
@@ -279,9 +274,9 @@ router.post('/soulprint', asyncHandler(async (req, res) => {
   const result = await core.processRequest(requestData);
 
   res.json({
-    success: result.success
+    success: result.success,
     data: result.data
-    metadata: result.metadata
+    metadata: result.metadata,
     message: 'Signature spirituelle ALEX générée'
     timestamp: new Date().toISOString()
   });
@@ -298,7 +293,7 @@ router.post('/alex', asyncHandler(async (req, res) => {
 
   if (!query) {
     return res.status(400).json({
-      success: false
+      success: false,
       error: 'Query is required for Alex interaction'
       timestamp: new Date().toISOString()
     });
@@ -308,7 +303,7 @@ router.post('/alex', asyncHandler(async (req, res) => {
 
   const requestData = {
     type: 'alex'
-    query
+    query,
     context: context || {}
     userId
   };
@@ -317,9 +312,9 @@ router.post('/alex', asyncHandler(async (req, res) => {
   const result = await core.processRequest(requestData);
 
   res.json({
-    success: result.success
+    success: result.success,
     data: result.data
-    metadata: result.metadata
+    metadata: result.metadata,
     message: 'Interaction avec la personnalité ALEX complétée'
     timestamp: new Date().toISOString()
   });
@@ -335,37 +330,36 @@ router.get('/health', asyncHandler(async (req, res) => {
   const systemStatus = core.getSystemStatus();
 
   const healthStatus = {
-    status: systemStatus.initialized ? 'healthy' : 'initializing'
+    status: systemStatus.initialized ? 'healthy' : 'initializing',
     uptime: systemStatus.metrics?.uptime || 0
-    modules: {
+    modules: {,
       total: systemStatus.modules?.total || 0
-      active: systemStatus.modules?.active?.length || 0
+      active: systemStatus.modules?.active?.length || 0,
       status: systemStatus.modules?.status || []
     }
-    performance: {
+    performance: {,
       average_response_time: systemStatus.metrics?.averageResponseTime || 0
-      total_requests: systemStatus.metrics?.totalRequests || 0
-      success_rate: systemStatus.metrics?
-      .totalRequests > 0
+      total_requests: systemStatus.metrics?.totalRequests || 0,
+      success_rate: systemStatus.metrics?.totalRequests > 0
         ? (systemStatus.metrics.successfulResponses / systemStatus.metrics.totalRequests) * 100
          :
        100
     }
-    consciousness: {
+    consciousness: {,
       level: systemStatus.metrics?.consciousnessLevel || 0.75
       last_activity: systemStatus.metrics?.lastActivity
     }
   };
 
   logger.info('AI System health check completed', {
-    status: healthStatus.status
+    status: healthStatus.status,
     modules: healthStatus.modules.active
   });
 
   res.json({
-    success: true
+    success: true,
     data: healthStatus
-    message: 'Contrôle de santé système IA ALEX'
+    message: 'Contrôle de santé système IA ALEX',
     timestamp: new Date().toISOString()
   });
 }));
@@ -376,8 +370,7 @@ router.get('/health', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.get('/metrics', asyncHandler(async (req, res) => {
-  logger.info('AI System metrics requested', { userId: req.auth?
-      .userId });
+  logger.info('AI System metrics requested', { userId: req.auth?.userId });
 
   const core = getHustleFinderCore();
   const systemStatus = core.getSystemStatus();
@@ -385,24 +378,23 @@ router.get('/metrics', asyncHandler(async (req, res) => {
   const detailedMetrics = {
     system :
        {
-      name: systemStatus.name
+      name: systemStatus.name,
       version: systemStatus.version
-      initialized: systemStatus.initialized
+      initialized: systemStatus.initialized,
       uptime: systemStatus.metrics?.uptime || 0
     }
-    performance: {
+    performance: {,
       total_requests: systemStatus.metrics?.totalRequests || 0
-      successful_responses: systemStatus.metrics?.successfulResponses || 0
+      successful_responses: systemStatus.metrics?.successfulResponses || 0,
       average_response_time: systemStatus.metrics?.averageResponseTime || 0
-      success_rate: systemStatus.metrics?
-      .totalRequests > 0
+      success_rate: systemStatus.metrics?.totalRequests > 0
         ? ((systemStatus.metrics.successfulResponses / systemStatus.metrics.totalRequests) * 100).toFixed(2) + '%'
          :
        '100%'
     }
-    modules: systemStatus.modules
+    modules: systemStatus.modules,
     consciousness: {
-      current_level: systemStatus.metrics?.consciousnessLevel || 0.75
+      current_level: systemStatus.metrics?.consciousnessLevel || 0.75,
       start_time: systemStatus.metrics?.startTime
       last_activity: systemStatus.metrics?.lastActivity
     }
@@ -410,9 +402,9 @@ router.get('/metrics', asyncHandler(async (req, res) => {
   };
 
   res.json({
-    success: true
+    success: true,
     data: detailedMetrics
-    message: 'Métriques détaillées système IA ALEX'
+    message: 'Métriques détaillées système IA ALEX',
     timestamp: new Date().toISOString()
   });
 }));
@@ -422,17 +414,17 @@ router.get('/metrics', asyncHandler(async (req, res) => {
  */
 router.use((error, req, res, next) => {
   logger.error('AI System route error:', {
-    error: error.message
+    error: error.message,
     stack: error.stack
-    path: req.path
+    path: req.path,
     method: req.method
     userId: req.auth?.userId
   });
 
   res.status(error.statusCode || 500).json({
-    success: false
+    success: false,
     error: error.message || 'Internal AI System error'
-    path: req.path
+    path: req.path,
     timestamp: new Date().toISOString()
   });
 });

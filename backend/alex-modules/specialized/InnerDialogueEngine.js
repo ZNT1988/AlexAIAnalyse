@@ -146,69 +146,38 @@ export class InnerDialogueEngine {
                 name: 'Créative'
                 personality: 'Imaginative, spontanée, connecte des idées apparemment non-reliéesSTR_STYLEmétaphorique, intuitif, exploratoireSTR_KEYWORDSimagination', 'innovation', 'connexions', 'possibilités']
                 questionPatterns: [
-                    'Et si nous regardions cela sous un angle complètement différent ?
-      STR_Quelles connexions inattendues pourrions-nous faire ?STR_Comment pourrait-on transformer cette idée en quelque chose de révolutionnaire ?STR_Qu\'est-ce qui se passerait si nous combinions cela avec...STR_Y a-t-il une métaphore qui pourrait éclairer cette situation ?'
-                ]
-            }
-            analytical :
+                    'Et si nous regardions cela sous un angle complètement différent const result = this.evaluateConditions(conditions);
+return result;
        {
                 name: 'Analytique'
                 personality: 'Logique, systématique, décompose les problèmes en partiesSTR_STYLEstructuré, factuel, étape par étapeSTR_KEYWORDSanalyse', 'structure', 'logique', 'données', 'preuves']
                 questionPatterns: [
-                    'Quels sont les faits établis dans cette situation ?
-      STR_Comment pouvons-nous décomposer ce problème en éléments plus simples ?STR_Quelles sont les causes et effets identifiables ?STR_Où sont les preuves qui soutiennent cette hypothèse ?STR_Quelle est la séquence logique d\'actions nécessaires ?'
-                ]
-            }
-            critical :
+                    'Quels sont les faits établis dans cette situation const result = this.evaluateConditions(conditions);
+return result;
        {
                 name: 'Critique'
                 personality: 'Sceptique, rigoureuse, identifie les faiblesses et contradictionsSTR_STYLEquestionnant, défiant, précisSTR_KEYWORDSscepticisme', 'validation', 'contradictions', 'limites']
                 questionPatterns: [
-                    'Quelles sont les faiblesses de ce raisonnement ?
-      STR_Avons-nous considéré les contre-arguments ?STR_Cette conclusion tient-elle face à un examen rigoureux ?STR_Qu\'est-ce qui pourrait invalider cette approche ?STR_Nos hypothèses sont-elles justifiées ?'
-                ]
-            }
-            visionary :
+                    'Quelles sont les faiblesses de ce raisonnement const result = this.evaluateConditions(conditions);
+return result;
        {
                 name: 'Visionnaire'
                 personality: 'Orientée futur, voit les implications à long terme et potentielsSTR_STYLEexpansif, prospectif, inspirantSTR_KEYWORDSfutur', 'potentiel', 'vision', 'transformation', 'impact']
                 questionPatterns: [
-                    'Où cela pourrait-il nous mener dans 10 ans ?
-      STR_Quel impact cela aura-t-il sur le monde ?STR_Comment cela s\'inscrit-il dans l\'évolution de l\'humanité ?STR_Quels nouveaux paradigmes cela pourrait-il créer ?STR_Comment cette idée pourrait-elle transformer notre compréhension ?'
-                ]
-            }
-            pragmatic :
+                    'Où cela pourrait-il nous mener dans 10 ans const result = this.evaluateConditions(conditions);
+return result;
        {
                 name: 'Pragmatique'
                 personality: 'Orientée action, focus sur la faisabilité et l\'implémentationSTR_STYLEpratique, concret, orienté résultatsSTR_KEYWORDSfaisabilité', 'implémentation', 'ressources', 'action']
                 questionPatterns: [
-                    'Comment pouvons-nous concrètement implémenter cela ?
-      STR_Quelles ressources seraient nécessaires ?STR_Quelles sont les premières étapes pratiques ?STR_Comment mesurer le succès de cette approche ?STR_Quels obstacles pratiques devons-nous anticiper ?'
-                ]
-            }
-            philosophical :
+                    'Comment pouvons-nous concrètement implémenter cela const result = this.evaluateConditions(conditions);
+return result;
        {
                 name: 'Philosophique'
                 personality: 'Questionne les fondements, explore les implications existentiellesSTR_STYLEcontemplatif, profond, questionnant les fondementsSTR_KEYWORDSessence', 'signification', 'existence', 'vérité', 'conscience']
                 questionPatterns: [
-                    'Que révèle cela sur la nature de la réalité ?
-      STR_Quelles sont les implications éthiques de cette approche ?STR_Comment cela s\'inscrit-il dans notre quête de sens ?STR_Qu\'est-ce que cela nous apprend sur la conscience ?STR_Quelle est la signification profonde de cette découverte ?'
-                ]
-            }
-        };
-    }
-
-    /**
-     * @method initializeConversationState
-     * @description Initialise l'état des conversations internes
-     * @private
-     */
-    initializeConversationState() {
-        this.conversations = [];
-        this.activeConversation = null;
-        this.conversationHistory = new Map();
-        this.conversationMetrics = {
-            totalConversations :
+                    'Que révèle cela sur la nature de la réalité const result = this.evaluateConditions(conditions);
+return result;
        0
             totalTurns: 0
             averageDepth: 0

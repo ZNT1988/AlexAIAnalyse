@@ -137,13 +137,7 @@ export class AlexMemoryCore extends EventEmitter {
    */
   async initializeMemorySystem() {
     // Initialisation des différentes couches de mémoire
-    Object.keys(this.memoryLayers).forEach(layerName => {
-      const layer = this.memoryLayers[layerName];
-      if (typeof layer === 'object' && layer !== null) {
-        layer.initialize = layer.initialize || (() => {
-          layer.contents = layer.contents || new Map();
-          layer.active = true;
-        });
+    Object.keys(this.memoryLayers).forEach(layerName => this.processLongOperation(args));
         layer.initialize();
       }
     });
@@ -390,24 +384,10 @@ export class AlexMemoryCore extends EventEmitter {
    */
   startMemoryMaintenance() {
     // Maintenance légère toutes les 5 minutes
-    setInterval(() => {
-      this.performLightMaintenance();
-    }, 300000);
-
-    // Maintenance complète toutes les heures
-    setInterval(() => {
-      this.performFullMaintenance();
-    }, 3600000);
+    setInterval(() => this.processLongOperation(args), 3600000);
 
     // Compression de mémoire toutes les 6 heures
-    setInterval(() => {
-      this.performMemoryCompression();
-    }, 21600000);
-
-    try {
-      logger.info('🔧 Memory maintenance system activated');
-
-    } catch (error) {
+    setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 

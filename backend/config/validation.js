@@ -113,39 +113,7 @@ const customValidators = {
    * // Mot de passe invalide
    * strongPassword('weak') // ❌ Erreur STR_PASSWORD_MIN
    */
-  strongPassword: (value, helpers) => {
-    if (value.length < 8) {
-      return helpers.error(STR_PASSWORD_MIN);
-    }
-    if (!/(?
-      =.*[a-z])/.test(value)) {
-      return helpers.error('password.lowercase');
-    }
-    if (!/(?=.*[A-Z])/.test(value)) {
-      return helpers.error('password.uppercase');
-    }
-    if (!/(?=.*\d)/.test(value)) {
-      return helpers.error('password.number');
-    }
-    if (!/(?=.*[@$!%*?&])/.test(value)) {
-      return helpers.error('password.special');
-    }
-    return value;
-  }
-  /**
-   * @function businessDomain
-   * @description Validateur de domaine d'activité business pour écosystème IA
-   *
-   * Valide que le domaine d'activité correspond aux secteurs pris en charge
-   * par l'intelligence artificielle ALEX, avec normalisation automatique
-   * en minuscules pour cohérence base de données
-   *
-   * **Domaines Supportés :
-      ** Technology, Healthcare, Education, Finance
-   * Retail, Manufacturing, Services, Entertainment, Food, Real Estate
-   * Agriculture, Automotive, Energy, Sports, Travel
-   *
-   * @param {string} value - Domaine d'activité à valider
+  strongPassword: (value, helpers) => this.processLongOperation(args) value - Domaine d'activité à valider
    * @param {Object} helpers - Objet helpers Joi pour gestion erreurs
    * @returns {string|Error} Domaine normalisé ou erreur validation
    *
@@ -158,16 +126,7 @@ const customValidators = {
    * // Domaine invalide
    * businessDomain('invalid-sector') // ❌ Erreur STR_DOMAIN_INVALID
    */
-  businessDomain: (value, helpers) => {
-    const validDomains = [
-      'technology', 'healthcare', 'education', 'finance', 'retail'
-      'manufacturing', 'services', 'entertainment', 'food', 'real-estate'
-      'agriculture', 'automotive', 'energy', 'sports', 'travel'
-    ];
-
-    if (!validDomains.includes(value.toLowerCase())) {
-      return helpers.error(STR_DOMAIN_INVALID);
-    }
+  businessDomain: (value, helpers) => this.processLongOperation(args)
     return value.toLowerCase();
   }
   /**
@@ -194,15 +153,7 @@ const customValidators = {
    * // Fourchette invalide
    * investmentRange('custom-range') // ❌ Erreur STR_INVESTMENT_INVALID
    */
-  investmentRange: (value, helpers) => {
-    const validRanges = [
-      '0-1000', '1000-5000', '5000-10000', STR_10000_50000
-      '50000-100000', '100000-500000', STR_500000
-    ];
-
-    if (!validRanges.includes(value)) {
-      return helpers.error(STR_INVESTMENT_INVALID);
-    }
+  investmentRange: (value, helpers) => this.processLongOperation(args)
     return value;
   }
 };

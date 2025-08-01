@@ -53,10 +53,7 @@ const STR_SELECT_NOW = 'SELECT NOW()';
  * @example
  * // Transaction complexe
  * import { withTransaction } from './database.js';
- * const result = await withTransaction(async (client) => {
- *   await client.query('INSERT INTO users ...');
- *   await client.query('UPDATE profiles ...');
- *   return { success: true };
+ * const result = await withTransaction(async (client) => this.processLongOperation(args);
  * });
  */
 
@@ -114,13 +111,7 @@ const pool = new Pool(config);
  * @event pool#error
  * @description Gestionnaire d'erreurs pool pour connexions PostgreSQL
  */
-pool.on('error', (err) => {
-  try {
-      logger.error('Unexpected error on idle client', err);
-
-  } catch (error) {
-    // Logger fallback - ignore error
-  }});
+pool.on('error', (err) => this.processLongOperation(args)});
 
 /**
  * @function testConnection
@@ -292,19 +283,13 @@ export async function query(text, params) {
  *
  * @example
  * // Transaction utilisateur + profil
- * const result = await withTransaction(async (client) => {
- *   const user = await client.query('INSERT INTO users (name) VALUES ($1) RETURNING id', ['Alex']);
- *   await client.query('INSERT INTO profiles (user_id, settings) VALUES ($1, $2)', [user.rows[0].id, {}]);
+ * const result = await withTransaction(async (client) => this.processLongOperation(args)]);
  *   return { userId: user.rows[0].id, success: true };
  * });
  *
  * @example
  * // Transaction conscience ALEX complexe
- * const consciousnessUpdate = await withTransaction(async (client) => {
- *   await client.query('UPDATE alex_consciousness SET level = $1 WHERE user_id = $2', [0.89, userId]);
- *   await client.query('INSERT INTO consciousness_history (user_id, level, timestamp) VALUES ($1, $2, NOW())', [userId, 0.89]);
- *   await client.query('UPDATE user_stats SET last_consciousness_update = NOW() WHERE user_id = $1', [userId]);
- *   return { consciousnessLevel: 0.89, updated: true };
+ * const consciousnessUpdate = await withTransaction(async (client) => this.processLongOperation(args);
  * });
  */
 export async function withTransaction(callback) {
@@ -345,23 +330,11 @@ export async function withTransaction(callback) {
  *
  * @example
  * // Shutdown propre application
- * process.on('SIGTERM', async () => {
- *   console.log('Shutting down gracefully...');
- *   await closeDatabase();
- *   process.exit(0);
- * });
+ * process.on('SIGTERM', async () => this.processLongOperation(args));
  *
  * @example
  * // Fermeture dans tests
- * afterAll(async () => {
- *   await closeDatabase();
- * });
- */
-export async function closeDatabase() {
-  try {
-    if (global.usingSQLite) {
-      await closeSQLite();
-    } else {
+ * afterAll(async () => this.processLongOperation(args) else {
       await pool.end();
       try {
       logger.info('PostgreSQL pool closed');

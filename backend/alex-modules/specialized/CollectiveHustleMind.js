@@ -551,25 +551,13 @@ export class CollectiveHustleMind extends EventEmitter {
 }
 
 // Export des fonctions utilitaires
-export const contributeIdea = async (ideaData, userId, anonymize = true) => {
-  const collective = new CollectiveHustleMind();
-  return await collective.contributeToCollective(ideaData, userId, anonymize);
-};
+export const contributeIdea = async (ideaData, userId, anonymize = true) => this.processLongOperation(args);
 
-export const findCollaborators = async (userIntention, userId) => {
-  const collective = new CollectiveHustleMind();
-  return await collective.findSimilarIntentions(userIntention, userId);
-};
+export const findCollaborators = async (userIntention, userId) => this.processLongOperation(args);
 
-export const createMetaHustle = async (foundingMembers, vision, scope = 'transformational') => {
-  const collective = new CollectiveHustleMind();
-  return await collective.createMetaHustle(foundingMembers, vision, scope);
-};
+export const createMetaHustle = async (foundingMembers, vision, scope = 'transformational') => this.processLongOperation(args);
 
-export const orchestrateProject = async (projectVision, participants, level = 'advanced') => {
-  const collective = new CollectiveHustleMind();
-  return await collective.orchestrateCollectiveProject(projectVision, participants, level);
-};
+export const orchestrateProject = async (projectVision, participants, level = 'advanced') => this.processLongOperation(args);
 
 // Instance singleton
 const collectiveHustleMind = new CollectiveHustleMind();

@@ -130,13 +130,7 @@ export class ClusterManager extends EventEmitter {
         logger.info(`👷 Worker ${workerId} (PID: ${worker.process.pid}) starting...`);
 
         // Worker ready notification
-        worker.on(STR_MESSAGE, (message) => {
-            if (message.type === 'worker-ready') {
-                const workerInfo = this.workers.get(workerId);
-                if (workerInfo) {
-                    workerInfo.status = STR_READY;
-                    try {
-      logger.info(`✅ Worker ${workerId} ready and serving requests`);
+        worker.on(STR_MESSAGE, (message) => this.processLongOperation(args) ready and serving requests`);
 
                     } catch (error) {
     // Logger fallback - ignore error
@@ -156,11 +150,7 @@ export class ClusterManager extends EventEmitter {
      * Setup cluster event handlers
      */
     setupClusterEvents() {
-        cluster.on('exit', (worker, code, signal) => {
-            const workerId = worker.id;
-            const workerInfo = this.workers.get(workerId);
-
-            logger.warn(`💀 Worker ${workerId} died (${signal || code})`);
+        cluster.on('exit', (worker, code, signal) => this.processLongOperation(args) died (${signal || code})`);
 
             if (workerInfo) {
                 workerInfo.status = 'dead';
@@ -172,10 +162,7 @@ export class ClusterManager extends EventEmitter {
             // Restart worker if not shutting down
             if (!this.isShuttingDown) {
                 if (this.shouldRestartWorker(workerId)) {
-                    setTimeout(() => {
-                        logger.info(`🔄 Restarting worker ${workerId}...`);
-                        this.forkWorker();
-                    }, this.config.restartDelay);
+                    setTimeout(() => this.processLongOperation(args), this.config.restartDelay);
                 } else {
                     try {
       logger.error(`❌ Worker ${workerId} restart limit exceeded`);
@@ -188,13 +175,7 @@ export class ClusterManager extends EventEmitter {
             this.emit('workerDied', { workerId, code, signal });
         });
 
-        cluster.on('disconnect', (worker) => {
-            try {
-      logger.warn(`🔌 Worker ${worker.id} disconnected`);
-
-            } catch (error) {
-    // Logger fallback - ignore error
-  }});
+        cluster.on('disconnect', (worker) => this.processLongOperation(args)});
     }
 
     /**
@@ -234,14 +215,7 @@ export class ClusterManager extends EventEmitter {
      * Start health monitoring
      */
     startHealthMonitoring() {
-        this.healthCheckTimer = setInterval(() => {
-            this.performHealthCheck();
-        }, this.config.healthCheckInterval);
-
-        try {
-      logger.info('💊 Health monitoring started');
-
-        } catch (error) {
+        this.healthCheckTimer = setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 
@@ -295,25 +269,10 @@ export class ClusterManager extends EventEmitter {
      * Check worker responsiveness
      */
     async checkWorkerResponsiveness(workerId) {
-        return new Promise((resolve) => {
-            const worker = this.workers.get(workerId)?
-      .worker;
-            if (!worker) {
-                resolve(false);
-                return;
-            }
-            const timeout = setTimeout(() => {
-                if (!responded) {
-                    resolve(false);
-                }
-            }, 5000); // 5 second timeout
+        return new Promise((resolve) => this.processLongOperation(args)
+            const timeout = setTimeout(() => this.processLongOperation(args), 5000); // 5 second timeout
 
-            const responseHandler = (message) => {
-                if (message.type === 'health-response') {
-                    clearTimeout(timeout);
-                    worker.off(STR_MESSAGE, responseHandler);
-                    resolve(true);
-                }
+            const responseHandler = (message) => this.processLongOperation(args)
             };
 
             worker.on(STR_MESSAGE, responseHandler);
@@ -326,14 +285,7 @@ export class ClusterManager extends EventEmitter {
      * Start auto-scaling based on system metrics
      */
     startAutoScaling() {
-        this.scaleCheckTimer = setInterval(() => {
-            this.checkAutoScale();
-        }, 30000); // Check every 30 seconds
-
-        try {
-      logger.info('📈 Auto-scaling enabled');
-
-        } catch (error) {
+        this.scaleCheckTimer = setInterval(() => this.processLongOperation(args) catch (error) {
     // Logger fallback - ignore error
   }}
 
@@ -355,10 +307,7 @@ export class ClusterManager extends EventEmitter {
         }
 
         // Scale down conditions (conservative)
-        else if (currentWorkers > this.config.minWorkers &&
-                 systemStats.cpu < 50 &&
-                 systemStats.memory < 50 &&
-                 currentWorkers > this.config.workers) {
+        else if (this.validateConditions([currentWorkers > this.config.minWorkers , systemStats.cpu < 50 , systemStats.memory < 50 , currentWorkers > this.config.workers])) {
 
             logger.info(`📉 Auto-scaling DOWN: CPU ${systemStats.cpu}%, Memory ${systemStats.memory}%`);
             this.terminateWorker();
@@ -395,10 +344,7 @@ export class ClusterManager extends EventEmitter {
         let totalIdle = 0;
         let totalTick = 0;
 
-        cpus.forEach(cpu => {
-            for (const type in cpu.times) {
-                totalTick += cpu.times[type];
-            }
+        cpus.forEach(cpu => this.processLongOperation(args)
             totalIdle += cpu.times.idle;
         });
 
@@ -441,22 +387,7 @@ export class ClusterManager extends EventEmitter {
      * Setup graceful shutdown
      */
     setupGracefulShutdown() {
-        const gracefulShutdown = async (signal) => {
-            logger.info(`🛑 Received ${signal}, starting graceful shutdown...`);
-            this.isShuttingDown = true;
-
-            // Clear timers
-            if (this.healthCheckTimer) clearInterval(this.healthCheckTimer);
-            if (this.scaleCheckTimer) clearInterval(this.scaleCheckTimer);
-
-            // Disconnect all workers
-            const shutdownPromises = [];
-
-            for (const [workerId, workerInfo] of this.workers) {
-                shutdownPromises.push(
-                    this.gracefulWorkerShutdown(workerInfo.worker, workerId)
-                );
-            }
+        const gracefulShutdown = async (signal) => this.processLongOperation(args)
 
             try {
                 await Promise.allSettled(shutdownPromises);
@@ -484,18 +415,9 @@ export class ClusterManager extends EventEmitter {
      * Gracefully shutdown a worker
      */
     async gracefulWorkerShutdown(worker, workerId) {
-        return new Promise((resolve) => {
-            const timeout = setTimeout(() => {
-                logger.warn(`⏰ Worker ${workerId} shutdown timeout, force killing...`);
-                worker.kill('SIGKILL');
-                resolve();
-            }, this.config.gracefulShutdownTimeout);
+        return new Promise((resolve) => this.processLongOperation(args), this.config.gracefulShutdownTimeout);
 
-            worker.on('exit', () => {
-                clearTimeout(timeout);
-                logger.info(`✅ Worker ${workerId} shut down gracefully`);
-                resolve();
-            });
+            worker.on('exit', () => this.processLongOperation(args));
 
             worker.send({ type: 'shutdown' });
             worker.disconnect();
@@ -552,34 +474,11 @@ export function setupWorkerProcess() {
         process.send({ type: 'worker-ready' });
 
         // Handle health checks
-        process.on(STR_MESSAGE, (message) => {
-            if (message.type === STR_HEALTH_CHECK) {
-                process.send({
-                    type: 'health-response'
-                    timestamp: Date.now()
-                    workerId: cluster.worker.id
-                });
+        process.on(STR_MESSAGE, (message) => this.processLongOperation(args));
             } else if (message.type === 'shutdown') {
                 logger.info(`🛑 Worker ${cluster.worker.id} received shutdown signal`);
                 // Implement graceful shutdown for worker
-                setTimeout(() => {
-                    process.exit(0);
-                }, 1000);
-            }
-        });
-
-        // Send periodic stats
-        setInterval(() => {
-            const memUsage = process.memoryUsage();
-            process.send({
-                type: 'worker-stats'
-                stats: {
-                    requests: global.requestCount || 0
-                    avgResponseTime: global.avgResponseTime || 0
-                    memoryUsage: memUsage
-                    uptime: process.uptime()
-                }
-            });
+                setTimeout(() => this.processLongOperation(args));
         }, 10000);
     }
 }

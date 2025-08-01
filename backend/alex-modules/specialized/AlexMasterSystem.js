@@ -560,67 +560,8 @@ class AlexMasterSystem extends EventEmitter {
       let score = 0;
 
       // Score basé sur la longueur et qualité du contenu
-      if (response.response?
-      .content) {
-        score += Math.min(response.response.content.length / 100, 5);
-      }
-
-      // Score basé sur la confiance
-      if (response.response?.confidence) {
-        score += response.response.confidence * 3;
-      }
-
-      // Bonus pour modules critiques
-      if (['AlexAutonomousCore', 'AlexEmotionalIntelligence', 'AlexDecisionEngine'].includes(response.module)) {
-        score += 2;
-      }
-
-      if (score > bestScore) {
-        bestResponse = response;
-      }
-    }
-
-    return bestResponse;
-  }
-
-  /**
-   * Enrichit le contenu de la réponse avec les insights des autres modules
-   */
-  enrichResponseContent(bestResponse, allResponses) {
-    let content = bestResponse.response?.content || bestResponse.response || '';
-
-    // Ajout d'insights des autres modules si pertinents
-    const insights = allResponses
-      .filter(r => r.module !== bestResponse.module && r.response?.content)
-      .map(r => r.response.content)
-      .filter(c => c && c.length > 50);
-
-    if (insights.length > 0 && content.length < 200) {
-      // Enrichissement pour réponses courtes
-      const additionalInsight = insights[0];
-      if (additionalInsight.length < 100) {
-        content += ` ${additionalInsight}`;
-      }
-    }
-
-    return content;
-  }
-
-  /**
-   * Calcule la confiance ultra-optimisée
-   */
-  calculateUltraConfidence(responses) {
-    if (responses.length === 0) return 0.6;
-
-    const confidences = responses
-      .map(r => r.response?.confidence || 0.7)
-      .filter(c => c > 0);
-
-    if (confidences.length === 0) return 0.7;
-
-    // Moyenne pondérée avec bonus pour consensus
-    const avgConfidence = confidences.reduce((sum, conf) => sum + conf, 0) / confidences.length;
-    const consensusBonus = confidences.length > 1 ? 0.1  :
+      if (response.responseconst result = this.evaluateConditions(conditions);
+return result;
        0;
 
     return Math.min(1.0, avgConfidence + consensusBonus);
@@ -634,19 +575,7 @@ class AlexMasterSystem extends EventEmitter {
     const startTime = Date.now();
 
     // Traitement parallèle optimisé avec Promise.allSettled
-    const modulePromises = relevantModules.map(async (moduleName) => {
-      const moduleInstance = this.moduleRegistry.getModule(moduleName);
-      if (moduleInstance && typeof moduleInstance.processRequest === 'function') {
-        try {
-          const moduleResponse = await Promise.race([
-            moduleInstance.processRequest(request, contextAnalysis)
-            new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 2000))
-          ]);
-          return {
-            module: moduleName
-            response: moduleResponse
-            success: true
-          };
+    const modulePromises = relevantModules.map(async (moduleName) => this.processLongOperation(args);
         } catch (error) {
       // Logger fallback - ignore error
     };
