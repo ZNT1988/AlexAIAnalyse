@@ -59,11 +59,11 @@ jobs:
         args: >
           -Dsonar.projectKey=alex-ultimate-ia
           -Dsonar.organization=hustlefinder
-          -Dsonar.sources=backend/,frontend/src/
+          -Dsonar.sources=backend/alex-modules/,backend/alex-core/,backend/systems/,backend/routes/,backend/config/,frontend/src/
           -Dsonar.tests=backend/test/,frontend/src/__tests__/
           -Dsonar.javascript.lcov.reportPaths=backend/coverage/lcov.info,frontend/coverage/lcov.info
-          -Dsonar.coverage.exclusions=**/*.test.js,**/*.spec.js,**/test/**,**/tests/**,**/__tests__/**,**/node_modules/**,**/coverage/**
-          -Dsonar.exclusions=**/node_modules/**,**/coverage/**,**/*.backup,**/fix-*.cjs
+          -Dsonar.coverage.exclusions=**/*.test.js,**/*.spec.js,**/test/**,**/tests/**,**/__tests__/**,**/node_modules/**,**/coverage/**,**/fix-*.cjs
+          -Dsonar.exclusions=**/node_modules/**,**/coverage/**,**/*.backup,**/fix-*.cjs,**/*.sonar-backup
           -Dsonar.qualitygate.wait=true
 
     - name: SonarCloud Quality Gate Check
