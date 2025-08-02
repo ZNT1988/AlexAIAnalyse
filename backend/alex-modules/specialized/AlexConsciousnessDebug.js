@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_CONSOLE_LOG = ');
-    logger.debug(';
+const _STR_CONSOLE_LOG = ');    logger.debug(';
 
 /**
  * 🔍 AlexConsciousnessDebug.js - Mode Debug Conscience en Temps Réel
@@ -17,7 +16,7 @@ const STR_CONSOLE_LOG = ');
  * - Métriques de conscience
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 class AlexConsciousnessDebug extends EventEmitter {
@@ -171,15 +170,14 @@ class AlexConsciousnessDebug extends EventEmitter {
 
       logger.debug('🔍 Mode debug prêt - Utilisez startDebugging() pour commencer');
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
   /**
    * Démarre le monitoring de conscience en temps réel
    */
-  async startDebugging() {
+  async startDebugging(!this._isInitialized) {
     if (!this.isInitialized) {
       await this.initialize();
     }
@@ -227,9 +225,7 @@ class AlexConsciousnessDebug extends EventEmitter {
       decisions: this.getPendingDecisions()
       memory: this.getMemoryActivity()
       learning: this.getLearningActivity()
-    };
-
-    // Stocker dans le flux temps réel
+    };    // Stocker dans le flux temps réel
     this.realtimeMonitoring.thoughtStream.push(snapshot);
 
     // Limitation du buffer
@@ -258,13 +254,8 @@ class AlexConsciousnessDebug extends EventEmitter {
       reflection: this.assessReflectionDepth()
       integration: this.assessIntegrationLevel()
       responsiveness: this.assessResponsiveness()
-    };
-
-    // Moyenne pondérée
-    const weights = { selfAwareness: 0.3, attention: 0.2, reflection: 0.2, integration: 0.15, responsiveness: 0.15 };
-
-    let weightedSum = 0;
-    for (const [factor, value] of Object.entries(factors)) {
+    };    // Moyenne pondérée
+    const weights = { selfAwareness: 0.3, attention: 0.2, reflection: 0.2, integration: 0.15, responsiveness: 0.15 };    let weightedSum = 0;    for (const [factor, value] of Object.entries(factors)) {
       weightedSum += value * weights[factor];
     }
 
@@ -275,11 +266,7 @@ class AlexConsciousnessDebug extends EventEmitter {
    * Analyse l'état mental actuel
    */
   analyzeMentalState() {
-    const cognitiveLoad = this.calculateCognitiveLoad();
-    const emotionalState = this.analyzeEmotionalState();
-    const attentionState = this.analyzeAttentionState();
-
-    // Détermination de l'état mental composite
+    const cognitiveLoad = this.calculateCognitiveLoad();    const emotionalState = this.analyzeEmotionalState();    const attentionState = this.analyzeAttentionState();    // Détermination de l'état mental composite
     if (cognitiveLoad > 0.8) return 'intense_processing';
     if (emotionalState.intensity > 0.7) return 'emotionally_engaged';
     if (attentionState.focus > 0.8) return 'deeply_focused';
@@ -299,18 +286,17 @@ class AlexConsciousnessDebug extends EventEmitter {
     }
 
     // Affichage des émotions
-    if (snapshot.emotions.length > 0) {
-      const emotion = snapshot.emotions[snapshot.emotions.length - 1];
-      logger.info(`❤️  Émotion :
+    if (snapshot._emotions._length > 0) {
+      const emotion = snapshot.emotions[snapshot.emotions.length - 1];      logger.info(`❤️  Émotion :
        ${emotion.type} (${Math.round(emotion.intensity * 100)}%)`);
     }
 
     // Affichage des décisions
-    if (snapshot.decisions.length > 0) {
+    if (_snapshot._decisions._length > 0) {
     }
 
     // Affichage de l'apprentissage
-    if (snapshot.learning.active) {
+    if (snapshot._learning._active) {
       logger.info(`📚 Apprentissage: ${snapshot.learning.type} (efficacité: ${Math.round(snapshot.learning.efficiency * 100)}%)`);
     }
   }
@@ -318,7 +304,7 @@ class AlexConsciousnessDebug extends EventEmitter {
   /**
    * Connecte aux systèmes à monitorer
    */
-  async connectToSystems() {
+  async connectToSystems('./AlexCognitionEngine.js') {
     try {
       // Connexion au moteur de cognition
       const alexCognitionEngine = await import('./AlexCognitionEngine.js');
@@ -336,23 +322,20 @@ class AlexConsciousnessDebug extends EventEmitter {
       const alexMasterSystem = await import('./AlexMasterSystem.js');
       this.connectToMasterSystem(alexMasterSystem.default);
 
-    } catch (error) {
-      // Logger fallback - ignore error
-    } catch (error) {
-    // Logger fallback - ignore error
-  }}
+    } catch (_error) {
+    } catch (error) }
   }
 
   /**
    * Connecte au moteur de cognition
    */
   connectToCognitionEngine(cognitionEngine) {
-    cognitionEngine.on('thought_generated', (thought) => this.processLongOperation(args));
+    cognitionEngine.on('thought_generated', (_thought) => this.processLongOperation(args));
 
       this.trimBuffer('thoughts');
     });
 
-    cognitionEngine.on('decision_made', (decision) => this.processLongOperation(args));
+    cognitionEngine.on('decision_made', (_decision) => this.processLongOperation(args));
 
       this.trimBuffer('decisions');
     });
@@ -363,12 +346,12 @@ class AlexConsciousnessDebug extends EventEmitter {
    * Connecte au système de mémoire
    */
   connectToMemoryCore(memoryCore) {
-    memoryCore.on('memory_stored', (memory) => this.processLongOperation(args));
+    memoryCore.on('memory_stored', (_memory) => this.processLongOperation(args));
 
       this.trimBuffer('memories');
     });
 
-    memoryCore.on('memory_retrieved', (retrieval) => this.processLongOperation(args));
+    memoryCore.on('memory_retrieved', (_retrieval) => this.processLongOperation(args));
 
       this.trimBuffer('memories');
     });
@@ -379,12 +362,12 @@ class AlexConsciousnessDebug extends EventEmitter {
    * Connecte au moteur d'apprentissage
    */
   connectToTrainingEngine(trainingEngine) {
-    trainingEngine.on('learning_processed', (event) => this.processLongOperation(args));
+    trainingEngine.on('learning_processed', (_event) => this.processLongOperation(args));
 
       this.trimBuffer('learning');
     });
 
-    trainingEngine.on('self_evaluation_completed', (evaluation) => this.processLongOperation(args));
+    trainingEngine.on('self_evaluation_completed', (_evaluation) => this.processLongOperation(args));
 
       this.trimBuffer('learning');
     });
@@ -439,9 +422,7 @@ class AlexConsciousnessDebug extends EventEmitter {
       anomalies: this.identifyAnomalies()
       trends: this.analyzeTrends()
       recommendations: this.generateRecommendations()
-    };
-
-    logger.info('═══════════════════════════════');
+    };    logger.info('═══════════════════════════════');
     logger.info(`⚠️  Anomalies détectées: ${insights.anomalies.length}STR_CONSOLE_LOG💡 Recommandations: ${insights.recommendations.length}`);
 
     return insights;
@@ -538,8 +519,7 @@ class AlexConsciousnessDebug extends EventEmitter {
   }
 
   generateDebugReport() {
-    const stream = this.realtimeMonitoring.thoughtStream;
-    return {
+    const stream = this.realtimeMonitoring.thoughtStream;    return {
       duration: this.debugState.totalObservationTime
       snapshots: stream.length
       averageConsciousness: stream.reduce((sum, s) => sum + s.consciousness.level, 0) / stream.length || 0
@@ -553,8 +533,7 @@ class AlexConsciousnessDebug extends EventEmitter {
   generateRecommendations() { return ['continue_monitoring', 'enhance_meta_cognition']; }
 
   getCollectorStatus() {
-    const status = {};
-    for (const [name, collector] of Object.entries(this.dataCollectors)) {
+    const status = {};    for (const [name, collector] of Object.entries(this.dataCollectors)) {
       status[name] = {
         active: collector.active
         bufferSize: collector.buffer.length

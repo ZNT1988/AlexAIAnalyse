@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_CONTEXTUAL = 'contextual';
-/**
+const STR_CONTEXTUAL = 'contextual';/**
  * @fileoverview AlexLearningEngine - Moteur d'Apprentissage Avancé d'Alex
  * Apprentissage adaptatif et amélioration continue
  * @module AlexLearningEngine
@@ -10,7 +9,7 @@ const STR_CONTEXTUAL = 'contextual';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -103,8 +102,7 @@ export class AlexLearningEngine extends EventEmitter {
     try {
       logger.info('🧠 AlexLearningEngine initializing - Cognitive evolution beginning');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -116,8 +114,7 @@ export class AlexLearningEngine extends EventEmitter {
     try {
       logger.info('📚 AlexLearningEngine fully initialized - Advanced learning active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -134,9 +131,7 @@ export class AlexLearningEngine extends EventEmitter {
       adaptations: []
       retention: 0
       confidence: 0
-    };
-
-    // Analyse de l'interaction
+    };    // Analyse de l'interaction
     const analysis = await this.analyzeInteraction(interaction);
     learningEvent.analysis = analysis;
 
@@ -168,9 +163,7 @@ export class AlexLearningEngine extends EventEmitter {
    * Classification du type d'apprentissage
    */
   classifyLearningType(interaction) {
-    const types = [];
-
-    // Analyse conversationnelle
+    const types = [];    // Analyse conversationnelle
     if (interaction.type === 'conversation') {
       types.push('conversational');
     }
@@ -208,9 +201,7 @@ export class AlexLearningEngine extends EventEmitter {
       emotionalAnalysis: this.analyzeEmotionalContent(interaction)
       patternAnalysis: this.analyzePatterns(interaction)
       outcomeAnalysis: this.analyzeOutcome(interaction)
-    };
-
-    // Analyse de la nouveauté
+    };    // Analyse de la nouveauté
     analysis.novelty = this.assessNovelty(interaction);
 
     // Analyse de la complexité
@@ -226,9 +217,7 @@ export class AlexLearningEngine extends EventEmitter {
    * Extraction d'insights d'apprentissage
    */
   async extractInsights(analysis, feedback) {
-    const insights = [];
-
-    // Insights de contenu
+    const insights = [];    // Insights de contenu
     if (analysis.contentAnalysis.newConcepts?.length > 0) {
       insights.push({
         type: 'conceptual'
@@ -275,9 +264,7 @@ export class AlexLearningEngine extends EventEmitter {
    * Génération d'adaptations basées sur les insights
    */
   async generateAdaptations(insights) {
-    const adaptations = [];
-
-    for (const insight of insights) {
+    const adaptations = [];    for (const insight of insights) {
       switch (insight.type) {
         case 'conceptual':
           adaptations.push({
@@ -327,13 +314,10 @@ export class AlexLearningEngine extends EventEmitter {
   /**
    * Application des apprentissages
    */
-  async applyLearning(learningEvent) {
-    const appliedAdaptations = [];
-
-    for (const adaptation of learningEvent.adaptations) {
+  async applyLearning(const _adaptation _of learningEvent._adaptations) {
+    const appliedAdaptations = [];    for (const adaptation of learningEvent.adaptations) {
       try {
-        const result = await this.executeAdaptation(adaptation);
-        appliedAdaptations.push({
+        const result = await this.executeAdaptation(adaptation);        appliedAdaptations.push({
           adaptation: adaptation
           result: result
           success: true
@@ -352,8 +336,7 @@ export class AlexLearningEngine extends EventEmitter {
         try {
       logger.warn(`Learning adaptation failed: ${error.message}`);
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
     }
 
@@ -426,7 +409,7 @@ export class AlexLearningEngine extends EventEmitter {
 
     // Évaluation méta-cognitive quotidienne
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -439,9 +422,7 @@ export class AlexLearningEngine extends EventEmitter {
       reviewed: 0
       reinforced: 0
       forgotten: 0
-    };
-
-    // Révision de la mémoire à court terme
+    };    // Révision de la mémoire à court terme
     for (const memory of this.learningMemory.shortTerm.slice(-50)) {
       if (this.shouldReinforce(memory)) {
         await this.reinforceLearning(memory);
@@ -463,8 +444,7 @@ export class AlexLearningEngine extends EventEmitter {
     try {
       logger.info(`📖 Memory review completed: ${reviewEvent.reinforced}/${reviewEvent.reviewed} reinforced`);
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -483,8 +463,7 @@ export class AlexLearningEngine extends EventEmitter {
     try {
       logger.info('⚙️ Learning system initialized');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**

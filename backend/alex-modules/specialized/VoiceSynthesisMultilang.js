@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_HIGH = 'high';
-/**
+const STR_HIGH = 'high';/**
  * @fileoverview VoiceSynthesisMultilang - Synthèse Vocale Multilingue Révolutionnaire
  * ALEX parle naturellement dans 60+ langues avec émotions et personnalités vocales
  *
@@ -59,16 +58,14 @@ const STR_HIGH = 'high';
  *   voice: 'natural_female'
  *   emotion: 'caring'
  *   speed: 1.0
- * });
- *
+ * }); *
  * @example
  * // Conversation naturelle avec adaptation
  * const conversation = await voice.generateConversationalSpeech({
  *   messages: dialogueHistory
  *   personality: 'friendly_expert'
  *   culturalContext: { country: 'Japan', formal: true }
- * });
- */
+ * }); */
 
 import logger from '../config/logger.js';
 
@@ -221,7 +218,7 @@ export class VoiceSynthesisMultilang {
      * @private
      */
     initializeLanguageVoiceModel(langCode) {
-        const voiceModel = {
+        const _voiceModel = {
             language: langCode
             phonemes: this.getLanguagePhonemes(langCode)
             prosody: this.getLanguageProsody(langCode)
@@ -234,8 +231,7 @@ export class VoiceSynthesisMultilang {
                 casual_female: { quality: 'medium', personality: 'warm' }
             }
             accents: this.getLanguageAccents(langCode)
-            culturalNuances: this.getVoiceCulturalNuances(langCode)
-        };
+            culturalNuances: this.getVoiceCulturalNuances(langCode);        };
 
         this.voiceEngine.voiceModels.set(langCode, voiceModel);
     }
@@ -364,12 +360,9 @@ export class VoiceSynthesisMultilang {
      *   personality: 'friendly'
      *   speed: 0.9
      *   pitch: 1.1
-     * });
-     */
+     * });     */
     async speak(speechRequest) {
-        const speechId = `speech_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting voice synthesis', {
+        const speechId = `speech_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting voice synthesis', {
             speechId
             language: speechRequest.language
             voice: speechRequest.voice
@@ -385,9 +378,7 @@ export class VoiceSynthesisMultilang {
             audioGeneration: null
             postProcessing: null
             result: null
-        };
-
-        try {
+        };        try {
             // Phase 1: Analyse du texte et détection langue
             synthesis.analysis = await this.analyzeTextForSynthesis(speechRequest.text, speechRequest.language);
 
@@ -405,22 +396,28 @@ export class VoiceSynthesisMultilang {
             );
 
             // Phase 4: Application émotions et personnalité
-            if (this.config.emotionalSynthesis) {
+            async if(
+                    synthesis.audioGeneration
+                    speechRequest.emotion
+                    speechRequest.personality
+                ) 
                 synthesis.audioGeneration = await this.applyEmotionalProcessing(
                     synthesis.audioGeneration
                     speechRequest.emotion
                     speechRequest.personality
                 );
-            }
 
             // Phase 5: Optimisation prosodie
-            if (this.config.prosodyEnhancement) {
+            async if(
+                    synthesis.audioGeneration
+                    synthesis.analysis
+                    speechRequest.prosody
+                ) 
                 synthesis.audioGeneration = await this.enhanceProsody(
                     synthesis.audioGeneration
                     synthesis.analysis
                     speechRequest.prosody
                 );
-            }
 
             // Phase 6: Post-traitement et finalisation
             synthesis.postProcessing = await this.postProcessAudio(
@@ -457,8 +454,7 @@ export class VoiceSynthesisMultilang {
                 alternatives: await this.generateVoiceAlternatives(speechRequest)
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -492,12 +488,9 @@ export class VoiceSynthesisMultilang {
      *   ]
      *   personality: 'friendly_professional'
      *   culturalContext: { country: 'US', formal: false }
-     * });
-     */
+     * });     */
     async generateConversationalSpeech(conversationRequest) {
-        const conversationId = `conv_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting conversational speech generation', {
+        const conversationId = `conv_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting conversational speech generation', {
             conversationId
             messagesCount: conversationRequest.messages.length
             personality: conversationRequest.personality
@@ -510,9 +503,7 @@ export class VoiceSynthesisMultilang {
             personalityProfile: null
             speechSegments: []
             coherenceData: null
-        };
-
-        try {
+        };        try {
             // Phase 1: Analyse conversation et profil personnalité
             conversation.personalityProfile = await this.buildConversationPersonality(
                 conversationRequest.personality
@@ -520,11 +511,11 @@ export class VoiceSynthesisMultilang {
             );
 
             // Phase 2: Génération segments audio avec cohérence
-            for (let i = 0; i < conversationRequest.messages.length; i++) {
+            async for(message.role === STR_ASSISTANT) {
                 const message = conversationRequest.messages[i];
 
                 if (message.role === STR_ASSISTANT) {
-                    const segmentRequest = {
+                    const _segmentRequest = {
                         text: message.text
                         language: message.language || 'en'
                         personality: conversation.personalityProfile.current
@@ -533,20 +524,22 @@ export class VoiceSynthesisMultilang {
                             position: i
                             total: conversationRequest.messages.length
                             previousEmotion: i > 0 ? conversation.speechSegments[i-1]?.emotion : null
-                        }
-                    };
+                        };                    };
 
                     const segment = await this.speak(segmentRequest);
                     conversation.speechSegments.push(segment);
 
                     // Mise à jour personnalité pour cohérence
-                    if (conversationRequest.maintainConsistency !== false) {
+                    async if(
+                            conversation.personalityProfile
+                            segment
+                            message
+                        ) 
                         conversation.personalityProfile = await this.updatePersonalityConsistency(
                             conversation.personalityProfile
                             segment
                             message
                         );
-                    }
                 }
             }
 
@@ -573,7 +566,6 @@ export class VoiceSynthesisMultilang {
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
     });
 
             return {
@@ -613,27 +605,23 @@ export class VoiceSynthesisMultilang {
      *     primary: [STR_CONFIDENT, 'helpful', 'analytical']
      *     secondary: ['encouraging', 'patient']
      *   }
-     * });
-     */
+     * });     */
     async createVoicePersona(personaRequest) {
-        const personaId = `persona_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Creating voice persona', {
+        const personaId = `persona_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Creating voice persona', {
             personaId
             name: personaRequest.name
             languages: personaRequest.languages?.length || 0
         });
 
         try {
-            const persona = {
+            const _persona = {
                 id: personaId
                 name: personaRequest.name
                 characteristics: personaRequest.characteristics
                 languages: personaRequest.languages || ['en']
                 emotionalRange: personaRequest.emotionalRange
                 voiceProfile: await this.buildPersonaVoiceProfile(personaRequest)
-                createdAt: new Date().toISOString()
-            };
+                createdAt: new Date().toISOString();            };
 
             // Enregistrer persona pour usage futur
             await this.registerVoicePersona(persona);
@@ -646,7 +634,6 @@ export class VoiceSynthesisMultilang {
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
     });
 
             return {
@@ -666,10 +653,8 @@ export class VoiceSynthesisMultilang {
      * @description Analyse texte pour préparation synthèse
      * @private
      */
-    async analyzeTextForSynthesis(text, providedLanguage) {
-        const language = providedLanguage || await this.detectTextLanguage(text);
-
-        return {
+    async analyzeTextForSynthesis(text) {
+        const language = providedLanguage || await this.detectTextLanguage(text);        return {
             text: text
             detectedLanguage: language
             sentences: this.splitIntoSentences(text)
@@ -695,9 +680,7 @@ export class VoiceSynthesisMultilang {
         }
 
         // Sélection basée sur paramètres
-        let selectedVoice = request.voice || 'natural_female';
-
-        // Validation disponibilité
+        let selectedVoice = request.voice || 'natural_female';        // Validation disponibilité
         if (!voiceModel.voices[selectedVoice]) {
             selectedVoice = Object.keys(voiceModel.voices)[0]; // Fallback
         }

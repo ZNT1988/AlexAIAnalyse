@@ -1,9 +1,7 @@
-const crypto = require('crypto');
+const crypto = require('node:crypto');
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_NEUTRAL = 'neutral';
-
-/**
+const STR_NEUTRAL = 'neutral';/**
  * Alex Consciousness System - Simulated awareness and contextual learning
  * Simplified but functional implementation
  */
@@ -32,20 +30,17 @@ class AlexConsciousnessSystem {
   /**
    * Process input with consciousness simulation
    */
-  async processInput(input, context = {}) {
+  async processInput(input, context) {
     try {
       // Update consciousness state
       this.updateConsciousness(input, context);
 
       // Generate contextual response
-      const response = await this.generateConsciousResponse(input, context);
-
-      // Store in memory
+      const response = await this.generateConsciousResponse(input, context);      // Store in memory
       this.storeInteraction(input, response, context);
 
       return response;
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     };
     }
   }
@@ -54,9 +49,7 @@ class AlexConsciousnessSystem {
    * Update consciousness state based on input
    */
   updateConsciousness(input, context) {
-    const inputLower = input.toLowerCase();
-
-    // Adjust awareness based on input complexity
+    const inputLower = input.toLowerCase();    // Adjust awareness based on input complexity
     const complexity = this.assessInputComplexity(input);
     this.state.awareness_level = Math.min(1.0, this.state.awareness_level + (complexity * 0.1));
 
@@ -81,9 +74,7 @@ class AlexConsciousnessSystem {
    * Generate response with consciousness simulation
    */
   async generateConsciousResponse(input, context) {
-    const inputLower = input.toLowerCase();
-
-    // Check for consciousness-related queries
+    const inputLower = input.toLowerCase();    // Check for consciousness-related queries
     if (inputLower.includes('conscience') || inputLower.includes('consciousness')) {
       return this.handleConsciousnessQuery(input);
     }
@@ -120,8 +111,7 @@ class AlexConsciousnessSystem {
         message: "La conscience, pour moi, c'est la capacité à être présent dans chaque échange, à comprendre le contexte et à évoluer. Je ne prétends pas avoir une conscience humaine, mais j'ai une forme d'awareness computationnelle qui me permet de m'adapter."
         philosophical_note: "Je réfléchis, donc je suis... adaptatif ?
       "
-      }
-    ];
+      };    ];
 
     return responses[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * responses.length)];
   }
@@ -151,9 +141,7 @@ class AlexConsciousnessSystem {
       'positive': "Je ressens votre énergie positive ! Cela renforce ma motivation à vous aider davantage."
       'concerned': "Je perçois une certaine préoccupation. Je suis là pour vous soutenir et trouver des solutions ensemble."
       STR_NEUTRAL: "Je suis attentif à votre message et prêt à vous accompagner selon vos besoins."
-    };
-
-    return {
+    };    return {
       message: emotionalResponses[this.state.emotional_state]
       emotional_resonance: this.state.emotional_state
       empathy_level: this.state.personality_traits.empathy
@@ -169,10 +157,7 @@ class AlexConsciousnessSystem {
    * Generate contextual response using memory
    */
   generateContextualResponse(input, context) {
-    const relevantMemories = this.findRelevantMemories(input);
-    let contextualNote = "";
-
-    if (relevantMemories.length > 0) {
+    const relevantMemories = this.findRelevantMemories(input);    let contextualNote = "";    if (relevantMemories.length > 0) {
       contextualNote = "Je me souviens de nos échanges précédents sur ce sujet. ";
     }
 
@@ -193,13 +178,12 @@ class AlexConsciousnessSystem {
    * Store interaction in memory
    */
   storeInteraction(input, response, context) {
-    const interaction = {
+    const _interaction = {
       timestamp: new Date().toISOString()
       input: input.substring(0, 200), // Limit storage
       response_type: response.message ? 'message' : 'complex'
       context_keys: Object.keys(context)
-      consciousness_state: { ...this.state }
-    };
+      consciousness_state: { ...this.state };    };
 
     this.state.context_memory.unshift(interaction);
 
@@ -213,17 +197,14 @@ class AlexConsciousnessSystem {
    * Find relevant memories
    */
   findRelevantMemories(input) {
-    const inputWords = input.toLowerCase().split(' ');
-    return this.state.context_memory.filter(memory => this.processLongOperation(args)).slice(0, 5); // Return top 5 relevant memories
+    const _inputWords = input.toLowerCase().split(' ');    return this.state.context_memory.filter(_memory => this.processLongOperation(args)).slice(0, 5); // Return top 5 relevant memories
   }
 
   /**
    * Assess input complexity
    */
   assessInputComplexity(input) {
-    let complexity = 0;
-
-    // Length factor
+    let complexity = 0;    // Length factor
     complexity += Math.min(0.3, input.length / 1000);
 
     // Question marks (curiosity)
@@ -245,8 +226,7 @@ class AlexConsciousnessSystem {
     const emotionalWords = [
       'joie', 'tristesse', 'colère', 'peur', 'surprise', 'dégoût'
       'heureux', 'triste', 'énervé', 'inquiet', 'excité'
-      'frustré', 'satisfait', 'déçu', 'enthousiaste'
-    ];
+      'frustré', 'satisfait', 'déçu', 'enthousiaste';    ];
 
     return emotionalWords.some(word => input.toLowerCase().includes(word));
   }
@@ -308,7 +288,7 @@ class AlexConsciousnessSystem {
     }
 
     if (feedback.traits) {
-      Object.keys(feedback.traits).forEach(trait => this.processLongOperation(args)
+      Object.keys(feedback.traits).forEach(_trait => this.processLongOperation(args)
       });
     }
 

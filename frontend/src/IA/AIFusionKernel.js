@@ -1,4 +1,5 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
+
 /**
  * 🧠 AIFusionKernel.js - Orchestrateur Central d'Alex
  *
@@ -9,17 +10,18 @@ import crypto from 'crypto';
  * l'état global, et orchestre les processus cognitifs complexes
  */
 
-import AlexMasterSystem from './AlexMasterSystem.js';
-import VisualCortex from './VisualCortex.js';
-import LanguageProcessor from './LanguageProcessor.js';
 import EmotionalIntelligence from '../components/time/EmotionalIntelligence.js';
 import MemoryPalace from '../components/time/MemoryPalace.js';
+import AlexMasterSystem from './AlexMasterSystem.js';
 import CognitiveBridge from './CognitiveBridge.js';
+import LanguageProcessor from './LanguageProcessor.js';
+import VisualCortex from './VisualCortex.js';
+
 const logger = {
-  info: (msg, ...args) => console.log(`[${new Date().toISOString()}] INFO:`, msg, ...args),
-  warn: (msg, ...args) => console.warn(`[${new Date().toISOString()}] WARN:`, msg, ...args),
-  error: (msg, ...args) => console.error(`[${new Date().toISOString()}] ERROR:`, msg, ...args),
-  debug: (msg, ...args) => console.debug(`[${new Date().toISOString()}] DEBUG:`, msg, ...args)
+  info: (_msg, ..._args) => {},
+  warn: (_msg, ..._args) => {},
+  error: (_msg, ..._args) => {},
+  debug: (_msg, ..._args) => {},
 };
 
 class AIFusionKernel {
@@ -33,7 +35,7 @@ class AIFusionKernel {
       memoryRetention: 0.9,
       creativityLevel: 0.8,
       debugMode: false,
-      ...config
+      ...config,
     };
 
     // 🧠 État global du système
@@ -44,7 +46,7 @@ class AIFusionKernel {
       activeProcesses: new Set(),
       lastInteraction: null,
       cognitiveLoad: 0,
-      attentionFocus: null
+      attentionFocus: null,
     };
 
     // 📊 Métriques de performance
@@ -53,7 +55,7 @@ class AIFusionKernel {
       interactions: 0,
       learningEvents: 0,
       emotionalEvents: 0,
-      memoryOperations: 0
+      memoryOperations: 0,
     };
 
     // 🔄 File des tâches cognitives
@@ -66,10 +68,19 @@ class AIFusionKernel {
 
     // ⚡ Modules IA initialisés
     this.modules = {};
-    this.initializeModules();
+    this.isInitialized = false;
 
-    // 🎯 Démarrage du kernel
-    this.boot();
+    // 🎯 Initialisation différée
+    this._initialize();
+  }
+
+  /**
+   * 🚀 Initialisation différée du système
+   */
+  async _initialize() {
+    await this.initializeModules();
+    await this.boot();
+    this.isInitialized = true;
   }
 
   /**
@@ -110,9 +121,8 @@ class AIFusionKernel {
 
       // Configuration des interconnexions
       await this.establishCognitiveConnections();
-
     } catch (error) {
-      // Logger fallback - ignore error
+      logger.error("Erreur lors de l'initialisation des modules:", error);
     }
   }
 
@@ -121,19 +131,19 @@ class AIFusionKernel {
    */
   async establishCognitiveConnections() {
     // Master System ↔ Emotional Intelligence
-    this.subscribe('emotion.changed', (emotion) => {
+    this.subscribe('emotion.changed', emotion => {
       this.modules.master.updateEmotionalState(emotion);
       this.modules.memory.tagEmotionalMemory(emotion);
     });
 
     // Language ↔ Memory
-    this.subscribe('language.processed', (analysis) => {
+    this.subscribe('language.processed', analysis => {
       this.modules.memory.storeLinguisticMemory(analysis);
       this.modules.emotions.analyzeEmotionalContent(analysis);
     });
 
     // Vision ↔ Memory
-    this.subscribe('vision.perceived', (visualData) => {
+    this.subscribe('vision.perceived', visualData => {
       this.modules.memory.storeVisualMemory(visualData);
       this.modules.emotions.analyzeVisualEmotion(visualData);
     });
@@ -178,7 +188,6 @@ class AIFusionKernel {
       this.updateConsciousness();
       this.maintainEmotionalBalance();
       this.consolidateMemories();
-
     }, 100); // 10 FPS cognitif
   }
 
@@ -194,12 +203,14 @@ class AIFusionKernel {
       const languageAnalysis = await this.modules.language.process(input);
 
       // 👁️ Analyse visuelle si présente
-      const visualAnalysis = input.media ?
-        await this.modules.vision.analyze(input.media) : null;
+      const visualAnalysis = input.media
+        ? await this.modules.vision.analyze(input.media)
+        : null;
 
       // 💫 Analyse émotionnelle
       const emotionalContext = await this.modules.emotions.analyzeInput(
-        languageAnalysis, visualAnalysis
+        languageAnalysis,
+        visualAnalysis
       );
 
       // 🧠 Décision du master system
@@ -207,7 +218,7 @@ class AIFusionKernel {
         language: languageAnalysis,
         visual: visualAnalysis,
         emotional: emotionalContext,
-        memory: await this.modules.memory.recall(input.text)
+        memory: await this.modules.memory.recall(input.text),
       });
 
       // 💾 Stockage en mémoire
@@ -215,16 +226,16 @@ class AIFusionKernel {
         input,
         response,
         context: emotionalContext,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
 
       // 🔄 Mise à jour de l'état
       this.updateCognitiveState(response);
 
       return response;
-
     } catch (error) {
-      // Logger fallback - ignore error
+      logger.error("Erreur lors du traitement de l'interaction:", error);
+      throw error;
     }
   }
 
@@ -263,11 +274,13 @@ class AIFusionKernel {
       activity: this.state.activeProcesses.size / 10,
       memory: this.modules.memory?.getMemoryDensity() || 0,
       emotion: this.modules.emotions?.getEmotionalComplexity() || 0,
-      cognitive: 1 - (this.state.cognitiveLoad / 100),
-      time: Math.min(this.getUptime() / 3600000, 1) // 1h max
+      cognitive: 1 - this.state.cognitiveLoad / 100,
+      time: Math.min(this.getUptime() / 3600000, 1), // 1h max
     };
 
-    this.state.consciousness = Object.values(factors).reduce((a, b) => a + b) / Object.keys(factors).length;
+    this.state.consciousness =
+      Object.values(factors).reduce((a, b) => a + b) /
+      Object.keys(factors).length;
     this.emit('consciousness.updated', this.state.consciousness);
   }
 
@@ -284,7 +297,11 @@ class AIFusionKernel {
    * 💾 Consolidation des mémoires
    */
   consolidateMemories() {
-    if (this.modules.memory && (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) < 0.1) { // 10% de chance
+    if (
+      this.modules.memory &&
+      crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff < 0.1
+    ) {
+      // 10% de chance
       this.modules.memory.consolidate();
     }
   }
@@ -296,10 +313,13 @@ class AIFusionKernel {
     const factors = [
       this.cognitiveQueue.length * 10,
       this.state.activeProcesses.size * 5,
-      this.modules.emotions?.getEmotionalIntensity() * 20 || 0
+      this.modules.emotions?.getEmotionalIntensity() * 20 || 0,
     ];
 
-    return Math.min(100, factors.reduce((a, b) => a + b, 0));
+    return Math.min(
+      100,
+      factors.reduce((a, b) => a + b, 0)
+    );
   }
 
   /**
@@ -318,17 +338,13 @@ class AIFusionKernel {
         try {
           callback(data);
         } catch (error) {
-          try {
-      logger.error(`Erreur dans l'abonnement ${event} :
-      `, error);
-
-          } catch (error) {
-    // Logger fallback - ignore error
-  }}
+          logger.error(`Erreur dans l'abonnement ${event}:`, error);
+        }
       });
     }
 
     if (this.config.debugMode) {
+      logger.debug(`Event émis: ${event}`, data);
     }
   }
 
@@ -338,8 +354,8 @@ class AIFusionKernel {
   addCognitiveTask(task) {
     this.cognitiveQueue.push({
       ...task,
-      id: Date.now() + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF),
-      timestamp: Date.now()
+      id: Date.now() + crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff,
+      timestamp: Date.now(),
     });
   }
 
@@ -355,12 +371,8 @@ class AIFusionKernel {
     try {
       await this.executeCognitiveTask(task);
     } catch (error) {
-      try {
       logger.error('Erreur tâche cognitive:', error);
-
-      } catch (error) {
-    // Logger fallback - ignore error
-  }} finally {
+    } finally {
       this.isProcessing = false;
     }
   }
@@ -386,12 +398,8 @@ class AIFusionKernel {
           await this.modules.vision.deepAnalyze(task.data);
           break;
         default:
-          try {
-      logger.warn('Type de tâche cognitive inconnue:', task.type);
-
-          } catch (error) {
-      // Logger fallback - ignore error
-    }}
+          logger.warn('Type de tâche cognitive inconnue:', task.type);
+      }
     } finally {
       this.state.activeProcesses.delete(task.id);
     }
@@ -407,11 +415,7 @@ class AIFusionKernel {
         await this.modules.memory.loadState(JSON.parse(savedState));
       }
     } catch (error) {
-      try {
-        logger.warn('Impossible de charger l\'état mémoire:', error);
-      } catch (logError) {
-        // Logger fallback - ignore error
-      }
+      logger.warn("Impossible de charger l'état mémoire:", error);
     }
   }
 
@@ -425,11 +429,7 @@ class AIFusionKernel {
         localStorage.setItem('alex_memory_state', JSON.stringify(state));
       }
     } catch (error) {
-      try {
-        logger.warn('Impossible de sauvegarder l\'état mémoire:', error);
-      } catch (logError) {
-        // Logger fallback - ignore error
-      }
+      logger.warn("Impossible de sauvegarder l'état mémoire:", error);
     }
   }
 
@@ -460,7 +460,7 @@ class AIFusionKernel {
       config: { ...this.config },
       modules: Object.keys(this.modules),
       uptime: this.getUptime(),
-      cognitiveLoad: this.calculateCognitiveLoad()
+      cognitiveLoad: this.calculateCognitiveLoad(),
     };
   }
 
@@ -489,7 +489,7 @@ class AIFusionKernel {
     await this.saveMemoryState();
 
     // Arrêt des modules
-    for (const [name, module] of Object.entries(this.modules)) {
+    for (const [, module] of Object.entries(this.modules)) {
       if (module.shutdown) {
         await module.shutdown();
       }
@@ -507,7 +507,7 @@ class AIFusionKernel {
       timestamp: Date.now(),
       user: options.user || 'anonymous',
       media: options.media,
-      context: options.context
+      context: options.context,
     };
 
     return await this.processInteraction(input);
@@ -523,7 +523,7 @@ class AIFusionKernel {
       cognitiveLoad: this.state.cognitiveLoad,
       attention: this.state.attentionFocus,
       uptime: this.getUptime(),
-      isThinking: this.isProcessing
+      isThinking: this.isProcessing,
     };
   }
 }
@@ -539,7 +539,7 @@ export const createAlex = (config = {}) => {
     emotionalSensitivity: 0.8,
     learningRate: 0.4,
     debugMode: process.env.NODE_ENV === 'development',
-    ...config
+    ...config,
   });
 };
 
@@ -547,7 +547,7 @@ export const createAlex = (config = {}) => {
 export let Alex = null;
 
 export const initializeAlex = async (config = {}) => {
-  if (!Alex) {
+  if (config) {
     Alex = createAlex(config);
     await Alex.boot();
   }

@@ -1,9 +1,10 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
+
 // Système de Prédiction Temporelle Avancée - HustleFinderIA
 // Simulation et prédiction du futur avec précision surhumaine
 
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
-import { EventEmitter } from 'events';
 
 /**
  * Moteur de Prédiction Temporelle
@@ -70,8 +71,7 @@ export class TemporalPredictionEngine extends EventEmitter {
     try {
       logger.info('Temporal Prediction Engine initialized with future-sight capabilities');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -91,9 +91,7 @@ export class TemporalPredictionEngine extends EventEmitter {
         strategicRecommendations: {}
         uncertaintyAnalysis: {}
         temporalOptimization: {}
-      };
-
-      // 1. Analyse des horizons temporels
+      };      // 1. Analyse des horizons temporels
       for (const [horizon, config] of Object.entries(this.timeHorizons)) {
         predictionResult.timeHorizons[horizon] = await this.analyzeTimeHorizon(
           businessIdea
@@ -142,19 +140,15 @@ export class TemporalPredictionEngine extends EventEmitter {
 
       return predictionResult;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
   /**
    * Simulation de lignes temporelles alternatives
    */
-  async simulateAlternativeTimelines(businessIdea, decisions = [], interventions = []) {
-    const timelines = [];
-    const baseTimeline = await this.generateBaseTimeline(businessIdea);
-
-    // Timeline de base (sans interventions)
+  async simulateAlternativeTimelines(businessIdea) {
+    const timelines = [];    const baseTimeline = await this.generateBaseTimeline(businessIdea);    // Timeline de base (sans interventions)
     timelines.push({
       id: 'baseline'
       type: 'baseline'
@@ -165,9 +159,8 @@ export class TemporalPredictionEngine extends EventEmitter {
     });
 
     // Timelines avec différentes décisions
-    for (const decision of decisions) {
-      const modifiedTimeline = await this.applyDecisionToTimeline(baseTimeline, decision);
-      timelines.push({
+    async for(baseTimeline, decision) {
+      const modifiedTimeline = await this.applyDecisionToTimeline(baseTimeline, decision);      timelines.push({
         id: `decision_${decision.id}'
         type: 'decision_modified'
         description: 'Impact de la décision: ${decision.description}`
@@ -179,9 +172,8 @@ export class TemporalPredictionEngine extends EventEmitter {
     }
 
     // Timelines avec interventions externes
-    for (const intervention of interventions) {
-      const interventionTimeline = await this.applyInterventionToTimeline(baseTimeline, intervention);
-      timelines.push({
+    async for(baseTimeline, intervention) {
+      const interventionTimeline = await this.applyInterventionToTimeline(baseTimeline, intervention);      timelines.push({
         id: `intervention_${intervention.id}'
         type: 'intervention_modified'
         description: 'Impact de l'intervention: ${intervention.description}`
@@ -193,15 +185,9 @@ export class TemporalPredictionEngine extends EventEmitter {
     }
 
     // Analyse comparative des timelines
-    const comparison = this.compareTimelines(timelines);
-
-    // Identification des points de divergence critique
-    const divergencePoints = this.identifyDivergencePoints(timelines);
-
-    // Recommandations basées sur l'analyse des timelines
-    const recommendations = this.generateTimelineRecommendations(timelines, comparison);
-
-    return {
+    const comparison = this.compareTimelines(timelines);    // Identification des points de divergence critique
+    const divergencePoints = this.identifyDivergencePoints(timelines);    // Recommandations basées sur l'analyse des timelines
+    const recommendations = this.generateTimelineRecommendations(timelines, comparison);    return {
       timelines
       comparison
       divergencePoints
@@ -222,40 +208,23 @@ export class TemporalPredictionEngine extends EventEmitter {
       disruptionProbabilities: {}
       impactAssessment: {}
       preparationStrategies: {}
-    };
-
-    // 1. Analyse des patterns de disruption historiques
-    const historicalPatterns = await this.analyzeHistoricalDisruptions(industry);
-
-    // 2. Détection de signaux faibles actuels
-    const weakSignals = await this.detectWeakSignals(industry);
-
-    // 3. Modélisation des technologies émergentes
+    };    // 1. Analyse des patterns de disruption historiques
+    const historicalPatterns = await this.analyzeHistoricalDisruptions(industry);    // 2. Détection de signaux faibles actuels
+    const weakSignals = await this.detectWeakSignals(industry);    // 3. Modélisation des technologies émergentes
     const emergingTech = await this.modelEmergingTechnologies(industry
-      timeframe);
-
-    // 4. Analyse des dynamiques concurrentielles
-    const competitiveDynamics = await this.analyzeCompetitiveDynamics(industry);
-
-    // 5. Évaluation des changements réglementaires potentiels
+      timeframe);    // 4. Analyse des dynamiques concurrentielles
+    const competitiveDynamics = await this.analyzeCompetitiveDynamics(industry);    // 5. Évaluation des changements réglementaires potentiels
     const regulatoryChanges = await this.predictRegulatoryChanges(industry
-      timeframe);
-
-    // Synthesis des données pour identifier les disruptions
-    const potentialDisruptions = this.synthesizeDisruptionData({
+      timeframe);    // Synthesis des données pour identifier les disruptions
+    const _potentialDisruptions = this.synthesizeDisruptionData({
       historicalPatterns
       weakSignals
       emergingTech
       competitiveDynamics
       regulatoryChanges
-    });
-
-    // Évaluation de la probabilité et de l'impact
-    for (const disruption of potentialDisruptions) {
-      const probability = await this.calculateDisruptionProbability(disruption, timeframe);
-      const impact = await this.assessDisruptionImpact(disruption, industry);
-
-      disruptionAnalysis.detectedDisruptions.push({
+    });    // Évaluation de la probabilité et de l'impact
+    async for(disruption, timeframe) {
+      const probability = await this.calculateDisruptionProbability(disruption, timeframe);      const impact = await this.assessDisruptionImpact(disruption, industry);      disruptionAnalysis.detectedDisruptions.push({
         ...disruption
         probability
         impact
@@ -275,7 +244,7 @@ export class TemporalPredictionEngine extends EventEmitter {
   /**
    * Optimisation temporelle des décisions business
    */
-  async optimizeBusinessTiming(businessPlan, constraints = {}) {
+  async optimizeBusinessTiming(businessPlan, _constraints = {}) {
     const optimizationResult = {
       originalPlan: businessPlan
       optimizedTimeline: {}
@@ -283,27 +252,17 @@ export class TemporalPredictionEngine extends EventEmitter {
       performanceGains: {}
       riskReduction: {}
       resourceOptimization: {}
-    };
-
-    // 1. Analyse des fenêtres d'opportunité
-    const opportunityWindows = await this.identifyOpportunityWindows(businessPlan);
-
-    // 2. Modélisation des contraintes temporelles
+    };    // 1. Analyse des fenêtres d'opportunité
+    const opportunityWindows = await this.identifyOpportunityWindows(businessPlan);    // 2. Modélisation des contraintes temporelles
 
     // 3. Optimisation par algorithme temporel
     const optimizedSchedule = await this.temporalOptimizer.optimize({
       plan: businessPlan
       windows: opportunityWindows
       constraints: temporalConstraints
-    });
-
-    // 4. Évaluation des gains de performance
-    const performanceAnalysis = this.analyzePerformanceGains(businessPlan, optimizedSchedule);
-
-    // 5. Analyse de réduction des risques
-    const riskAnalysis = this.analyzeRiskReduction(businessPlan, optimizedSchedule);
-
-    optimizationResult.optimizedTimeline = optimizedSchedule;
+    });    // 4. Évaluation des gains de performance
+    const performanceAnalysis = this.analyzePerformanceGains(businessPlan, optimizedSchedule);    // 5. Analyse de réduction des risques
+    const riskAnalysis = this.analyzeRiskReduction(businessPlan, optimizedSchedule);    optimizationResult.optimizedTimeline = optimizedSchedule;
     optimizationResult.performanceGains = performanceAnalysis;
     optimizationResult.riskReduction = riskAnalysis;
     optimizationResult.timingRecommendations = this.generateTimingRecommendations(optimizedSchedule);
@@ -323,9 +282,7 @@ export class TemporalPredictionEngine extends EventEmitter {
       cycleAnalysis: {}
       riskFactors: {}
       opportunityAreas: {}
-    };
-
-    // Prédiction des indicateurs économiques clés
+    };    // Prédiction des indicateurs économiques clés
     macroAnalysis.economicIndicators = await this.predictEconomicIndicators(region
       timeframe);
 
@@ -356,18 +313,12 @@ export class TemporalPredictionEngine extends EventEmitter {
       cascadeEffects: []
       stabilizationTime: 0
       finalImpact: {}
-    };
-
-    let currentEvent = initialEvent;
-    let propagationStep = 0;
-    const maxSteps = 20;
+    };    const currentEvent = initialEvent;    let propagationStep = 0;    const maxSteps = 20;
 
     while (propagationStep < maxSteps && !this.isSystemStabilized(currentEvent)) {
       // Calcul de la propagation pour cette étape
       const stepResult = await this.calculatePropagationStep(currentEvent
-      networkScope);
-
-      propagationModel.propagationSteps.push({
+      networkScope);      propagationModel.propagationSteps.push({
         step: propagationStep
       event: currentEvent
       affectedNodes: stepResult.affectedNodes
@@ -388,11 +339,8 @@ export class TemporalPredictionEngine extends EventEmitter {
 
   // Méthodes utilitaires
 
-  async analyzeTimeHorizon(idea, config, depth) {
-    const models = Object.values(this.predictionModels);
-    const predictions = {};
-
-    for (const model of models) {
+  async analyzeTimeHorizon(idea, config, _depth) {
+    const _models = Object.values(this.predictionModels);    const predictions = {};    async for(idea, config.range, config.precision) {
       predictions[model.constructor.name] = await model.predict(idea, config.range, config.precision);
     }
 
@@ -405,7 +353,7 @@ export class TemporalPredictionEngine extends EventEmitter {
     };
   }
 
-  async generateFutureScenarios(idea, timeHorizons) {
+  async generateFutureScenarios() {
     return await this.scenarioGenerator.generate({
       idea
       timeHorizons
@@ -424,17 +372,15 @@ export class TemporalPredictionEngine extends EventEmitter {
   // Méthodes placeholder pour implémentations complexes
   calibrateTemporalModels() { try {
       logger.debug('Calibrating temporal models');
- } catch (error) {
-    // Logger fallback - ignore error
+ } catch (_error) {
   }}
   loadHistoricalPatterns() { try {
       logger.debug('Loading historical patterns');
- } catch (error) {
-    // Logger fallback - ignore error
+ } catch (_error) {
   }}
   startContinuousForecasting() {
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   generateBaseTimeline(idea) {
@@ -486,7 +432,7 @@ export class TemporalPredictionEngine extends EventEmitter {
 
 // Classes de prédiction spécialisées
 class EconomicCyclePredictor {
-  async predict(idea, range, precision) {
+  async predict(_idea, _range, _precision) {
     return {
       cyclePhase: 'expansion'
       cycleDuration: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 8 + 4, // 4-12 ans
@@ -496,7 +442,7 @@ class EconomicCyclePredictor {
 }
 
 class TechnologyEvolutionPredictor {
-  async predict(idea, range, precision) {
+  async predict(_idea, _range, _precision) {
     return {
       emergingTech: ['AI', 'Blockchain', 'IoT']
       adoptionRate: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF)
@@ -506,7 +452,7 @@ class TechnologyEvolutionPredictor {
 }
 
 class MarketDynamicsPredictor {
-  async predict(idea, range, precision) {
+  async predict(_idea, _range, _precision) {
     return {
       marketGrowth: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.3 + 0.05
       competitionIntensity: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF)
@@ -516,7 +462,7 @@ class MarketDynamicsPredictor {
 }
 
 class SocialTrendsPredictor {
-  async predict(idea, range, precision) {
+  async predict(_idea, _range, _precision) {
     return {
       demographicShifts: ['aging_population', 'urbanization']
       behaviorChanges: ['digital_adoption', 'sustainability_focus']
@@ -526,7 +472,7 @@ class SocialTrendsPredictor {
 }
 
 class DisruptionEventPredictor {
-  async predict(idea, range, precision) {
+  async predict(_idea, range, _precision) {
     return {
       disruptionProbability: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.4
       potentialDisruptors: ['new_technology', 'regulatory_change']
@@ -536,7 +482,7 @@ class DisruptionEventPredictor {
 }
 
 class ClimaticFactorPredictor {
-  async predict(idea, range, precision) {
+  async predict(_idea, _range, _precision) {
     return {
       climateImpact: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.5
       sustainabilityRequirements: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.5
@@ -546,7 +492,7 @@ class ClimaticFactorPredictor {
 }
 
 class PoliticalShiftPredictor {
-  async predict(idea, range, precision) {
+  async predict(_idea, _range, _precision) {
     return {
       politicalStability: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF)
       regulatoryChanges: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.6
@@ -556,7 +502,7 @@ class PoliticalShiftPredictor {
 }
 
 class CulturalEvolutionPredictor {
-  async predict(idea, range, precision) {
+  async predict(_idea, _range, _precision) {
     return {
       culturalTrends: ['individualization', 'digital_culture']
       valueShifts: ['experiences_over_possessions']
@@ -566,7 +512,7 @@ class CulturalEvolutionPredictor {
 }
 
 class UncertaintyQuantifier {
-  quantify(scenarios) {
+  quantify(_scenarios) {
     return {
       overallUncertainty: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.5 + 0.2
       uncertaintyByDomain: {
@@ -579,7 +525,7 @@ class UncertaintyQuantifier {
 }
 
 class ScenarioGenerator {
-  async generate(params) {
+  async generate(_params) {
     return {
       optimistic: { probability: 0.2, outcome: 'exceptional_growth' }
       realistic: { probability: 0.5, outcome: 'steady_growth' }
@@ -591,7 +537,7 @@ class ScenarioGenerator {
 }
 
 class CausalityAnalyzer {
-  analyzeCausalChains(events) {
+  analyzeCausalChains(_events) {
     return {
       primaryCauses: ['market_demand', 'technology_readiness']
       secondaryCauses: ['funding_availability', 'team_expertise']

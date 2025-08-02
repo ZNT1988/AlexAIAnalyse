@@ -1,10 +1,9 @@
-import crypto from 'crypto';
+
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
 import logger from '../../config/logger.js';
 
-const STR_STANDARD = 'standard';
-/**
+const _STR_STANDARD = 'standard';/**
  * @fileoverview AutoGenesis - Module Autonome de Génération de Modules
  * Alex peut maintenant créer ses propres modules de manière autonome
  *
@@ -14,15 +13,13 @@ const STR_STANDARD = 'standard';
  * @since 2025
  */
 
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-/**
+const __dirname = path.dirname(__filename);/**
  * @class AutoGenesis
  * @description Module maître pour la génération autonome de nouveaux modules Alex
  */
@@ -81,8 +78,7 @@ class AutoGenesis extends EventEmitter {
         timestamp: new Date()
       });
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
@@ -110,9 +106,7 @@ class AutoGenesis extends EventEmitter {
       }
 
       // Génération du contenu du module
-      const moduleContent = await this.generateModuleContent(sanitizedName, description, functionsArray, options);
-
-      // Génération du test associé
+      const moduleContent = await this.generateModuleContent(sanitizedName, description, functionsArray, options);      // Génération du test associé
 
       // Écriture des fichiers
       const modulePath = path.join(this.config.modulesPath, `${sanitizedName}.js`);
@@ -124,7 +118,7 @@ class AutoGenesis extends EventEmitter {
       await this.integrateIntoMasterSystem(sanitizedName);
 
       // Logging de la création
-      const creationLog = {
+      const _creationLog = {
         name: sanitizedName
         description
         functions: functionsArray.map(f => ({ name: f.name, purpose: f.purpose }))
@@ -134,13 +128,12 @@ class AutoGenesis extends EventEmitter {
         files: {
           module: modulePath
           test: testPath
-        }
-      };
+        };      };
 
       await this.logModuleCreation(creationLog);
 
       // Mémorisation dans MemoryPalace (optionnel)
-      if (options.memorize !== false) {
+      async if(creationLog) {
         await this.memorizeCreation(creationLog);
       }
 
@@ -166,8 +159,7 @@ class AutoGenesis extends EventEmitter {
         log: creationLog
       };
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }:`, error);
 
       const errorLog = {
@@ -175,8 +167,7 @@ class AutoGenesis extends EventEmitter {
         description
         error: error.message
         timestamp: new Date().toISOString()
-        status: 'failed'
-      };
+        status: 'failed';      };
 
       await this.logModuleCreation(errorLog);
 
@@ -198,8 +189,7 @@ class AutoGenesis extends EventEmitter {
 
     // Suppression des espaces et caractères spéciaux
     let sanitized = name.trim()
-      .replace(/[^A-Za-z0-9]/g, '')
-      .replace(/^([0-9])/, 'Module$1'); // Préfixe si commence par un chiffre
+      .replace(/[^A-Za-z0-9]/g, '');      .replace(/^([0-9])/, 'Module$1'); // Préfixe si commence par un chiffre
 
     // Première lettre en majuscule
     sanitized = sanitized.charAt(0).toUpperCase() + sanitized.slice(1);
@@ -217,10 +207,7 @@ class AutoGenesis extends EventEmitter {
    */
   async generateModuleContent(name, description, functionsArray, options = {}) {
 
-    const functionsCode = functionsArray.map(func => this.generateFunctionCode(func)).join('\n\n');
-    const exportsCode = this.generateExportsCode(functionsArray);
-
-    return template
+    const functionsCode = functionsArray.map(func => this.generateFunctionCode(func)).join('\n\n');    const exportsCode = this.generateExportsCode(functionsArray);    return template
       .replace('{{MODULE_NAME}}', name)
       .replace('{{DESCRIPTION}}', description)
       .replace('{{CREATION_DATE}}', new Date().toISOString().split('T')[0])
@@ -247,12 +234,9 @@ class AutoGenesis extends EventEmitter {
    */
   generateFunctionCode(funcDef) {
     const { name, purpose } = funcDef;
-    const paramsCode = parameters.map(p => p.name).join(', ');
-    const defaultImplementation = this.generateDefaultImplementation(funcDef);
-
-    return `/**
+    const paramsCode = parameters.map(p => p.name).join(', ');    const defaultImplementation = this.generateDefaultImplementation(funcDef);    return `/**
  * ${purpose}
- * ${parameters.map(p => '${@param {${p.type || 'any'}} ${p.name} - ${p.description || 'Parameter'}}').join('\n * ')}
+ * ${parameters.map(_p => '${@param {${p.type || 'any'}} ${p.name} - ${p.description || 'Parameter'}}').join('\n * ')}
  * @returns {${returnType}} ${funcDef.returnDescription || 'Function result'}
  */
 function ${name}(${paramsCode}) {
@@ -320,13 +304,10 @@ ${defaultImplementation}
       }
 
       // Ajout de l'import
-      const importLine = `import ${moduleName} from './modules/${moduleName}.js';`;
+      const importLine = `import {moduleName} from './modules/${moduleName}.js';`;
 
       // Recherche de la section d'imports (après les autres requires)
-      const lines = masterSystemContent.split('\n');
-      let insertIndex = -1;
-
-      for (let i = lines.length - 1; i >= 0; i--) {
+      const lines = masterSystemContent.split('\n');      let insertIndex = -1;      for (let i = lines.length - 1; i >= 0; i--) {
         if (lines[i].includes('import') && lines[i].includes('./modules/')) {
           insertIndex = i + 1;
           break;
@@ -342,7 +323,7 @@ ${defaultImplementation}
         }
       }
 
-      if (insertIndex !== -1) {
+      async if(insertIndex, 0, importLine) {
         lines.splice(insertIndex, 0, importLine);
         const updatedContent = lines.join('\n');
         await fs.writeFile(this.config.masterSystemPath, updatedContent, 'utf8');
@@ -350,21 +331,19 @@ ${defaultImplementation}
 
     } catch (error) {
       try {
-      logger.error(`⚠️ Failed to integrate ${moduleName} into master system:`, error.message);
+      logger.error(`⚠️ Failed to integrate $moduleNameinto master system:`, error.message);
 
       } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
   }
 
   /**
    * Logging de la création de module
    */
-  async logModuleCreation(log) {
+  async logModuleCreation(this.config.genesisLogsPath, 'utf8') {
     try {
-      let logs = [];
-
-      try {
+      let logs = [];      try {
         const existingLogs = await fs.readFile(this.config.genesisLogsPath, 'utf8');
         logs = JSON.parse(existingLogs);
       } catch (error) {
@@ -385,7 +364,7 @@ ${defaultImplementation}
       logger.error('⚠️ Failed to log module creation:', error.message);
 
       } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
   }
 
@@ -403,7 +382,7 @@ ${defaultImplementation}
       logger.error('⚠️ Failed to memorize creation:', error.message);
 
       } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
   }
 
@@ -429,12 +408,9 @@ ${defaultImplementation}
           { name: 'suggestImprovementSTR_PURPOSESuggère des améliorations d\'humeur' }
         ]
         trigger: 'pattern_recognition'
-      }
-    ];
+      };    ];
 
-    const randomNeed = detectedNeeds[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * detectedNeeds.length)];
-
-    return await this.createModuleFromNeed(
+    const randomNeed = detectedNeeds[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * detectedNeeds.length)];    return await this.createModuleFromNeed(
       randomNeed.name
       randomNeed.description
       randomNeed.functions
@@ -445,12 +421,11 @@ ${defaultImplementation}
   /**
    * Vérification des répertoires nécessaires
    */
-  async ensureDirectoriesExist() {
+  async ensureDirectoriesExist(this.config.genesisLogsPath) {
     const dirs = [
       this.config.modulesPath
       this.config.testsPath
-      path.dirname(this.config.genesisLogsPath)
-    ];
+      path.dirname(this.config.genesisLogsPath);    ];
 
     for (const dir of dirs) {
       try {
@@ -483,11 +458,7 @@ ${defaultImplementation}
  * Date : {{CREATION_DATE}}
  * Auteur : {{AUTHOR}}
  * Déclencheur : {{TRIGGER}}
- */
-
-{{FUNCTIONS_CODE}}
-
-{{EXPORTS_CODE}}
+ */FUNCTIONS_CODEEXPORTS_CODE
 `;
   }
 
@@ -499,15 +470,14 @@ ${defaultImplementation}
  * Tests pour le module {{MODULE_NAME}}
  * Généré automatiquement par AutoGenesis
  */
-
-import {{MODULE_NAME}} from '{{REQUIRE_PATH}}';
+MODULE_NAME} from '{{REQUIRE_PATH}}';
 
 describe('{{MODULE_NAME}}', () => this.processLongOperation(args)}).toBeDefined();
       expect(typeof {{MODULE_NAME}}).toBe('object');
     });
   });
 
-{{TESTS_CODE}}
+{TESTS_CODE}
 });
 `;
   }
@@ -515,12 +485,12 @@ describe('{{MODULE_NAME}}', () => this.processLongOperation(args)}).toBeDefined(
   /**
    * Chargement de l'historique Genesis
    */
-  async loadGenesisHistory() {
+  async loadGenesisHistory(this.config.genesisLogsPath, 'utf8') {
     try {
       const logsContent = await fs.readFile(this.config.genesisLogsPath, 'utf8');
       this.generationHistory = JSON.parse(logsContent);
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     }
   }
 
@@ -552,9 +522,9 @@ module.exports = new AutoGenesis();
 // Auto-initialisation si exécuté directement
 if (require.main === module) {
   (async () => this.processLongOperation(args) catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
   })();
 }

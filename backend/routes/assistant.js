@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_ALEX = 'alex';
-/**
+// const STR_ALEX = 'alex'; // Unused variable commented by SonarFix/**
  * @fileoverview Assistant Routes - Routes Assistant Personnel avec Nouvelle Architecture
  * API endpoints pour assistant personnel utilisant HustleFinderCore
  *
@@ -16,18 +15,13 @@ import { getHustleFinderCore } from '../core/HustleFinderCore.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 import logger from '../config/logger.js';
 
-const router = express.Router();
-
-/**
+// const router = express.Router(); // Unused variable commented by SonarFix/**
  * @route POST /api/assistant/calendar/schedule
  * @description Gestion du calendrier et prise de rendez-vous
  * @access Private
  */
 router.post('/calendar/schedule', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const appointmentDetails = req.body;
-
-  logger.info('Appointment scheduling request', { userId, type :
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  // const appointmentDetails = req.body; // Unused variable commented by SonarFix  logger.info('Appointment scheduling request', { userId, type :
        appointmentDetails.type });
 
   const { title, description, location } = appointmentDetails;
@@ -38,10 +32,8 @@ router.post('/calendar/schedule', asyncHandler(async (req, res) => {
     });
   }
 
-  const core = getHustleFinderCore();
-
-  // Process through Alex with appointment scheduling context
-  const result = await core.processRequest({
+  // const core = getHustleFinderCore(); // Unused variable commented by SonarFix  // Process through Alex with appointment scheduling context
+  // const result = await core.processRequest({
     type: STR_ALEX,
     query: `Planifie un rendez-vous: ${title}`
     context: {,
@@ -60,9 +52,7 @@ router.post('/calendar/schedule', asyncHandler(async (req, res) => {
       assistant_mode: true
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     appointment: result.data?.appointment || {
       title,
@@ -92,12 +82,11 @@ router.post('/calendar/schedule', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/calendar/find-slots', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const { participants, duration, dateRange, preferences } = req.body;
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  const { participants, duration, dateRange, preferences } = req.body;
 
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type :
        STR_ALEX,
     query: 'Trouve des créneaux libres optimaux pour un rendez-vous',
@@ -112,9 +101,7 @@ router.post('/calendar/find-slots', asyncHandler(async (req, res) => {
       assistant_mode: true
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     freeSlots: result.data?.free_slots || []
     recommendations: result.data?.recommendations || [],
@@ -135,11 +122,10 @@ router.post('/calendar/find-slots', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/calendar/optimize', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const { goals, constraints } = req.body;
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  const { goals, constraints } = req.body;
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type :
        STR_ALEX,
     query: `Optimise mon planning pour ${timeframe}`
@@ -153,9 +139,7 @@ router.post('/calendar/optimize', asyncHandler(async (req, res) => {
       assistant_mode: true
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     originalSchedule: result.data?.original_schedule || {}
     optimizedSchedule: result.data?.optimized_schedule || {}
@@ -183,7 +167,7 @@ router.get('/calendar/upcoming', asyncHandler(async (req, res) => {
 
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type :
        STR_ALEX,
     query: 'Récupère les prochaines réunions du calendrier',
@@ -194,10 +178,8 @@ router.get('/calendar/upcoming', asyncHandler(async (req, res) => {
       assistant_mode: true
     }
     userId
-  });
-
-  // Données de démonstration enrichies pour tests
-  const demoMeetings = [
+  }); // Unused variable commented by SonarFix  // Données de démonstration enrichies pour tests
+  // const demoMeetings = [
     {
       id: 1,
       title: 'Réunion équipe marketing - Q4 Strategy'
@@ -228,13 +210,8 @@ router.get('/calendar/upcoming', asyncHandler(async (req, res) => {
       date: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('TSTR_0_TYPEcoachingSTR_PRIORITYmediumSTR_PREPARATIONRéfléchir aux objectifs de la semaine', 'Noter les blocages rencontrés']
       agenda: ['Bilan semaine', 'Identification blocages', 'Plan d\'action', 'Motivation']
     }
-  ];
-
-  // Calcul des insights intelligents
-  const upcomingHours = demoMeetings.reduce((total, meeting) => total + meeting.duration, 0) / 60;
-  const externalMeetings = demoMeetings.filter(m => m.type === 'external').length;
-
-  res.json({
+  ]; // Unused variable commented by SonarFix  // Calcul des insights intelligents
+  // const upcomingHours = demoMeetings.reduce((total, meeting) => total + meeting.duration, 0) / 60; // Unused variable commented by SonarFix  // const externalMeetings = demoMeetings.filter(m => m.type === 'external').length; // Unused variable commented by SonarFix  res.json({
     success: true,
     meetings: result.data?.meetings || demoMeetings
     totalCount: result.data?.total || demoMeetings.length,
@@ -289,14 +266,13 @@ router.get('/calendar/upcoming', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/email/manage', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const { action, parameters = {} } = req.body;
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  const { action, parameters = {} } = req.body;
 
   logger.info('Email management request', { userId, action });
 
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type :
        STR_ALEX,
     query: `Gère mes emails: ${action}`
@@ -307,9 +283,7 @@ router.post('/email/manage', asyncHandler(async (req, res) => {
       assistant_mode: true
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     action,
     result: result.data,
@@ -327,11 +301,10 @@ router.post('/email/manage', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/email/draft-response', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const { emailId } = req.body;
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  const { emailId } = req.body;
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type :
        STR_ALEX,
     query: `Rédige une réponse email avec le tone ${tone}`
@@ -347,9 +320,7 @@ router.post('/email/draft-response', asyncHandler(async (req, res) => {
       creative_mode: true
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     draft: result.data?.draft || 'Brouillon de réponse généré avec IA'
     alternatives: result.data?.alternatives || [],
@@ -371,15 +342,12 @@ router.post('/email/draft-response', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/automation/create', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const automationRequest = req.body;
-
-  logger.info('Task automation request', { userId, taskType :
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  // const automationRequest = req.body; // Unused variable commented by SonarFix  logger.info('Task automation request', { userId, taskType :
        automationRequest.taskType });
 
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type: STR_ALEX,
     query: `Crée une automatisation pour ${automationRequest.taskType}`
     context: {,
@@ -388,9 +356,7 @@ router.post('/automation/create', asyncHandler(async (req, res) => {
       assistant_mode: true
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     automation: result.data?.automation || {}
     estimatedSavings: {,
@@ -416,15 +382,14 @@ router.post('/automation/create', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/voice/command', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const { audioData, context = {} } = req.body;
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  const { audioData, context = {} } = req.body;
 
   logger.info('Voice command received', { userId, contextType :
        context.type });
 
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type: STR_ALEX,
     query: 'Traite cette commande vocale'
     context: {,
@@ -434,9 +399,7 @@ router.post('/voice/command', asyncHandler(async (req, res) => {
       assistant_mode: true
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     transcription: result.data?.transcription || 'Transcription vocale'
     intent: result.data?.intent || 'general_assistance',
@@ -460,15 +423,12 @@ router.post('/voice/command', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/research/conduct', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const researchRequest = req.body;
-
-  logger.info('Research request initiated', { userId, topic :
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  // const researchRequest = req.body; // Unused variable commented by SonarFix  logger.info('Research request initiated', { userId, topic :
        researchRequest.topic });
 
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type: STR_ALEX,
     query: `Effectue une recherche sur: ${researchRequest.topic}`
     context: {,
@@ -478,9 +438,7 @@ router.post('/research/conduct', asyncHandler(async (req, res) => {
       analysis_depth: 'comprehensive'
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     research: {
       plan: result.data?.research_plan || {}
@@ -511,15 +469,12 @@ router.post('/research/conduct', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/planning/strategic', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const planRequest = req.body;
-
-  logger.info('Strategic planning request', { userId, objective :
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  // const planRequest = req.body; // Unused variable commented by SonarFix  logger.info('Strategic planning request', { userId, objective :
        planRequest.objective });
 
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type: STR_ALEX,
     query: `Crée un plan stratégique pour: ${planRequest.objective}`
     context: {,
@@ -529,9 +484,7 @@ router.post('/planning/strategic', asyncHandler(async (req, res) => {
       analysis_depth: 'comprehensive'
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     plan: {
       objective: result.data?.objective || planRequest.objective,
@@ -564,15 +517,12 @@ router.post('/planning/strategic', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/negotiation/assist', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const negotiationContext = req.body;
-
-  logger.info('Negotiation assistance request', { userId, type :
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  // const negotiationContext = req.body; // Unused variable commented by SonarFix  logger.info('Negotiation assistance request', { userId, type :
        negotiationContext.type });
 
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type: STR_ALEX,
     query: `Assiste-moi dans cette négociation: ${negotiationContext.type}`
     context: {,
@@ -582,9 +532,7 @@ router.post('/negotiation/assist', asyncHandler(async (req, res) => {
       analysis_depth: 'detailed'
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     strategy: {
       approach: result.data?.recommended_approach || 'collaborative',
@@ -625,10 +573,8 @@ router.get('/performance/analytics', asyncHandler(async (req, res) => {
   logger.info('Performance analytics request', { userId, timeframe });
 
   const core = getHustleFinderCore();
-  const systemStatus = core.getSystemStatus();
-
-  // Get analytics from system metrics and generate realistic data
-  const analytics = {
+  // const systemStatus = core.getSystemStatus(); // Unused variable commented by SonarFix  // Get analytics from system metrics and generate realistic data
+  // const analytics = {
     tasksCompleted :
        systemStatus.metrics?.totalRequests || 0
     timeSaved: Math.floor((systemStatus.metrics?.totalRequests || 0) * 0.2), // 0.2h per task
@@ -655,9 +601,7 @@ router.get('/performance/analytics', asyncHandler(async (req, res) => {
       'Email management saves 2.5 hours per week'
       'Strategic planning sessions show 85% success rate'
     ]
-  };
-
-  res.json({
+  }; // Unused variable commented by SonarFix  res.json({
     success: true,
     timeframe,
     performance: {,
@@ -692,14 +636,13 @@ router.get('/performance/analytics', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/settings/preferences', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const preferences = req.body;
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  const preferences = req.body;
 
   logger.info('Assistant preferences update', { userId });
 
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type :
        STR_ALEX,
     query: 'Mets à jour mes préférences assistant',
@@ -709,9 +652,7 @@ router.post('/settings/preferences', asyncHandler(async (req, res) => {
       assistant_mode: true
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     preferences: preferences
     adaptations: {,
@@ -737,8 +678,7 @@ router.post('/settings/preferences', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/chat', asyncHandler(async (req, res) => {
-  const userId = req.auth?.userId;
-  const { message, context = {} } = req.body;
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  const { message, context = {} } = req.body;
 
   if (!message) {
     return res.status(400).json({ error :
@@ -749,7 +689,7 @@ router.post('/chat', asyncHandler(async (req, res) => {
 
   const core = getHustleFinderCore();
 
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type: STR_ALEX,
     query: message
     context: {
@@ -758,9 +698,7 @@ router.post('/chat', asyncHandler(async (req, res) => {
       empathetic_response: true
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     response: result.data?.message || 'Je suis là pour vous assister !'
     intent: result.data?.intent || 'general_assistance',
@@ -790,10 +728,7 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
   logger.info('Assistant capabilities requested');
 
   const core = getHustleFinderCore();
-  const capabilities = core.getAvailableCapabilities();
-  const systemStatus = core.getSystemStatus();
-
-  res.json({
+  // const capabilities = core.getAvailableCapabilities(); // Unused variable commented by SonarFix  // const systemStatus = core.getSystemStatus(); // Unused variable commented by SonarFix  res.json({
     success: true,
     assistant_capabilities: [
       STR_CALENDAR_MANAGEMENT

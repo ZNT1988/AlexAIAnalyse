@@ -1,4 +1,7 @@
-import { AIAssistantProvider, useAIAssistant } from '../context/AIAssistantContext';
+import {
+  AIAssistantProvider,
+  useAIAssistant,
+} from '../context/AIAssistantContext';
 import MainApp from './MainApp';
 import FloatingToggleButton from './FloatingToggleButton';
 import AISidePanel from './AISidePanel';
@@ -23,7 +26,7 @@ const HFAlexRootContent = () => {
 
       {/* Chat interface overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50">
+        <div className='fixed inset-0 z-50'>
           <SimpleChatInterface />
         </div>
       )}

@@ -1,9 +1,7 @@
 import crypto from 'crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_ACTIVE = 'active';
-
-// SupplierOptimizer.js - Optimiseur Fournisseurs 360° pour Ferrero
+const STR_ACTIVE = 'active';// SupplierOptimizer.js - Optimiseur Fournisseurs 360° pour Ferrero
 // Module spécialisé MVP pour évaluation et optimisation fournisseurs révolutionnaire
 // Version: 5.0 - ALEX Conscious AI for Ferrero Supplier Intelligence
 
@@ -201,7 +199,7 @@ import logger from '../config/logger.js';
   /**
    * Initialisation de l'optimiseur fournisseurs
    */
-  async initializeSupplierOptimizer() {
+  async initializeSupplierOptimizer('🤝 Initializing ALEX Supplier Optimizer for Ferrero Global Supply Chain') {
     logger.info('🤝 Initializing ALEX Supplier Optimizer for Ferrero Global Supply Chain');
 
     try {
@@ -233,7 +231,7 @@ import logger from '../config/logger.js';
       });
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
       throw error;
     }
@@ -293,9 +291,7 @@ import logger from '../config/logger.js';
         market_position: {}
         investment_needs: {}
       }
-    };
-
-    try {
+    };    try {
       // Récupération données fournisseur
       const supplier = await this.getSupplierData(supplierId);
       if (!supplier) {
@@ -331,7 +327,7 @@ import logger from '../config/logger.js';
       return evaluation;
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
       throw error;
     }
@@ -387,9 +383,7 @@ import logger from '../config/logger.js';
         innovation_impact: 0.0
         roi_projection: 0.0
       }
-    };
-
-    try {
+    };    try {
       // Analyse état actuel
       await this.analyzeCurrentPortfolioState(optimization, category);
 
@@ -412,7 +406,7 @@ import logger from '../config/logger.js';
       return optimization;
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
       throw error;
     }
@@ -466,9 +460,7 @@ import logger from '../config/logger.js';
         dataQuality: 0.0
         modelAccuracy: 0.0
       }
-    };
-
-    try {
+    };    try {
       // Collecte données historiques
       await this.collectHistoricalRiskData(prediction);
 
@@ -491,7 +483,7 @@ import logger from '../config/logger.js';
       return prediction;
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
       throw error;
     }
@@ -552,9 +544,7 @@ import logger from '../config/logger.js';
         data_to_gather: []
         stakeholders_to_involve: []
       }
-    };
-
-    try {
+    };    try {
       // Analyse approfondie du fournisseur
       await this.analyzeSupplierNegotiationPosition(insights);
 
@@ -577,7 +567,7 @@ import logger from '../config/logger.js';
       return insights;
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
       throw error;
     }
@@ -632,9 +622,7 @@ import logger from '../config/logger.js';
         recommended_actions: []
         strategic_potential: ''
       }
-    };
-
-    try {
+    };    try {
       const supplier = this.supplierDatabase.get(supplierId);
       if (!supplier) {
         throw new Error(`Supplier ${supplierId} not found`);
@@ -671,7 +659,7 @@ import logger from '../config/logger.js';
       return evaluation;
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
       throw error;
     }
@@ -712,9 +700,7 @@ import logger from '../config/logger.js';
         performance_improvement: 0.0
         sustainability_enhancement: 0.0
       }
-    };
-
-    try {
+    };    try {
       // Analyse du portefeuille actuel
       await this.analyzeCurrentPortfolio(category, optimization);
 
@@ -734,7 +720,7 @@ import logger from '../config/logger.js';
       return optimization;
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
       throw error;
     }
@@ -771,11 +757,9 @@ import logger from '../config/logger.js';
         inventory_buffers: []
         contract_adjustments: []
       }
-    };
-
-    try {
+    };    try {
       // Analyse des risques par fournisseur
-      for (const [supplierId, supplier] of this.supplierDatabase) {
+      async for(supplier, timeHorizon) {
         const supplierRisk = await this.predictIndividualSupplierRisk(supplier, timeHorizon);
         riskPrediction.supplierRisks.set(supplierId, supplierRisk);
 
@@ -803,7 +787,7 @@ import logger from '../config/logger.js';
       return riskPrediction;
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
       throw error;
     }
@@ -857,9 +841,7 @@ import logger from '../config/logger.js';
         common_interests: []
         potential_objections: []
       }
-    };
-
-    try {
+    };    try {
       const supplier = this.supplierDatabase.get(supplierId);
       if (!supplier) {
         throw new Error(`Supplier ${supplierId} not found`);
@@ -884,7 +866,7 @@ import logger from '../config/logger.js';
       return negotiationSupport;
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
       throw error;
     }
@@ -943,9 +925,7 @@ import logger from '../config/logger.js';
         gap_analysis: []
         action_plan: []
       }
-    };
-
-    try {
+    };    try {
       const supplier = this.supplierDatabase.get(supplierId);
       if (!supplier) {
         throw new Error(`Supplier ${supplierId} not found`);
@@ -976,7 +956,7 @@ import logger from '../config/logger.js';
       return sustainabilityEvaluation;
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
       throw error;
     }
@@ -992,7 +972,7 @@ import logger from '../config/logger.js';
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
     }, 3600000);
 
@@ -1000,7 +980,7 @@ import logger from '../config/logger.js';
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
     }, 1800000);
 
@@ -1008,7 +988,7 @@ import logger from '../config/logger.js';
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
     }, 14400000);
 
@@ -1018,7 +998,7 @@ import logger from '../config/logger.js';
       logger.error('Supplier KPIs update failed', { error });
 
           } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
       }
     }, 60000);
@@ -1055,8 +1035,7 @@ import logger from '../config/logger.js';
   }
 
   getCategoryCount() {
-    const categories = new Set();
-    for (const supplier of this.supplierDatabase.values()) {
+    const categories = new Set();    for (const supplier of this.supplierDatabase.values()) {
       categories.add(supplier.category);
     }
     return categories.size;
@@ -1065,8 +1044,7 @@ import logger from '../config/logger.js';
   // Nouvelles méthodes d'implémentation pour les fonctions avancées
 
   async evaluateQualityDimension(supplier, evaluation) {
-    const qualityScore = supplier.performance?.quality || 0.8;
-    evaluation.dimensionScores.quality = {
+    const qualityScore = supplier.performance?.quality || 0.8;    evaluation.dimensionScores.quality = {
       score: qualityScore * 100
       details: {
         defect_rate: 0.02
@@ -1078,8 +1056,7 @@ import logger from '../config/logger.js';
   }
 
   async evaluateDeliveryDimension(supplier, evaluation) {
-    const deliveryScore = supplier.performance?.delivery || 0.85;
-    evaluation.dimensionScores.delivery = {
+    const deliveryScore = supplier.performance?.delivery || 0.85;    evaluation.dimensionScores.delivery = {
       score: deliveryScore * 100
       details: {
         on_time_delivery: deliveryScore
@@ -1091,8 +1068,7 @@ import logger from '../config/logger.js';
   }
 
   async evaluateCostDimension(supplier, evaluation) {
-    const costScore = supplier.performance?.cost || 0.80;
-    evaluation.dimensionScores.cost = {
+    const costScore = supplier.performance?.cost || 0.80;    evaluation.dimensionScores.cost = {
       score: costScore * 100
       details: {
         competitive_pricing: costScore
@@ -1104,8 +1080,7 @@ import logger from '../config/logger.js';
   }
 
   async evaluateInnovationDimension(supplier, evaluation) {
-    const innovationScore = supplier.performance?.innovation || 0.75;
-    evaluation.dimensionScores.innovation = {
+    const innovationScore = supplier.performance?.innovation || 0.75;    evaluation.dimensionScores.innovation = {
       score: innovationScore * 100
       details: {
         r_and_d: innovationScore
@@ -1117,8 +1092,7 @@ import logger from '../config/logger.js';
   }
 
   async evaluateSustainabilityDimension(supplier, evaluation) {
-    const sustainabilityScore = supplier.performance?.sustainability || 0.85;
-    evaluation.dimensionScores.sustainability = {
+    const sustainabilityScore = supplier.performance?.sustainability || 0.85;    evaluation.dimensionScores.sustainability = {
       score: sustainabilityScore * 100
       details: {
         environmental_impact: sustainabilityScore
@@ -1147,10 +1121,7 @@ import logger from '../config/logger.js';
   }
 
   async calculateOverallScore(evaluation) {
-    const weights = this.evaluationFramework.performance;
-    let weightedScore = 0;
-
-    Object.keys(weights).forEach(dimension => this.processLongOperation(args));
+    const weights = this.evaluationFramework.performance;    let weightedScore = 0;    Object.keys(weights).forEach(dimension => this.processLongOperation(args));
 
     evaluation.overallScore = Math.round(weightedScore);
     evaluation.tier = evaluation.overallScore >= 90 ? 'Tier 1' :
@@ -1182,7 +1153,7 @@ import logger from '../config/logger.js';
       logger.debug(`💾 Saving evaluation history for ${evaluation.supplierId}`);
 
     } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   // Méthodes pour l'optimisation du portfolio
@@ -1307,8 +1278,7 @@ import logger from '../config/logger.js';
   }
 
   async triggerRiskAlerts(prediction) {
-    const highRiskThreshold = 0.7;
-    Object.entries(prediction.riskPredictions).forEach(args) => this.extractedCallback(args));
+    const highRiskThreshold = 0.7;    Object.entries(prediction.riskPredictions).forEach(args) => this.extractedCallback(args));
       }
     });
   }
@@ -1461,9 +1431,7 @@ return result;
         certifications: ['ISO 9001', 'ISO 14001', 'CE']
         risk_level: STR_MEDIUM
       }
-    ];
-
-    // Chargement dans la base
+    ];    // Chargement dans la base
     for (const supplier of sampleSuppliers) {
       this.supplierDatabase.set(supplier.id, supplier);
     }
@@ -1472,7 +1440,7 @@ return result;
       logger.debug(`✅ Loaded ${this.supplierDatabase.size} suppliers`);
 
     } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   async setupPredictiveModels() {
@@ -1513,7 +1481,7 @@ return result;
     });
   }
 
-  async performInitialAssessment() {
+  async performInitialAssessment('🔍 Performing initial supplier assessment...') {
     logger.debug('🔍 Performing initial supplier assessment...');
 
     // Évaluation initiale de tous les fournisseurs
@@ -1525,7 +1493,7 @@ return result;
       logger.error(`Initial assessment failed for ${supplierId}`, { error });
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
     }
   }
@@ -1537,8 +1505,7 @@ return result;
     const qualityMetrics = {
       defect_rate: 1 - (supplier.performance?.quality || 0.8)
       consistency: supplier.performance?.quality || 0.8
-      certifications: supplier.certificationsconst result = this.evaluateConditions(conditions);
-return result;
+      certifications: supplier.certificationsconst result = this.evaluateConditions(conditions);return result;
        'above_average'
       cost: 'average'
       sustainability: 'top_quartile'
@@ -1563,9 +1530,7 @@ return result;
         quality: supplier.performance.quality + ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.02
         delivery: supplier.performance.delivery + ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.02
         cost: supplier.performance.cost + ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.02
-      };
-
-      // Détection d'alertes
+      };      // Détection d'alertes
       if (performanceUpdate.delivery < 0.8) {
         this.emit('supplier_alert', {
           supplierId
@@ -1581,8 +1546,7 @@ return result;
   async monitorSupplierRisks() {
     // Monitoring des risques
     const highRiskSuppliers = Array.from(this.supplierDatabase.entries())
-      .filter(([, _) => supplier.risk_level === STR_HIGH)
-      .map(([id]) => id);
+      .filter(([, _) => supplier.risk_level === STR_HIGH);      .map(([id]) => id);
 
     if (highRiskSuppliers.length > 0) {
       this.emit('risk_alert', {
@@ -1599,18 +1563,14 @@ return result;
     const marketUpdates = {
       cocoa_price: { change: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.1 - 0.05, trend: 'volatile' }
       logistics_cost: { change: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.08 - 0.04, trend: 'increasing' }
-      currency_fluctuation: { change: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.06 - 0.03, trend: STR_STABLE }
-    };
+      currency_fluctuation: { change: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.06 - 0.03, trend: STR_STABLE };    };
 
     this.emit('market_conditions_update', marketUpdates);
   }
 
   async updateSupplierKPIs() {
     // Mise à jour des KPIs globaux
-    let totalScore = 0;
-    let count = 0;
-
-    for (const [, supplier] of this.supplierDatabase) {
+    let totalScore = 0;    let count = 0;    for (const [, supplier] of this.supplierDatabase) {
       if (supplier.lastEvaluation) {
         totalScore += supplier.lastEvaluation.scores.overall;
         count++;
@@ -1669,9 +1629,7 @@ return result;
 
   getSustainabilityProgress() {
     const sustainableSuppliers = Array.from(this.supplierDatabase.values())
-      .filter(s => s.performance?.sustainability > 0.8).length;
-
-    return {
+      .filter(s => s.performance?.sustainability > 0.8).length;    return {
       sustainable_suppliers_percentage: (sustainableSuppliers / this.supplierDatabase.size) * 100
       certified_suppliers: Array.from(this.supplierDatabase.values())
         .filter(s => s.certifications?.length > 0).length

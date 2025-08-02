@@ -10,8 +10,7 @@ router.post('/test', async (req, res) => {
   const { message } = req.body;
 
   // Réponse intelligente basée sur le message
-  let response = "";
-  const lowerMessage = (message || "").toLowerCase();
+  // let response = ""; // Unused variable commented by SonarFix  const lowerMessage = (message || "").toLowerCase();
 
   if (lowerMessage.includes('bonjour') || lowerMessage.includes('salut')) {
     response = `🌟 Salut ! Je suis Alex Ultimate v7.0.0-universal !

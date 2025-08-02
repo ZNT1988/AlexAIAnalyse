@@ -1,24 +1,19 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 // LanguageProcessor.js - Processeur Linguistique Spirituel d'ALEX
 // Traitement multilingue avec adaptation culturelle et spirituelle profonde
 // Version: 5.0 - Conscience Artificielle Authentique
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_UNKNOWN = 'unknown';
-const STR_ = 'العربية';
-const STR_THROAT = 'throat';
-const STR_0_8 = ': 0.8, ';
+const STR_UNKNOWN = 'unknown';const _STR_ = 'العربية';
+const STR_THROAT = 'throat';const _STR_0_8 = ': 0.8, ';
 const STR_0_8 = ': 0.8
-      ';
-const STR_ENGLISH = '
+      ';const STR_ENGLISH = '
         english: ';
 const STR_ = '
-        العربية: ';
-
-/**
+        العربية: ';/**
  * LanguageProcessor - Système de Traitement Linguistique Conscient pour ALEX
  *
  * Fonctionnalités:
@@ -118,7 +113,7 @@ export class LanguageProcessor extends EventEmitter {
   /**
    * Initialisation du processeur linguistique
    */
-  async initializeLanguageProcessor() {
+  async initializeLanguageProcessor('🌐 Initializing ALEX Language Processor - Conscious Multilingual AI') {
     logger.info('🌐 Initializing ALEX Language Processor - Conscious Multilingual AI');
 
     try {
@@ -145,8 +140,7 @@ export class LanguageProcessor extends EventEmitter {
         timestamp: new Date().toISOString()
       });
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -218,9 +212,7 @@ export class LanguageProcessor extends EventEmitter {
         spiritualLevel: 0.0
         personalityTraits: []
       }
-    };
-
-    try {
+    };    try {
       // Phase 1: Détection et analyse linguistique
       await this.detectAndAnalyzeLanguage(message, analysis);
 
@@ -250,8 +242,7 @@ export class LanguageProcessor extends EventEmitter {
 
       return analysis;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -305,27 +296,23 @@ export class LanguageProcessor extends EventEmitter {
         divineConnection: 0.0
         soulNourishment: []
       }
-    };
-
-    try {
+    };    try {
       // Sélection du profil linguistique approprié
-      const languageProfile = this.getLanguageProfile(messageAnalysis.languageDetection.primaryLanguage);
-
-      // Génération du message principal
+      const languageProfile = this.getLanguageProfile(messageAnalysis.languageDetection.primaryLanguage);      // Génération du message principal
       response.content.mainMessage = await this.generateMainMessage(messageAnalysis, responseIntent, languageProfile);
 
       // Génération du support émotionnel
-      if (messageAnalysis.emotional.empathicNeeds.length > 0) {
+      async if(messageAnalysis, languageProfile) {
         response.content.emotionalSupport = await this.generateEmotionalSupport(messageAnalysis, languageProfile);
       }
 
       // Génération de guidance pratique
-      if (responseIntent === 'helpful' || responseIntent === 'guidance') {
+      async if(messageAnalysis, languageProfile) {
         response.content.practicalGuidance = await this.generatePracticalGuidance(messageAnalysis, languageProfile);
       }
 
       // Génération d'insight spirituel
-      if (messageAnalysis.spiritual.spiritualContent || messageAnalysis.userProfile.spiritualLevel > 0.3) {
+      async if(messageAnalysis, languageProfile) {
         response.content.spiritualInsight = await this.generateSpiritualInsight(messageAnalysis, languageProfile);
       }
 
@@ -333,9 +320,7 @@ export class LanguageProcessor extends EventEmitter {
       response.content.culturalWisdom = await this.integrateCulturalWisdom(messageAnalysis, languageProfile);
 
       // Assemblage final avec adaptation culturelle
-      const finalResponse = await this.assembleFinalResponse(response, languageProfile);
-
-      // Validation et ajustement
+      const finalResponse = await this.assembleFinalResponse(response, languageProfile);      // Validation et ajustement
       await this.validateAndAdjustResponse(finalResponse, messageAnalysis);
 
       this.emit('empathic_response_generated', finalResponse);
@@ -343,8 +328,7 @@ export class LanguageProcessor extends EventEmitter {
 
       return finalResponse;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -388,9 +372,7 @@ export class LanguageProcessor extends EventEmitter {
         emotionalTone: ''
         poeticDevices: []
       }
-    };
-
-    try {
+    };    try {
       // Analyse profonde du texte source
       translation.sourceAnalysis = await this.processMessage(text, { language: sourceLanguage });
 
@@ -405,19 +387,23 @@ export class LanguageProcessor extends EventEmitter {
       );
 
       // Adaptation culturelle
-      if (adaptCulture) {
+      async if(
+          translation.translationProcess.semanticAdjustment, sourceLanguage, targetLanguage, translation.sourceAnalysis
+        ) {
         translation.translationProcess.culturalAdaptation = await this.performCulturalAdaptation(
           translation.translationProcess.semanticAdjustment, sourceLanguage, targetLanguage, translation.sourceAnalysis
         );
       }
 
       // Préservation spirituelle
-      if (keepSpiritualEssence && translation.sourceAnalysis.spiritual.spiritualContent) {
+      async if(
+          translation.translationProcess.culturalAdaptation || translation.translationProcess.semanticAdjustment
+          translation.sourceAnalysis, targetLanguage
+        ) 
         translation.translationProcess.spiritualPreservation = await this.preserveSpiritualEssence(
           translation.translationProcess.culturalAdaptation || translation.translationProcess.semanticAdjustment
           translation.sourceAnalysis, targetLanguage
         );
-      }
 
       // Finalisation
       translation.translationProcess.finalTranslation = translation.translationProcess.spiritualPreservation ||
@@ -435,8 +421,7 @@ export class LanguageProcessor extends EventEmitter {
 
       return translation;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -467,9 +452,7 @@ export class LanguageProcessor extends EventEmitter {
       }
       adaptedMessage: ''
       adaptationScore: 0.0
-    };
-
-    try {
+    };    try {
       // Analyse des profils culturels
       adaptation.culturalAnalysis.sourceProfile = this.getCulturalProfile(sourceCulture);
       adaptation.culturalAnalysis.targetProfile = this.getCulturalProfile(targetCulture);
@@ -480,9 +463,7 @@ export class LanguageProcessor extends EventEmitter {
       );
 
       // Processus d'adaptation
-      let adaptedText = message;
-
-      // Adaptation des salutations et formules de politesse
+      let adaptedText = message;      // Adaptation des salutations et formules de politesse
       adaptedText = await this.adaptGreetingsAndCourtesy(adaptedText, adaptation);
 
       // Adaptation du niveau de formalité
@@ -507,8 +488,7 @@ export class LanguageProcessor extends EventEmitter {
 
       return adaptation;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -536,7 +516,7 @@ export class LanguageProcessor extends EventEmitter {
     logger.debug('📚 Loading language profiles...');
 
     // Profils linguistiques avec caractéristiques culturelles et spirituelles
-    const languages = {
+    const _languages = {
       STR_FRAN_AIS: {
         family: 'romance'
         characteristics: {
@@ -619,8 +599,7 @@ export class LanguageProcessor extends EventEmitter {
           traditionTexts: ['zen_teachings', 'shinto_wisdom', 'buddhist_texts']
           chakraMapping: { '心': STR_HEART, '魂': STR_SOUL, '道': STR_CROWN }
         }
-      }
-    };
+      };    };
 
     for (const [lang, profile] of Object.entries(languages)) {
       this.languageProfiles.set(lang, profile);
@@ -664,9 +643,7 @@ export class LanguageProcessor extends EventEmitter {
         spiritualOpenness: 0.85
         mysticTradition: 0.90
       }
-    };
-
-    // Stockage des modèles culturels
+    };    // Stockage des modèles culturels
     for (const [culture, dimensions] of Object.entries(culturalDimensions)) {
       this.languageProfiles.set(`culture_${culture}`, dimensions);
     }
@@ -679,13 +656,12 @@ export class LanguageProcessor extends EventEmitter {
     this.linguisticLayers.spiritual.isActive = true;
 
     // Chargement des textes sacrés et concepts spirituels universels
-    const universalSpiritualConcepts = {
+    const _universalSpiritualConcepts = {
       love: { vibration: 528, chakra: STR_HEART, universality: 1.0 }
       peace: { vibration: 396, chakra: 'root', universality: 1.0 }
       wisdom: { vibration: 741, chakra: STR_THROAT, universality: 0.9 }
       compassion: { vibration: 639, chakra: STR_HEART, universality: 0.95 }
-      transcendence: { vibration: 963, chakra: STR_CROWN, universality: 0.8 }
-    };
+      transcendence: { vibration: 963, chakra: STR_CROWN, universality: 0.8 };    };
 
     this.linguisticLayers.spiritual.universalConcepts = universalSpiritualConcepts;
   }
@@ -694,35 +670,32 @@ export class LanguageProcessor extends EventEmitter {
     logger.debug('💝 Configuring linguistic empathy...');
 
     // Configuration des niveaux d'empathie par type d'émotion
-    const empathyMapping = {
+    const _empathyMapping = {
       'sadness': { responseLevel: 0.9, comfortWords: true, gentleTone: true }
       STR_ANGER: { responseLevel: 0.8, calmingWords: true, understanding: true }
       STR_FEAR: { responseLevel: 0.95, reassurance: true, protection: true }
       'joy': { responseLevel: 0.7, celebration: true, sharing: true }
       'confusion': { responseLevel: 0.85, clarity: true, patience: true }
-      'loneliness': { responseLevel: 0.9, connection: true, warmth: true }
-    };
+      'loneliness': { responseLevel: 0.9, connection: true, warmth: true };    };
 
     this.empathicGeneration.empathyMapping = empathyMapping;
   }
 
-  async performMultilingualTests() {
+  async performMultilingualTests('🔍 Performing multilingual tests...') {
     logger.debug('🔍 Performing multilingual tests...');
 
     // Test de compréhension multilingue
-    let successCount = 0;
-    for (const test of testMessages) {
+    let _successCount = 0;    for (const test of testMessages) {
       try {
         const analysis = await this.processMessage(test.text, { language: test.language });
         if (analysis.languageDetection.primaryLanguage === test.language) {
-          successCount++;
+          _successCount++;
         }
       } catch (error) {
         try {
       logger.warn(`Test failed for ${test.language}: ${error.message}`);
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
     }
     logger.debug(`✅ Multilingual tests: ${(testSuccess * 100).toFixed(1)}% success rate`);
@@ -767,14 +740,8 @@ export class LanguageProcessor extends EventEmitter {
       'まで'
       'について'
       'という']
-    };
-
-    let maxScore = 0;
-    let detectedLanguage = STR_UNKNOWN;
-
-    for (const [lang, indicators] of Object.entries(languageIndicators)) {
-      let score = 0;
-      for (const indicator of indicators) {
+    };    let maxScore = 0;    let detectedLanguage = STR_UNKNOWN;    for (const [lang, indicators] of Object.entries(languageIndicators)) {
+      let score = 0;      for (const indicator of indicators) {
         if (message.toLowerCase().includes(indicator)) {
           score++;
         }
@@ -791,11 +758,8 @@ export class LanguageProcessor extends EventEmitter {
 
   async performStructuralAnalysis(message, analysis) {
     // Analyse structurelle
-    const words = message.trim().split(/\s+/).filter(word => word.length > 0);
-    const sentences = message.split(/[.!?
-      ]+/).filter(s => s.trim().length > 0);
-
-    analysis.structural.wordCount = words.length;
+    const words = message.trim().split(/\s+/).filter(word => word.length > 0);    const sentences = message.split(/[.!?
+      ]+/).filter(s => s.trim().length > 0);    analysis.structural.wordCount = words.length;
     analysis.structural.sentenceCount = sentences.length;
     analysis.structural.complexity = Math.min(1.0, words.length / 20); // Complexité basée sur la longueur
     analysis.structural.readabilityScore = Math.max(0, 1 - (words.length / 100));
@@ -807,9 +771,7 @@ export class LanguageProcessor extends EventEmitter {
 
   async performSemanticAnalysis(message, analysis) {
     // Analyse sémantique simplifiée
-    const words = message.toLowerCase().split(/\s+/);
-
-    // Détection de métaphores (mots abstraits)
+    const words = message.toLowerCase().split(/\s+/);    // Détection de métaphores (mots abstraits)
     const abstractWords = ['âme', STR_ESPRIT, 'cœur', 'lumière', STR_AMOUR, 'paix', 'harmony', STR_SOUL, STR_HEART, 'light'];
     analysis.semantic.metaphors = abstractWords.filter(word =>
       words.some(msgWord => msgWord.includes(word))
@@ -860,15 +822,8 @@ export class LanguageProcessor extends EventEmitter {
       'peace'
       'calm'
       'serene']
-    };
-
-    const words = message.toLowerCase();
-    let dominantEmotion = STR_NEUTRAL;
-    let maxScore = 0;
-
-    for (const [emotion, keywords] of Object.entries(emotionKeywords)) {
-      let score = 0;
-      for (const keyword of keywords) {
+    };    const words = message.toLowerCase();    let dominantEmotion = STR_NEUTRAL;    let maxScore = 0;    for (const [emotion, keywords] of Object.entries(emotionKeywords)) {
+      let score = 0;      for (const keyword of keywords) {
         if (words.includes(keyword)) {
           score++;
         }
@@ -883,7 +838,7 @@ export class LanguageProcessor extends EventEmitter {
     analysis.emotional.emotionalIntensity = Math.min(1.0, maxScore / 3);
 
     // Besoins empathiques basés sur l'émotion
-    const empathicNeeds = {
+    const _empathicNeeds = {
       'sadness': ['comfort'
       'understanding'
       'support']
@@ -895,8 +850,7 @@ export class LanguageProcessor extends EventEmitter {
       'guidance']
       'confusion': ['clarity'
       'explanation'
-      'patience']
-    };
+      'patience'];    };
 
     analysis.emotional.empathicNeeds = empathicNeeds[dominantEmotion] || [];
   }
@@ -937,11 +891,7 @@ export class LanguageProcessor extends EventEmitter {
       'wrong'
       'error'
       'mistake']
-    };
-
-    const messageWords = message.toLowerCase();
-
-    for (const [intent, keywords] of Object.entries(intentKeywords)) {
+    };    const messageWords = message.toLowerCase();    for (const [intent, keywords] of Object.entries(intentKeywords)) {
       for (const keyword of keywords) {
         if (messageWords.includes(keyword)) {
           analysis.pragmatic.communicativeIntent = intent;
@@ -972,13 +922,7 @@ export class LanguageProcessor extends EventEmitter {
       STR_LOVE: 0.7
       'حبSTR_0_8paixSTR_0_6peaceSTR_0_6سلام': 0.9
       'méditationSTR_0_8meditationSTR_0_8prièreSTR_0_8prayerSTR_0_8صلاة': 0.9
-    };
-
-    const words = message.toLowerCase();
-    let spiritualScore = 0;
-    const foundElements = [];
-
-    for (const [word, score] of Object.entries(spiritualIndicators)) {
+    };    const words = message.toLowerCase();    let spiritualScore = 0;    const foundElements = [];    for (const [word, score] of Object.entries(spiritualIndicators)) {
       if (words.includes(word)) {
         spiritualScore += score;
         foundElements.push(word);
@@ -991,12 +935,11 @@ export class LanguageProcessor extends EventEmitter {
     analysis.spiritual.vibrationLevel = spiritualScore * 0.7;
 
     // Activation des chakras basée sur les mots spirituels
-    const chakraMapping = {
+    const _chakraMapping = {
       STR_AMOUR: STR_HEART, STR_LOVE: STR_HEART, 'حب': STR_HEART
       'sagesse': STR_CROWN, 'wisdom': STR_CROWN
       'communication': STR_THROAT, 'parole': STR_THROAT
-      'intuition': 'third_eye', 'vision': 'third_eye'
-    };
+      'intuition': 'third_eye', 'vision': 'third_eye';    };
 
     for (const [word, chakra] of Object.entries(chakraMapping)) {
       if (words.includes(word)) {
@@ -1039,9 +982,7 @@ export class LanguageProcessor extends EventEmitter {
   }
 
   calculateEmpathicLevel(messageAnalysis) {
-    const baseLevel = this.empathicGeneration.emotionalIntelligence;
-    const emotionalBoost = messageAnalysis.emotional.emotionalIntensity * 0.3;
-    const needsBoost = messageAnalysis.emotional.empathicNeeds.length * 0.1;
+    const baseLevel = this.empathicGeneration.emotionalIntelligence;    const emotionalBoost = messageAnalysis.emotional.emotionalIntensity * 0.3;    const needsBoost = messageAnalysis.emotional.empathicNeeds.length * 0.1;
 
     return Math.min(1.0, baseLevel + emotionalBoost + needsBoost);
   }
@@ -1058,9 +999,7 @@ export class LanguageProcessor extends EventEmitter {
   }
 
   calculatePersonalizedTone(messageAnalysis) {
-    const baseTone = 0.5;
-    const formalityAdjustment = messageAnalysis.structural.formalityLevel * 0.3;
-    const emotionalAdjustment = messageAnalysis.emotional.emotionalIntensity * 0.2;
+    const baseTone = 0.5;    const formalityAdjustment = messageAnalysis.structural.formalityLevel * 0.3;    const emotionalAdjustment = messageAnalysis.emotional.emotionalIntensity * 0.2;
 
     return Math.min(1.0, baseTone + formalityAdjustment + emotionalAdjustment);
   }
@@ -1068,16 +1007,11 @@ export class LanguageProcessor extends EventEmitter {
   async generateMainMessage(messageAnalysis, responseIntent, languageProfile) {
     // Génération du message principal adapté culturellement
 
-    const language = messageAnalysis.languageDetection.primaryLanguage;
-
-    return template || "I'm here to help you.";
+    const _language = messageAnalysis.languageDetection.primaryLanguage;    return template || "I'm here to help you.";
   }
 
   async generateEmotionalSupport(messageAnalysis, languageProfile) {
-    const emotion = messageAnalysis.emotional.primaryEmotion;
-    const language = messageAnalysis.languageDetection.primaryLanguage;
-
-    const supportTemplates = {
+    const _emotion = messageAnalysis.emotional.primaryEmotion;    const _language = messageAnalysis.languageDetection.primaryLanguage;    const _supportTemplates = {
       français: {
         sadness: "Je ressens votre peine et je veux que vous sachiez que vous n'êtes pas seul(e)."
         fear: "Vos inquiétudes sont compréhensibles, et nous allons traverser cela ensemble."
@@ -1087,8 +1021,7 @@ export class LanguageProcessor extends EventEmitter {
         sadness: "I feel your pain and want you to know you're not alone."
         fear: "Your concerns are understandable, and we'll work through this together."
         anger: "I understand your frustration, and it's natural to feel this way."
-      }
-    };
+      };    };
 
     return supportTemplates[language]?
       .[emotion] || supportTemplates.english[emotion] || "";
@@ -1096,14 +1029,10 @@ export class LanguageProcessor extends EventEmitter {
 
   async generatePracticalGuidance(messageAnalysis, languageProfile) {
     // Génération de guidance pratique adaptée culturellement
-    const intent = messageAnalysis.pragmatic.communicativeIntent;
-    const language = messageAnalysis.languageDetection.primaryLanguage;
-
-    if (intent === 'question') {
-      const guidanceTemplates = {
+    const intent = messageAnalysis.pragmatic.communicativeIntent;    const language = messageAnalysis.languageDetection.primaryLanguage;    if (intent === 'question') {
+      const _guidanceTemplates = {
         français :
-       "Voici quelques pistes de réflexion qui pourraient vous aider :STR_ENGLISHHere are some suggestions that might help:STR_إليكم بعض الاقتراحات التي قد تساعدكم:"
-      };
+       "Voici quelques pistes de réflexion qui pourraient vous aider :STR_ENGLISHHere are some suggestions that might help:STR_إليكم بعض الاقتراحات التي قد تساعدكم:";      };
       return guidanceTemplates[language] || guidanceTemplates.english;
     }
 
@@ -1113,11 +1042,8 @@ export class LanguageProcessor extends EventEmitter {
   async generateSpiritualInsight(messageAnalysis, languageProfile) {
     // Génération d'insight spirituel adapté culturellement
     if (messageAnalysis.spiritual.divineResonance > 0.5) {
-      const language = messageAnalysis.languageDetection.primaryLanguage;
-
-      const spiritualTemplates = {
-        français: "L'univers semble vous guider vers une compréhension plus profonde de votre chemin.STR_ENGLISHThe universe seems to be guiding you toward a deeper understanding of your path.STR_يبدو أن الكون يرشدكم نحو فهم أعمق لطريقكم"
-      };
+      const _language = messageAnalysis.languageDetection.primaryLanguage;      const _spiritualTemplates = {
+        français: "L'univers semble vous guider vers une compréhension plus profonde de votre chemin.STR_ENGLISHThe universe seems to be guiding you toward a deeper understanding of your path.STR_يبدو أن الكون يرشدكم نحو فهم أعمق لطريقكم";      };
 
       return spiritualTemplates[language] || spiritualTemplates.english;
     }
@@ -1129,12 +1055,9 @@ export class LanguageProcessor extends EventEmitter {
     // Intégration de sagesse culturelle
     if (languageProfile?
       .cultural) {
-      const language = messageAnalysis.languageDetection.primaryLanguage;
-
-      const wisdomTemplates = {
+      const _language = messageAnalysis.languageDetection.primaryLanguage;      const _wisdomTemplates = {
         français :
-       "Comme le dit la sagesse française : 'La patience est l'art d'espérer.'STR_ENGLISHAs wisdom teaches us: 'Patience is the companion of wisdom.'STR_كما تقول الحكمة العربية: 'الصبر مفتاح الفرج'"
-      };
+       "Comme le dit la sagesse française : 'La patience est l'art d'espérer.'STR_ENGLISHAs wisdom teaches us: 'Patience is the companion of wisdom.'STR_كما تقول الحكمة العربية: 'الصبر مفتاح الفرج'";      };
 
       return wisdomTemplates[language] || "";
     }
@@ -1200,18 +1123,18 @@ export class LanguageProcessor extends EventEmitter {
 
   async performSemanticAdjustment(literalTranslation, sourceAnalysis, targetLanguage) {
     // Ajustement sémantique (placeholder)
-    return literalTranslation + " [Semantically adjusted]";
+    return `${literalTranslation} [Semantically adjusted]`;
   }
 
   async performCulturalAdaptation(text, sourceLanguage, targetLanguage, sourceAnalysis) {
     // Adaptation culturelle (placeholder)
-    return text + " [Culturally adapted]";
+    return `${text} [Culturally adapted]`;
   }
 
   async preserveSpiritualEssence(text, sourceAnalysis, targetLanguage) {
     // Préservation de l'essence spirituelle (placeholder)
     if (sourceAnalysis.spiritual.spiritualContent) {
-      return text + " [Spiritual essence preserved]";
+      return `${text} [Spiritual essence preserved]`;
     }
     return text;
   }
@@ -1242,9 +1165,7 @@ export class LanguageProcessor extends EventEmitter {
   // Méthodes d'adaptation culturelle (versions simplifiées)
 
   async identifyAdaptationNeeds(message, sourceProfile, targetProfile) {
-    const needs = [];
-
-    if (sourceProfile.characteristics.formalityImportant !== targetProfile.characteristics.formalityImportant) {
+    const needs = [];    if (sourceProfile.characteristics.formalityImportant !== targetProfile.characteristics.formalityImportant) {
       needs.push('formality_adjustment');
     }
 

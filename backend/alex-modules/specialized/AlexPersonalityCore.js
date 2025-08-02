@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_BALANCED = 'balanced';
-/**
+const STR_BALANCED = 'balanced';/**
  * @fileoverview AlexPersonalityCore - Noyau de Personnalité d'Alex
  * Gestion de la personnalité cohérente et adaptative
  * @module AlexPersonalityCore
@@ -10,7 +9,7 @@ const STR_BALANCED = 'balanced';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -125,8 +124,7 @@ export class AlexPersonalityCore extends EventEmitter {
     try {
       logger.info('🎭 AlexPersonalityCore initializing - Authentic self emerging');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -137,8 +135,7 @@ export class AlexPersonalityCore extends EventEmitter {
     try {
       logger.info('✨ AlexPersonalityCore fully initialized - Authentic personality active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -153,12 +150,8 @@ export class AlexPersonalityCore extends EventEmitter {
       adaptedTraits: {}
       adaptationStrength: 0
       reasoning: []
-    };
-
-    // Analyse du contexte
-    const contextualNeeds = this.analyzeContextualNeeds(context, userProfile);
-
-    // Adaptation des traits
+    };    // Analyse du contexte
+    const contextualNeeds = this.analyzeContextualNeeds(context, userProfile);    // Adaptation des traits
     adaptation.adaptedTraits = this.adaptTraits(contextualNeeds);
     adaptation.adaptationStrength = this.calculateAdaptationStrength(
       adaptation.originalTraits
@@ -192,9 +185,7 @@ export class AlexPersonalityCore extends EventEmitter {
       emotionalTone: this.selectEmotionalTone(message, context)
       languagePatterns: this.generateLanguagePatterns()
       personalityMarkers: this.getPersonalityMarkers()
-    };
-
-    // Adaptation du ton selon les traits actuels
+    };    // Adaptation du ton selon les traits actuels
     response.toneAdjustments = this.calculateToneAdjustments();
 
     // Sélection des patterns de réponse
@@ -216,9 +207,7 @@ export class AlexPersonalityCore extends EventEmitter {
       energy: 0.7
       directness: 0.7
       creativity: 0.6
-    };
-
-    // Adaptation selon le contexte
+    };    // Adaptation selon le contexte
     switch (context) {
       case 'emotional_support':
         needs.empathy = 0.98;
@@ -257,10 +246,7 @@ export class AlexPersonalityCore extends EventEmitter {
    * Adaptation des traits de personnalité
    */
   adaptTraits(contextualNeeds) {
-    const adaptedTraits = JSON.parse(JSON.stringify(this.coreTraits));
-    const adaptationFactor = this.personalityConfig.adaptability;
-
-    Object.entries(contextualNeeds).forEach(args) => this.extractedCallback(args)
+    const _adaptedTraits = JSON.parse(JSON.stringify(this.coreTraits));    const _adaptationFactor = this.personalityConfig.adaptability;    Object.entries(contextualNeeds).forEach(args) => this.extractedCallback(args)
     });
 
     return adaptedTraits;
@@ -282,12 +268,8 @@ export class AlexPersonalityCore extends EventEmitter {
       expressions: []
       transitions: []
       conclusions: []
-    };
-
-    // Patterns selon les traits actuels
-    const currentTraits = this.getCurrentTraits();
-
-    // Salutations selon le niveau d'extraversion
+    };    // Patterns selon les traits actuels
+    const currentTraits = this.getCurrentTraits();    // Salutations selon le niveau d'extraversion
     if (currentTraits.extraversion.warmth > 0.8) {
       patterns.greetings.push('Salut !', 'Hey !', 'Coucou !');
     } else {
@@ -313,13 +295,8 @@ export class AlexPersonalityCore extends EventEmitter {
    * Sélection du ton émotionnel
    */
   selectEmotionalTone(message, context) {
-    const traits = this.getCurrentTraits();
-    let tone = STR_BALANCED;
-
-    // Analyse du message pour adaptation
-    const messageAnalysis = this.analyzeMessageEmotionally(message);
-
-    // Sélection du ton selon les traits et le contexte
+    const traits = this.getCurrentTraits();    let tone = STR_BALANCED;    // Analyse du message pour adaptation
+    const messageAnalysis = this.analyzeMessageEmotionally(message);    // Sélection du ton selon les traits et le contexte
     if (traits.agreeableness.altruism > 0.9 && messageAnalysis.needsSupport) {
       tone = STR_SUPPORTIVE;
     } else if (traits.extraversion.positiveEmotions > 0.8) {
@@ -335,10 +312,7 @@ export class AlexPersonalityCore extends EventEmitter {
    * Obtention des marqueurs de personnalité
    */
   getPersonalityMarkers() {
-    const traits = this.getCurrentTraits();
-    const markers = [];
-
-    // Marqueurs basés sur les traits dominants
+    const traits = this.getCurrentTraits();    const markers = [];    // Marqueurs basés sur les traits dominants
     if (traits.openness.creativity > 0.8) {
       markers.push(STR_CREATIVE, 'imaginative', 'innovative');
     }
@@ -374,13 +348,12 @@ export class AlexPersonalityCore extends EventEmitter {
     try {
       logger.info('🎯 Personality calibration completed');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   validateTraitConsistency() {
     // Vérification que les traits sont dans les bonnes plages
-    Object.keys(this.coreTraits).forEach(dimension => this.processLongOperation(args).${trait} out of range: ${value}`);
+    Object.keys(this.coreTraits).forEach(_dimension => this.processLongOperation(args).${trait} out of range: ${value}`);
           this.coreTraits[dimension][trait] = Math.max(0, Math.min(1, value));
         }
       });
@@ -403,8 +376,7 @@ export class AlexPersonalityCore extends EventEmitter {
     try {
       logger.info('🎯 Default values calibrated');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -433,8 +405,7 @@ export class AlexPersonalityCore extends EventEmitter {
     try {
       logger.info('🎭 Behavioral patterns initialized');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -463,8 +434,7 @@ export class AlexPersonalityCore extends EventEmitter {
     try {
       logger.info('🎨 Personality patterns loaded successfully');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -516,8 +486,7 @@ export class AlexPersonalityCore extends EventEmitter {
   }
 
   summarizeCoreTraits() {
-    const summary = {};
-    Object.keys(this.coreTraits).forEach(dimension => this.processLongOperation(args));
+    const summary = {};    Object.keys(this.coreTraits).forEach(_dimension => this.processLongOperation(args));
     return summary;
   }
 
@@ -531,12 +500,8 @@ export class AlexPersonalityCore extends EventEmitter {
         adaptationStrength: 0.7
         personalityInfluence: {}
         communicationAdjustments: {}
-      };
-
-      // Adaptation selon les traits dominants
-      const traits = this.getCurrentTraits();
-
-      // Influence de l'ouverture
+      };      // Adaptation selon les traits dominants
+      const traits = this.getCurrentTraits();      // Influence de l'ouverture
       if (traits.openness.creativity > 0.8) {
         adaptation.personalityInfluence.creativity = STR_HIGH;
         adaptation.communicationAdjustments.tone = 'creative_inspirational';
@@ -568,10 +533,8 @@ export class AlexPersonalityCore extends EventEmitter {
       });
 
       return adaptation;
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
-        communicationAdjustments: {}
       };
     }
   }

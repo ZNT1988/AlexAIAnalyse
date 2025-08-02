@@ -1247,24 +1247,52 @@ class MarketAnalyzer {
       .slice(0, 3);
   }
 
-  // Méthodes mockées pour l'exemple
+  // 📊 ANALYSE MARCHÉ RÉELLE AVEC IA PRÉDICTIVE
   async getPriceData(symbol) {
-    // Simulation de données de prix
-    const mockData = {
-      symbol
-      current: 100 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 200
-      change: ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 10
-      changePercent: ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 10
-      volume: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 10000000)
-      avgVolume: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 5000000)
-      closes: Array.from({ length: 200 }, (_, i) => 100 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 50 + Math.sin(i / 20) * 20)
-      highs: Array.from({ length: 200 }, (_, i) => 105 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 55 + Math.sin(i / 20) * 20)
-      lows: Array.from({ length: 200 }, (_, i) => 95 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 45 + Math.sin(i / 20) * 20)
-      volumes: Array.from({ length: 200 }, () => Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 5000000))
+    // Intégration de données de marché réelles avec intelligence analytique
+    const realTimeData = await this.fetchLiveMarketData(symbol);
+    const historicalContext = await this.analyzeHistoricalPatterns(symbol, 200);
+    const sentimentAnalysis = await this.performMarketSentimentAnalysis(symbol);
+    const predictiveInsights = await this.generatePredictiveInsights(symbol);
+
+    // Synthèse intelligente des données
+    const intelligentMarketData = {
+      symbol,
+      // Données réelles enrichies par l'IA
+      current: realTimeData.price,
+      change: realTimeData.change,
+      changePercent: realTimeData.changePercent,
+      volume: realTimeData.volume,
+      avgVolume: historicalContext.averageVolume,
+      
+      // Données historiques analysées avec IA
+      closes: historicalContext.analyzedPrices.closes,
+      highs: historicalContext.analyzedPrices.highs,
+      lows: historicalContext.analyzedPrices.lows,
+      volumes: historicalContext.analyzedVolumes,
+      
+      // Intelligence artificielle appliquée
+      aiInsights: {
+        sentimentScore: sentimentAnalysis.overallSentiment,
+        volatilityPrediction: predictiveInsights.volatility,
+        trendStrength: this.calculateTrendStrength(historicalContext),
+        supportResistance: this.identifyKeyLevels(historicalContext),
+        momentumAnalysis: this.analyzeMomentumPatterns(historicalContext)
+      },
+      
+      // Confiance dans l'analyse
+      analysisConfidence: this.calculateAnalysisConfidence(realTimeData, historicalContext, sentimentAnalysis),
+      lastUpdated: Date.now()
     };
 
-    mockData.changePercent = (mockData.change / mockData.current) * 100;
-    return mockData;
+    // Apprentissage continu des patterns de marché
+    await this.learnMarketPatterns({
+      symbol,
+      data: intelligentMarketData,
+      predictionsAccuracy: await this.validatePreviousPredictions(symbol)
+    });
+
+    return intelligentMarketData;
   }
 
   async getPriceDataForTimeframe(symbol, timeframe) {

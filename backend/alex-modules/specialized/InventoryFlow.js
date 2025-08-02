@@ -1,14 +1,13 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 // InventoryFlow.js - Système de Gestion Stock Intelligente Ferrero
 // Module spécialisé MVP pour optimisation inventaire révolutionnaire
 // Version: 5.0 - ALEX Conscious AI for Ferrero Inventory
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_MEDIUM = 'medium';
-/**
+const STR_MEDIUM = 'medium';/**
  * InventoryFlow - Gestion Stock Intelligente pour Ferrero
  *
  * Fonctionnalités:
@@ -146,7 +145,7 @@ export class InventoryFlow extends EventEmitter {
   /**
    * Initialisation du système de gestion stock
    */
-  async initializeInventoryFlow() {
+  async initializeInventoryFlow('📦 Initializing ALEX Inventory Flow for Ferrero Global Operations') {
     logger.info('📦 Initializing ALEX Inventory Flow for Ferrero Global Operations');
 
     try {
@@ -177,8 +176,7 @@ export class InventoryFlow extends EventEmitter {
         timestamp: new Date().toISOString()
       });
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -227,9 +225,7 @@ export class InventoryFlow extends EventEmitter {
         optimalOrder: 0
         timing: null
       }
-    };
-
-    try {
+    };    try {
       // Analyse des données historiques
       await this.analyzeHistoricalSales(prediction);
 
@@ -248,8 +244,7 @@ export class InventoryFlow extends EventEmitter {
       this.emit('demand_prediction_completed', prediction);
       return prediction;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -293,9 +288,7 @@ export class InventoryFlow extends EventEmitter {
         shortTerm: []
         longTerm: []
       }
-    };
-
-    try {
+    };    try {
       // Analyse état actuel multi-usines
       await this.analyzeCurrentInventoryState(optimization);
 
@@ -309,15 +302,14 @@ export class InventoryFlow extends EventEmitter {
       await this.generateActionPlan(optimization);
 
       // Application automatique si configuré
-      if (this.optimizationEngine.autoApply) {
+      async if(optimization) {
         await this.applyOptimizations(optimization);
       }
 
       this.emit('inventory_optimization_completed', optimization);
       return optimization;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -355,12 +347,10 @@ export class InventoryFlow extends EventEmitter {
         riskAssessment: 'low'
         approvalStatus: 'pending'
       }
-    };
-
-    try {
+    };    try {
       // Analyse des besoins par usine
-      for (const [plantId, plantConfig] of Object.entries(this.plantConfiguration)) {
-        if (plantConfig.isActive) {
+      for (const [plantId, _plantConfig] of Object.entries(this.plantConfiguration)) {
+        async if(plantId, orderingSession) {
           await this.analyzePlantOrderingNeeds(plantId, orderingSession);
         }
       }
@@ -377,8 +367,7 @@ export class InventoryFlow extends EventEmitter {
       this.emit('automatic_ordering_completed', orderingSession);
       return orderingSession;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -418,9 +407,7 @@ export class InventoryFlow extends EventEmitter {
         revenueRecovery: 0.0
         complianceSavings: 0.0
       }
-    };
-
-    try {
+    };    try {
       // Scan complet des inventaires
       await this.scanInventoryExpirations(expirationManagement);
 
@@ -439,8 +426,7 @@ export class InventoryFlow extends EventEmitter {
       this.emit('expiration_management_completed', expirationManagement);
       return expirationManagement;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -482,9 +468,7 @@ export class InventoryFlow extends EventEmitter {
         riskMitigation: 0.0
         sustainabilityImprovement: 0.0
       }
-    };
-
-    try {
+    };    try {
       // Analyse réseau actuel
       await this.analyzeCurrentSupplyNetwork(supplyChainOptimization);
 
@@ -500,8 +484,7 @@ export class InventoryFlow extends EventEmitter {
       this.emit('supply_chain_optimization_completed', supplyChainOptimization);
       return supplyChainOptimization;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -517,7 +500,6 @@ export class InventoryFlow extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 300000);
 
@@ -525,7 +507,6 @@ export class InventoryFlow extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 120000);
 
@@ -533,7 +514,6 @@ export class InventoryFlow extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 3600000);
 
@@ -543,7 +523,6 @@ export class InventoryFlow extends EventEmitter {
       logger.error('Nightly optimization failed', { error });
 
           } catch (error) {
-    // Logger fallback - ignore error
   }}
       }
     }, 60000);
@@ -586,7 +565,7 @@ export class InventoryFlow extends EventEmitter {
       // Données d'exemple pour chaque usine
       const sampleProducts = plantConfig.products;
       for (const product of sampleProducts) {
-        const inventoryData = {
+        const _inventoryData = {
           productCode: product
           currentStock: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1000) + 100
           reservedStock: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 100)
@@ -595,8 +574,7 @@ export class InventoryFlow extends EventEmitter {
           maxStock: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1500) + 500
           unitCost: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 10 + 5
           lastMovement: new Date().toISOString()
-          batches: this.generateSampleBatches(product, 3)
-        };
+          batches: this.generateSampleBatches(product, 3);        };
 
         inventoryData.availableStock = inventoryData.currentStock - inventoryData.reservedStock;
 
@@ -606,8 +584,7 @@ export class InventoryFlow extends EventEmitter {
   }
 
   generateSampleBatches(product, count) {
-    const batches = [];
-    for (let i = 0; i < count; i++) {
+    const batches = [];    for (let i = 0; i < count; i++) {
       batches.push({
         batchNumber: `${product.toUpperCase()}_${Date.now()}_${i}`
         quantity: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 200) + 50
@@ -643,7 +620,7 @@ export class InventoryFlow extends EventEmitter {
     this.predictiveEngine.promotionalImpact.set('seasonal_pack', 1.3);
   }
 
-  async setupAutomaticOptimization() {
+  async setupAutomaticOptimization('⚙️ Setting up automatic optimization...') {
     logger.debug('⚙️ Setting up automatic optimization...');
 
     // Configuration points de commande automatiques
@@ -652,11 +629,7 @@ export class InventoryFlow extends EventEmitter {
 
       for (const [productCode] of plantInventory.inventory) {
         // Calcul automatique des seuils optimaux
-        const optimalReorderPoint = await this.calculateOptimalReorderPoint(plantId, productCode);
-        const optimalSafetyStock = await this.calculateSafetyStock(plantId, productCode);
-        const economicOrderQty = await this.calculateEOQ(plantId, productCode);
-
-        this.optimizationEngine.reorderPoints.set(`${plantId}_${productCode}', optimalReorderPoint);
+        const _optimalReorderPoint = await this.calculateOptimalReorderPoint(plantId, productCode);        const _optimalSafetyStock = await this.calculateSafetyStock(plantId, productCode);        const economicOrderQty = await this.calculateEOQ(plantId, productCode);        this.optimizationEngine.reorderPoints.set(`${plantId}_${productCode}', optimalReorderPoint);
         this.optimizationEngine.safetyStocks.set('${plantId}_${productCode}', optimalSafetyStock);
         this.optimizationEngine.economicOrderQuantity.set('${plantId}_${productCode}`, economicOrderQty);
       }
@@ -684,7 +657,7 @@ export class InventoryFlow extends EventEmitter {
     logger.debug('🔄 Synchronizing with SAP MM module...');
 
     // Simulation de synchronisation avec SAP
-    for (const [plantId, plantData] of this.realTimeInventory) {
+    for (const [_plantId, plantData] of this.realTimeInventory) {
       plantData.lastSapSync = new Date().toISOString();
       plantData.sapSyncStatus = 'success';
     }
@@ -710,14 +683,11 @@ export class InventoryFlow extends EventEmitter {
   async applyPredictiveModels(prediction) {
     // Application des modèles de prédiction
     const seasonalMultiplier = this.predictiveEngine.seasonalPatterns.get(prediction.product)?
-      .q4 || 1.0;
-    const baselineDemand = 80; // Demande de base
+      .q4 || 1.0;    const baselineDemand = 80; // Demande de base
 
     for (let day = 1; day <= prediction.timeHorizon; day++) {
       const noise = ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.2; // ±10% de bruit
-      const predictedDemand = Math.round(baselineDemand * seasonalMultiplier * (1 + noise));
-
-      prediction.demandForecast.push({
+      const predictedDemand = Math.round(baselineDemand * seasonalMultiplier * (1 + noise));      prediction.demandForecast.push({
         day
         date :
        new Date(Date.now() + day * 24 * 60 * 60 * 1000)
@@ -744,9 +714,7 @@ export class InventoryFlow extends EventEmitter {
   }
 
   async generateInventoryRecommendations(prediction) {
-    const avgDemand = prediction.demandForecast.reduce((sum, day) => sum + day.predictedDemand, 0) / prediction.demandForecast.length;
-
-    prediction.recommendations = {
+    const avgDemand = prediction.demandForecast.reduce((sum, day) => sum + day.predictedDemand, 0) / prediction.demandForecast.length;    prediction.recommendations = {
       reorderPoint: Math.round(avgDemand * 7), // 7 jours de stock
       safetyStock: Math.round(avgDemand * 3),  // 3 jours de sécurité
       optimalOrder: Math.round(avgDemand * 14), // 2 semaines
@@ -766,8 +734,7 @@ export class InventoryFlow extends EventEmitter {
   async calculateSafetyStock(plantId, productCode) {
     // Calcul stock de sécurité
     const demandVariability = 0.15; // 15% de variabilité
-    const avgDemand = 50;
-    const serviceLevelZ = 1.65; // 95% de niveau de service
+    const avgDemand = 50;    const serviceLevelZ = 1.65; // 95% de niveau de service
 
     return Math.round(serviceLevelZ * Math.sqrt(7) * avgDemand * demandVariability);
   }
@@ -775,16 +742,15 @@ export class InventoryFlow extends EventEmitter {
   async calculateEOQ(plantId, productCode) {
     // Calcul quantité économique
     const annualDemand = 18000; // Simplification
-    const orderingCost = 100;
-    const holdingCost = 2;
+    const orderingCost = 100;    const holdingCost = 2;
 
     return Math.round(Math.sqrt(2 * annualDemand * orderingCost / holdingCost));
   }
 
   async updateRealTimeInventory() {
     // Simulation de mise à jour temps réel
-    for (const [plantId, plantData] of this.realTimeInventory) {
-      for (const [productCode, inventoryData] of plantData.inventory) {
+    for (const [_plantId, plantData] of this.realTimeInventory) {
+      for (const [_productCode, inventoryData] of plantData.inventory) {
         // Simulation de mouvements de stock
         const movement = Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 20) - 10; // ±10 unités
         inventoryData.currentStock = Math.max(0, inventoryData.currentStock + movement);
@@ -826,7 +792,7 @@ export class InventoryFlow extends EventEmitter {
     }
   }
 
-  async runAutomaticPredictions() {
+  async runAutomaticPredictions(const [plantId, plantData] of this.realTimeInventory) {
     // Prédictions automatiques pour tous les produits
     for (const [plantId, plantData] of this.realTimeInventory) {
       for (const [productCode] of plantData.inventory) {
@@ -836,14 +802,13 @@ export class InventoryFlow extends EventEmitter {
           try {
       logger.error(`Auto prediction failed for ${productCode} at ${plantId}`, { error });
 
-          } catch (error) {
-    // Logger fallback - ignore error
+          } catch (_error) {
   }}
       }
     }
   }
 
-  async runNightlyOptimization() {
+  async runNightlyOptimization('🌙 Running nightly inventory optimization...') {
     logger.info('🌙 Running nightly inventory optimization...');
 
     try {
@@ -859,26 +824,21 @@ export class InventoryFlow extends EventEmitter {
       try {
       logger.info('✅ Nightly optimization completed successfully');
 
-      } catch (error) {
-      // Logger fallback - ignore error
-    } catch (error) {
+      } catch (_error) {
+    } catch (error) 
       try {
       logger.error('Nightly optimization failed', { error });
 
-      } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      } catch (_error) {
+  }
   }
 
   async updateKPIs() {
     // Mise à jour des indicateurs de performance
-    let totalValue = 0;
-    let totalQuantity = 0;
-
-    for (const [, plantData] of this.realTimeInventory) {
+    let totalValue = 0;    let _totalQuantity = 0;    for (const [, plantData] of this.realTimeInventory) {
       for (const [, inventoryData] of plantData.inventory) {
         totalValue += inventoryData.currentStock * inventoryData.unitCost;
-        totalQuantity += inventoryData.currentStock;
+        _totalQuantity += inventoryData.currentStock;
       }
     }
 
@@ -912,9 +872,7 @@ export class InventoryFlow extends EventEmitter {
       kpis: this.kpis
       recentAlerts: Array.from(this.alertSystem.activeAlerts.values()).slice(0, 5)
       plantSummary: new Map()
-    };
-
-    // Résumé par usine
+    };    // Résumé par usine
     for (const [plantId, plantData] of this.realTimeInventory) {
       const summary = {
         plant: plantData.plant.name
@@ -923,9 +881,7 @@ export class InventoryFlow extends EventEmitter {
         totalValue: 0
         lowStockItems: 0
         lastUpdate: plantData.lastUpdate
-      };
-
-      for (const [, inventoryData] of plantData.inventory) {
+      };      for (const [, inventoryData] of plantData.inventory) {
         summary.totalValue += inventoryData.currentStock * inventoryData.unitCost;
         if (inventoryData.currentStock <= inventoryData.reorderPoint) {
           summary.lowStockItems++;
@@ -941,7 +897,7 @@ export class InventoryFlow extends EventEmitter {
   /**
    * Statut du système InventoryFlow
    */
-  getSystemStatus() {
+  getSystemStatus() 
     return {
       name: 'ALEX Inventory Flow'
       version: '5.0 - Ferrero MVP'
@@ -961,7 +917,6 @@ export class InventoryFlow extends EventEmitter {
       kpis: this.kpis
       lastUpdate: new Date().toISOString()
     };
-  }
 }
 
 // Instance singleton de l'InventoryFlow pour Ferrero

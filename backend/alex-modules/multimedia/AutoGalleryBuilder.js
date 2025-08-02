@@ -1,8 +1,7 @@
 import crypto from 'crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_AUTO = 'auto';
-/**
+const STR_AUTO = 'auto';/**
  * @fileoverview AutoGalleryBuilder - Constructeur Galerie Photo Intelligent IA
  * Génère automatiquement des galeries photos organisées avec IA avancée
  *
@@ -43,7 +42,7 @@ export class AutoGalleryBuilder {
         });
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
     /**
@@ -102,9 +101,7 @@ export class AutoGalleryBuilder {
      * @returns {Promise<Object>} Galerie générée
      */
     async generateSmartGallery(galleryRequest) {
-        const galleryId = `gallery_${Date.now()}`;
-
-        logger.info('🖼️ Starting smart gallery generation', {
+        const galleryId = `gallery_${Date.now()}`;        logger.info('🖼️ Starting smart gallery generation', {
             galleryId
             sourcePath: galleryRequest.sourcePath
             galleryType: galleryRequest.type || STR_AUTO
@@ -120,9 +117,7 @@ export class AutoGalleryBuilder {
                 categories: []
                 metadata: {}
                 layout: null
-            };
-
-            // Phase 1: Découverte et indexation des images
+            };            // Phase 1: Découverte et indexation des images
             logger.info('🔍 Phase 1: Image discovery and indexing');
             gallerySession.images = await this.discoverImages(galleryRequest.sourcePath);
 
@@ -142,9 +137,7 @@ export class AutoGalleryBuilder {
                 gallerySession.images
                 gallerySession.categories
                 galleryRequest.organizationStrategy
-            );
-
-            // Phase 4: Sélection du thème et mise en page
+            );            // Phase 4: Sélection du thème et mise en page
             logger.info('🎨 Phase 4: Theme selection and layout generation');
             const theme = await this.selectOptimalTheme(organizedImages, galleryRequest);
             const layout = await this.generateLayout(organizedImages, theme, galleryRequest);
@@ -152,26 +145,20 @@ export class AutoGalleryBuilder {
 
             // Phase 5: Génération des miniatures et optimisation
             logger.info('🖼️ Phase 5: Thumbnail generation and optimization');
-            const processedImages = await this.processImages(organizedImages, galleryRequest);
-
-            // Phase 6: Construction de la galerie finale
+            const processedImages = await this.processImages(organizedImages, galleryRequest);            // Phase 6: Construction de la galerie finale
             logger.info('🏗️ Phase 6: Final gallery construction');
             const galleryStructure = await this.buildGalleryStructure(
                 processedImages
                 theme
                 layout
                 galleryRequest
-            );
-
-            // Phase 7: Génération des fichiers de sortie
+            );            // Phase 7: Génération des fichiers de sortie
             logger.info('📁 Phase 7: Output file generation');
             const outputFiles = await this.generateOutputFiles(
                 galleryStructure
                 galleryRequest.outputPath || this.config.outputPath
                 galleryId
-            );
-
-            gallerySession.endTime = Date.now();
+            );            gallerySession.endTime = Date.now();
             gallerySession.duration = gallerySession.endTime - gallerySession.startTime;
 
             const result = {
@@ -216,9 +203,7 @@ export class AutoGalleryBuilder {
                     socialTags: this.generateSocialTags(galleryStructure)
                     downloadLink: this.generateDownloadLink(galleryId)
                 }
-            };
-
-            logger.info('✅ Smart gallery generated successfully', {
+            };            logger.info('✅ Smart gallery generated successfully', {
                 galleryId
                 imagesProcessed: result.imagesProcessed
                 categories: result.gallery.categories.length
@@ -229,7 +214,7 @@ export class AutoGalleryBuilder {
             return result;
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -244,10 +229,7 @@ export class AutoGalleryBuilder {
      * Découvre et indexe les images
      */
     async discoverImages(sourcePath) {
-        const images = [];
-        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.tiff'];
-
-        const processFile = async (filePath) => this.processLongOperation(args)_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 9)}`
+        const images = [];        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.tiff'];        const processFile = async (filePath) => this.processLongOperation(args)_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 9)}`
                         path: filePath
                         filename: path.basename(filePath)
                         extension: ext
@@ -255,13 +237,12 @@ export class AutoGalleryBuilder {
                         lastModified: stats.mtime
                         metadata: metadata
                         processed: false
-                    });
-                } catch (error) {
-      // Logger fallback - ignore error
+                    });                } catch (error) {
+      console.error("Logger error:", error);
     }`, { error: error.message });
 
                     } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
             }
         };
@@ -274,16 +255,13 @@ export class AutoGalleryBuilder {
      * Analyse et classe les images avec IA
      */
     async analyzeAndClassifyImages(images) {
-        const categories = new Map();
-        const metadata = {
+        const categories = new Map();        const metadata = {
             subjects: {}
             locations: {}
             dates: {}
             colors: {}
             qualities: {}
-        };
-
-        for (const image of images) {
+        };        async for(image.path) {
             try {
                 // Classification par sujet
                 const subjects = await this.galleryEngines.classifier.classifySubjects(image.path);
@@ -301,7 +279,7 @@ export class AutoGalleryBuilder {
                 }
 
                 // Extraction de la localisation
-                if (image.metadata.gps) {
+                async if(image.metadata.gps) {
                     const location = await this.metadataAnalyzer.locationExtractor.extract(image.metadata.gps);
                     if (location) {
                         image.location = location;
@@ -330,11 +308,11 @@ export class AutoGalleryBuilder {
                 metadata.qualities[quality.grade] = (metadata.qualities[quality.grade] || 0) + 1;
 
             } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     }`, { error: error.message });
 
                 } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
         }
 
@@ -348,9 +326,7 @@ export class AutoGalleryBuilder {
      * Organise intelligemment les images
      */
     async organizeImages(images, categories, strategy = STR_AUTO) {
-        const organizer = this.galleryEngines.organizer;
-
-        switch (strategy) {
+        const organizer = this.galleryEngines.organizer;        switch (strategy) {
             case 'chronological':
                 return organizer.organizeByDate(images);
             case 'location':
@@ -370,10 +346,7 @@ export class AutoGalleryBuilder {
      * Sélectionne le thème optimal
      */
     async selectOptimalTheme(organizedImages, request) {
-        const themeSelector = this.galleryEngines.themeSelector;
-
-        const themePreference = request.theme || STR_AUTO;
-        const imageCharacteristics = this.analyzeImageCharacteristics(organizedImages);
+        const themeSelector = this.galleryEngines.themeSelector;        const themePreference = request.theme || STR_AUTO;        const imageCharacteristics = this.analyzeImageCharacteristics(organizedImages);
 
         return themeSelector.selectTheme(themePreference, imageCharacteristics, {
             responsive: this.config.responsiveDesign
@@ -401,14 +374,10 @@ export class AutoGalleryBuilder {
      * Traite les images (miniatures, optimisation, etc.)
      */
     async processImages(organizedImages, request) {
-        const processedImages = [];
-
-        for (const image of organizedImages) {
+        const processedImages = [];        for (const image of organizedImages) {
             try {
-                const processed = { ...image };
-
-                // Génération des miniatures
-                if (this.config.generateThumbnails) {
+                const processed = { ...image };                // Génération des miniatures
+                async if() {
                     processed.thumbnail = await this.imageProcessors.thumbnailGenerator.generate(
                         image.path
                         { sizes: ['small', 'medium', 'large'] }
@@ -422,7 +391,10 @@ export class AutoGalleryBuilder {
                 );
 
                 // Application de filigrane si demandé
-                if (request.watermark) {
+                async if(
+                        processed.optimized.path
+                        request.watermark
+                    ) {
                     processed.watermarked = await this.imageProcessors.watermarker.apply(
                         processed.optimized.path
                         request.watermark
@@ -433,7 +405,7 @@ export class AutoGalleryBuilder {
                 processedImages.push(processed);
 
             } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     }`, { error: error.message });
                 processedImages.push(image);
             }
@@ -466,28 +438,23 @@ export class AutoGalleryBuilder {
     /**
      * Génère les fichiers de sortie
      */
-    async generateOutputFiles(galleryStructure, outputPath, galleryId) {
-        const files = [];
-
-        // Création du répertoire de sortie
+    async generateOutputFiles(outputPath, galleryId) {
+        const files = [];        // Création du répertoire de sortie
         const galleryPath = path.join(outputPath, galleryId);
         await fs.mkdir(galleryPath, { recursive: true });
 
         // Génération du fichier HTML principal
-        const htmlContent = this.generateHTML(galleryStructure);
-        const htmlFile = path.join(galleryPath, 'index.html');
+        const htmlContent = this.generateHTML(galleryStructure);        const htmlFile = path.join(galleryPath, 'index.html');
         await fs.writeFile(htmlFile, htmlContent, 'utf8');
         files.push({ type: STR_INDEX, path: htmlFile, publicUrl: this.generatePublicURL(htmlFile) });
 
         // Génération du CSS
-        const cssContent = this.generateCSS(galleryStructure.theme, galleryStructure.layout);
-        const cssFile = path.join(galleryPath, 'styles.css');
+        const cssContent = this.generateCSS(galleryStructure.theme, galleryStructure.layout);        const cssFile = path.join(galleryPath, 'styles.css');
         await fs.writeFile(cssFile, cssContent, 'utf8');
         files.push({ type: 'css', path: cssFile });
 
         // Génération du JavaScript
-        const jsContent = this.generateJavaScript(galleryStructure);
-        const jsFile = path.join(galleryPath, 'gallery.js');
+        const jsContent = this.generateJavaScript(galleryStructure);        const jsFile = path.join(galleryPath, 'gallery.js');
         await fs.writeFile(jsFile, jsContent, 'utf8');
         files.push({ type: 'js', path: jsFile });
 
@@ -495,7 +462,7 @@ export class AutoGalleryBuilder {
         const imagesPath = path.join(galleryPath, 'images');
         await fs.mkdir(imagesPath, { recursive: true });
 
-        for (const image of galleryStructure.images) {
+        async for(image.optimized) {
             if (image.optimized) {
                 const destPath = path.join(imagesPath, path.basename(image.optimized.path));
                 await fs.copyFile(image.optimized.path, destPath);
@@ -508,7 +475,7 @@ export class AutoGalleryBuilder {
 
     // Méthodes utilitaires
 
-    async walkDirectory(dirPath, fileCallback) {
+    async walkDirectory(dirPath) {
         try {
             const files = await fs.readdir(dirPath);
 
@@ -523,17 +490,16 @@ export class AutoGalleryBuilder {
                 }
             }
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     }`, { error: error.message });
 
             } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
     }
 
     categorizeTimePeriod(date) {
-        const year = new Date(date).getFullYear();
-        const currentYear = new Date().getFullYear();
+        const year = new Date(date).getFullYear();        const currentYear = new Date().getFullYear();
 
         if (year === currentYear) return 'This Year';
         if (year === currentYear - 1) return 'Last Year';

@@ -2,7 +2,7 @@
 // Système révolutionnaire d'identification des blocages inconscients
 // Version: 2.0 - HustleFinderIA Advanced AI System
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
@@ -42,8 +42,7 @@ export class DarkSideDecoder extends EventEmitter {
     try {
       logger.info('DarkSideDecoder initialized - Ready to illuminate the shadows');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -57,33 +56,19 @@ export class DarkSideDecoder extends EventEmitter {
 
     try {
       // Phase 1: Analyse linguistique des patterns inconscients
-      const linguisticShadows = await this.analyzeLinguisticShadows(userData);
-
-      // Phase 2: Détection des patterns comportementaux limitants
-      const behavioralBlocks = await this.detectBehavioralBlocks(userData);
-
-      // Phase 3: Analyse des échecs et patterns de sabotage
-      const sabotagePatterns = await this.analyzeSabotagePatterns(userData);
-
-      // Phase 4: Identification des croyances limitantes
-      const limitingBeliefs = await this.identifyLimitingBeliefs(userData);
-
-      // Phase 5: Révélation des traumas et blessures anciennes
-      const ancientWounds = await this.revealAncientWounds(userData);
-
-      // Phase 6: Mapping de l'architecture de l'ombre
+      const linguisticShadows = await this.analyzeLinguisticShadows(userData);      // Phase 2: Détection des patterns comportementaux limitants
+      const behavioralBlocks = await this.detectBehavioralBlocks(userData);      // Phase 3: Analyse des échecs et patterns de sabotage
+      const sabotagePatterns = await this.analyzeSabotagePatterns(userData);      // Phase 4: Identification des croyances limitantes
+      const limitingBeliefs = await this.identifyLimitingBeliefs(userData);      // Phase 5: Révélation des traumas et blessures anciennes
+      const ancientWounds = await this.revealAncientWounds(userData);      // Phase 6: Mapping de l'architecture de l'ombre
       const shadowArchitecture = await this.mapShadowArchitecture(
         linguisticShadows
         behavioralBlocks
         sabotagePatterns
         limitingBeliefs
         ancientWounds
-      );
-
-      // Phase 7: Génération des antidotes personnalisés
-      const personalizedAntidotes = await this.generateAntidotes(shadowArchitecture);
-
-      const darkSideAnalysis = {
+      );      // Phase 7: Génération des antidotes personnalisés
+      const personalizedAntidotes = await this.generateAntidotes(shadowArchitecture);      const _darkSideAnalysis = {
         userId: userData.userId
         analysisDate: new Date().toISOString()
         depth: analysisDepth
@@ -108,16 +93,14 @@ export class DarkSideDecoder extends EventEmitter {
           healingTimeEstimate: this.estimateHealingTime(shadowArchitecture)
         }
         // Plan de transformation
-        transformationPlan: await this.createTransformationPlan(shadowArchitecture, personalizedAntidotes)
-      };
+        transformationPlan: await this.createTransformationPlan(shadowArchitecture, personalizedAntidotes);      };
 
       this.emit('dark_side_decoded', darkSideAnalysis);
       return darkSideAnalysis;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
-      throw new Error(`Dark side decoding failed: ${error.message}`);
+      throw new Error(`_Dark _side _decoding failed: ${error.message}`);
     }
   }
 
@@ -134,16 +117,12 @@ export class DarkSideDecoder extends EventEmitter {
       impostor: []
       powerlessness: []
       unworthiness: []
-    };
-
-    // Analyse des messages et conversations
+    };    // Analyse des messages et conversations
     if (userData.conversationHistory) {
       for (const conversation of userData.conversationHistory) {
         for (const message of conversation.messages || []) {
           if (message.type === 'user') {
-            const content = message.content.toLowerCase();
-
-            // Détection du langage limitant
+            const content = message.content.toLowerCase();            // Détection du langage limitant
             shadows.limitingLanguage.push(...this.detectLimitingLanguage(content));
 
             // Patterns de victimisation
@@ -172,15 +151,9 @@ export class DarkSideDecoder extends EventEmitter {
     }
 
     // Analyse des patterns récurrents
-    const recurringPatterns = this.analyzeRecurringLinguisticPatterns(shadows);
-
-    // Calcul des intensités
-    const intensities = this.calculateLinguisticIntensities(shadows);
-
-    // Identification des shadows dominantes
-    const dominantShadows = this.identifyDominantLinguisticShadows(shadows, intensities);
-
-    return {
+    const recurringPatterns = this.analyzeRecurringLinguisticPatterns(shadows);    // Calcul des intensités
+    const intensities = this.calculateLinguisticIntensities(shadows);    // Identification des shadows dominantes
+    const dominantShadows = this.identifyDominantLinguisticShadows(shadows, intensities);    return {
       rawPatterns: shadows
       recurring: recurringPatterns
       intensities
@@ -202,9 +175,7 @@ export class DarkSideDecoder extends EventEmitter {
       comfort_zone_addiction: {}
       fear_of_success: {}
       fear_of_failure: {}
-    };
-
-    // Analyse des habitudes et comportements
+    };    // Analyse des habitudes et comportements
     if (userData.behaviorHistory) {
       blocks.procrastination = this.analyzeProcrastinationPatterns(userData.behaviorHistory);
       blocks.avoidance = this.analyzeAvoidancePatterns(userData.behaviorHistory);
@@ -225,12 +196,8 @@ export class DarkSideDecoder extends EventEmitter {
     }
 
     // Identification des mécanismes de défense
-    const defensemechanisms = this.identifyDefenseMechanisms(blocks);
-
-    // Calcul de l'impact comportemental
-    const behavioralImpact = this.calculateBehavioralImpact(blocks);
-
-    return {
+    const defensemechanisms = this.identifyDefenseMechanisms(blocks);    // Calcul de l'impact comportemental
+    const behavioralImpact = this.calculateBehavioralImpact(blocks);    return {
       activeBlocks: blocks
       defensemechanisms
       impact: behavioralImpact
@@ -243,14 +210,13 @@ export class DarkSideDecoder extends EventEmitter {
    * Analyse des patterns de sabotage
    */
   async analyzeSabotagePatterns(userData) {
-    const sabotage = {
+    const _sabotage = {
       self_sabotage_events: []
       timing_patterns: {}
       trigger_analysis: {}
       frequency: {}
       impact_assessment: {}
-      unconscious_motivations: []
-    };
+      unconscious_motivations: [];    };
 
     // Détection des événements de self-sabotage
     if (userData.projectHistory) {
@@ -291,9 +257,7 @@ export class DarkSideDecoder extends EventEmitter {
       capability_beliefs: []
       origin_analysis: {}
       strength_assessment: {}
-    };
-
-    // Analyse linguistique pour les croyances
+    };    // Analyse linguistique pour les croyances
     if (userData.conversationHistory) {
       const beliefIndicators = this.extractBeliefIndicators(userData.conversationHistory);
 
@@ -327,9 +291,7 @@ export class DarkSideDecoder extends EventEmitter {
       injustice_wounds: []
       healing_status: {}
       activation_triggers: {}
-    };
-
-    // Analyse des patterns émotionnels
+    };    // Analyse des patterns émotionnels
     if (userData.emotionalHistory) {
       wounds.childhood_wounds = this.detectChildhoodWounds(userData.emotionalHistory);
       wounds.betrayal_wounds = this.detectBetrayalWounds(userData.emotionalHistory);
@@ -360,9 +322,7 @@ export class DarkSideDecoder extends EventEmitter {
       power_dynamics: {}
       evolution_stage: ''
       integration_potential: 0
-    };
-
-    // Identification de l'ombre primaire
+    };    // Identification de l'ombre primaire
     architecture.primary_shadow = this.identifyPrimaryShadow(linguistic, behavioral, sabotage, beliefs, wounds);
 
     // Ombres secondaires
@@ -396,9 +356,7 @@ export class DarkSideDecoder extends EventEmitter {
       long_term: []
       maintenance: []
       emergency: []
-    };
-
-    // Antidotes immédiats (24-48h)
+    };    // Antidotes immédiats (24-48h)
     antidotes.immediate = [
       {
         name: 'Shadow Awareness Meditation'
@@ -456,10 +414,7 @@ export class DarkSideDecoder extends EventEmitter {
   detectLimitingLanguage(content) {
     const limitingPhrases = [
       'je ne peux pas', 'c\'est impossible', 'je ne suis pas capableSTR_je ne mérite pas', 'c\'est trop difficile', 'je n\'y arriverai jamaisSTR_je ne suis pas assez', 'c\'est de ma faute', 'je suis nul'
-    ];
-
-    const detected = [];
-    for (const phrase of limitingPhrases) {
+    ];    const detected = [];    for (const phrase of limitingPhrases) {
       if (content.includes(phrase)) {
         detected.push({
           phrase
@@ -475,10 +430,7 @@ export class DarkSideDecoder extends EventEmitter {
   detectVictimPatterns(content) {
     const victimPhrases = [
       'ils me font toujours', 'pourquoi moi', 'ce n\'est pas justeSTR_personne ne me comprend', 'tout va mal', 'je n\'ai pas de chanceSTR_on m\'empêche de', 'c\'est la faute de'
-    ];
-
-    const detected = [];
-    for (const phrase of victimPhrases) {
+    ];    const detected = [];    for (const phrase of victimPhrases) {
       if (content.includes(phrase)) {
         detected.push({
           phrase
@@ -492,9 +444,7 @@ export class DarkSideDecoder extends EventEmitter {
   }
 
   detectSabotageInProject(project) {
-    const sabotageEvents = [];
-
-    // Analyse des abandons près du succès
+    const sabotageEvents = [];    // Analyse des abandons près du succès
     if (project.status === 'abandoned' && project.completion > 0.8) {
       sabotageEvents.push({
         type: 'near_success_abandonment'
@@ -523,9 +473,7 @@ export class DarkSideDecoder extends EventEmitter {
   }
 
   identifyPrimaryShadow(linguistic, behavioral, sabotage, beliefs, wounds) {
-    const shadowScores = new Map();
-
-    // Scoring basé sur l'intensité et la fréquence
+    const shadowScores = new Map();    // Scoring basé sur l'intensité et la fréquence
     if (linguistic.dominant.length > 0) {
       shadowScores.set('linguistic', linguistic.intensities.total);
     }
@@ -539,10 +487,7 @@ export class DarkSideDecoder extends EventEmitter {
     }
 
     // Identification de l'ombre la plus puissante
-    let primaryShadow = null;
-    let maxScore = 0;
-
-    for (const [shadow, score] of shadowScores) {
+    let primaryShadow = null;    const maxScore = 0;    for (const [shadow, score] of shadowScores) {
       if (score > maxScore) {        primaryShadow = shadow;
       }
     }
@@ -551,10 +496,7 @@ export class DarkSideDecoder extends EventEmitter {
   }
 
   calculateShadowIntensity(architecture) {
-    let totalIntensity = 0;
-    let componentCount = 0;
-
-    if (architecture.primary_shadow) {
+    let totalIntensity = 0;    let componentCount = 0;    if (architecture.primary_shadow) {
       totalIntensity += 0.4; // Poids élevé pour l'ombre primaire
       componentCount++;
     }
@@ -575,8 +517,7 @@ export class DarkSideDecoder extends EventEmitter {
     try {
       logger.debug('Shadow database loaded');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   setupPsychologicalAnalysis() {
@@ -584,8 +525,7 @@ export class DarkSideDecoder extends EventEmitter {
     try {
       logger.debug('Psychological analysis configured');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   initializeBlockageDetection() {
@@ -593,8 +533,7 @@ export class DarkSideDecoder extends EventEmitter {
     try {
       logger.debug('Blockage detection initialized');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   loadTransformationProtocols() {
@@ -602,8 +541,7 @@ export class DarkSideDecoder extends EventEmitter {
     try {
       logger.debug('Transformation protocols loaded');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   setupAntidoteGeneration() {
@@ -611,18 +549,11 @@ export class DarkSideDecoder extends EventEmitter {
     try {
       logger.debug('Antidote generation configured');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 }
 
 // Export des fonctions utilitaires
-export const decodeDarkSide = async (userData, depth = 'comprehensive') => this.processLongOperation(args);
-
-export const identifyBlockages = async (userData) => this.processLongOperation(args);
-
-export const generateHealingPlan = async (shadowAnalysis) => this.processLongOperation(args);
-
-// Instance singleton
+export const decodeDarkSide = async (_userData, _depth = 'comprehensive') => this.processLongOperation(args);export const identifyBlockages = async (_userData) => this.processLongOperation(args);export const generateHealingPlan = async (_shadowAnalysis) => this.processLongOperation(args);// Instance singleton
 const darkSideDecoder = new DarkSideDecoder();
 export default darkSideDecoder;

@@ -1,8 +1,7 @@
-const crypto = require('crypto');
+const crypto = require('node:crypto');
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_BUSINESS_STRATEGY = 'business_strategy';
-/**
+const STR_BUSINESS_STRATEGY = 'business_strategy';/**
  * Mutual Growth System - Facilitates collaborative learning and development
  * Simplified but functional implementation
  */
@@ -32,12 +31,8 @@ class MutualGrowthSystem {
    */
   async processGrowthQuery(query, context = {}) {
     try {
-      const queryLower = query.toLowerCase();
-
-      // Identify growth area
-      const growthArea = this.identifyGrowthArea(query);
-
-      // Generate growth-focused response
+      const queryLower = query.toLowerCase();      // Identify growth area
+      const growthArea = this.identifyGrowthArea(query);      // Generate growth-focused response
       if (queryLower.includes('croissance') || queryLower.includes('développement')) {
         return this.handleGrowthPlan(query, growthArea, context);
       }
@@ -57,8 +52,7 @@ class MutualGrowthSystem {
       // Default growth response
       return this.generateGrowthInsight(query, growthArea, context);
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     };
     }
   }
@@ -67,7 +61,7 @@ class MutualGrowthSystem {
    * Handle growth planning
    */
   handleGrowthPlan(query, growthArea, context) {
-    const growthPlans = {
+    const _growthPlans = {
       STR_BUSINESS_STRATEGY: {
         title: 'Plan de Croissance Business'
         phases: [
@@ -100,13 +94,10 @@ class MutualGrowthSystem {
         ]
         timeline: 'Continue'
         key_metrics: ['Compétences', 'Confiance', 'Résultats']
-      }
-    };
+      };    };
 
-    const plan = growthPlans[growthArea] || growthPlans[STR_PERSONAL_DEVELOPMENT];
-
-    return {
-      message: `Basé sur votre demande : "${query}"\n\n🎯 ${plan.title}\n\n📋 Phases de développement :\n${plan.phases.map((phase, i) => '${${i + 1}. ${phase}}').join('\n')}\n\n⏱️ Timeline estimée : ${plan.timeline}\n📊 Métriques clés : ${plan.key_metrics.join(', ')}`
+    const plan = growthPlans[growthArea] || growthPlans[STR_PERSONAL_DEVELOPMENT];    return {
+      message: `Basé sur votre demande : "${query}"\n\n🎯 ${plan.title}\n\n📋 Phases de développement :\n${plan.phases.map((_phase, _i) => '${${i + 1}. ${phase}}').join('\n')}\n\n⏱️ Timeline estimée : ${plan.timeline}\n📊 Métriques clés : ${plan.key_metrics.join(', ')}`
       growth_plan: plan
       next_steps: [
         'Définir des objectifs spécifiquesSTR_Établir un calendrierSTR_Identifier les ressources nécessaires'
@@ -121,7 +112,7 @@ class MutualGrowthSystem {
    * Handle learning path recommendations
    */
   handleLearningPath(query, growthArea, context) {
-    const learningPaths = {
+    const _learningPaths = {
       STR_BUSINESS_STRATEGY: [
         'Analyse SWOT et modèles businessSTR_Stratégies de pricing et positionnementSTR_Marketing digital et acquisitionSTR_Leadership et management d\'équipe'
       ]
@@ -130,13 +121,10 @@ class MutualGrowthSystem {
       ]
       'technical_knowledge': [
         'Fondamentaux de la technologieSTR_Outils d\'automatisationSTR_Analyse de donnéesSTR_Intelligence artificielle appliquée'
-      ]
-    };
+      ];    };
 
-    const path = learningPaths[growthArea] || learningPaths[STR_BUSINESS_STRATEGY];
-
-    return {
-      message: `Parcours d'apprentissage recommandé pour : "${query}"\n\n📚 Étapes d'apprentissage :\n${path.map((step, i) => '${${i + 1}. ${step}}').join('\n')}\n\n💡 Approche suggérée :\n• Théorie + Pratique immédiate\n• Projets concrets\n• Feedback régulier\n• Itération continue`
+    const path = learningPaths[growthArea] || learningPaths[STR_BUSINESS_STRATEGY];    return {
+      message: `Parcours d'apprentissage recommandé pour : "${query}"\n\n📚 Étapes d'apprentissage :\n${path.map((_step, _i) => '${${i + 1}. ${step}}').join('\n')}\n\n💡 Approche suggérée :\n• Théorie + Pratique immédiate\n• Projets concrets\n• Feedback régulier\n• Itération continue`
       learning_path: path
       estimated_duration: '2-4 semaines par étape'
       mutual_learning: {
@@ -214,12 +202,9 @@ class MutualGrowthSystem {
         title: 'Collaboration Synergique'
         message: 'Ensemble, nous créons une intelligence collective supérieure à la somme de nos parties.'
         principle: 'Collective Intelligence'
-      }
-    ];
+      };    ];
 
-    const insight = insights[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * insights.length)];
-
-    return {
+    const insight = insights[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * insights.length)];    return {
       message: `Réflexion sur votre demande : "${query}"\n\n💡 ${insight.title}\n\n${insight.message}\n\n🌱 Dans votre contexte, cela signifie :\n• Identifier vos leviers de croissance\n• Agir avec intention et mesure\n• Évoluer ensemble vers l'excellence`
       growth_insight: insight
       growth_area: growthArea
@@ -263,7 +248,7 @@ class MutualGrowthSystem {
     this.growthMetrics.knowledge_sharing += 0.08;
 
     // Cap at 100
-    Object.keys(this.growthMetrics).forEach(key => this.processLongOperation(args);
+    Object.keys(this.growthMetrics).forEach(_key => this.processLongOperation(args);
   }
 
   /**

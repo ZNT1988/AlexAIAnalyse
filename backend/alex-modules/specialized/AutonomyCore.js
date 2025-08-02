@@ -5,7 +5,7 @@
  * @version 1.0.0 - Independent Decision Making
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 export class AutonomyCore extends EventEmitter {
@@ -33,8 +33,7 @@ export class AutonomyCore extends EventEmitter {
     try {
       logger.info('🔮 AutonomyCore initializing - Alex independent intelligence awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -44,8 +43,7 @@ export class AutonomyCore extends EventEmitter {
     try {
       logger.info('🎯 AutonomyCore fully initialized - True autonomy achieved');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async activateAutonomousThinking() {

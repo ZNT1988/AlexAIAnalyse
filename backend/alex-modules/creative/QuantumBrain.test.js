@@ -9,7 +9,6 @@
  * @requires ../QuantumBrain
  */
 
-import { jest } from '@jest/globals';
 import { QuantumBrain } from './QuantumBrain.js';
 
 describe('QuantumBrain - Cerveau Quantique Révolutionnaire', () => {
@@ -65,8 +64,8 @@ describe('QuantumBrain - Cerveau Quantique Révolutionnaire', () => {
         expect(result).toBeDefined();
         expect(result.qubit_index).toBe(qubitIndex);
         expect(result.state).toBe('superposition');
-        expect(result.amplitude_0).toBeCloseTo(0.707, 2); // 1/√2
-        expect(result.amplitude_1).toBeCloseTo(0.707, 2); // 1/√2
+        expect(result.amplitude_0).toBeCloseTo(Math.SQRT1_2, 2); // 1/√2
+        expect(result.amplitude_1).toBeCloseTo(Math.SQRT1_2, 2); // 1/√2
       }
     });
 
@@ -124,7 +123,7 @@ describe('QuantumBrain - Cerveau Quantique Révolutionnaire', () => {
         expect(entanglement.qubit_1).toBe(qubit1);
         expect(entanglement.qubit_2).toBe(qubit2);
         expect(entanglement.entanglement_strength).toBeGreaterThan(0.9);
-        expect(entanglement.bell_state).toMatch(/^(Φ\+|Φ\-|Ψ\+|Ψ\-)$/);
+        expect(entanglement.bell_state).toMatch(/^(Φ\+|Φ-|Ψ\+|Ψ-)$/);
       }
     });
 
@@ -208,7 +207,7 @@ describe('QuantumBrain - Cerveau Quantique Révolutionnaire', () => {
         ];
         
         for (const algorithm of algorithms) {
-          const result = await quantumBrain.executeQuantumAlgorithm(algorithm, {
+          const _result = await quantumBrain.executeQuantumAlgorithm(algorithm, {
             input_size: 64
             precision: 0.001
           ; return; });

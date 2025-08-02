@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_TYPESCRIPT = 'typescript';
-/**
+const STR_TYPESCRIPT = 'typescript';/**
  * @fileoverview FunctionBuilder - Système de Génération de Code Révolutionnaire ALEX
  * Générateur de code intelligent qui permet à ALEX de créer ses propres fonctions et modules
  *
@@ -62,8 +61,7 @@ const STR_TYPESCRIPT = 'typescript';
  *   parameters: ['principal', 'rate', 'time', 'monthlyContribution']
  *   returnType: 'number'
  *   includeTests: true
- * });
- *
+ * }); *
  * @example
  * // Génération classe complète
  * const classCode = await builder.generateClass({
@@ -72,8 +70,7 @@ const STR_TYPESCRIPT = 'typescript';
  *   methods: ['get', 'set', 'delete', 'clear', 'stats']
  *   features: [STR_TYPESCRIPT, 'async', 'events']
  *   documentation: 'full'
- * });
- */
+ * }); */
 
 import logger from '../config/logger.js';
 
@@ -329,12 +326,9 @@ export class FunctionBuilder {
      *     { input: [48.8566, 2.3522, 40.7614, -73.9776], output: 5837.1 }
      *   ]
      *   constraints: { performance: 'high', precision: 'double' }
-     * });
-     */
+     * });     */
     async generateFunction(specification) {
-        const generationId = `func_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting function generation', {
+        const generationId = `func_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting function generation', {
             generationId
             description: specification.description.substring(0, 100)
             language: specification.language || this.config.defaultLanguage
@@ -360,9 +354,7 @@ export class FunctionBuilder {
                     overall: 0
                 }
             }
-        };
-
-        try {
+        };        try {
             // Phase 1: Parsing et analyse spécifications
             const parsing = await this.parseSpecifications(specification, generation);
             generation.phases.push({ name: 'parsing', results: parsing, timestamp: Date.now() });
@@ -388,8 +380,7 @@ export class FunctionBuilder {
 
             // Phase 7: Validation complète
             const validation = await this.validateGeneration(
-                optimization, documentation, testing, specification, generation
-            );
+                optimization, documentation, testing, specification, generation;            );
             generation.phases.push({ name: 'validation', results: validation, timestamp: Date.now() });
 
             // Phase 8: Finalisation et packaging
@@ -420,8 +411,7 @@ export class FunctionBuilder {
                 improvements: await this.suggestImprovements(generation)
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -459,12 +449,9 @@ export class FunctionBuilder {
      *   properties: ['model', 'accuracy', 'trainingData']
      *   features: ['async', 'events', 'caching']
      *   language: STR_TYPESCRIPT
-     * });
-     */
+     * });     */
     async generateClass(specification) {
-        const generationId = `class_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting class generation', {
+        const generationId = `class_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting class generation', {
             generationId
             name: specification.name
             methodsCount: specification.methods?
@@ -478,17 +465,13 @@ export class FunctionBuilder {
             const generation = await this.generateClassCode(planning, specification);
             const optimization = await this.optimizeClass(generation, specification);
             const documentation = await this.generateClassDocumentation(optimization, specification);
-            const validation = await this.validateClass(optimization, documentation, testing);
-
-            const result = await this.finalizeClass({
+            const validation = await this.validateClass(optimization, documentation, testing);            const result = await this.finalizeClass({
                 generation :
        optimization
                 documentation
                 testing
                 validation
-            });
-
-            return {
+            });            return {
                 success: true
                 generationId
                 type: 'class'
@@ -500,8 +483,7 @@ export class FunctionBuilder {
                 quality: result.quality
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -538,12 +520,9 @@ export class FunctionBuilder {
      *     { type: 'constantsSTR_NAMEPROCESSING_CONSTANTS' }
      *   ]
      *   dependencies: { lodash: '^4.17.21', moment: '^2.29.0' }
-     * });
-     */
+     * });     */
     async generateModule(specification) {
-        const generationId = `module_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting module generation', {
+        const generationId = `module_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting module generation', {
             generationId
             name: specification.name
             componentsCount: specification.components?
@@ -551,9 +530,7 @@ export class FunctionBuilder {
         });
 
         try {
-            const result = await this.processModuleGeneration(specification, generationId);
-
-            return {
+            const result = await this.processModuleGeneration(specification, generationId);            return {
                 success :
        true
                 generationId
@@ -567,8 +544,7 @@ export class FunctionBuilder {
                 metadata: result.metadata
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -598,24 +574,17 @@ export class FunctionBuilder {
      *   criteria: [STR_PERFORMANCE, 'memory', STR_READABILITY]
      *   language: STR_JAVASCRIPT
      *   aggressiveness: 0.8
-     * });
-     */
+     * });     */
     async optimizeGenerated(code, optimizationOptions = {}) {
-        const optimizationId = `opt_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting code optimization', {
+        const optimizationId = `opt_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting code optimization', {
             optimizationId
             criteria: optimizationOptions.criteria || [STR_PERFORMANCE]
         });
 
         try {
-            const criteria = optimizationOptions.criteria || [STR_PERFORMANCE, STR_READABILITY];
-            const optimizations = [];
-
-            for (const criterion of criteria) {
+            const _criteria = optimizationOptions.criteria || [STR_PERFORMANCE, STR_READABILITY];            const optimizations = [];            async for(this.optimizers[criterion]) {
                 if (this.optimizers[criterion]) {
-                    const result = await this.optimizers[criterion].optimize(code, optimizationOptions);
-                    optimizations.push({
+                    const result = await this.optimizers[criterion].optimize(code, optimizationOptions);                    optimizations.push({
                         criterion
                         result
                         improvement: result.metrics
@@ -623,10 +592,7 @@ export class FunctionBuilder {
                 }
             }
 
-            const finalCode = this.mergeOptimizations(code, optimizations);
-            const improvementReport = this.generateImprovementReport(optimizations);
-
-            return {
+            const finalCode = this.mergeOptimizations(code, optimizations);            const improvementReport = this.generateImprovementReport(optimizations);            return {
                 success: true
                 optimizationId
                 original: code
@@ -635,8 +601,7 @@ export class FunctionBuilder {
                 metrics: await this.calculateOptimizationMetrics(code, finalCode)
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -661,9 +626,7 @@ export class FunctionBuilder {
      * @returns {Promise<Object>} Code refactorisé avec changements documentés
      */
     async refactorCode(code, refactoringOptions = {}) {
-        const refactoringId = `refactor_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting code refactoring', {
+        const refactoringId = `refactor_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting code refactoring', {
             refactoringId
             preserveBehavior: refactoringOptions.preserveBehavior !== false
         });
@@ -672,9 +635,7 @@ export class FunctionBuilder {
             const analysis = await this.analyzeCodeStructure(code);
             const refactorings = await this.identifyRefactoringOpportunities(analysis);
             const refactoredCode = await this.applyRefactorings(code, refactorings, refactoringOptions);
-            const validation = await this.validateRefactoring(code, refactoredCode, refactoringOptions);
-
-            return {
+            const validation = await this.validateRefactoring(code, refactoredCode, refactoringOptions);            return {
                 success: true
                 refactoringId
                 original: code
@@ -684,8 +645,7 @@ export class FunctionBuilder {
                 improvements: validation.improvements
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -712,10 +672,8 @@ export class FunctionBuilder {
             constraints: []
             examples: []
             patterns: []
-        };
-
-        // Analyser description naturelle
-        if (specification.description) {
+        };        // Analyser description naturelle
+        async if(specification.description) {
             parsing.intent = await this.parsers.natural.parse(specification.description);
         }
 
@@ -723,12 +681,12 @@ export class FunctionBuilder {
         parsing.requirements = await this.parsers.requirements.extract(specification);
 
         // Identifier contraintes
-        if (specification.constraints) {
+        async if(specification.constraints) {
             parsing.constraints = await this.parsers.constraints.parse(specification.constraints);
         }
 
         // Analyser exemples fournis
-        if (specification.examples) {
+        async if(specification.examples) {
             parsing.examples = await this.parsers.examples.parse(specification.examples);
         }
 
@@ -740,16 +698,14 @@ export class FunctionBuilder {
      * @description Planifie l'architecture de la fonction
      * @private
      */
-    async planFunction(parsing, specification, generation) {
+    async planFunction() {
         const planning = await this.planners.function.plan({
             intent: parsing.intent
             requirements: parsing.requirements
             constraints: parsing.constraints
             language: specification.language || this.config.defaultLanguage
             style: this.config.codeStyle
-        });
-
-        return {
+        });        return {
             architecture: planning.architecture
             structure: planning.structure
             dependencies: planning.dependencies
@@ -774,9 +730,7 @@ export class FunctionBuilder {
             plan: planning
             specification: specification
             config: this.config
-        });
-
-        return {
+        });        return {
             code: code.source
             metadata: code.metadata
             dependencies: code.dependencies
@@ -789,27 +743,21 @@ export class FunctionBuilder {
      * @description Optimise le code généré
      * @private
      */
-    async optimizeCode(codeGeneration, specification, generation) {
-        const optimizations = [];
-        const targetLevel = specification.optimization || this.config.optimization;
-
-        // Appliquer optimisations selon niveau cible
+    async optimizeCode(const type of optimizationTypes) {
+        const optimizations = [];        const targetLevel = specification.optimization || this.config.optimization;        // Appliquer optimisations selon niveau cible
         const optimizationTypes = [STR_PERFORMANCE, STR_READABILITY, 'security'];
 
         for (const type of optimizationTypes) {
             if (this.optimizers[type]) {
                 const result = await this.optimizers[type].optimize(
                     codeGeneration.code
-                    { level: targetLevel }
-                );
+                    { level: targetLevel };                );
                 optimizations.push({ type, result });
             }
         }
 
         // Merger optimisations
-        const optimizedCode = this.mergeOptimizations(codeGeneration.code, optimizations);
-
-        return {
+        const optimizedCode = this.mergeOptimizations(codeGeneration.code, optimizations);        return {
             ...codeGeneration
             code: optimizedCode
             optimizations
@@ -831,9 +779,7 @@ export class FunctionBuilder {
             code: optimization.code
             specification: specification
             metadata: optimization.metadata
-        });
-
-        return {
+        });        return {
             documentation: documentation.content
             format: documentation.format
             coverage: documentation.coverage
@@ -862,9 +808,7 @@ export class FunctionBuilder {
      * @private
      */
     async validateGeneration(optimization, documentation, testing, specification, generation) {
-        const validations = {};
-
-        // Validation syntaxe
+        const validations = {};        // Validation syntaxe
         validations.syntax = await this.validators.syntax.validate(optimization.code);
 
         // Validation logique
@@ -874,7 +818,7 @@ export class FunctionBuilder {
         validations.security = await this.validators.security.validate(optimization.code);
 
         // Validation tests
-        if (testing.tests) {
+        async if(testing.tests) {
             validations.testing = await this.validators.testing.validate(testing.tests);
         }
 
@@ -892,7 +836,7 @@ export class FunctionBuilder {
      * @private
      */
     async finalizeGeneration(validation, generation) {
-        const result = {
+        const _result = {
             code: validation.optimization?.code || ''
             documentation: validation.documentation?.documentation || ''
             tests: validation.testing?.tests || ''
@@ -903,8 +847,7 @@ export class FunctionBuilder {
                 quality: validation.overall
                 phases: generation.phases.length
             }
-            quality: validation.overall
-        };
+            quality: validation.overall;        };
 
         return { result };
     }
@@ -936,8 +879,7 @@ export class FunctionBuilder {
     }
 
     extractIssues(validations) {
-        const issues = [];
-        for (const [type, validation] of Object.entries(validations)) {
+        const issues = [];        for (const [type, validation] of Object.entries(validations)) {
             if (validation.issues) {
                 issues.push(...validation.issues.map(issue => ({ type, ...issue })));
             }
@@ -958,8 +900,8 @@ export class FunctionBuilder {
     async generateUsageExamples(generation) {
         return [
             '// Example usage:'
-            '// const result = generatedFunction(param1, param2);'
-            '// console.log(result);'
+            'const result = generatedFunction(param1, param2);'
+            '// // console.log(result); // Removed console.log for production'
         ];
     }
 
@@ -1010,17 +952,17 @@ export class FunctionBuilder {
 
 // Parsers
 class NaturalLanguageParser {
-    async parse(description) {
+    async parse(_description) {
         return { intent: STR_FUNCTION, complexity: 'medium', domain: 'utility' };
     }
 }
 
 class TechnicalSpecParser {
-    async parse(spec) { return { technical: true }; }
+    async parse(_spec) { return { technical: true }; }
 }
 
 class RequirementsParser {
-    async extract(spec) { return []; }
+    async extract(_spec) { return []; }
 }
 
 class ExampleParser {
@@ -1028,24 +970,24 @@ class ExampleParser {
 }
 
 class ConstraintsParser {
-    async parse(constraints) { return []; }
+    async parse(_constraints) { return []; }
 }
 
 class PatternParser {
-    async parse(patterns) { return []; }
+    async parse(_patterns) { return []; }
 }
 
 class APISpecParser {
-    async parse(spec) { return { api: true }; }
+    async parse(_spec) { return { api: true }; }
 }
 
 class SchemaParser {
-    async parse(schema) { return { schema: true }; }
+    async parse(_schema) { return { schema: true }; }
 }
 
 // Planners
 class FunctionPlanner {
-    async plan(options) {
+    async plan(_options) {
         return {
             architecture: 'simple'
             structure: 'linear'
@@ -1056,36 +998,33 @@ class FunctionPlanner {
 }
 
 class ClassPlanner {
-    async plan(options) { return { planned: true }; }
+    async plan(_options) { return { planned: true }; }
 }
 
 class ModulePlanner {
-    async plan(options) { return { planned: true }; }
+    async plan(_options) { return { planned: true }; }
 }
 
 class SystemPlanner {
-    async plan(options) { return { planned: true }; }
+    async plan(_options) { return { planned: true }; }
 }
 
 class APIPlanner {
-    async plan(options) { return { planned: true }; }
+    async plan(_options) { return { planned: true }; }
 }
 
 class ComponentPlanner {
-    async plan(options) { return { planned: true }; }
+    async plan(_options) { return { planned: true }; }
 }
 
 class ArchitecturePlanner {
-    async plan(options) { return { planned: true }; }
+    async plan(_options) { return { planned: true }; }
 }
 
 // Generators
 class JavaScriptGenerator {
     async generate(options) {
-        const functionName = options.specification.name || 'generatedFunction';
-        const params = options.specification.parameters || ['param1', 'param2'];
-
-        return {
+        const functionName = options.specification.name || 'generatedFunction';        const params = options.specification.parameters || ['param1', 'param2'];        return {
             source: `/**\n * Generated function: ${functionName}\n */\nfunction ${functionName}(${params.join(', ')}) {\n    // TODO: Implement logic\n    return null;\n}`
             metadata: { language: STR_JAVASCRIPT, params, name: functionName }
             dependencies: []
@@ -1095,172 +1034,172 @@ class JavaScriptGenerator {
 }
 
 class TypeScriptGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { source: 'function generated(): void {}', metadata: {}, dependencies: [], exports: [] };
     }
 }
 
 class PythonGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { source: 'def generated():\n    pass', metadata: {}, dependencies: [], exports: [] };
     }
 }
 
 class JavaGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { source: 'public void generated() {}', metadata: {}, dependencies: [], exports: [] };
     }
 }
 
 class CSharpGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { source: 'public void Generated() {}', metadata: {}, dependencies: [], exports: [] };
     }
 }
 
 class GoGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { source: 'func Generated() {}', metadata: {}, dependencies: [], exports: [] };
     }
 }
 
 class RustGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { source: 'fn generated() {}', metadata: {}, dependencies: [], exports: [] };
     }
 }
 
 class SQLGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { source: 'SELECT 1;', metadata: {}, dependencies: [], exports: [] };
     }
 }
 
 class HTMLGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { source: '<div>Generated</div>', metadata: {}, dependencies: [], exports: [] };
     }
 }
 
 class CSSGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { source: '.generated { color: blue; }', metadata: {}, dependencies: [], exports: [] };
     }
 }
 
 // Optimizers
 class PerformanceOptimizer {
-    async optimize(code, options) {
+    async optimize(code, _options) {
         return { code, metrics: { improvement: 0.1 } };
     }
 }
 
 class MemoryOptimizer {
-    async optimize(code, options) {
+    async optimize(code, _options) {
         return { code, metrics: { memoryReduction: 0.05 } };
     }
 }
 
 class ReadabilityOptimizer {
-    async optimize(code, options) {
+    async optimize(code, _options) {
         return { code, metrics: { readabilityScore: 0.85 } };
     }
 }
 
 class SecurityOptimizer {
-    async optimize(code, options) {
+    async optimize(code, _options) {
         return { code, metrics: { securityScore: 0.9 } };
     }
 }
 
 class SizeOptimizer {
-    async optimize(code, options) {
+    async optimize(code, _options) {
         return { code, metrics: { sizeReduction: 0.1 } };
     }
 }
 
 class ComplexityOptimizer {
-    async optimize(code, options) {
+    async optimize(code, _options) {
         return { code, metrics: { complexityReduction: 0.15 } };
     }
 }
 
 class MaintainabilityOptimizer {
-    async optimize(code, options) {
+    async optimize(code, _options) {
         return { code, metrics: { maintainability: 0.8 } };
     }
 }
 
 // Validators
 class SyntaxValidator {
-    async validate(code) {
+    async validate(_code) {
         return { valid: true, score: 0.9, issues: [] };
     }
 }
 
 class LogicValidator {
-    async validate(code, spec) {
+    async validate(_code, _spec) {
         return { valid: true, score: 0.85, issues: [] };
     }
 }
 
 class SecurityValidator {
-    async validate(code) {
+    async validate(_code) {
         return { secure: true, score: 0.9, vulnerabilities: [] };
     }
 }
 
 class PerformanceValidator {
-    async validate(code) {
+    async validate(_code) {
         return { performant: true, score: 0.8, bottlenecks: [] };
     }
 }
 
 class StandardsValidator {
-    async validate(code) {
+    async validate(_code) {
         return { compliant: true, score: 0.85, violations: [] };
     }
 }
 
 class CompatibilityValidator {
-    async validate(code) {
+    async validate(_code) {
         return { compatible: true, score: 0.9, issues: [] };
     }
 }
 
 class TestingValidator {
-    async validate(tests) {
+    async validate(_tests) {
         return { valid: true, coverage: 0.85, issues: [] };
     }
 }
 
 // Template Generators
 class FunctionTemplateGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { content: 'Generated function template', format: STR_JSDOC };
     }
 }
 
 class ClassTemplateGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { content: 'Generated class template', format: STR_JSDOC };
     }
 }
 
 class ModuleTemplateGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { content: 'Generated module template', format: STR_JSDOC };
     }
 }
 
 class TestTemplateGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { content: 'Generated test template', framework: 'jest', coverage: 0.8 };
     }
 }
 
 class DocsTemplateGenerator {
-    async generate(options) {
+    async generate(_options) {
         return { content: 'Generated documentation', format: 'markdown', coverage: 0.9 };
     }
 }

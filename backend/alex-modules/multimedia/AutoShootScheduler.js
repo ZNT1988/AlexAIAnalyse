@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_PORTRAIT = 'portrait';
-/**
+const STR_PORTRAIT = 'portrait';/**
  * @fileoverview AutoShootScheduler - Planificateur de Sessions Photo Automatique IA
  * Planifie et programme automatiquement les sessions photo selon conditions optimales
  *
@@ -37,8 +36,7 @@ export class AutoShootScheduler {
             calendarSync: this.config.calendarSync
         });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
 
     /**
@@ -96,9 +94,7 @@ export class AutoShootScheduler {
      * @returns {Promise<Object>} Planning optimisé généré
      */
     async createOptimalSchedule(requirements, preferences = {}) {
-        const scheduleId = `schedule_${Date.now()}`;
-
-        logger.info('🗓️ Creating optimal photo schedule', {
+        const scheduleId = `schedule_${Date.now()}`;        logger.info('🗓️ Creating optimal photo schedule', {
             scheduleId
             shootType: requirements.type
             duration: requirements.duration || this.config.defaultDuration
@@ -113,22 +109,18 @@ export class AutoShootScheduler {
                 preferences: preferences
                 sessions: []
                 metadata: {}
-            };
-
-            // Phase 1: Analyse conditions optimales
+            };            // Phase 1: Analyse conditions optimales
             logger.info('🌤️ Phase 1: Analyzing optimal conditions');
             const optimalConditions = await this.analyzeOptimalConditions(
                 requirements
-                preferences
-            );
+                preferences;            );
             scheduleSession.metadata.conditions = optimalConditions;
 
             // Phase 2: Recherche créneaux disponibles
             logger.info('⏰ Phase 2: Finding available time slots');
             const availableSlots = await this.findAvailableTimeSlots(
                 requirements
-                optimalConditions
-            );
+                optimalConditions;            );
             scheduleSession.metadata.availableSlots = availableSlots;
 
             // Phase 3: Optimisation selon météo
@@ -137,9 +129,7 @@ export class AutoShootScheduler {
                 availableSlots
                 requirements.location
                 requirements.timeRange
-            );
-
-            // Phase 4: Planification sessions multiples
+            );            // Phase 4: Planification sessions multiples
             logger.info('📸 Phase 4: Multi-session planning');
             scheduleSession.sessions = await this.planMultipleSessions(
                 weatherOptimizedSlots
@@ -154,7 +144,7 @@ export class AutoShootScheduler {
 
             // Phase 6: Intégration calendrier et notifications
             logger.info('📅 Phase 6: Calendar integration');
-            if (this.config.calendarSync) {
+            async if(scheduleSession) {
                 await this.integrateWithCalendar(scheduleSession);
             }
 
@@ -192,9 +182,7 @@ export class AutoShootScheduler {
                     flexibilityScore: this.calculateFlexibilityScore(scheduleSession)
                     reschedulingOptions: this.generateReschedulingOptions(scheduleSession)
                 }
-            };
-
-            logger.info('✅ Optimal photo schedule created successfully', {
+            };            logger.info('✅ Optimal photo schedule created successfully', {
                 scheduleId
                 totalSessions: result.totalSessions
                 processingTime: `${scheduleSession.processingTime}ms`
@@ -203,8 +191,7 @@ export class AutoShootScheduler {
 
             return result;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -224,9 +211,7 @@ export class AutoShootScheduler {
             weather: {}
             timing: {}
             location: {}
-        };
-
-        // Analyse selon type de photo
+        };        // Analyse selon type de photo
         switch (requirements.type) {
             case STR_PORTRAIT:
                 conditions.lighting = {
@@ -273,11 +258,10 @@ export class AutoShootScheduler {
     /**
      * Trouve les créneaux disponibles
      */
-    async findAvailableTimeSlots(requirements, optimalConditions) {
-        const timeSlots = [];
-        const startDate = new Date(requirements.timeRange?
-      .start || Date.now());
-        const endDate = new Date(requirements.timeRange?.end || Date.now() + (7 * 24 * 60 * 60 * 1000));
+    async findAvailableTimeSlots(requirements.timeRange?
+      .start || Date.now() {
+        const timeSlots = [];        const startDate = new Date(requirements.timeRange?
+      .start || Date.now());        const endDate = new Date(requirements.timeRange?.end || Date.now() + (7 * 24 * 60 * 60 * 1000));
 
         for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
             const daySlots = await this.findDaySlots(date, requirements, optimalConditions);
@@ -290,17 +274,13 @@ export class AutoShootScheduler {
     /**
      * Trouve les créneaux pour une journée
      */
-    async findDaySlots(date, requirements, optimalConditions) {
-        const slots = [];
-
-        // Golden hour morning
+    async findDaySlots(optimalConditions.lighting.idealTimes.includes(STR_GOLDEN_HOUR) {
+        const slots = [];        // Golden hour morning
         if (optimalConditions.lighting.idealTimes.includes(STR_GOLDEN_HOUR)) {
             const goldenHourMorning = await this.lightingCalculator.goldenHour.getMorning(
                 date
                 requirements.location
-            );
-
-            slots.push({
+            );            slots.push({
                 date :
        date
                 startTime: goldenHourMorning.start
@@ -320,9 +300,7 @@ export class AutoShootScheduler {
             const blueHour = await this.lightingCalculator.blueHour.getEvening(
                 date
                 requirements.location
-            );
-
-            slots.push({
+            );            slots.push({
                 date: date
                 startTime: blueHour.start
                 endTime: blueHour.end
@@ -346,20 +324,14 @@ export class AutoShootScheduler {
     /**
      * Optimise selon les conditions météo
      */
-    async optimizeForWeather(timeSlots, location, timeRange) {
-        const optimizedSlots = [];
-
-        for (const slot of timeSlots) {
+    async optimizeForWeather(const slot of timeSlots) {
+        const optimizedSlots = [];        for (const slot of timeSlots) {
             const weatherForecast = await this.weatherService.api.getForecast(
                 location
                 slot.startTime
-            );
-
-            const weatherScore = this.weatherService.conditions.evaluateShootingConditions(
+            );            const weatherScore = this.weatherService.conditions.evaluateShootingConditions(
                 weatherForecast
-            );
-
-            const optimizedSlot = {
+            );            const _optimizedSlot = {
                 ...slot
                 weatherForecast: weatherForecast
                 weatherScore: weatherScore
@@ -369,8 +341,7 @@ export class AutoShootScheduler {
                     visibility: weatherForecast.visibility
                     precipitation: weatherForecast.precipitation
                     windSpeed: weatherForecast.windSpeed
-                }
-            };
+                };            };
 
             optimizedSlots.push(optimizedSlot);
         }
@@ -382,13 +353,10 @@ export class AutoShootScheduler {
      * Planifie plusieurs sessions
      */
     async planMultipleSessions(optimizedSlots, requirements, preferences) {
-        const sessions = [];
-        const sessionCount = requirements.sessionCount || 1;
+        const sessions = [];        const sessionCount = requirements.sessionCount || 1;
 
         for (let i = 0; i < Math.min(sessionCount, optimizedSlots.length); i++) {
-            const slot = optimizedSlots[i];
-
-            const session = {
+            const slot = optimizedSlots[i];            const _session = {
                 id: `session_${i + 1}'
                 name: '${requirements.type} Session ${i + 1}`
                 scheduledTime: {
@@ -418,8 +386,7 @@ export class AutoShootScheduler {
                     compositions: this.suggestCompositions(requirements.type, slot)
                     techniques: this.suggestTechniques(requirements.type, slot)
                     styles: this.suggestStyles(requirements.type, slot)
-                }
-            };
+                };            };
 
             sessions.push(session);
         }
@@ -430,7 +397,7 @@ export class AutoShootScheduler {
     /**
      * Crée les plans de secours
      */
-    async createBackupPlans(scheduleSession) {
+    async createBackupPlans(const session of scheduleSession.sessions) {
         scheduleSession.backupPlans = [];
 
         for (const session of scheduleSession.sessions) {
@@ -439,9 +406,7 @@ export class AutoShootScheduler {
                 timeBackup: await this.createTimeBackup(session)
                 locationBackup: await this.createLocationBackup(session)
                 indoorAlternative: await this.createIndoorAlternative(session)
-            };
-
-            scheduleSession.backupPlans.push({
+            };            scheduleSession.backupPlans.push({
                 sessionId: session.id
                 options: backupOptions
                 autoRescheduleRules: this.createAutoRescheduleRules(session)
@@ -452,17 +417,14 @@ export class AutoShootScheduler {
     // Méthodes utilitaires
 
     calculateSlotScore(timeType, requirements) {
-        const scores = {
+        const _scores = {
             STR_GOLDEN_HOUR_MORNING: 0.95
             'golden_hour_evening': 0.98
             STR_BLUE_HOUR: 0.90
             'overcast_day': 0.75
-            'bright_sun': 0.60
-        };
+            'bright_sun': 0.60;        };
 
-        let baseScore = scores[timeType] || 0.5;
-
-        // Ajustements selon type de photo
+        let baseScore = scores[timeType] || 0.5;        // Ajustements selon type de photo
         if (requirements.type === STR_PORTRAIT && timeType.includes(STR_GOLDEN_HOUR)) {
             baseScore += 0.05;
         }
@@ -478,9 +440,7 @@ export class AutoShootScheduler {
       'memory_cards']
       recommended: []
       optional: []
-        };
-
-        switch (sessionType) {
+        };        switch (sessionType) {
             case STR_PORTRAIT:
                 equipment.recommended.push('reflector'
       '85mm_lens'
@@ -514,9 +474,7 @@ export class AutoShootScheduler {
             shutterSpeed: '1/125'
             focusMode: 'single'
             meteringMode: 'matrix'
-        };
-
-        if (sessionType === STR_PORTRAIT) {
+        };        if (sessionType === STR_PORTRAIT) {
             settings.aperture = 'f/2.8';
             settings.focusMode = 'continuous';
         }
@@ -602,7 +560,7 @@ class ScheduleValidator {}
 
 class WeatherAPIClient {
     constructor(apiKey) { this.apiKey = apiKey; }
-    async getForecast(location, time) {
+    async getForecast(_location, _time) {
         return {
             cloudCover: 0.3
             visibility: 10
@@ -626,13 +584,13 @@ class ShootingConditionsEvaluator {
 }
 
 class GoldenHourCalculator {
-    async getMorning(date, location) {
+    async getMorning(date, _location) {
         return { start: new Date(date.getTime() + 6 * 60 * 60 * 1000), end: new Date(date.getTime() + 7.5 * 60 * 60 * 1000) };
     }
 }
 
 class BlueHourCalculator {
-    async getEvening(date, location) {
+    async getEvening(date, _location) {
         return { start: new Date(date.getTime() + 20.5 * 60 * 60 * 1000), end: new Date(date.getTime() + 21.25 * 60 * 60 * 1000) };
     }
 }

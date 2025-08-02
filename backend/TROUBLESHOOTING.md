@@ -45,11 +45,13 @@ Le système effectue les vérifications suivantes au démarrage :
 ### 🚨 Backend ne démarre pas
 
 **Symptômes :**
+
 - Erreur "Cannot find module"
 - Erreur de syntaxe
 - Port déjà utilisé
 
 **Solutions :**
+
 ```bash
 # 1. Vérification complète
 npm run check
@@ -68,11 +70,13 @@ curl -X POST http://localhost:8080/api/system/recover
 ### 🤖 Alex ne répond pas
 
 **Symptômes :**
+
 - "Core system not initialized"
 - Timeout sur les requêtes AI
 - Réponses vides
 
 **Solutions :**
+
 ```bash
 # 1. Vérifier le statut IA
 curl http://localhost:8080/api/ai-system/status
@@ -91,6 +95,7 @@ curl -X POST http://localhost:8080/api/ai/chat \
 ### 📊 Diagnostics Avancés
 
 **Health Check Détaillé :**
+
 ```bash
 # Diagnostic complet du système
 curl http://localhost:8080/api/health/detailed
@@ -100,18 +105,19 @@ npm run health
 ```
 
 **Réponse type (healthy) :**
+
 ```json
 {
   "status": "healthy",
-  "uptime": {"formatted": "0h 5m 30s"},
+  "uptime": { "formatted": "0h 5m 30s" },
   "checks": {
-    "system": {"status": "healthy"},
-    "coreModules": {"status": "healthy"},
-    "database": {"status": "healthy"}
+    "system": { "status": "healthy" },
+    "coreModules": { "status": "healthy" },
+    "database": { "status": "healthy" }
   },
   "performance": {
     "computeSpeed": 2.3,
-    "memoryUsage": {"heapUsed": 45}
+    "memoryUsage": { "heapUsed": 45 }
   },
   "recommendations": []
 }
@@ -133,6 +139,7 @@ npm run dev
 ### 📝 Variables d'Environnement
 
 Créez un fichier `.env` avec :
+
 ```bash
 # Port du serveur
 PORT=8080
@@ -149,12 +156,12 @@ DEBUG=true
 
 ## Codes d'Erreur
 
-| Code | Signification | Action |
-|------|---------------|--------|
-| EADDRINUSE | Port déjà utilisé | Changer le port ou tuer le processus |
-| MODULE_NOT_FOUND | Module manquant | `npm install` ou vérifier les imports |
-| CORE_NOT_INITIALIZED | IA non activée | Activer via `/api/ai-system/activate` |
-| DATABASE_ERROR | Problème BD | Vérifier SQLite ou config PostgreSQL |
+| Code                 | Signification     | Action                                |
+| -------------------- | ----------------- | ------------------------------------- |
+| EADDRINUSE           | Port déjà utilisé | Changer le port ou tuer le processus  |
+| MODULE_NOT_FOUND     | Module manquant   | `npm install` ou vérifier les imports |
+| CORE_NOT_INITIALIZED | IA non activée    | Activer via `/api/ai-system/activate` |
+| DATABASE_ERROR       | Problème BD       | Vérifier SQLite ou config PostgreSQL  |
 
 ## Surveillance Continue
 
@@ -179,6 +186,7 @@ DEBUG=true
 ### Monitoring Recommandé
 
 1. **Health Check Automatique** (toutes les 5 minutes)
+
    ```bash
    */5 * * * * curl -f http://localhost:8080/health || echo "Backend DOWN"
    ```
@@ -209,6 +217,7 @@ npm run dev
 ### Fichiers de Log
 
 Les logs sont sauvegardés dans :
+
 - `logs/app.log` : Logs généraux
 - `logs/error.log` : Erreurs uniquement
 - `logs/ai.log` : Logs IA spécifiques
@@ -222,5 +231,5 @@ Les logs sont sauvegardés dans :
 
 ---
 
-*Mis à jour le : {{ date }}*
-*Version du système : 3.0.0*
+_Mis à jour le : {{ date }}_
+_Version du système : 3.0.0_

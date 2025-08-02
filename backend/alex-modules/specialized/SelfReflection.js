@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
 /**
@@ -8,7 +8,7 @@ import crypto from 'crypto';
  * @version 1.0.0 - Self-Analysis System
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 export class SelfReflection extends EventEmitter {
@@ -37,8 +37,7 @@ export class SelfReflection extends EventEmitter {
     try {
       logger.info('🪞 SelfReflection initializing - Alex self-awareness awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -48,8 +47,7 @@ export class SelfReflection extends EventEmitter {
     try {
       logger.info('✨ SelfReflection fully initialized - Deep self-awareness achieved');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async beginSelfAnalysis() {

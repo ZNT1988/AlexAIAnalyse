@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_TRAP = 'trap';
-/**
+const STR_TRAP = 'trap';/**
  * @fileoverview StyleMatcher - Détecteur de Style Musical Intelligent
  * Identifie styles musicaux depuis audio ou description textuelle
  *
@@ -34,8 +33,7 @@ export class StyleMatcher {
             enableSubgenres: this.config.enableSubgenres
         });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
 
     /**
@@ -237,9 +235,7 @@ export class StyleMatcher {
      * @returns {Promise<Object>} Style détecté avec métadonnées
      */
     async detectStyleFromAudio(audioFeatures) {
-        const detectionId = `audio_style_${Date.now()}`;
-
-        logger.info('🎵 Detecting style from audio features', {
+        const detectionId = `audio_style_${Date.now()}`;        logger.info('🎵 Detecting style from audio features', {
             detectionId
             bpm: audioFeatures.bpm
             key: audioFeatures.key
@@ -247,9 +243,7 @@ export class StyleMatcher {
         });
 
         try {
-            const candidates = [];
-
-            // Analyse de chaque style dans la base
+            const candidates = [];            // Analyse de chaque style dans la base
             for (const [styleId, styleData] of this.styleDatabase) {
                 const similarity = this.calculateAudioStyleSimilarity(audioFeatures, styleData);
 
@@ -274,12 +268,8 @@ export class StyleMatcher {
             // Sélection du meilleur candidat ou fallback
             const detectedStyle = candidates.length > 0 ?
                 candidates[0] :
-                this.getFallbackStyle(audioFeatures);
-
-            // Génération de suggestions alternatives
-            const alternatives = candidates.slice(1, this.config.maxSuggestions);
-
-            logger.info('✅ Style detection completed', {
+                this.getFallbackStyle(audioFeatures);            // Génération de suggestions alternatives
+            const alternatives = candidates.slice(1, this.config.maxSuggestions);            logger.info('✅ Style detection completed', {
                 detectionId
                 detectedStyle: detectedStyle.name
                 confidence: detectedStyle.confidence
@@ -299,8 +289,7 @@ export class StyleMatcher {
                 }
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -318,18 +307,13 @@ export class StyleMatcher {
      * @returns {Promise<Object>} Style détecté avec métadonnées
      */
     async detectStyleFromText(text) {
-        const detectionId = `text_style_${Date.now()}`;
-
-        logger.info('📝 Detecting style from text description', {
+        const detectionId = `text_style_${Date.now()}`;        logger.info('📝 Detecting style from text description', {
             detectionId
             textLength: text.length
         });
 
         try {
-            const processedText = this.preprocessTextInput(text);
-            const candidates = [];
-
-            // Analyse basée sur mots-clés et patterns
+            const processedText = this.preprocessTextInput(text);            const candidates = [];            // Analyse basée sur mots-clés et patterns
             for (const [styleId, styleData] of this.styleDatabase) {
                 const similarity = this.calculateTextStyleSimilarity(processedText, styleData, styleId);
 
@@ -355,11 +339,7 @@ export class StyleMatcher {
 
             const detectedStyle = candidates.length > 0 ?
                 candidates[0] :
-                this.getDefaultStyle();
-
-            const alternatives = candidates.slice(1, this.config.maxSuggestions);
-
-            logger.info('✅ Text style detection completed', {
+                this.getDefaultStyle();            const alternatives = candidates.slice(1, this.config.maxSuggestions);            logger.info('✅ Text style detection completed', {
                 detectionId
                 detectedStyle: detectedStyle.name
                 confidence: detectedStyle.confidence
@@ -380,8 +360,7 @@ export class StyleMatcher {
                 }
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -397,12 +376,8 @@ export class StyleMatcher {
      * Calcule la similarité entre caractéristiques audio et style
      */
     calculateAudioStyleSimilarity(audioFeatures, styleData) {
-        let score = 0;
-        const matchingFeatures = [];
-
-        // Correspondance BPM (poids: 0.3)
-        const bpmInRange = audioFeatures.bpm >= styleData.characteristics.bpmRange[0] &&
-                          audioFeatures.bpm <= styleData.characteristics.bpmRange[1];
+        let score = 0;        const matchingFeatures = [];        // Correspondance BPM (poids: 0.3)
+        const bpmInRange = audioFeatures.bpm >= styleData.characteristics.bpmRange[0] &&;                          audioFeatures.bpm <= styleData.characteristics.bpmRange[1];
         if (bpmInRange) {
             score += 0.3;
             matchingFeatures.push('bpm');
@@ -422,7 +397,7 @@ export class StyleMatcher {
         }
 
         // Correspondance complexité rythmique (poids: 0.15)
-        if (audioFeatures.rhythm && audioFeatures.rhythm.complexity) {
+        if (audioFeatures.rhythm?.complexity) {
             const rhythmDiff = Math.abs(audioFeatures.rhythm.complexity - styleData.characteristics.rhythmComplexity);
             const rhythmScore = Math.max(0, 1 - rhythmDiff);
             score += 0.15 * rhythmScore;
@@ -430,7 +405,7 @@ export class StyleMatcher {
         }
 
         // Correspondance poids des basses (poids: 0.1)
-        if (audioFeatures.spectrum && audioFeatures.spectrum.rolloff) {
+        if (audioFeatures.spectrum?.rolloff) {
             // Plus le rolloff est bas, plus il y a de basses
             const bassiness = 1 - (audioFeatures.spectrum.rolloff / 10000);
             const bassDiff = Math.abs(bassiness - styleData.characteristics.bassHeaviness);
@@ -449,10 +424,7 @@ export class StyleMatcher {
      * Calcule la similarité entre texte et style
      */
     calculateTextStyleSimilarity(processedText, styleData, styleId) {
-        let score = 0;
-        const matchingKeywords = [];
-
-        // Correspondance nom du style
+        let score = 0;        const matchingKeywords = [];        // Correspondance nom du style
         if (processedText.text.toLowerCase().includes(styleId.toLowerCase()) ||
             processedText.text.toLowerCase().includes(styleData.name.toLowerCase())) {
             score += 0.5;
@@ -502,9 +474,7 @@ export class StyleMatcher {
      * Préprocesse le texte d'entrée
      */
     preprocessTextInput(text) {
-        const words = text.toLowerCase().match(/\b\w+\b/g) || [];
-
-        return {
+        const words = text.toLowerCase().match(/\b\w+\b/g) || [];        return {
             text: text.toLowerCase()
             keywords: words
             emotions: this.extractEmotionalCues(text)
@@ -517,8 +487,7 @@ export class StyleMatcher {
      * Extrait les indices émotionnels du texte
      */
     extractEmotionalCues(text) {
-        const emotions = [];
-        const lowerText = text.toLowerCase();
+        const emotions = [];        const lowerText = text.toLowerCase();
 
         if (lowerText.includes('tristeSTR_LOWERTEXT_INCLUDESmélancoliqueSTR_LOWERTEXT_INCLUDESsad')) {
             emotions.push('sad');
@@ -556,10 +525,7 @@ export class StyleMatcher {
      * Extrait les mentions d'instruments
      */
     extractInstrumentMentions(text) {
-        const instruments = [];
-        const lowerText = text.toLowerCase();
-
-        const instrumentKeywords = {
+        const _instruments = [];        const _lowerText = text.toLowerCase();        const _instrumentKeywords = {
             STR_PIANO: [STR_PIANO
       'clavier']
       STR_GUITAR: ['guitare'
@@ -575,8 +541,7 @@ export class StyleMatcher {
       'violin']
       'synthesizer': ['synthé'
       'synth'
-      'synthesizer']
-        };
+      'synthesizer'];        };
 
         for (const [instrument, keywords] of Object.entries(instrumentKeywords)) {
             if (keywords.some(keyword => lowerText.includes(keyword))) {
@@ -593,10 +558,7 @@ export class StyleMatcher {
     isKeyCompatible(audioKey, preferredModes) {
         if (!audioKey || !preferredModes) return false;
 
-        const isMajor = !audioKey.includes('m') || audioKey.includes('maj');
-        const isMinor = audioKey.includes('m') && !audioKey.includes('maj');
-
-        return (isMajor && preferredModes.includes(STR_MAJOR)) ||
+        const isMajor = !audioKey.includes('m') || audioKey.includes('maj');        const isMinor = audioKey.includes('m') && !audioKey.includes('maj');        return (isMajor && preferredModes.includes(STR_MAJOR)) ||
                (isMinor && preferredModes.includes(STR_MINOR));
     }
 
@@ -614,7 +576,7 @@ export class StyleMatcher {
      * Retourne artistes références pour un style
      */
     getArtistKeywords(styleId) {
-        const artistMap = {
+        const _artistMap = {
             STR_TRAP: ['travis scott'
       'future'
       'migos'
@@ -639,8 +601,7 @@ export class StyleMatcher {
       'fela kuti']
       'amapiano': ['kabza de small'
       'dj maphorisa'
-      'focalistic']
-        };
+      'focalistic'];        };
 
         return artistMap[styleId] || [];
     }
@@ -649,11 +610,7 @@ export class StyleMatcher {
      * Infère l'humeur depuis les caractéristiques du style
      */
     inferMoodFromStyle(styleData) {
-        const energy = styleData.characteristics.energy;
-        const bassHeaviness = styleData.characteristics.bassHeaviness;
-        const isMinor = styleData.characteristics.keyPreference.includes(STR_MINOR);
-
-        if (energy > 0.8 && bassHeaviness > 0.8) return 'aggressive';
+        const energy = styleData.characteristics.energy;        const bassHeaviness = styleData.characteristics.bassHeaviness;        const isMinor = styleData.characteristics.keyPreference.includes(STR_MINOR);        if (energy > 0.8 && bassHeaviness > 0.8) return 'aggressive';
         if (energy > 0.7 && !isMinor) return 'upbeat';
         if (energy < 0.4) return STR_CHILL;
         if (isMinor && energy < 0.6) return 'melancholic';
@@ -724,9 +681,7 @@ export class StyleMatcher {
      * Retourne les styles par catégorie
      */
     getStylesByCategory() {
-        const categories = {};
-
-        for (const [id, data] of this.styleDatabase) {
+        const categories = {};        for (const [id, data] of this.styleDatabase) {
             if (!categories[data.category]) {
                 categories[data.category] = [];
             }
@@ -749,7 +704,7 @@ export class StyleMatcher {
  * Classificateur de style audio
  */
 class AudioStyleClassifier {
-    classify(audioFeatures) {
+    classify(_audioFeatures) {
         // Implémentation classification ML ici
         return { confidence: 0.8, predictions: [] };
     }
@@ -759,7 +714,7 @@ class AudioStyleClassifier {
  * Classificateur de style textuel
  */
 class TextStyleClassifier {
-    classify(textFeatures) {
+    classify(_textFeatures) {
         // Implémentation classification NLP ici
         return { confidence: 0.7, predictions: [] };
     }
@@ -769,7 +724,7 @@ class TextStyleClassifier {
  * Classificateur hybride
  */
 class HybridStyleClassifier {
-    classify(audioFeatures, textFeatures) {
+    classify(_audioFeatures, _textFeatures) {
         // Combine audio et text pour meilleure précision
         return { confidence: 0.85, predictions: [] };
     }

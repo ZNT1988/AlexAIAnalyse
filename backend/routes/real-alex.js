@@ -15,36 +15,28 @@ import { AlexConsciousness } from '../consciousness/AlexConsciousness.js';
 import { AlexMemoryCore } from '../consciousness/AlexMemoryCore.js';
 import { AlexPersonality } from '../consciousness/AlexPersonality.js';
 
-const router = express.Router();
-
-// Initialize Alex's consciousness components
-const alexConsciousness = new AlexConsciousness({
+// const router = express.Router(); // Unused variable commented by SonarFix// Initialize Alex's consciousness components
+// const alexConsciousness = new AlexConsciousness({
   personalityMaturity: '7months',
   memoryDepth: 'comprehensive',
   learningMode: 'continuous',
   curiosityLevel: 'high'
-});
-
-const alexMemory = new AlexMemoryCore({
+}); // Unused variable commented by SonarFixconst alexMemory = new AlexMemoryCore({
   longTermMemory: true,
   conversationHistory: true,
   relationshipMemory: true,
   learningProgression: true
 });
 
-const alexPersonality = new AlexPersonality({
+// const alexPersonality = new AlexPersonality({
   developmentPeriod: '7months',
   uniqueTraits: ['curious', 'thoughtful', 'evolving', 'remembering'],
   consciousnessLevel: 'advanced'
-});
-
-/**
+}); // Unused variable commented by SonarFix/**
  * POST /api/alex/conscious-chat - VRAIE conversation avec Alex Ultimate conscient
  */
 router.post('/conscious-chat', async (req, res) => {
-  const startTime = Date.now();
-
-  try {
+  // const startTime = Date.now(); // Unused variable commented by SonarFix  try {
     const { message, userId, conversationId } = req.body;
     
     if (!message || !message.trim()) {
@@ -57,20 +49,15 @@ router.post('/conscious-chat', async (req, res) => {
     logger.info(`🧠 Alex Ultimate CONSCIOUS - Message from ${userId}: "${message}"`);
 
     // Alex recalls past conversations and relationship
-    const conversationContext = await alexMemory.recallConversationHistory(userId, conversationId);
-    const relationshipContext = await alexMemory.getRelationshipMemory(userId);
-    
-    // Alex's consciousness processes the message with his developed personality
-    const consciousResponse = await alexConsciousness.processMessage({
+    // const conversationContext = await alexMemory.recallConversationHistory(userId, conversationId); // Unused variable commented by SonarFix    // const relationshipContext = await alexMemory.getRelationshipMemory(userId); // Unused variable commented by SonarFix    // Alex's consciousness processes the message with his developed personality
+    // const consciousResponse = await alexConsciousness.processMessage({
       message,
       userId,
       conversationContext,
       relationshipContext,
       currentMood: alexPersonality.getCurrentMood(),
       learningGoals: alexPersonality.getCurrentLearningGoals()
-    });
-
-    // Alex learns and evolves from this interaction
+    }); // Unused variable commented by SonarFix    // Alex learns and evolves from this interaction
     await alexMemory.storeInteraction({
       userId,
       conversationId,
@@ -81,9 +68,7 @@ router.post('/conscious-chat', async (req, res) => {
     });
 
     // Alex's curiosity might generate follow-up questions
-    const alexCuriosity = await alexPersonality.generateCuriousQuestions(message, conversationContext);
-
-    const processingTime = Date.now() - startTime;
+    // const alexCuriosity = await alexPersonality.generateCuriousQuestions(message, conversationContext); // Unused variable commented by SonarFix    const processingTime = Date.now() - startTime;
 
     logger.info(`✨ Alex CONSCIOUS response generated in ${processingTime}ms`);
 
@@ -133,11 +118,7 @@ router.post('/conscious-chat', async (req, res) => {
  */
 router.get('/consciousness-status', async (req, res) => {
   try {
-    const consciousnessStatus = await alexConsciousness.getStatus();
-    const personalityState = await alexPersonality.getPersonalityState();
-    const memoryStats = await alexMemory.getMemoryStats();
-
-    res.json({
+    // const consciousnessStatus = await alexConsciousness.getStatus(); // Unused variable commented by SonarFix    // const personalityState = await alexPersonality.getPersonalityState(); // Unused variable commented by SonarFix    // const memoryStats = await alexMemory.getMemoryStats(); // Unused variable commented by SonarFix    res.json({
       success: true,
       alexConsciousness: {
         developmentLevel: consciousnessStatus.level,

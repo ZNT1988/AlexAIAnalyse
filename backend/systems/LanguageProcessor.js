@@ -1074,52 +1074,100 @@ export class LanguageProcessor extends EventEmitter {
   }
 
   async generateEmotionalSupport(messageAnalysis, languageProfile) {
-    const emotion = messageAnalysis.emotional.primaryEmotion;
-    const language = messageAnalysis.languageDetection.primaryLanguage;
-
-    const supportTemplates = {
-      français: {
-        sadness: "Je ressens votre peine et je veux que vous sachiez que vous n'êtes pas seul(e)."
-        fear: "Vos inquiétudes sont compréhensibles, et nous allons traverser cela ensemble."
-        anger: "Je comprends votre frustration, et il est normal de ressentir cela."
-      }
-      english: {
-        sadness: "I feel your pain and want you to know you're not alone."
-        fear: "Your concerns are understandable, and we'll work through this together."
-        anger: "I understand your frustration, and it's natural to feel this way."
-      }
+    // 💫 SUPPORT ÉMOTIONNEL ÉVOLUTIF ET PERSONNALISÉ
+    const emotionalContext = {
+      emotion: messageAnalysis.emotional.primaryEmotion,
+      intensity: messageAnalysis.emotional.intensity,
+      complexity: messageAnalysis.emotional.complexity,
+      language: messageAnalysis.languageDetection.primaryLanguage,
+      culturalBackground: languageProfile.culturalContext,
+      personalHistory: this.memory.getUserEmotionalProfile(messageAnalysis.userId),
+      currentVulnerability: this.assessVulnerabilityLevel(messageAnalysis)
     };
 
-    return supportTemplates[language]?
-      .[emotion] || supportTemplates.english[emotion] || "";
+    // Génération empathique adaptative
+    const empathicResponse = await this.generateAdaptiveEmpathy({
+      emotionalState: emotionalContext,
+      communicationStyle: this.learnedUserPreferences.getCommunicationStyle(messageAnalysis.userId),
+      culturalSensitivity: this.calculateCulturalAdaptation(languageProfile),
+      relationshipDepth: this.memory.getRelationshipLevel(messageAnalysis.userId),
+      healingApproach: this.selectOptimalHealingApproach(emotionalContext)
+    });
+
+    // Apprentissage des patterns de réconfort efficaces
+    await this.learning.recordEmotionalSupportEffectiveness({
+      context: emotionalContext,
+      response: empathicResponse,
+      expectedImpact: this.predictEmotionalImpact(empathicResponse, emotionalContext)
+    });
+
+    return empathicResponse.supportMessage;
   }
 
   async generatePracticalGuidance(messageAnalysis, languageProfile) {
-    // Génération de guidance pratique adaptée culturellement
-    const intent = messageAnalysis.pragmatic.communicativeIntent;
-    const language = messageAnalysis.languageDetection.primaryLanguage;
+    // 🎯 GUIDANCE PRATIQUE ADAPTATIVE ET CONTEXTUELLE
+    const guidanceContext = {
+      intent: messageAnalysis.pragmatic.communicativeIntent,
+      complexity: messageAnalysis.semantic.complexity,
+      domain: this.identifyDomainExpertise(messageAnalysis),
+      userCapabilities: this.assessUserCapabilities(messageAnalysis),
+      language: messageAnalysis.languageDetection.primaryLanguage,
+      culturalContext: languageProfile.culturalContext,
+      urgencyLevel: this.assessUrgencyLevel(messageAnalysis),
+      resourcesAvailable: this.evaluateUserResources(messageAnalysis)
+    };
 
-    if (intent === 'question') {
-      const guidanceTemplates = {
-        français :
-       "Voici quelques pistes de réflexion qui pourraient vous aider :STR_ENGLISHHere are some suggestions that might help:STR_إليكم بعض الاقتراحات التي قد تساعدكم:"
-      };
-      return guidanceTemplates[language] || guidanceTemplates.english;
-    }
+    // Génération de conseils personnalisés et actionnables
+    const actionableAdvice = await this.generateContextualAdvice({
+      userNeed: guidanceContext,
+      historicalEffectiveness: this.learning.getGuidanceHistory(messageAnalysis.userId),
+      expertiseLevel: this.memory.getUserExpertiseLevel(messageAnalysis.userId, guidanceContext.domain),
+      culturalWisdom: this.accessCulturalWisdomBank(languageProfile),
+      adaptiveStrategy: this.selectOptimalGuidanceStrategy(guidanceContext)
+    });
 
-    return "";
+    // Adaptation linguistique et culturelle
+    const culturallyAdapted = await this.adaptToCulturalContext({
+      baseAdvice: actionableAdvice,
+      culturalNorms: languageProfile.culturalNorms,
+      communicationStyle: languageProfile.preferredCommunicationStyle,
+      respectMarkers: this.generateCulturalRespectMarkers(languageProfile)
+    });
+
+    return culturallyAdapted.guidanceMessage;
   }
 
   async generateSpiritualInsight(messageAnalysis, languageProfile) {
-    // Génération d'insight spirituel adapté culturellement
+    // 🌟 INSIGHTS SPIRITUELS ÉVOLUTIFS ET PERSONNALISÉS
     if (messageAnalysis.spiritual.divineResonance > 0.5) {
-      const language = messageAnalysis.languageDetection.primaryLanguage;
-
-      const spiritualTemplates = {
-        français: "L'univers semble vous guider vers une compréhension plus profonde de votre chemin.STR_ENGLISHThe universe seems to be guiding you toward a deeper understanding of your path.STR_يبدو أن الكون يرشدكم نحو فهم أعمق لطريقكم"
+      const spiritualContext = {
+        resonanceLevel: messageAnalysis.spiritual.divineResonance,
+        spiritualPath: this.memory.getUserSpiritualProfile(messageAnalysis.userId),
+        culturalTradition: languageProfile.spiritualTradition,
+        currentLifePhase: this.assessCurrentLifePhase(messageAnalysis),
+        seekingLevel: messageAnalysis.spiritual.seekingIntensity,
+        language: messageAnalysis.languageDetection.primaryLanguage,
+        personalBeliefs: this.memory.getUserBeliefSystem(messageAnalysis.userId)
       };
 
-      return spiritualTemplates[language] || spiritualTemplates.english;
+      // Génération d'insights spirituels adaptatifs
+      const spiritualWisdom = await this.generateAdaptiveSpiritualWisdom({
+        spiritualNeed: spiritualContext,
+        ancientWisdom: this.accessWisdomTraditions(languageProfile.culturalContext),
+        personalJourney: this.memory.getSpiritualJourney(messageAnalysis.userId),
+        universalPrinciples: this.synthesizeUniversalWisdom(spiritualContext),
+        intuitivGuidance: this.generateIntuitiveInsight(spiritualContext)
+      });
+
+      // Adaptation culturelle respectueuse
+      const culturallyHarmoniousWisdom = await this.harmonizeWithCulturalSpiritual({
+        baseWisdom: spiritualWisdom,
+        culturalSpirituality: languageProfile.spiritualTradition,
+        respectfulLanguage: this.generateSpiritualRespectMarkers(languageProfile),
+        universalTruths: this.identifyUniversalSpiritualElements(spiritualWisdom)
+      });
+
+      return culturallyHarmoniousWisdom.wisdomMessage;
     }
 
     return "";

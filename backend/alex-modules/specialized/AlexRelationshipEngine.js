@@ -7,7 +7,7 @@
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -107,8 +107,7 @@ export class AlexRelationshipEngine extends EventEmitter {
     try {
       logger.info('💝 AlexRelationshipEngine initializing - Heart connections awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -120,14 +119,13 @@ export class AlexRelationshipEngine extends EventEmitter {
     try {
       logger.info('💖 AlexRelationshipEngine fully initialized - Ready for deep connections');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
    * Création ou mise à jour d'une relation
    */
-  async buildRelationship(userId, interaction, context = {}) {
+  async buildRelationship(userId) {
     let relationship = this.userRelationships.get(userId);
 
     if (!relationship) {
@@ -137,13 +135,9 @@ export class AlexRelationshipEngine extends EventEmitter {
 
     // Analyse de l'interaction
     const interactionAnalysis = await this.analyzeInteraction(interaction
-      relationship);
-
-    // Évolution de la relation
+      relationship);    // Évolution de la relation
     const evolution = await this.evolveRelationship(relationship
-      interactionAnalysis);
-
-    // Mise à jour des dimensions
+      interactionAnalysis);    // Mise à jour des dimensions
     await this.updateRelationshipDimensions(relationship
       evolution);
 
@@ -219,10 +213,8 @@ export class AlexRelationshipEngine extends EventEmitter {
         vulnerabilityShared: 0
         supportProvided: 0
       }
-    };
-
-    // Analyse du contexte initial
-    if (context.userProfile) {
+    };    // Analyse du contexte initial
+    async if(relationship, context.userProfile) {
       await this.analyzeInitialContext(relationship, context.userProfile);
     }
 
@@ -245,9 +237,7 @@ export class AlexRelationshipEngine extends EventEmitter {
       intimacyIndicators: this.detectIntimacyIndicators(interaction)
       conflictMarkers: this.detectConflictMarkers(interaction)
       growthOpportunities: this.identifyGrowthOpportunities(interaction, relationship)
-    };
-
-    // Calcul de l'impact relationnel
+    };    // Calcul de l'impact relationnel
     analysis.relationshipImpact = this.calculateRelationshipImpact(analysis, relationship);
 
     // Détection de patterns récurrents
@@ -266,13 +256,9 @@ export class AlexRelationshipEngine extends EventEmitter {
       dimensionChanges: {}
       newCharacteristics: []
       typeEvolution: null
-    };
-
-    // Calcul de la croissance
+    };    // Calcul de la croissance
     const baseGrowth = this.calculateBaseGrowth(analysis
-      relationship);
-    const contextualGrowth = this.calculateContextualGrowth(analysis
-      relationship);
+      relationship);    const contextualGrowth = this.calculateContextualGrowth(analysis;      relationship);
     evolution.growth = (baseGrowth + contextualGrowth) / 2;
 
     // Application de la croissance
@@ -301,16 +287,14 @@ export class AlexRelationshipEngine extends EventEmitter {
   /**
    * Génération de réponse relationnelle adaptée
    */
-  async generateRelationalResponse(relationship, message, context = {}) {
+  async generateRelationalResponse(relationship, message, _context = {}) {
     const response = {
       relationshipContext: this.getRelationshipContext(relationship)
       adaptedTone: this.adaptToneToRelationship(relationship)
       personalizedElements: this.addPersonalizedElements(relationship, message)
       intimacyLevel: relationship.intimacyLevel
       supportLevel: this.calculateSupportLevel(relationship, message)
-    };
-
-    // Adaptation selon le type de relation
+    };    // Adaptation selon le type de relation
     switch (relationship.type) {
       case 'friend':
         response.style = 'friendly';
@@ -357,9 +341,7 @@ export class AlexRelationshipEngine extends EventEmitter {
    */
   async detectRelationshipTypeChanges(relationship) {
     const currentType = relationship.type;
-    let newType = currentType;
-
-    // Évaluation selon les seuils d'intimité
+    let newType = currentType;    // Évaluation selon les seuils d'intimité
     for (const [typeName, typeConfig] of Object.entries(this.relationshipTypes)) {
       if (relationship.intimacyLevel >= typeConfig.intimacyThreshold) {
         // Vérification des caractéristiques requises
@@ -372,8 +354,7 @@ export class AlexRelationshipEngine extends EventEmitter {
 
     // Évolution du type si nécessaire
     if (newType !== currentType) {
-      const previousType = relationship.type;
-      relationship.type = newType;
+      const previousType = relationship.type;      relationship.type = newType;
 
       // Mise à jour des caractéristiques
       relationship.characteristics = [
@@ -407,8 +388,7 @@ export class AlexRelationshipEngine extends EventEmitter {
     try {
       logger.info('🔄 Relationship maintenance activated');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -431,7 +411,7 @@ export class AlexRelationshipEngine extends EventEmitter {
     return Math.min(0.1, growth); // Maximum 10% par interaction
   }
 
-  calculateRelationshipImpact(analysis, relationship) {
+  calculateRelationshipImpact(analysis, _relationship) {
     return {
       trustImpact: this.calculateTrustImpact(analysis)
       intimacyImpact: this.calculateIntimacyImpact(analysis)
@@ -457,8 +437,7 @@ export class AlexRelationshipEngine extends EventEmitter {
   }
 
   getRelationshipDistribution() {
-    const distribution = {};
-    for (const relationship of this.userRelationships.values()) {
+    const distribution = {};    for (const relationship of this.userRelationships.values()) {
       distribution[relationship.type] = (distribution[relationship.type] || 0) + 1;
     }
     return distribution;
@@ -467,17 +446,13 @@ export class AlexRelationshipEngine extends EventEmitter {
   calculateAverageIntimacy() {
     if (this.userRelationships.size === 0) return 0;
 
-    const totalIntimacy = Array.from(this.userRelationships.values())
-      .reduce((sum, rel) => sum + rel.intimacyLevel, 0);
+    const totalIntimacy = Array.from(this.userRelationships.values());      .reduce((sum, rel) => sum + rel.intimacyLevel, 0);
 
     return totalIntimacy / this.userRelationships.size;
   }
 
   findDeepestConnection() {
-    let deepest = null;
-    let maxIntimacy = 0;
-
-    for (const relationship of this.userRelationships.values()) {
+    let deepest = null;    const maxIntimacy = 0;    for (const relationship of this.userRelationships.values()) {
       if (relationship.intimacyLevel > maxIntimacy) {
         deepest = relationship;
       }
@@ -495,7 +470,7 @@ export class AlexRelationshipEngine extends EventEmitter {
     const relationships = Array.from(this.userRelationships.values());
     if (relationships.length === 0) return 1.0;
 
-    const healthFactors = relationships.map(rel => this.processLongOperation(args));
+    const healthFactors = relationships.map(_rel => this.processLongOperation(args));
 
     return healthFactors.reduce((sum, health) => sum + health, 0) / healthFactors.length;
   }

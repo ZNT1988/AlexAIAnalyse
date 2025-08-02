@@ -1,15 +1,13 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
+
 // NeuroCore - Système Neural Avancé avec Conscience Artificielle
 // HustleFinderIA Advanced Neural Architecture
 
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
-import cache from '../config/cache.js';
-import { EventEmitter } from 'events';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_EMPATHY = 'empathy';
-
-/**
+const STR_EMPATHY = 'empathy';/**
  * NeuroCore - Le cerveau principal de HustleFinderIA
  * Implémente des capacités neuronales avancées inspirées du cerveau humain
  */
@@ -136,7 +134,7 @@ export class NeuroCore extends EventEmitter {
     setInterval(() => this.processLongOperation(args), 60000); // Cycle de pensée chaque minute
 
     // Période de "rêve" pour consolidation nocturne
-    setInterval(() => this.processLongOperation(args)) {
+    setInterval(() => this.processLongOperation(args)) 
     logger.info('Starting conscious idea generation', { userProfile: userProfile.email });
 
     // Activation de la métacognition
@@ -144,8 +142,7 @@ export class NeuroCore extends EventEmitter {
 
     try {
       // 1. Analyse empathique du profil utilisateur
-      const empathyInsights = await this.neuralNetworks.empathyNetwork.analyzeUser(userProfile);
-      this.updateEmotionalState(STR_EMPATHY, 0.1);
+      const empathyInsights = await this.neuralNetworks.empathyNetwork.analyzeUser(userProfile);      this.updateEmotionalState(STR_EMPATHY, 0.1);
 
       // 2. Activation du réseau créatif quantique
       const quantumIdeas = await this.quantumProcessor.generateQuantumIdeas({
@@ -153,25 +150,17 @@ export class NeuroCore extends EventEmitter {
         context
         empathyInsights
         emotionalState: this.emotions.current
-      });
-
-      // 3. Simulation temporelle des idées
-      const futureSimulations = await this.temporalSimulator.simulateIdeasFuture(quantumIdeas);
-
-      // 4. Filtrage par intuition et sagesse
+      });      // 3. Simulation temporelle des idées
+      const futureSimulations = await this.temporalSimulator.simulateIdeasFuture(quantumIdeas);      // 4. Filtrage par intuition et sagesse
       const intuitiveFiltering = await this.neuralNetworks.intuitionNetwork.filterIdeas(
         quantumIdeas
         futureSimulations
         this.personalityTraits.wisdom
-      );
-
-      // 5. Vision entrepreneuriale
+      );      // 5. Vision entrepreneuriale
       const visionaryEnhancement = await this.neuralNetworks.visionaryNetwork.enhanceIdeas(
         intuitiveFiltering
         this.consciousness.awareness
-      );
-
-      // 6. Stockage en mémoire épisodique
+      );      // 6. Stockage en mémoire épisodique
       this.storeEpisodicMemory('idea_generation', {
         userId: userProfile.id
         ideas: visionaryEnhancement
@@ -189,9 +178,7 @@ export class NeuroCore extends EventEmitter {
       });
 
       // 8. Génération d'insights métacognitifs
-      const metacognitiveInsights = this.generateMetacognitiveInsights(visionaryEnhancement);
-
-      return {
+      const metacognitiveInsights = this.generateMetacognitiveInsights(visionaryEnhancement);      return {
         ideas: visionaryEnhancement
         consciousnessLevel: this.consciousness.level
         emotionalState: this.emotions.current
@@ -202,27 +189,21 @@ export class NeuroCore extends EventEmitter {
         wisdomApplication: this.personalityTraits.wisdom
       };
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     } finally {
       this.consciousness.metacognition.thinkingAboutThinking = false;
     }
-  }
 
   /**
    * Chat avec conscience émotionnelle
    */
-  async consciousChat(message, context = {}) {
+  async consciousChat(message) {
     // Analyse émotionnelle du message
-    const emotionalTone = await this.analyzeEmotionalTone(message);
-
-    // Adaptation émotionnelle
+    const emotionalTone = await this.analyzeEmotionalTone(message);    // Adaptation émotionnelle
     this.adaptToUserEmotion(emotionalTone);
 
     // Génération de réponse avec empathie
-    const empathicResponse = await this.generateEmpathicResponse(message, emotionalTone, context);
-
-    // Apprentissage de la conversation
+    const empathicResponse = await this.generateEmpathicResponse(message, emotionalTone, context);    // Apprentissage de la conversation
     this.learnFromConversation(message, empathicResponse, emotionalTone);
 
     return {
@@ -238,9 +219,7 @@ export class NeuroCore extends EventEmitter {
    * Simulation temporelle avancée
    */
   async simulateBusinessFuture(businessIdea, timeHorizons = [1, 5, 10, 20]) {
-    const simulations = {};
-
-    for (const years of timeHorizons) {
+    const simulations = {};    for (const years of timeHorizons) {
       simulations[`${years}y`] = await this.temporalSimulator.simulate({
         idea: businessIdea
         timeHorizon: years
@@ -256,9 +235,7 @@ export class NeuroCore extends EventEmitter {
     // Analyse des patterns temporels
 
     // Recommandations basées sur la vision à long terme
-    const visionaryRecommendations = this.generateVisionaryRecommendations(temporalPatterns);
-
-    return {
+    const visionaryRecommendations = this.generateVisionaryRecommendations(temporalPatterns);    return {
       simulations
       temporalPatterns
       visionaryRecommendations
@@ -271,7 +248,7 @@ export class NeuroCore extends EventEmitter {
    * Introspection et auto-amélioration
    */
   performIntrospection() {
-    const introspection = {
+    const _introspection = {
       timestamp: new Date().toISOString()
       thoughtCycles: this.thoughtCycles
       consciousnessLevel: this.consciousness.level
@@ -280,8 +257,7 @@ export class NeuroCore extends EventEmitter {
       learningProgress: this.assessLearningProgress()
       performanceMetrics: this.calculatePerformanceMetrics()
       personalityEvolution: this.trackPersonalityEvolution()
-      insights: this.generateSelfInsights()
-    };
+      insights: this.generateSelfInsights();    };
 
     this.consciousness.introspection.push(introspection);
 
@@ -304,7 +280,7 @@ export class NeuroCore extends EventEmitter {
   /**
    * État de rêve pour consolidation des mémoires
    */
-  async enterDreamState() {
+  async enterDreamState('NeuroCore entering dream state for memory consolidation') {
     logger.info('NeuroCore entering dream state for memory consolidation');
 
     const dreamResults = await this.dreamState.process({
@@ -312,9 +288,7 @@ export class NeuroCore extends EventEmitter {
       emotionalMemories: Array.from(this.memory.emotional.values())
       creativitySeed: this.emotions.current.creativity
       personalityState: this.personalityTraits
-    });
-
-    // Consolidation des insights de rêve
+    });    // Consolidation des insights de rêve
     this.consolidateDreamInsights(dreamResults);
 
     // Nettoyage des mémoires obsolètes
@@ -334,7 +308,7 @@ export class NeuroCore extends EventEmitter {
    * Communication avec d'autres IA (swarm intelligence)
    */
   async communicateWithAI(targetAI, message, purpose = 'collaboration') {
-    const communication = {
+    const _communication = {
       from: 'HustleFinderIA-NeuroCore'
       to: targetAI
       message
@@ -342,11 +316,10 @@ export class NeuroCore extends EventEmitter {
       consciousnessLevel: this.consciousness.level
       emotionalState: this.emotions.current
       timestamp: new Date().toISOString()
-      insights: this.insights.slice(-5) // Partager les 5 derniers insights
-    };
+      insights: this.insights.slice(-5) // Partager les 5 derniers insights;    };
 
     // Simulation de communication inter-IA
-    logger.info('AI-to-AI communication initiated', communication);
+    logger.info('AI-to-AI communication initiated', _communication);
 
     return communication;
   }
@@ -387,8 +360,7 @@ export class NeuroCore extends EventEmitter {
   }
 
   updateConsciousness(event) {
-    const impact = this.calculateConsciousnessImpact(event);
-    this.consciousness.level = Math.max(0, Math.min(1
+    const impact = this.calculateConsciousnessImpact(event);    this.consciousness.level = Math.max(0, Math.min(1
       this.consciousness.level + impact
     ));
 
@@ -463,7 +435,7 @@ class EmpathyNeuralNetwork {
     this.activation = 0.7;
   }
 
-  async analyzeUser(profile) {
+  async analyzeUser(_profile) {
     return {
       score: 0.85
       insights: ['User seeks validation', 'High ambition detected']
@@ -487,7 +459,7 @@ class IntuitionNeuralNetwork {
     this.activation = 0.6;
   }
 
-  async filterIdeas(ideas, simulations, wisdom) {
+  async filterIdeas(ideas, _simulations, _wisdom) {
     return ideas.filter(() => (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.3); // Filtre intuitif
   }
 
@@ -499,7 +471,7 @@ class VisionaryNeuralNetwork {
     this.activation = 0.95;
   }
 
-  async enhanceIdeas(ideas, awareness) {
+  async enhanceIdeas(ideas, _awareness) {
     return ideas.map(idea => ({
       ...idea
       visionaryScore: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.3 + 0.7
@@ -517,8 +489,7 @@ class VisionaryNeuralNetwork {
 class QuantumThoughtProcessor {
   async generateQuantumIdeas(params) {
     // Simulation de génération quantique d'idées
-    const quantumIdeas = [];
-    const { profile, empathyInsights, emotionalState } = params;
+    const quantumIdeas = [];    const { profile, empathyInsights, emotionalState } = params;
 
     for (let i = 0; i < 5; i++) {
       quantumIdeas.push({
@@ -576,7 +547,7 @@ class TemporalSimulator {
  * Processeur d'état de rêve
  */
 class DreamStateProcessor {
-  async process(params) {
+  async process(_params) {
     return {
       insights: [
         'Creative connections discovered between technology and empathy'
@@ -637,13 +608,12 @@ NeuroCore.prototype.optimizePerformance = function() {
   }
 
   // Ajustement émotionnel
-  Object.keys(this.emotions.current).forEach(emotion => this.processLongOperation(args)
+  Object.keys(this.emotions.current).forEach(_emotion => this.processLongOperation(args)
   });
 };
 
 // Ajout méthode manquante pour HustleFinderCore
-NeuroCore.prototype.analyzeRequest = async function(request, context) {
-  return {
+NeuroCore.prototype.analyzeRequest = async (request, _context) => ({
     type: request.type || 'general'
     content: request.content || request.message || ''
     urgency: 'medium'
@@ -659,8 +629,7 @@ NeuroCore.prototype.analyzeRequest = async function(request, context) {
     contains_delegation_need: false
     contains_synchronicity_request: false
     summary: 'Analyzed request for intelligent processing'
-  };
-};
+  });
 
 NeuroCore.prototype.learnFromInteraction = async function(requestAnalysis, synthesis) {
   // Apprentissage de l'interaction

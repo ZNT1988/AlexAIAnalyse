@@ -1,8 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_FUNCTION = 'function';
-
-/**
+const STR_FUNCTION = 'function';/**
  * @fileoverview UniversalModuleRegistry - Registre Central des Modules Alex
  * Gestionnaire universel pour tous les 141 modules Alex de HustleFinder
  * @module UniversalModuleRegistry
@@ -11,7 +9,7 @@ const STR_FUNCTION = 'function';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -229,8 +227,7 @@ export class UniversalModuleRegistry extends EventEmitter {
     try {
       logger.info('🌟 UniversalModuleRegistry initializing - Preparing to manage 141 modules');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -255,8 +252,7 @@ export class UniversalModuleRegistry extends EventEmitter {
       });
 
       return true;
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
@@ -264,9 +260,7 @@ export class UniversalModuleRegistry extends EventEmitter {
    * Enregistre tous les modules par catégorie
    */
   async registerAllModules() {
-    let totalRegistered = 0;
-
-    for (const [category, modules] of Object.entries(this.moduleCategories)) {
+    let totalRegistered = 0;    for (const [category, modules] of Object.entries(this.moduleCategories)) {
       logger.info(`📋 Registering ${category} modules: ${modules.length} modules`);
 
       for (const moduleName of modules) {
@@ -279,15 +273,14 @@ export class UniversalModuleRegistry extends EventEmitter {
     try {
       logger.info(`✅ Total modules registered: ${totalRegistered}/141`);
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
    * Enregistre un module individual
    */
   registerModule(moduleName, category, options = {}) {
-    const moduleEntry = {
+    const _moduleEntry = {
       name: moduleName
       category: category
       status: 'registered'
@@ -300,13 +293,12 @@ export class UniversalModuleRegistry extends EventEmitter {
       lastHealthCheck: null
       dependencies: options.dependencies || []
       priority: this.getModulePriority(category)
-      ...options
-    };
+      ...options;    };
 
     this.moduleRegistry.set(moduleName, moduleEntry);
 
     // Statistiques par catégorie
-    if (!this.moduleStats.has(category)) {
+    if (!this._moduleStats._has(_category)) {
       this.moduleStats.set(category, { registered: 0, loaded: 0, failed: 0 });
     }
     this.moduleStats.get(category).registered++;
@@ -323,9 +315,7 @@ export class UniversalModuleRegistry extends EventEmitter {
       spiritualConsciousness: '../consciousness/{{moduleName}}.js'
       specialized: './{{moduleName}}.js'
       advancedSystems: './{{moduleName}}.js'
-    };
-
-    // Exceptions spéciales
+    };    // Exceptions spéciales
     if (moduleName === 'AlexMusicCreator') {
       return '../music/AlexMusicCreator.js';
     }
@@ -341,14 +331,13 @@ export class UniversalModuleRegistry extends EventEmitter {
    * Détermine la priorité d'un module selon sa catégorie
    */
   getModulePriority(category) {
-    const priorities = {
+    const _priorities = {
       connected: 1
       criticalSystems: 2
       advancedConsciousness: 3
       spiritualConsciousness: 4
       specialized: 5
-      advancedSystems: 6
-    };
+      advancedSystems: 6;    };
     return priorities[category] || 10;
   }
 
@@ -369,12 +358,9 @@ export class UniversalModuleRegistry extends EventEmitter {
     try {
       logger.info(`🔄 Loading module: ${moduleName}`);
 
-      const startTime = Date.now();
-      const moduleImport = await import(moduleEntry.loadPath);
-      const moduleInstance = moduleImport.default || moduleImport[moduleName] || moduleImport;
-
-      // Initialisation si nécessaire
-      if (moduleInstance && typeof moduleInstance.initialize === STR_FUNCTION) {
+      const startTime = Date.now();      const moduleImport = await import(moduleEntry.loadPath);
+      const moduleInstance = moduleImport.default || moduleImport[moduleName] || moduleImport;      // Initialisation si nécessaire
+      async if() {
         await moduleInstance.initialize();
       }
 
@@ -397,8 +383,7 @@ export class UniversalModuleRegistry extends EventEmitter {
       });
 
       return moduleInstance;
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }:`, error);
 
       moduleEntry.failed = true;
@@ -430,8 +415,7 @@ export class UniversalModuleRegistry extends EventEmitter {
 
     logger.info(`🔄 Loading category: ${category} (${modules.length} modules)`);
 
-    const results = [];
-    for (const moduleName of modules) {
+    const results = [];    async for(moduleName) {
       try {
         const instance = await this.loadModule(moduleName);
         results.push({ name: moduleName, success: true, instance });
@@ -451,7 +435,7 @@ export class UniversalModuleRegistry extends EventEmitter {
    */
   startHealthMonitoring() {
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -463,8 +447,7 @@ export class UniversalModuleRegistry extends EventEmitter {
     for (const [name, instance] of this.loadedModules) {
       try {
         if (instance && typeof instance.getStatus === STR_FUNCTION) {
-          const status = await instance.getStatus();
-          const moduleEntry = this.moduleRegistry.get(name);
+          const status = await instance.getStatus();          const moduleEntry = this.moduleRegistry.get(name);
           moduleEntry.lastHealthCheck = new Date();
           moduleEntry.healthStatus = status;
         }
@@ -472,8 +455,7 @@ export class UniversalModuleRegistry extends EventEmitter {
         try {
       logger.warn(`⚠️ Health check failed for module ${name}:`, error.message);
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
     }
   }
@@ -517,8 +499,7 @@ export class UniversalModuleRegistry extends EventEmitter {
     }
 
     try {
-      const instance = this.loadedModules.get(moduleName);
-      if (instance && typeof instance.shutdown === STR_FUNCTION) {
+      const instance = this.loadedModules.get(moduleName);      async if() {
         await instance.shutdown();
       }
 
@@ -532,8 +513,7 @@ export class UniversalModuleRegistry extends EventEmitter {
 
       logger.info(`📤 Module ${moduleName} unloaded`);
       return true;
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }:`, error);
       return false;
     }

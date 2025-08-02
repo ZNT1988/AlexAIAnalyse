@@ -17,7 +17,8 @@ body {
 }
 
 @keyframes blink {
-  from, to {
+  from,
+  to {
     opacity: 1;
   }
   50% {
@@ -42,7 +43,7 @@ button:hover {
 }
 
 /* Input styling */
-input[type="text"] {
+input[type='text'] {
   border: 1px solid #ccc;
   border-radius: 6px;
   padding: 8px;

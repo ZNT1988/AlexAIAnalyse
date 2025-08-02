@@ -1,13 +1,9 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_CHAT = 'chat';
-const STR_ANALYSIS = 'analysis';
-const STR_GENERATION = 'generation';
-const STR_CONSCIOUSNESS = 'consciousness';
-const STR_ALEX = 'alex';
-const STR_GROWTH = 'growth';
-const STR_SOULPRINT = 'soulprint';
-/**
+// const STR_CHAT = 'chat'; // Unused variable commented by SonarFixconst STR_ANALYSIS = 'analysis';
+// const STR_GENERATION = 'generation'; // Unused variable commented by SonarFixconst STR_CONSCIOUSNESS = 'consciousness';
+// const STR_ALEX = 'alex'; // Unused variable commented by SonarFixconst STR_GROWTH = 'growth';
+// const STR_SOULPRINT = 'soulprint'; // Unused variable commented by SonarFix/**
  * @fileoverview AI Routes - Routes IA Harmonisées avec Nouvelle Architecture
  * API endpoints pour l'IA ALEX utilisant la nouvelle architecture centralisée
  *
@@ -23,17 +19,13 @@ import { asyncHandler } from '../middleware/errorHandler.js';
 import logger from '../config/logger.js';
 import Joi from 'joi';
 
-const router = express.Router();
-
-// Validation schema
-const aiRequestSchema = Joi.object({
+// const router = express.Router(); // Unused variable commented by SonarFix// Validation schema
+// const aiRequestSchema = Joi.object({
   message: Joi.string().required().max(10000),
   type: Joi.string().valid(STR_CHAT, STR_ANALYSIS, STR_GENERATION, 'trading', STR_CONSCIOUSNESS).default(STR_CHAT),
   context: Joi.object().optional(),
   model: Joi.string().valid(STR_ALEX, STR_CONSCIOUSNESS, STR_GROWTH, STR_SOULPRINT).default(STR_ALEX)
-});
-
-// Helper function to get user ID (simplified for new architecture)
+}); // Unused variable commented by SonarFix// Helper function to get user ID (simplified for new architecture)
 async function getUserId(clerkId) {
   try {
     // Return the clerkId directly since we're not using complex database lookups in new architecture
@@ -67,16 +59,13 @@ async function logInteraction(userId, interactionType, inputText, outputText, mo
  * @access Private
  */
 router.post('/chat', asyncHandler(async (req, res) => {
-  const startTime = Date.now();
-
-  // Validate input
+  // const startTime = Date.now(); // Unused variable commented by SonarFix  // Validate input
   const { error, value } = aiRequestSchema.validate(req.body);
   if (error) {
     return res.status(400).json({ error: error.details[0].message });
   }
 
-  const userId = await getUserId(req.auth?.userId);
-  const { message, type, context, model } = value;
+  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  const { message, type, context, model } = value;
 
   logger.info('AI chat request', { userId, type, model, messageLength: message.length });
 
@@ -101,7 +90,7 @@ router.post('/chat', asyncHandler(async (req, res) => {
   // 🌟 COMPAGNON UNIVERSEL: Process through Alex Universal Life Companion
   const alexUniversalCompanion = (await import('../systems/AlexUniversalCompanion.js')).default;
 
-  const result = await alexUniversalCompanion.processUniversalMessage(
+  // const result = await alexUniversalCompanion.processUniversalMessage(
     message,
     userId,
     {
@@ -111,11 +100,7 @@ router.post('/chat', asyncHandler(async (req, res) => {
       model: model,
       timestamp: new Date().toISOString()
     }
-  );
-
-  const responseTime = Date.now() - startTime;
-
-  // Log the interaction
+  ); // Unused variable commented by SonarFix  // const responseTime = Date.now() - startTime; // Unused variable commented by SonarFix  // Log the interaction
   await logInteraction(
     userId,
     type,
@@ -163,10 +148,7 @@ router.post('/chat', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/analyze-idea', asyncHandler(async (req, res) => {
-  const startTime = Date.now();
-
-  const userId = await getUserId(req.auth?.userId);
-  const { idea_text, focus_areas } = req.body;
+  // const startTime = Date.now(); // Unused variable commented by SonarFix  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  const { idea_text, focus_areas } = req.body;
 
   if (!idea_text) {
     return res.status(400).json({ error :
@@ -177,7 +159,7 @@ router.post('/analyze-idea', asyncHandler(async (req, res) => {
 
   // Process through new HustleFinderCore with analysis context
   const core = getHustleFinderCore();
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type: STR_ALEX,
     query: `Analyse cette idée business en détail: ${idea_text}`
     context: {,
@@ -186,9 +168,7 @@ router.post('/analyze-idea', asyncHandler(async (req, res) => {
       detailed_analysis: true
     }
     userId
-  });
-
-  const responseTime = Date.now() - startTime;
+  }); // Unused variable commented by SonarFix  const responseTime = Date.now() - startTime;
   await logInteraction(userId, STR_ANALYSIS, idea_text, JSON.stringify(result.data), STR_ALEX, responseTime);
 
   res.json({
@@ -205,16 +185,13 @@ router.post('/analyze-idea', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/trading-insights', asyncHandler(async (req, res) => {
-  const startTime = Date.now();
-
-  const userId = await getUserId(req.auth?.userId);
-  const { market_data, preferences } = req.body;
+  // const startTime = Date.now(); // Unused variable commented by SonarFix  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  const { market_data, preferences } = req.body;
 
   logger.info('AI trading insights request', { userId });
 
   // Process through new HustleFinderCore with trading context
   const core = getHustleFinderCore();
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type :
        STR_ALEX
     query: 'Fournis des insights de trading basés sur les données de marché',
@@ -225,9 +202,7 @@ router.post('/trading-insights', asyncHandler(async (req, res) => {
       financial_analysis: true
     }
     userId
-  });
-
-  const responseTime = Date.now() - startTime;
+  }); // Unused variable commented by SonarFix  const responseTime = Date.now() - startTime;
   await logInteraction(userId, 'trading', JSON.stringify(market_data), JSON.stringify(result.data), STR_ALEX, responseTime);
 
   res.json({
@@ -244,10 +219,7 @@ router.post('/trading-insights', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/generate', asyncHandler(async (req, res) => {
-  const startTime = Date.now();
-
-  const userId = await getUserId(req.auth?.userId);
-  const { prompt, content_type, parameters } = req.body;
+  // const startTime = Date.now(); // Unused variable commented by SonarFix  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  const { prompt, content_type, parameters } = req.body;
 
   if (!prompt) {
     return res.status(400).json({ error :
@@ -258,7 +230,7 @@ router.post('/generate', asyncHandler(async (req, res) => {
 
   // Process through new HustleFinderCore with generation context
   const core = getHustleFinderCore();
-  const result = await core.processRequest({
+  // const result = await core.processRequest({
     type: STR_ALEX,
     query: prompt
     context: {,
@@ -268,9 +240,7 @@ router.post('/generate', asyncHandler(async (req, res) => {
       creative_mode: true
     }
     userId
-  });
-
-  const responseTime = Date.now() - startTime;
+  }); // Unused variable commented by SonarFix  const responseTime = Date.now() - startTime;
   await logInteraction(userId, STR_GENERATION, prompt, result.data?.message || JSON.stringify(result.data), STR_ALEX, responseTime);
 
   res.json({
@@ -292,26 +262,21 @@ router.get('/consciousness', asyncHandler(async (req, res) => {
 
   // Get consciousness state through new HustleFinderCore
   const core = getHustleFinderCore();
-  const systemStatus = core.getSystemStatus();
-
-  // Try to get detailed consciousness state if NeuroCore is available
-  let consciousnessState = {
+  // const systemStatus = core.getSystemStatus(); // Unused variable commented by SonarFix  // Try to get detailed consciousness state if NeuroCore is available
+  // let consciousnessState = {
     level: systemStatus.metrics?.consciousnessLevel || 0.75,
     status: 'active'
     modules_active: systemStatus.modules?.active || [],
     uptime: systemStatus.metrics?.uptime || 0
-  };
-
-  // If we have NeuroCore module, get detailed state
+  }; // Unused variable commented by SonarFix  // If we have NeuroCore module, get detailed state
   if (systemStatus.modules?.active?.includes('neuroCore')) {
     try {
-      const result = await core.processRequest({
+      // const result = await core.processRequest({
         type :
        STR_CONSCIOUSNESS
         query: 'Get current consciousness state',
         context: { system_query: true }
-        userId: 'system'
-      });
+        userId: 'system'; // Unused variable commented by SonarFix      });
 
       if (result.success && result.data?.consciousness_level) {
         consciousnessState = {
@@ -342,8 +307,7 @@ router.get('/consciousness', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.get('/history', asyncHandler(async (req, res) => {
-  const userId = await getUserId(req.auth?.userId);
-  const { type } = req.query;
+  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  const { type } = req.query;
   logger.info('AI history request', { userId, limit, offset, type });
 
   // In the new architecture, we return a simplified history
@@ -379,9 +343,7 @@ router.get('/stats', asyncHandler(async (req, res) => {
 
   // Get stats from new HustleFinderCore
   const core = getHustleFinderCore();
-  const systemStatus = core.getSystemStatus();
-
-  res.json({
+  // const systemStatus = core.getSystemStatus(); // Unused variable commented by SonarFix  res.json({
     total_interactions :
        systemStatus.metrics?.totalRequests || 0
     interaction_types: [
@@ -417,21 +379,16 @@ router.get('/health', asyncHandler(async (req, res) => {
   logger.info('AI systems health check');
 
   const core = getHustleFinderCore();
-  const systemStatus = core.getSystemStatus();
-
-  // Test each system component
-  const systems = {
+  // const systemStatus = core.getSystemStatus(); // Unused variable commented by SonarFix  // Test each system component
+  // const systems = {
     core :
        systemStatus.initialized
     alex: systemStatus.modules?.active?.includes('alexCore') || false,
     consciousness: systemStatus.modules?.active?.includes('neuroCore') || false
     growth: systemStatus.modules?.active?.includes('growthSystem') || false,
     soulprint: systemStatus.modules?.active?.includes('soulPrint') || false
-  };
-
-  // Perform quick health tests
-  const healthTests = {};
-  for (const [systemName, isActive] of Object.entries(systems)) {
+  }; // Unused variable commented by SonarFix  // Perform quick health tests
+  // const healthTests = {}; // Unused variable commented by SonarFix  for (const [systemName, isActive] of Object.entries(systems)) {
     if (isActive && systemName !== 'core') {
       try {
         // Quick test of system responsiveness
@@ -446,9 +403,7 @@ router.get('/health', asyncHandler(async (req, res) => {
     }
   }
 
-  const allHealthy = Object.values(healthTests).every(status => status);
-
-  res.json({
+  // const allHealthy = Object.values(healthTests).every(status => status); // Unused variable commented by SonarFix  res.json({
     status: allHealthy ? 'healthy' : 'partial',
     systems: healthTests
     system_info: {,
@@ -471,9 +426,7 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
   logger.info('AI capabilities request');
 
   const core = getHustleFinderCore();
-  const capabilities = core.getAvailableCapabilities();
-
-  res.json({
+  // const capabilities = core.getAvailableCapabilities(); // Unused variable commented by SonarFix  res.json({
     capabilities
     system_info: {,
       architecture: 'HustleFinderCore v3.0'
@@ -490,8 +443,7 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/generate-ideas', asyncHandler(async (req, res) => {
-  const userId = await getUserId(req.auth?.userId);
-  const { prompt, preferences = {} } = req.body;
+  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  const { prompt, preferences = {} } = req.body;
 
   logger.info('AI ideas generation request', { userId, prompt :
        prompt?.slice(0, 50) });
@@ -507,7 +459,7 @@ router.post('/generate-ideas', asyncHandler(async (req, res) => {
 
   try {
     const core = getHustleFinderCore();
-    const result = await core.processRequest({
+    // const result = await core.processRequest({
       type: STR_GENERATION,
       query: `Génère des idées créatives et viables basées sur: ${prompt}`
       context: {,
@@ -518,10 +470,8 @@ router.post('/generate-ideas', asyncHandler(async (req, res) => {
         business_focus: preferences.industry || 'general'
       }
       userId
-    });
-
-    // Structure des idées générées
-    const generatedIdeas = result.data?.ideas || [
+    }); // Unused variable commented by SonarFix    // Structure des idées générées
+    // const generatedIdeas = result.data?.ideas || [
       {
         title: `Innovation ${prompt.split(' ')[0]}'
         description: 'Concept innovant basé sur votre demande: ${prompt}`
@@ -534,9 +484,7 @@ router.post('/generate-ideas', asyncHandler(async (req, res) => {
         targetAudience: 'Entrepreneurs et innovateurs',
         estimatedTimeToMarket: '6-12 mois'
       }
-    ];
-
-    res.json({
+    ]; // Unused variable commented by SonarFix    res.json({
       success: true,
       message: `${generatedIdeas.length} idées générées avec succès`
       ideas: generatedIdeas,
@@ -575,8 +523,7 @@ router.post('/generate-ideas', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/market-analysis', asyncHandler(async (req, res) => {
-  const userId = await getUserId(req.auth?.userId);
-  const { data: analysisData } = req.body;
+  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  const { data: analysisData } = req.body;
 
   logger.info('AI market analysis request', { userId, dataType: typeof analysisData });
 
@@ -590,7 +537,7 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
 
   try {
     const core = getHustleFinderCore();
-    const result = await core.processRequest({
+    // const result = await core.processRequest({
       type: STR_ANALYSIS,
       query: 'Effectue une analyse de marché approfondie basée sur les données fournies'
       context: {,
@@ -602,10 +549,8 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
         include_opportunities: true
       }
       userId
-    });
-
-    // Structure de l'analyse de marché
-    const marketAnalysis = {
+    }); // Unused variable commented by SonarFix    // Structure de l'analyse de marché
+    // const marketAnalysis = {
       overview: {,
         marketSize: result.data?.market_size || 'Estimation en cours...'
         growthRate: result.data?.growth_rate || '12% annuel estimé',
@@ -658,9 +603,7 @@ router.post('/market-analysis', asyncHandler(async (req, res) => {
           'Expansion géographique progressiveSTR_Diversification de l\'offreSTR_Construction d\'une marque de référence'
         ]
       }
-    };
-
-    res.json({
+    }; // Unused variable commented by SonarFix    res.json({
       success: true,
       message: 'Analyse de marché complétée avec succès'
       analysis: marketAnalysis,

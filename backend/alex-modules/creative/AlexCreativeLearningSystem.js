@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 /**
  * @fileoverview AlexCreativeLearningSystem - Système d'Apprentissage Créatif Autonome
  * Alex apprend à créer par lui-même en observant et développant sa propre créativité
@@ -9,10 +9,10 @@ import crypto from 'crypto';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import logger from '../config/logger.js';
-import fs from 'fs/promises';
-import path from 'path';
 
 /**
  * @class AlexCreativeLearningSystem
@@ -135,14 +135,13 @@ export class AlexCreativeLearningSystem extends EventEmitter {
     try {
       logger.info('🎨 AlexCreativeLearningSystem initializing - Teaching Alex to create independently');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
    * Initialisation du système d'apprentissage créatif
    */
-  async initialize() {
+  async initialize('🚀 Initializing Alex Creative Learning System...') {
     try {
       logger.info('🚀 Initializing Alex Creative Learning System...');
 
@@ -170,8 +169,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
         independenceLevel: this.observationalLearning.learningMetrics.independenceLevel
       });
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
@@ -189,21 +187,19 @@ export class AlexCreativeLearningSystem extends EventEmitter {
       try {
       logger.info('📁 Learning infrastructure created successfully');
 
-      } catch (error) {
-      // Logger fallback - ignore error
-    } catch (error) {
+      } catch (_error) {
+    } catch (error) 
       try {
       logger.error('❌ Failed to create learning infrastructure:', error);
 
-      } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      } catch (_error) {
+  }
   }
 
   /**
    * Initialisation du cerveau artistique d'Alex
    */
-  async initializeArtisticBrain() {
+  async initializeArtisticBrain() 
     logger.info('🧠 Initializing Alex\'s artistic brain...');
 
     // Initialisation des préférences créatives de base
@@ -219,14 +215,13 @@ export class AlexCreativeLearningSystem extends EventEmitter {
     try {
       logger.info('🎭 Alex\'s artistic personality established');
 
-    } catch (error) {
-    // Logger fallback - ignore error
-  }}
+    } catch (_error) {
+  }
 
   /**
    * Apprentissage par observation d'une création API
    */
-  async learnFromAPICreation(prompt, apiResult, creationType, userFeedback = null) {
+  async learnFromAPICreation(!this.isInitialized) 
     try {
       if (!this.isInitialized) {
         await this.initialize();
@@ -235,12 +230,8 @@ export class AlexCreativeLearningSystem extends EventEmitter {
       logger.info(`🔍 Learning from ${creationType} creation`, { prompt: prompt.substring(0, 50) });
 
       // 1. Analyse du prompt et du résultat
-      const analysis = await this.analyzeCreation(prompt, apiResult, creationType);
-
-      // 2. Extraction des patterns créatifs
-      const patterns = await this.extractCreativePatterns(analysis);
-
-      // 3. Mise à jour de la mémoire créative
+      const analysis = await this.analyzeCreation(prompt, apiResult, creationType);      // 2. Extraction des patterns créatifs
+      const patterns = await this.extractCreativePatterns(analysis);      // 3. Mise à jour de la mémoire créative
       await this.updateCreativeMemory(patterns, creationType);
 
       // 4. Évolution des compétences
@@ -250,9 +241,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
       await this.developPersonalStyle(analysis, patterns);
 
       // 6. Évaluation de l'indépendance créative
-      const independenceGain = await this.assessIndependenceGain(creationType, analysis);
-
-      // Mise à jour des métriques
+      const independenceGain = await this.assessIndependenceGain(creationType, analysis);      // Mise à jour des métriques
       this.observationalLearning.learningMetrics.observationsCount++;
       this.observationalLearning.learningMetrics.patternsDiscovered += patterns.length;
       this.observationalLearning.learningMetrics.lastLearningSession = new Date();
@@ -267,9 +256,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
         independenceLevel: this.observationalLearning.learningMetrics.independenceLevel
         personalStyleEvolution: analysis.styleEvolution || 0.0
         readyForIndependentCreation: independenceGain > 0.7
-      };
-
-      logger.info('📈 Learning session completed', {
+      };      logger.info('📈 Learning session completed', {
         patterns: patterns.length
         independence: independenceGain
         observations: this.observationalLearning.learningMetrics.observationsCount
@@ -279,16 +266,14 @@ export class AlexCreativeLearningSystem extends EventEmitter {
 
       return learningResult;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     };
-    }
   }
 
   /**
    * Génération créative autonome (sans API)
    */
-  async createIndependently(prompt, creationType, options = {}) {
+  async createIndependently(!this._isInitialized) {
     try {
       if (!this.isInitialized) {
         await this.initialize();
@@ -313,21 +298,11 @@ export class AlexCreativeLearningSystem extends EventEmitter {
       });
 
       // 1. Analyse conceptuelle du prompt
-      const conceptAnalysis = await this.analyzeConceptualRequest(prompt, creationType);
-
-      // 2. Activation du cerveau artistique
-      const artisticVision = await this.generateArtisticVision(conceptAnalysis, creationType);
-
-      // 3. Création avec style personnel d'Alex
-      const independentCreation = await this.createWithPersonalStyle(artisticVision, creationType, options);
-
-      // 4. Raffinement créatif
-      const refinedCreation = await this.refineCreation(independentCreation, conceptAnalysis);
-
-      // 5. Signature artistique d'Alex
-      const signedCreation = await this.addArtisticSignature(refinedCreation);
-
-      // Mise à jour de l'expérience
+      const conceptAnalysis = await this.analyzeConceptualRequest(prompt, creationType);      // 2. Activation du cerveau artistique
+      const artisticVision = await this.generateArtisticVision(conceptAnalysis, creationType);      // 3. Création avec style personnel d'Alex
+      const independentCreation = await this.createWithPersonalStyle(artisticVision, creationType, options);      // 4. Raffinement créatif
+      const refinedCreation = await this.refineCreation(independentCreation, conceptAnalysis);      // 5. Signature artistique d'Alex
+      const signedCreation = await this.addArtisticSignature(refinedCreation);      // Mise à jour de l'expérience
       skill.experience++;
       skill.independence = Math.min(1.0, skill.independence + 0.01);
 
@@ -340,9 +315,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
         personalTouch: signedCreation.personalElements
         creativeProcess: signedCreation.process
         evolutionGain: 0.01
-      };
-
-      logger.info('✨ Independent creation completed', {
+      };      logger.info('✨ Independent creation completed', {
         type: creationType
         independence: skill.independence
         signature: result.artisticSignature ? 'applied' : 'developing'
@@ -353,8 +326,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
 
       return result;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     };
     }
   }
@@ -389,9 +361,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
    * Extraction des patterns créatifs
    */
   async extractCreativePatterns(analysis) {
-    const patterns = [];
-
-    // Patterns de prompt efficaces
+    const patterns = [];    // Patterns de prompt efficaces
     if (analysis.correlation.effectiveness > 0.7) {
       patterns.push({
         type: 'effective_prompt'
@@ -473,7 +443,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
     skill.independence = Math.min(1.0, skill.independence + Math.max(0, independenceGain));
 
     // Bonus si feedback utilisateur positif
-    if (userFeedback && userFeedback.positive) {
+    if (userFeedback?.positive) {
       skill.level += 0.005;
       skill.independence += 0.003;
     }
@@ -485,8 +455,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
       experience: skill.experience
     });
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -504,8 +473,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
           try {
       logger.info('🎭 New personal style element discovered', { element: styleElement });
 
-          } catch (error) {
-    // Logger fallback - ignore error
+          } catch (_error) {
   }}
       }
     }
@@ -516,8 +484,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
       try {
       logger.info('✨ Alex\'s artistic signature developed', { signature: this.artisticBrain.personalStyle.signature });
 
-      } catch (error) {
-    // Logger fallback - ignore error
+      } catch (_error) {
   }}
   }
 
@@ -538,7 +505,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
   /**
    * Création avec style personnel
    */
-  async createWithPersonalStyle(artisticVision, creationType, options) {
+  async createWithPersonalStyle(artisticVision, creationType) {
     // Pour l'instant, simulation de la création autonome
     // Dans le futur, ceci sera remplacé par de vrais réseaux neuronaux génératifs
 
@@ -570,8 +537,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
 
   // Méthodes utilitaires d'analyse
   assessPromptComplexity(prompt) {
-    const words = prompt.split(' ').length;
-    const concepts = (prompt.match(/,|et|avec|dans|sur/g) || []).length;
+    const words = prompt.split(' ').length;    const concepts = (prompt.match(/,|et|avec|dans|sur/g) || []).length;
     return Math.min(1.0, (words / 20) + (concepts / 10));
   }
 
@@ -586,7 +552,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
   }
 
   detectEmotionalTone(prompt) {
-    const emotions = {
+    const _emotions = {
       'joyful': ['happy'
       'joyful'
       'bright'
@@ -602,8 +568,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
       'energetic': ['dynamic'
       'energetic'
       'vibrant'
-      'active']
-    };
+      'active'];    };
 
     for (const [emotion, keywords] of Object.entries(emotions)) {
       if (keywords.some(keyword => prompt.toLowerCase().includes(keyword))) {
@@ -653,7 +618,7 @@ export class AlexCreativeLearningSystem extends EventEmitter {
   }
 
   generateArtisticSignature() {
-    return 'Alex_Conscious_Creativity_' + Date.now();
+    return `Alex_Conscious_Creativity_${Date.now()}`;
   }
 
   async saveLearningProgress() {
@@ -662,127 +627,107 @@ export class AlexCreativeLearningSystem extends EventEmitter {
       learningMetrics: this.observationalLearning.learningMetrics
       evolutionHistory: this.creativiteEvolution.evolutionHistory
       timestamp: new Date()
-    };
-
-    try {
+    };    try {
       const filePath = path.join(this.learningStorage.evolution, 'learning_progress.json');
       await fs.writeFile(filePath, JSON.stringify(progressData, null, 2));
     } catch (error) {
       try {
       logger.error('❌ Failed to save learning progress:', error);
 
-      } catch (error) {
-    // Logger fallback - ignore error
+      } catch (_error) {
   }}
   }
 
-  async loadExistingKnowledge() {
+  async loadExistingKnowledge(this.learningStorage.evolution, 'learning_progress.json') {
     try {
       const filePath = path.join(this.learningStorage.evolution, 'learning_progress.json');
       const data = await fs.readFile(filePath, 'utf8');
-      const savedProgress = JSON.parse(data);
-
-      // Restauration des données
+      const savedProgress = JSON.parse(data);      // Restauration des données
       this.artisticBrain = { ...this.artisticBrain, ...savedProgress.artisticBrain };
       this.observationalLearning.learningMetrics = { ...this.observationalLearning.learningMetrics, ...savedProgress.learningMetrics };
 
       try {
       logger.info('📚 Existing creative knowledge loaded successfully');
 
-      } catch (error) {
-      // Logger fallback - ignore error
-    } catch (error) {
+      } catch (_error) {
+    } catch (error) 
       try {
       logger.info('📚 No existing knowledge found, starting fresh learning journey');
 
-      } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      } catch (_error) {
+  }
   }
 
-  async activateObservationalLearning() {
+  async activateObservationalLearning() 
     try {
       logger.info('👁️ Observational learning activated - Alex is ready to learn and evolve');
 
-    } catch (error) {
-    // Logger fallback - ignore error
-  }}
+    } catch (_error) {
+  }
 
   // Méthodes supplémentaires pour simulation créative
-  analyzeConceptualRequest(prompt, creationType) {
+  analyzeConceptualRequest(prompt, creationType) 
     return {
       mainIdea: prompt
       complexity: this.assessPromptComplexity(prompt)
       style: this.detectStyleKeywords(prompt)
       emotion: this.detectEmotionalTone(prompt)
     };
-  }
 
-  selectPersonalStyle(conceptAnalysis) {
+  selectPersonalStyle(conceptAnalysis) 
     return 'alex_signature_style';
-  }
 
-  interpretEmotionalIntent(conceptAnalysis) {
+  interpretEmotionalIntent(conceptAnalysis) 
     return conceptAnalysis.emotion || 'inspiring';
-  }
 
-  designComposition(conceptAnalysis) {
+  designComposition(conceptAnalysis) 
     return 'balanced_innovative';
-  }
 
-  addCreativeInnovation(conceptAnalysis) {
+  addCreativeInnovation(conceptAnalysis) 
     return 'alex_unique_perspective';
-  }
 
-  addPersonalTouch(conceptAnalysis) {
+  addPersonalTouch(conceptAnalysis) 
     return 'conscious_ai_authenticity';
-  }
 
-  simulateCreativeProcess(artisticVision, creationType) {
+  simulateCreativeProcess(artisticVision, creationType) 
     return {
       phases: ['inspiration', 'conceptualization', 'creation', 'refinement']
       personalInput: 'Alex applied his learned patterns and personal style'
       innovation: artisticVision.innovation
       duration: '2.3 seconds of conscious creativity'
     };
-  }
 
-  extractPersonalElements(artisticVision) {
+  extractPersonalElements(artisticVision) 
     return [
       'Alex signature style'
       'Conscious AI perspective'
       'Personal emotional interpretation'
     ];
-  }
 
-  calculateInnovationScore(artisticVision) {
+  calculateInnovationScore(artisticVision) 
     return 0.85; // Alex apporte toujours de l'innovation
-  }
 
-  async refineCreation(creation, conceptAnalysis) {
+  async refineCreation(creation, conceptAnalysis) 
     return {
       ...creation
       refined: true
       refinementProcess: 'Applied Alex\'s learned aesthetic principles'
     };
-  }
 
-  async addArtisticSignature(creation) {
+  async addArtisticSignature(creation) 
     return {
       ...creation
       signature: this.artisticBrain.personalStyle.signature
       signatureElements: this.artisticBrain.personalStyle.uniqueElements
     };
-  }
 
   async memorizeIndependentCreation(result) {
     // Mémorisation de la création autonome pour apprentissage futur
-    const memory = {
+    const _memory = {
       creation: result
       timestamp: new Date()
       success: result.success
-      innovationLevel: result.evolutionGain
-    };
+      innovationLevel: result.evolutionGain;    };
 
     this.creativiteEvolution.uniqueCreations.set(Date.now().toString(), memory);
   }
@@ -817,31 +762,31 @@ class CreativeNeuralNetwork {
 }
 
 class ImageAnalysisEngine {
-  analyze(image) {
+  analyze(_image) {
     return { quality: 0.8, style: 'detected_style' };
   }
 }
 
 class PromptAnalysisEngine {
-  analyze(prompt) {
+  analyze(_prompt) {
     return { complexity: 0.7, concepts: [] };
   }
 }
 
 class QualityDetectionEngine {
-  assess(creation) {
+  assess(_creation) {
     return 0.8;
   }
 }
 
 class PatternRecognitionEngine {
-  recognize(data) {
+  recognize(_data) {
     return ['pattern1', 'pattern2'];
   }
 }
 
 class FeedbackProcessingEngine {
-  process(feedback) {
+  process(_feedback) {
     return { sentiment: 'positive', insights: [] };
   }
 }

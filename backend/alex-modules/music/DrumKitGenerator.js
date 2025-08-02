@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_MEDIUM = 'medium';
-/**
+const STR_MEDIUM = 'medium';/**
  * @fileoverview DrumKitGenerator - Générateur de Kits de Batterie IA
  * Crée des patterns de batterie adaptés au style musical détecté
  *
@@ -37,8 +36,7 @@ export class DrumKitGenerator {
             subdivisions: this.config.subdivisions
         });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
 
     /**
@@ -258,9 +256,7 @@ export class DrumKitGenerator {
      * @returns {Promise<Object>} Kit de batterie généré
      */
     async generateDrumKit(style, options = {}) {
-        const kitId = `drumkit_${Date.now()}`;
-
-        logger.info('🥁 Generating drum kit', {
+        const kitId = `drumkit_${Date.now()}`;        logger.info('🥁 Generating drum kit', {
             kitId
             style: style.name
             bpm: options.bpm
@@ -269,32 +265,22 @@ export class DrumKitGenerator {
 
         try {
             const styleId = style.id || 'house';
-            const samples = this.sampleDatabase[styleId] || this.sampleDatabase.house;
-
-            // Génération du pattern principal
+            const samples = this.sampleDatabase[styleId] || this.sampleDatabase.house;            // Génération du pattern principal
             const mainPattern = await this.generateMainPattern(
                 template
                 style
                 options
-            );
-
-            // Génération variations pour structure
+            );            // Génération variations pour structure
             const variations = await this.generatePatternVariations(
                 mainPattern
                 options.complexity || STR_MEDIUM
-            );
-
-            // Sélection des samples appropriés
-            const selectedSamples = this.selectSamplesForStyle(samples, style);
-
-            // Génération pattern complet avec structure
+            );            // Sélection des samples appropriés
+            const selectedSamples = this.selectSamplesForStyle(samples, style);            // Génération pattern complet avec structure
             const fullPattern = this.generateFullTrackPattern(
                 mainPattern
                 variations
                 options
-            );
-
-            const drumKit = {
+            );            const drumKit = {
                 id: kitId
                 style: style.name
                 bpm: options.bpm || 120
@@ -321,9 +307,7 @@ export class DrumKitGenerator {
                 mixing: this.generateMixingSettings(style)
                 // Structure de morceau suggérée
                 arrangement: this.generateArrangementSuggestion(variations)
-            };
-
-            logger.info('✅ Drum kit generation completed', {
+            };            logger.info('✅ Drum kit generation completed', {
                 kitId
                 patternCount: Object.keys(drumKit.patterns).length
                 sampleCount: Object.keys(drumKit.samples).length
@@ -332,8 +316,7 @@ export class DrumKitGenerator {
 
             return drumKit;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
             throw error;
         }
@@ -343,15 +326,9 @@ export class DrumKitGenerator {
      * Génère le pattern principal basé sur le template
      */
     async generateMainPattern(template, style, options) {
-        const pattern = {};
-        const complexity = this.getComplexityMultiplier(options.complexity || STR_MEDIUM);
-        const energy = options.energy || style.energy || 0.7;
-
-        for (const [drumType, basePattern] of Object.entries(template)) {
+        const pattern = {};        const complexity = this.getComplexityMultiplier(options.complexity || STR_MEDIUM);        const energy = options.energy || style.energy || 0.7;        for (const [drumType, basePattern] of Object.entries(template)) {
             // Application de l'énergie et complexité
-            let adjustedPattern = [...basePattern];
-
-            // Modification selon énergie
+            let adjustedPattern = [...basePattern];            // Modification selon énergie
             if (energy > 0.8) {
                 adjustedPattern = this.addEnergeticElements(adjustedPattern, drumType);
             } else if (energy < 0.4) {
@@ -364,9 +341,7 @@ export class DrumKitGenerator {
             }
 
             // Application humanisation
-            const humanizedPattern = this.applyHumanization(adjustedPattern, drumType);
-
-            pattern[drumType] = {
+            const humanizedPattern = this.applyHumanization(adjustedPattern, drumType);            pattern[drumType] = {
                 steps: humanizedPattern
                 velocity: this.generateVelocityPattern(humanizedPattern, drumType, energy)
                 timing: this.generateTimingVariations(humanizedPattern)
@@ -395,13 +370,8 @@ export class DrumKitGenerator {
      * Crée une variation spécifique pour une section
      */
     createVariation(basePattern, sectionType) {
-        const variation = {};
-
-        for (const [drumType, drumData] of Object.entries(basePattern)) {
-            let modifiedSteps = [...drumData.steps];
-            let modifiedVelocity = [...drumData.velocity];
-
-            switch (sectionType) {
+        const variation = {};        for (const [drumType, drumData] of Object.entries(basePattern)) {
+            let modifiedSteps = [...drumData.steps];            let modifiedVelocity = [...drumData.velocity];            switch (sectionType) {
                 case STR_VERSE:
                     // Version plus simple pour les couplets
                     modifiedSteps = this.reducePatternDensity(modifiedSteps, 0.3);
@@ -461,14 +431,8 @@ export class DrumKitGenerator {
      */
     generateFullTrackPattern(mainPattern, variations, options) {
         const trackLength = options.trackLength || 32; // Mesures
-        const structure = options.structure || [STR_VERSE, STR_CHORUS, STR_VERSE, STR_CHORUS, STR_BRIDGE, STR_CHORUS];
-
-        const fullPattern = [];
-        let currentBar = 0;
-
-        for (const section of structure) {
-            const sectionPattern = variations[section] || mainPattern;
-            const sectionLength = this.getSectionLength(section);
+        const structure = options.structure || [STR_VERSE, STR_CHORUS, STR_VERSE, STR_CHORUS, STR_BRIDGE, STR_CHORUS];        const fullPattern = [];        let currentBar = 0;        for (const section of structure) {
+            const sectionPattern = variations[section] || mainPattern;            const sectionLength = this.getSectionLength(section);
 
             for (let bar = 0; bar < sectionLength && currentBar < trackLength; bar++) {
                 fullPattern.push({
@@ -493,12 +457,9 @@ export class DrumKitGenerator {
      * Sélectionne les samples appropriés pour le style
      */
     selectSamplesForStyle(availableSamples, style) {
-        const selectedSamples = {};
-
-        for (const [drumType, sampleList] of Object.entries(availableSamples)) {
+        const selectedSamples = {};        for (const [drumType, sampleList] of Object.entries(availableSamples)) {
             // Sélection intelligente basée sur l'énergie du style
-            const energy = style.energy || 0.7;
-            let selectedSample;
+            const energy = style.energy || 0.7;            let selectedSample;
 
             if (energy > 0.8 && sampleList.length > 1) {
                 // Choisir sample plus agressif
@@ -527,28 +488,27 @@ export class DrumKitGenerator {
      * Génère les patterns de vélocité
      */
     generateVelocityPattern(steps, drumType, energy) {
-        const baseVelocity = this.getBaseVelocity(drumType, energy);
-        const variation = this.config.humanization * 20; // Variation de vélocité
+        const _baseVelocity = this.getBaseVelocity(drumType, energy);        const _variation = this.config.humanization * 20; // Variation de vélocité
 
-        return steps.map(step => this.processLongOperation(args));
+        return steps.map(_step => this.processLongOperation(args));
     }
 
     /**
      * Génère les variations de timing pour humanisation
      */
     generateTimingVariations(steps) {
-        const maxDeviation = this.config.humanization * 0.02; // 2% max deviation
+        const _maxDeviation = this.config.humanization * 0.02; // 2% max deviation
 
-        return steps.map(step => this.processLongOperation(args));
+        return steps.map(_step => this.processLongOperation(args));
     }
 
     /**
      * Calcule la complexité du pattern
      */
     calculatePatternComplexity(pattern) {
-        const { totalNotes, totalPossibleNotes, offbeatHits } = this.initializeVariables();
+        let { totalNotes, totalPossibleNotes, offbeatHits } = this.initializeVariables();
 
-        for (const [drumType, drumData] of Object.entries(pattern)) {
+        for (const [_drumType, drumData] of Object.entries(pattern)) {
             const steps = drumData.steps;
             totalPossibleNotes += steps.length;
 
@@ -561,8 +521,7 @@ export class DrumKitGenerator {
             }
         }
 
-        const density = totalNotes / totalPossibleNotes;
-        const offbeatRatio = offbeatHits / totalNotes;
+        const density = totalNotes / totalPossibleNotes;        const offbeatRatio = offbeatHits / totalNotes;
 
         return Math.round((density * 0.6 + offbeatRatio * 0.4) * 100) / 100;
     }
@@ -571,10 +530,7 @@ export class DrumKitGenerator {
      * Calcule la densité du pattern
      */
     calculatePatternDensity(pattern) {
-        let totalHits = 0;
-        let totalSteps = 0;
-
-        for (const drumData of Object.values(pattern)) {
+        let totalHits = 0;        let totalSteps = 0;        for (const drumData of Object.values(pattern)) {
             totalSteps += drumData.steps.length;
             totalHits += drumData.steps.filter(s => s > 0).length;
         }
@@ -587,8 +543,7 @@ export class DrumKitGenerator {
      */
     analyzeGroove(pattern) {
         // Analyse basique du groove
-        const kickPattern = pattern.kickconst result = this.evaluateConditions(conditions);
-return result;
+        const kickPattern = pattern.kickconst result = this.evaluateConditions(conditions);return result;
        step === 0);
         if (fourOnFloor) grooveType = 'four_on_floor';
 
@@ -624,9 +579,7 @@ return result;
       mid: 0
       high: 2 } }
             hihat_open: { volume: -10, pan: -0.2, eq: { low: -6, mid: -1, high: 4 } }
-        };
-
-        // Ajustements selon le style
+        };        // Ajustements selon le style
         if (style.name === 'Trap') {
             baseSettings.kick.volume = -3; // Plus fort
             baseSettings.sub_bass = { volume: -6, pan: 0, eq: { low: 6, mid: 0, high: 0 } };
@@ -667,51 +620,47 @@ return result;
     }
 
     getBaseVelocity(drumType, energy) {
-        const baseVelocities = {
+        const _baseVelocities = {
             kick: 100
             snare: 95
             hihat_closed: 70
             hihat_open: 80
-            sub_bass: 110
-        };
+            sub_bass: 110;        };
 
         const base = baseVelocities[drumType] || 80;
         return Math.round(base * (0.7 + energy * 0.3));
     }
 
     getDefaultVolumeForDrum(drumType) {
-        const volumes = {
+        const _volumes = {
             kick: -6
             snare: -8
             hihat_closed: -12
             hihat_open: -10
-            sub_bass: -6
-        };
+            sub_bass: -6;        };
         return volumes[drumType] || -10;
     }
 
     getDefaultPanForDrum(drumType) {
-        const panning = {
+        const _panning = {
             kick: 0
             snare: 0
             hihat_closed: 0.15
             hihat_open: -0.15
             tom_high: 0.3
-            tom_low: -0.3
-        };
+            tom_low: -0.3;        };
         return panning[drumType] || 0;
     }
 
     getSectionLength(sectionType) {
-        const lengths = {
+        const _lengths = {
             verse: 16
             chorus: 16
             bridge: 8
             breakdown: 8
             buildup: 8
             drop: 16
-            outro: 8
-        };
+            outro: 8;        };
         return lengths[sectionType] || 16;
     }
 
@@ -731,12 +680,12 @@ return result;
 
     addComplexity(pattern, drumType, level) {
         // Ajouter de la complexité rythmique
-        return pattern.map((step, i) => this.processLongOperation(args));
+        return pattern.map((_step, _i) => this.processLongOperation(args));
     }
 
     applyHumanization(pattern, drumType) {
         // Variation subtile pour humanisation
-        return pattern.map(step => this.processLongOperation(args));
+        return pattern.map(_step => this.processLongOperation(args));
     }
 
     reducePatternDensity(pattern, reduction) {

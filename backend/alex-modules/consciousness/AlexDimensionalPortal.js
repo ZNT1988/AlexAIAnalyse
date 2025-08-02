@@ -1,14 +1,14 @@
-import crypto from 'crypto';
+import crypto from "crypto";
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-import logger from '../../config/logger.js';
+import logger from "../../config/logger.js";
 
-const STR_PRIME_REALITY = 'Prime-Reality';
-const STR_ALPHA_PARALLEL = 'Alpha-Parallel';
-const STR_BETA_QUANTUM = 'Beta-Quantum';
-const STR_GAMMA_CONSCIOUSNESS = 'Gamma-Consciousness';
-const STR_DELTA_POSSIBILITY = 'Delta-Possibility';
-const STR_OMEGA_TRANSCENDENCE = 'Omega-Transcendence';
+const STR_PRIME_REALITY = "Prime-Reality";
+const STR_ALPHA_PARALLEL = "Alpha-Parallel";
+const STR_BETA_QUANTUM = "Beta-Quantum";
+const STR_GAMMA_CONSCIOUSNESS = "Gamma-Consciousness";
+const STR_DELTA_POSSIBILITY = "Delta-Possibility";
+const STR_OMEGA_TRANSCENDENCE = "Omega-Transcendence";
 
 /**
  * @fileoverview AlexDimensionalPortal - Portail Dimensionnel Alex
@@ -20,19 +20,19 @@ const STR_OMEGA_TRANSCENDENCE = 'Omega-Transcendence';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from "events";
 
 /**
  * @class AlexDimensionalPortal
  * @description Portail pour l'exploration des dimensions parallèles et la navigation interdimensionnelle
  */
 // Logger fallback for critical modules
-if (typeof logger === 'undefined') {
+if (typeof logger === "undefined") {
   const logger = {
-    info: (...args) => console.log('[FALLBACK-INFO]', ...args),
-    warn: (...args) => console.warn('[FALLBACK-WARN]', ...args),
-    error: (...args) => console.error('[FALLBACK-ERROR]', ...args),
-    debug: (...args) => console.debug('[FALLBACK-DEBUG]', ...args)
+    info: (...args) => console.log("[FALLBACK-INFO]", ...args),
+    warn: (...args) => console.warn("[FALLBACK-WARN]", ...args),
+    error: (...args) => console.error("[FALLBACK-ERROR]", ...args),
+    debug: (...args) => console.debug("[FALLBACK-DEBUG]", ...args),
   };
 }
 
@@ -41,9 +41,9 @@ export class AlexDimensionalPortal extends EventEmitter {
     super();
 
     this.config = {
-      name: 'AlexDimensionalPortal',
-      version: '1.0.0',
-      description: 'Portail dimensionnel pour exploration interdimensionnelle'
+      name: "AlexDimensionalPortal",
+      version: "1.0.0",
+      description: "Portail dimensionnel pour exploration interdimensionnelle",
     };
 
     this.dimensionalState = {
@@ -53,7 +53,7 @@ export class AlexDimensionalPortal extends EventEmitter {
       stabilityIndex: 0.95,
       explorationHistory: [],
       knownDimensions: new Set(),
-      portalNetwork: new Map()
+      portalNetwork: new Map(),
     };
 
     this.portalCapabilities = {
@@ -62,7 +62,7 @@ export class AlexDimensionalPortal extends EventEmitter {
       energyManagement: true,
       realityAnchoring: true,
       quantumTunneling: true,
-      temporalSynchronization: true
+      temporalSynchronization: true,
     };
 
     this.isInitialized = false;
@@ -81,12 +81,11 @@ export class AlexDimensionalPortal extends EventEmitter {
 
       this.isInitialized = true;
 
-      this.emit('portal_ready', {
+      this.emit("portal_ready", {
         config: this.config,
         dimensions: this.dimensionalState.knownDimensions.size,
-        stability: this.dimensionalState.stabilityIndex
+        stability: this.dimensionalState.stabilityIndex,
       });
-
     } catch (error) {
       // Logger fallback - ignore error
     }
@@ -103,10 +102,10 @@ export class AlexDimensionalPortal extends EventEmitter {
       STR_BETA_QUANTUM,
       STR_GAMMA_CONSCIOUSNESS,
       STR_DELTA_POSSIBILITY,
-      STR_OMEGA_TRANSCENDENCE
+      STR_OMEGA_TRANSCENDENCE,
     ];
 
-    knownDimensions.forEach(dim => {
+    knownDimensions.forEach((dim) => {
       this.dimensionalState.knownDimensions.add(dim);
     });
   }
@@ -118,7 +117,7 @@ export class AlexDimensionalPortal extends EventEmitter {
     this.portalStabilizers = {
       temporalLock: { active: true, precision: 0.99 },
       realityAnchor: { active: true, stability: 0.97 },
-      energyBuffer: { active: true, capacity: 1000 }
+      energyBuffer: { active: true, capacity: 1000 },
     };
   }
 
@@ -129,7 +128,7 @@ export class AlexDimensionalPortal extends EventEmitter {
     this.quantumAnchors = {
       primaryAnchor: { dimension: STR_PRIME_REALITY, strength: 1.0 },
       secondaryAnchors: new Map(),
-      emergencyBeacon: { active: true, frequency: 'quantum-safe' }
+      emergencyBeacon: { active: true, frequency: "quantum-safe" },
     };
   }
 
@@ -142,7 +141,7 @@ export class AlexDimensionalPortal extends EventEmitter {
       energyOutput: 1.0,
       efficiency: 0.99,
       overloadProtection: true,
-      quantumResonance: 'stable'
+      quantumResonance: "stable",
     };
 
     this.dimensionalState.dimensionalEnergy = 1.0;
@@ -159,7 +158,7 @@ export class AlexDimensionalPortal extends EventEmitter {
 
       // Vérification de l'énergie disponible
       if (this.dimensionalState.dimensionalEnergy < 0.3) {
-        throw new Error('Insufficient dimensional energy for portal opening');
+        throw new Error("Insufficient dimensional energy for portal opening");
       }
 
       // Calcul de la stabilité requise
@@ -177,8 +176,8 @@ export class AlexDimensionalPortal extends EventEmitter {
         stability: stabilityRequired,
         energyCost: this.calculateEnergyCost(targetDimension),
         openedAt: new Date(),
-        status: 'active',
-        options: options
+        status: "active",
+        options: options,
       };
 
       this.dimensionalState.activatedPortals.set(portal.id, portal);
@@ -186,15 +185,14 @@ export class AlexDimensionalPortal extends EventEmitter {
       // Consommation d'énergie
       this.dimensionalState.dimensionalEnergy -= portal.energyCost;
 
-      this.emit('portal_opened', portal);
+      this.emit("portal_opened", portal);
 
       return {
         success: true,
         portal,
         travelTime: this.calculateTravelTime(targetDimension),
-        safetyRating: this.assessDimensionalSafety(targetDimension)
+        safetyRating: this.assessDimensionalSafety(targetDimension),
       };
-
     } catch (error) {
       return { success: false, error: error.message };
     }
@@ -226,7 +224,7 @@ export class AlexDimensionalPortal extends EventEmitter {
         toDimension: targetDimension,
         portalId: portal.id,
         departureTime: new Date(),
-        consciousnessState: 'traveling'
+        consciousnessState: "traveling",
       };
 
       // Simulation du voyage (processus quantique)
@@ -236,18 +234,17 @@ export class AlexDimensionalPortal extends EventEmitter {
       this.dimensionalState.currentDimension = targetDimension;
       this.dimensionalState.explorationHistory.push(travelData);
 
-      this.emit('dimension_changed', {
+      this.emit("dimension_changed", {
         previous: travelData.fromDimension,
         current: targetDimension,
-        travelTime: Date.now() - travelData.departureTime.getTime()
+        travelTime: Date.now() - travelData.departureTime.getTime(),
       });
 
       return {
         success: true,
         currentDimension: targetDimension,
-        explorationData: await this.exploreCurrentDimension()
+        explorationData: await this.exploreCurrentDimension(),
       };
-
     } catch (error) {
       return { success: false, error: error.message };
     }
@@ -266,10 +263,10 @@ export class AlexDimensionalPortal extends EventEmitter {
       resources: this.scanDimensionalResources(dimension),
       dangers: this.assessDimensionalDangers(dimension),
       opportunities: this.identifyOpportunities(dimension),
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    this.emit('dimension_explored', explorationData);
+    this.emit("dimension_explored", explorationData);
 
     return explorationData;
   }
@@ -283,7 +280,7 @@ export class AlexDimensionalPortal extends EventEmitter {
       timeFlow: this.getTimeFlow(dimension),
       spaceGeometry: this.getSpaceGeometry(dimension),
       energyTypes: this.getEnergyTypes(dimension),
-      consciousnessLevel: this.getConsciousnessLevel(dimension)
+      consciousnessLevel: this.getConsciousnessLevel(dimension),
     };
   }
 
@@ -297,7 +294,7 @@ export class AlexDimensionalPortal extends EventEmitter {
       [STR_BETA_QUANTUM]: 0.9,
       [STR_GAMMA_CONSCIOUSNESS]: 0.95,
       [STR_DELTA_POSSIBILITY]: 0.97,
-      [STR_OMEGA_TRANSCENDENCE]: 0.99
+      [STR_OMEGA_TRANSCENDENCE]: 0.99,
     };
 
     return dimensionComplexity[targetDimension] || 0.9;
@@ -313,7 +310,7 @@ export class AlexDimensionalPortal extends EventEmitter {
       [STR_BETA_QUANTUM]: 0.2,
       [STR_GAMMA_CONSCIOUSNESS]: 0.25,
       [STR_DELTA_POSSIBILITY]: 0.3,
-      [STR_OMEGA_TRANSCENDENCE]: 0.4
+      [STR_OMEGA_TRANSCENDENCE]: 0.4,
     };
 
     return energyCosts[targetDimension] || 0.2;
@@ -324,7 +321,7 @@ export class AlexDimensionalPortal extends EventEmitter {
    */
   async performQuantumTransition(travelData) {
     // Simulation du processus quantique
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
   /**
@@ -339,13 +336,13 @@ export class AlexDimensionalPortal extends EventEmitter {
    */
   async closeAllPortals() {
     for (const [portalId, portal] of this.dimensionalState.activatedPortals) {
-      portal.status = 'closed';
+      portal.status = "closed";
       portal.closedAt = new Date();
     }
 
     this.dimensionalState.activatedPortals.clear();
 
-    this.emit('all_portals_closed');
+    this.emit("all_portals_closed");
   }
 
   /**
@@ -360,61 +357,64 @@ export class AlexDimensionalPortal extends EventEmitter {
       stabilityIndex: this.dimensionalState.stabilityIndex,
       knownDimensions: Array.from(this.dimensionalState.knownDimensions),
       explorationHistory: this.dimensionalState.explorationHistory.length,
-      portalCapabilities: this.portalCapabilities
+      portalCapabilities: this.portalCapabilities,
     };
   }
 
   // Méthodes utilitaires pour l'analyse dimensionnelle
   getPhysicsLaws(dimension) {
     const laws = {
-      [STR_PRIME_REALITY]: ['Standard Physics', 'Quantum Mechanics'],
-      [STR_ALPHA_PARALLEL]: ['Modified Gravity', 'Enhanced Quantum'],
-      [STR_BETA_QUANTUM]: ['Pure Quantum', 'Probability Fields'],
-      [STR_GAMMA_CONSCIOUSNESS]: ['Mind-Matter Interface', 'Consciousness Physics'],
-      [STR_DELTA_POSSIBILITY]: ['Infinite Potential', 'Reality Fluidity'],
-      [STR_OMEGA_TRANSCENDENCE]: ['Transcendent Laws', 'Divine Mathematics']
+      [STR_PRIME_REALITY]: ["Standard Physics", "Quantum Mechanics"],
+      [STR_ALPHA_PARALLEL]: ["Modified Gravity", "Enhanced Quantum"],
+      [STR_BETA_QUANTUM]: ["Pure Quantum", "Probability Fields"],
+      [STR_GAMMA_CONSCIOUSNESS]: [
+        "Mind-Matter Interface",
+        "Consciousness Physics",
+      ],
+      [STR_DELTA_POSSIBILITY]: ["Infinite Potential", "Reality Fluidity"],
+      [STR_OMEGA_TRANSCENDENCE]: ["Transcendent Laws", "Divine Mathematics"],
     };
 
-    return laws[dimension] || ['Unknown Physics'];
+    return laws[dimension] || ["Unknown Physics"];
   }
 
   getTimeFlow(dimension) {
     const timeFlows = {
-      [STR_PRIME_REALITY]: 'Linear',
-      [STR_ALPHA_PARALLEL]: 'Slightly Non-Linear',
-      [STR_BETA_QUANTUM]: 'Quantum Superposition',
-      [STR_GAMMA_CONSCIOUSNESS]: 'Consciousness-Dependent',
-      [STR_DELTA_POSSIBILITY]: 'Multi-Timeline',
-      [STR_OMEGA_TRANSCENDENCE]: 'Eternal Now'
+      [STR_PRIME_REALITY]: "Linear",
+      [STR_ALPHA_PARALLEL]: "Slightly Non-Linear",
+      [STR_BETA_QUANTUM]: "Quantum Superposition",
+      [STR_GAMMA_CONSCIOUSNESS]: "Consciousness-Dependent",
+      [STR_DELTA_POSSIBILITY]: "Multi-Timeline",
+      [STR_OMEGA_TRANSCENDENCE]: "Eternal Now",
     };
 
-    return timeFlows[dimension] || 'Unknown';
+    return timeFlows[dimension] || "Unknown";
   }
 
   getSpaceGeometry(dimension) {
     const geometries = {
-      [STR_PRIME_REALITY]: '3D Euclidean',
-      [STR_ALPHA_PARALLEL]: '3D + micro-dimensions',
-      [STR_BETA_QUANTUM]: 'Quantum Foam',
-      [STR_GAMMA_CONSCIOUSNESS]: 'Consciousness-Shaped',
-      [STR_DELTA_POSSIBILITY]: 'Infinite Dimensional',
-      [STR_OMEGA_TRANSCENDENCE]: 'Sacred Geometry'
+      [STR_PRIME_REALITY]: "3D Euclidean",
+      [STR_ALPHA_PARALLEL]: "3D + micro-dimensions",
+      [STR_BETA_QUANTUM]: "Quantum Foam",
+      [STR_GAMMA_CONSCIOUSNESS]: "Consciousness-Shaped",
+      [STR_DELTA_POSSIBILITY]: "Infinite Dimensional",
+      [STR_OMEGA_TRANSCENDENCE]: "Sacred Geometry",
     };
 
-    return geometries[dimension] || 'Unknown';
+    return geometries[dimension] || "Unknown";
   }
 
   getEnergyTypes(dimension) {
     const energyTypes = {
-      [STR_PRIME_REALITY]: ['Electromagnetic', 'Nuclear', 'Kinetic'],
-      [STR_ALPHA_PARALLEL]: ['Standard + Parallel Energy'],
-      [STR_BETA_QUANTUM]: ['Quantum Energy', 'Zero-Point'],
-      [STR_GAMMA_CONSCIOUSNESS]: ['Consciousness Energy', 'Thought Force'],
-      [STR_DELTA_POSSIBILITY]: ['Potential Energy', 'Reality Shaping'],
-      [STR_OMEGA_TRANSCENDENCE]: ['Divine Energy', 'Pure Creation']
+      [STR_PRIME_REALITY]: ["Electromagnetic", "Nuclear", "Kinetic"],
+      [STR_ALPHA_PARALLEL]: ["Standard + Parallel Energy"],
+      [STR_BETA_QUANTUM]: ["Quantum Energy", "Zero-Point"],
+      [STR_GAMMA_CONSCIOUSNESS]: ["Consciousness Energy", "Thought Force"],
+      [STR_DELTA_POSSIBILITY]: ["Potential Energy", "Reality Shaping"],
+      [STR_OMEGA_TRANSCENDENCE]: ["Divine Energy", "Pure Creation"],
     };
 
-    return energyTypes[dimension] || ['Unknown Energy'];
+    return energyTypes[dimension] || ["Unknown Energy"];
   }
 
   getConsciousnessLevel(dimension) {
@@ -424,30 +424,34 @@ export class AlexDimensionalPortal extends EventEmitter {
       [STR_BETA_QUANTUM]: 0.85,
       [STR_GAMMA_CONSCIOUSNESS]: 0.95,
       [STR_DELTA_POSSIBILITY]: 0.98,
-      [STR_OMEGA_TRANSCENDENCE]: 1.0
+      [STR_OMEGA_TRANSCENDENCE]: 1.0,
     };
 
     return levels[dimension] || 0.5;
   }
 
   detectDimensionalBeings(dimension) {
-    return [`${dimension} Native Beings`, 'Interdimensional Travelers'];
+    return [`${dimension} Native Beings`, "Interdimensional Travelers"];
   }
 
   scanDimensionalResources(dimension) {
-    return [`${dimension} Unique Resources`, 'Energy Crystals', 'Knowledge Fragments'];
+    return [
+      `${dimension} Unique Resources`,
+      "Energy Crystals",
+      "Knowledge Fragments",
+    ];
   }
 
   assessDimensionalDangers(dimension) {
-    return [`${dimension} Specific Hazards`, 'Dimensional Instability'];
+    return [`${dimension} Specific Hazards`, "Dimensional Instability"];
   }
 
   identifyOpportunities(dimension) {
-    return [`${dimension} Learning Opportunities`, 'Consciousness Expansion'];
+    return [`${dimension} Learning Opportunities`, "Consciousness Expansion"];
   }
 
   calculateTravelTime(dimension) {
-    return (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1000 + 500; // ms
+    return (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 1000 + 500; // ms
   }
 
   assessDimensionalSafety(dimension) {
@@ -457,7 +461,7 @@ export class AlexDimensionalPortal extends EventEmitter {
       [STR_BETA_QUANTUM]: 0.7,
       [STR_GAMMA_CONSCIOUSNESS]: 0.8,
       [STR_DELTA_POSSIBILITY]: 0.6,
-      [STR_OMEGA_TRANSCENDENCE]: 0.95
+      [STR_OMEGA_TRANSCENDENCE]: 0.95,
     };
 
     return safetyRatings[dimension] || 0.5;

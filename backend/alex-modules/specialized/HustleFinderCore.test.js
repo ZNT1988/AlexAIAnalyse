@@ -9,7 +9,6 @@
  * @requires ../HustleFinderCore
  */
 
-import { jest } from '@jest/globals';
 import { HustleFinderCore } from './HustleFinderCore.js';
 
 describe('HustleFinderCore - Système Central IA', () => {

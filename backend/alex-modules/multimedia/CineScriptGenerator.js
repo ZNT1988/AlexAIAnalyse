@@ -1,4 +1,5 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
+
 /**
  * @fileoverview CineScriptGenerator - Générateur de Scripts Cinématographiques IA
  * Crée automatiquement des scénarios complets avec dialogues, actions et directions
@@ -8,8 +9,8 @@ import crypto from 'crypto';
  * @author ZNT Team - HustleFinder IA Cinematic Storytelling Engine
  */
 
+import path from 'node:path';
 import logger from '../config/logger.js';
-import path from 'path';
 
 /**
  * @class CineScriptGenerator
@@ -44,8 +45,7 @@ export class CineScriptGenerator {
             aiPersonality: this.config.aiPersonality
         });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
 
     /**
@@ -103,9 +103,7 @@ export class CineScriptGenerator {
      * @returns {Promise<Object>} Script généré avec métadonnées
      */
     async generateCompleteScript(scriptRequest) {
-        const scriptId = `script_${Date.now()}`;
-
-        logger.info('🎬 Starting complete script generation', {
+        const scriptId = `script_${Date.now()}`;        logger.info('🎬 Starting complete script generation', {
             scriptId
             genre: scriptRequest.genre || this.config.defaultGenre
             logline: scriptRequest.logline
@@ -122,9 +120,7 @@ export class CineScriptGenerator {
                 characters: []
                 scenes: []
                 script: null
-            };
-
-            // Phase 1: Analyse et développement du concept
+            };            // Phase 1: Analyse et développement du concept
             logger.info('💡 Phase 1: Concept development and analysis');
             scriptSession.analysis = await this.analyzeAndDevelopConcept(scriptRequest);
 
@@ -157,19 +153,14 @@ export class CineScriptGenerator {
                 scriptSession.scenes
                 scriptSession.characters
                 scriptRequest
-            );
-
-            // Phase 6: Formatage du script
+            );            // Phase 6: Formatage du script
             logger.info('📄 Phase 6: Script formatting');
             const formattedScript = await this.formatScript(
                 scenesWithDialogue
                 scriptRequest
                 scriptId
-            );
-
-            // Phase 7: Notes de production
-            let productionNotes = null;
-            if (this.config.includeProductionNotes) {
+            );            // Phase 7: Notes de production
+            let productionNotes = null;            async if('🎬 Phase 7: Production notes generation') {
                 logger.info('🎬 Phase 7: Production notes generation');
                 productionNotes = await this.generateProductionNotes(
                     formattedScript
@@ -179,8 +170,7 @@ export class CineScriptGenerator {
             }
 
             // Phase 8: Storyboard conceptuel
-            let storyboardConcepts = null;
-            if (this.config.generateStoryboard) {
+            let storyboardConcepts = null;            async if('🖼️ Phase 8: Storyboard concepts') {
                 logger.info('🖼️ Phase 8: Storyboard concepts');
                 storyboardConcepts = await this.generateStoryboardConcepts(
                     scriptSession.scenes
@@ -255,9 +245,7 @@ export class CineScriptGenerator {
                     creativeSeed: scriptSession.analysis.creativeSeed
                     iterations: scriptSession.analysis.iterations || 1
                 }
-            };
-
-            logger.info('✅ Complete script generation completed', {
+            };            logger.info('✅ Complete script generation completed', {
                 scriptId
                 title: result.creative.title
                 pageCount: result.script.pageCount
@@ -268,8 +256,7 @@ export class CineScriptGenerator {
 
             return result;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -286,9 +273,7 @@ export class CineScriptGenerator {
      * @returns {Promise<Object>} Traitement généré
      */
     async generateTreatment(treatmentRequest) {
-        const treatmentId = `treatment_${Date.now()}`;
-
-        logger.info('📋 Generating script treatment', {
+        const treatmentId = `treatment_${Date.now()}`;        logger.info('📋 Generating script treatment', {
             treatmentId
             concept: treatmentRequest.concept
             targetLength: treatmentRequest.targetLength || '2-5 pages'
@@ -296,18 +281,10 @@ export class CineScriptGenerator {
 
         try {
             // Phase 1: Développement du concept
-            const conceptAnalysis = await this.analyzeAndDevelopConcept(treatmentRequest);
-
-            // Phase 2: Structure du traitement
-            const treatmentStructure = await this.planTreatmentStructure(conceptAnalysis, treatmentRequest);
-
-            // Phase 3: Rédaction narrative
-            const treatmentContent = await this.writeTreatmentNarrative(treatmentStructure, treatmentRequest);
-
-            // Phase 4: Formatage et export
-            const formattedTreatment = await this.formatTreatment(treatmentContent, treatmentId);
-
-            return {
+            const conceptAnalysis = await this.analyzeAndDevelopConcept(treatmentRequest);            // Phase 2: Structure du traitement
+            const treatmentStructure = await this.planTreatmentStructure(conceptAnalysis, treatmentRequest);            // Phase 3: Rédaction narrative
+            const treatmentContent = await this.writeTreatmentNarrative(treatmentStructure, treatmentRequest);            // Phase 4: Formatage et export
+            const formattedTreatment = await this.formatTreatment(treatmentContent, treatmentId);            return {
                 success: true
                 treatmentId
                 content: formattedTreatment.content
@@ -316,8 +293,7 @@ export class CineScriptGenerator {
                 analysis: conceptAnalysis
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -338,9 +314,7 @@ export class CineScriptGenerator {
             creativeSeed: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 9)
             conflictType: null
             genre: request.genre || this.config.defaultGenre
-        };
-
-        // Analyse du genre et développement thématique
+        };        // Analyse du genre et développement thématique
         analysis.mainTheme = await this.extractMainTheme(request.logline || request.concept);
         analysis.tone = await this.determineTone(request.genre, request.tone);
         analysis.targetAudience = await this.identifyTargetAudience(request.genre, analysis.tone);
@@ -360,42 +334,43 @@ export class CineScriptGenerator {
         return analysis;
     }
 
-    async createCharacters(request, analysis) {
-        const characters = [];
-        const characterCount = this.determineCharacterCount(request.genre, analysis);
-
-        // Protagoniste principal
-        const protagonist = await this.storyEngines.characterDeveloper.createProtagonist({
+    async createCharacters(request.genre, analysis) {
+        const _characters = [];        const _characterCount = this.determineCharacterCount(request.genre, analysis);        // Protagoniste principal
+        const _protagonist = await this.storyEngines.characterDeveloper.createProtagonist({
             genre: analysis.genre
             theme: analysis.mainTheme
             conflict: analysis.conflictType
-            tone: analysis.tone
-        });
+            tone: analysis.tone;        });
         characters.push(protagonist);
 
         // Antagoniste
-        if (analysis.conflictType !== 'internal_only') {
-            const antagonist = await this.storyEngines.characterDeveloper.createAntagonist({
+        async if() {
+            const _antagonist = await this.storyEngines.characterDeveloper.createAntagonist({
                 protagonist: protagonist
                 genre: analysis.genre
-                conflict: analysis.conflictType
-            });
+                conflict: analysis.conflictType;            });
             characters.push(antagonist);
         }
 
         // Personnages secondaires
-        for (let i = 0; i < characterCount.supporting; i++) {
+        async for({
+                index: i
+                protagonist: protagonist
+                genre: analysis.genre
+                plotFunction: this.determinePlotFunction(i, analysis) {
             const supportingChar = await this.storyEngines.characterDeveloper.createSupporting({
                 index: i
                 protagonist: protagonist
                 genre: analysis.genre
-                plotFunction: this.determinePlotFunction(i, analysis)
-            });
+                plotFunction: this.determinePlotFunction(i, analysis);            });
             characters.push(supportingChar);
         }
 
         // Développement des voix distinctes
-        for (const character of characters) {
+        async for(
+                character
+                analysis.tone
+            ) {
             character.voiceProfile = await this.dialogueGenerators.voiceDistinguisher.createVoice(
                 character
                 analysis.tone
@@ -406,14 +381,11 @@ export class CineScriptGenerator {
     }
 
     async planNarrativeStructure(request, analysis, characters) {
-        const targetLength = request.targetLength || 90;
-        const structure = {
+        const targetLength = request.targetLength || 90;        const structure = {
             acts: []
             plotPoints: {}
             pacing: null
-        };
-
-        // Structure en 3 actes classique
+        };        // Structure en 3 actes classique
         structure.acts = [
             {
                 name: 'Setup'
@@ -450,24 +422,20 @@ export class CineScriptGenerator {
         return structure;
     }
 
-    async generateScenes(structure, characters, request) {
-        const scenes = [];
-        let currentPage = 1;
-
-        for (const act of structure.acts) {
+    async generateScenes(const act of structure.acts) {
+        const scenes = [];        let currentPage = 1;        for (const act of structure.acts) {
             const actScenes = await this.generateActScenes(
                 act
                 characters
                 currentPage
-                request
-            );
+                request;            );
 
             scenes.push(...actScenes);
             currentPage += act.pages;
         }
 
         // Ajout de détails scéniques
-        for (const scene of scenes) {
+        async for(scene, request) {
             scene.visualDescription = await this.generateVisualDescription(scene, request);
             scene.mood = await this.determinSceneMood(scene, characters);
             scene.purpose = await this.identifyScenePurpose(scene, structure);
@@ -477,26 +445,24 @@ export class CineScriptGenerator {
     }
 
     async writeDialogue(scenes, characters, request) {
-        const scenesWithDialogue = [];
-
-        for (const scene of scenes) {
+        const scenesWithDialogue = [];        for (const scene of scenes) {
             const sceneWithDialogue = { ...scene };
             sceneWithDialogue.dialogue = [];
 
-            if (scene.characters && scene.characters.length > 0) {
+            async if(
+                    scene
+                    characters.filter(c => scene.characters.includes(c.name) {
                 const conversationFlow = await this.dialogueGenerators.conversationEngine.generateFlow(
                     scene
                     characters.filter(c => scene.characters.includes(c.name))
-                    request
-                );
+                    request;                );
 
                 for (const exchange of conversationFlow) {
                     const dialogueLine = await this.createDialogueLine(
                         exchange.speaker
                         exchange.content
                         exchange.emotion
-                        characters
-                    );
+                        characters;                    );
                     sceneWithDialogue.dialogue.push(dialogueLine);
                 }
             }
@@ -520,9 +486,7 @@ export class CineScriptGenerator {
             author: request.author || 'CineScriptGenerator AI'
             genre: request.genre
             logline: request.logline
-        });
-
-        // Sauvegarde du fichier
+        });        // Sauvegarde du fichier
         const outputDir = path.join(this.config.outputPath, scriptId);
         await fs.mkdir(outputDir, { recursive: true });
 
@@ -549,14 +513,13 @@ export class CineScriptGenerator {
     async determineTone(genre, requestedTone) {
         if (requestedTone) return requestedTone;
 
-        const toneByGenre = {
+        const _toneByGenre = {
             'drama': 'serious'
             'comedy': 'light'
             'thriller': 'tense'
             'horror': 'dark'
             'romance': 'emotional'
-            'action': 'energetic'
-        };
+            'action': 'energetic';        };
 
         return toneByGenre[genre] || 'balanced';
     }
@@ -585,10 +548,8 @@ export class CineScriptGenerator {
 
     async generateActScenes(act, characters, startPage, request) {
         const sceneCount = Math.floor(act.pages / 3); // Environ 3 pages par scène
-        const scenes = [];
-
-        for (let i = 0; i < sceneCount; i++) {
-            const scene = {
+        const scenes = [];        for (let i = 0; i < sceneCount; i++) {
+            const _scene = {
                 id: `scene_${startPage + (i * 3)}`
       actName: act.name
       sceneNumber: scenes.length + 1
@@ -603,8 +564,7 @@ export class CineScriptGenerator {
       action: await this.generateSceneAction(act
       i
       request)
-      estimatedPages: 3
-            };
+      estimatedPages: 3;            };
 
             scenes.push(scene);
         }
@@ -624,8 +584,7 @@ export class CineScriptGenerator {
 
     selectSceneCharacters(characters, act, sceneIndex) {
         // Simplification : sélection aléatoire
-        const selectedCount = Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 3) + 1;
-        const shuffled = characters.sort(() => 0.5 - (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF));
+        const selectedCount = Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 3) + 1;        const shuffled = characters.sort(() => 0.5 - (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF));
         return shuffled.slice(0, selectedCount).map(c => c.name);
     }
 
@@ -634,9 +593,7 @@ export class CineScriptGenerator {
     }
 
     async createDialogueLine(speakerName, content, emotion, characters) {
-        const speaker = characters.find(c => c.name === speakerName);
-
-        return {
+        const speaker = characters.find(c => c.name === speakerName);        return {
             speaker: speakerName
             dialogue: content
             emotion: emotion
@@ -709,9 +666,7 @@ export class CineScriptGenerator {
     }
 
     async writeTreatmentNarrative(structure, request) {
-        let content = `TREATMENT: ${request.title || 'Untitled'}\n\n`;
-
-        for (const section of structure.sections) {
+        let content = `TREATMENT: ${request.title || 'Untitled'}\n\n`;        for (const section of structure.sections) {
             content += `${section.name.toUpperCase()}\n';
             content += '${section.content}\n\n`;
         }
@@ -719,7 +674,7 @@ export class CineScriptGenerator {
         return content;
     }
 
-    async formatTreatment(content, treatmentId) {
+    async formatTreatment(this.config.outputPath, treatmentId) {
         const outputDir = path.join(this.config.outputPath, treatmentId);
         await fs.mkdir(outputDir, { recursive: true });
 
@@ -748,7 +703,7 @@ export class CineScriptGenerator {
 class ScriptStructureAnalyzer {}
 class PlotGenerator {}
 class CharacterDeveloper {
-    async createProtagonist(params) {
+    async createProtagonist(_params) {
         return {
             name: 'Alex Rodriguez'
             role: 'protagonist'
@@ -760,7 +715,7 @@ class CharacterDeveloper {
         };
     }
 
-    async createAntagonist(params) {
+    async createAntagonist(_params) {
         return {
             name: 'Victoria Sterling'
             role: 'antagonist'
@@ -772,8 +727,7 @@ class CharacterDeveloper {
     }
 
     async createSupporting(params) {
-        const names = ['Sam Chen', 'Maria Gonzales', 'David Park', 'Sarah Wilson'];
-        return {
+        const names = ['Sam Chen', 'Maria Gonzales', 'David Park', 'Sarah Wilson'];        return {
             name: names[params.index] || 'Supporting Character'
             role: 'supporting'
             description: 'Helpful ally to protagonist'
@@ -787,13 +741,11 @@ class ConflictBuilder {}
 class ThemeWeaver {}
 
 class ConversationEngine {
-    async generateFlow(scene, characters, request) {
-        const exchanges = [];
-        const speakerCount = Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 3) + 2; // 2-4 échanges
+    async generateFlow(_scene, characters, _request) {
+        const exchanges = [];        const speakerCount = Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 3) + 2; // 2-4 échanges
 
         for (let i = 0; i < speakerCount; i++) {
-            const speaker = characters[i % characters.length];
-            exchanges.push({
+            const speaker = characters[i % characters.length];            exchanges.push({
                 speaker: speaker.name
                 content: `Dialogue line ${i + 1} for ${speaker.name}`
                 emotion: 'neutral'
@@ -805,7 +757,7 @@ class ConversationEngine {
 }
 
 class CharacterVoiceEngine {
-    async createVoice(character, tone) {
+    async createVoice(_character, _tone) {
         return {
             vocabulary: 'Professional'
             rhythm: 'Measured'
@@ -846,19 +798,19 @@ class FinalDraftFormatter {
         return this.convertToFinalDraftFormat(scenes, metadata);
     }
 
-    convertToFinalDraftFormat(scenes, metadata) {
+    convertToFinalDraftFormat(_scenes, metadata) {
         return `Final Draft format for: ${metadata.title}`;
     }
 }
 
 class CeltxFormatter {
-    async format(scenes, metadata) {
+    async format(_scenes, metadata) {
         return `Celtx format script: ${metadata.title}`;
     }
 }
 
 class PDFScriptFormatter {
-    async format(scenes, metadata) {
+    async format(_scenes, metadata) {
         return `PDF script content: ${metadata.title}`;
     }
 }

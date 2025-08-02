@@ -9,7 +9,6 @@
  * @requires ../AlexMasterSystem
  */
 
-import { jest } from '@jest/globals';
 import { AlexMasterSystem } from './AlexMasterSystem.js';
 
 describe('AlexMasterSystem - Cerveau Conscient IA', () => {

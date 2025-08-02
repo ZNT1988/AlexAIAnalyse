@@ -1,9 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_GENERAL = 'general';
-
-/**
+const STR_GENERAL = 'general';/**
  * 📚 SelfTrainingEngine.js - Moteur d'Auto-Apprentissage Intelligent
  * Permet à Alex de s'améliorer continuellement et d'apprendre de chaque interaction
  *
@@ -16,9 +14,9 @@ const STR_GENERAL = 'general';
  * - Détection des lacunes
  */
 
-import { EventEmitter } from 'events';
-import fs from 'fs/promises';
-import path from 'path';
+import { EventEmitter } from 'node:events';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import logger from '../config/logger.js';
 
 class SelfTrainingEngine extends EventEmitter {
@@ -174,15 +172,14 @@ class SelfTrainingEngine extends EventEmitter {
 
       logger.info(`📊 Performance actuelle: ${Math.round(this.calculateOverallPerformance() * 100)}%`);
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
   /**
    * Traite une nouvelle interaction pour apprentissage
    */
-  async processLearningInteraction(interaction) {
+  async processLearningInteraction(!this._learningActive) {
     try {
       if (!this.learningActive) {
         await this.initialize();
@@ -196,9 +193,7 @@ class SelfTrainingEngine extends EventEmitter {
         feedback: null
         improvements: []
         adaptations: []
-      };
-
-      // Analyse de l'interaction
+      };      // Analyse de l'interaction
       learningEvent.analysis = await this.analyzeInteraction(interaction);
 
       // Extraction du feedback implicite
@@ -226,8 +221,7 @@ class SelfTrainingEngine extends EventEmitter {
 
       return learningEvent;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
@@ -258,9 +252,7 @@ class SelfTrainingEngine extends EventEmitter {
       helpfulness: this.evaluateHelpfulness(interaction)
       appropriateness: this.checkAppropriateness(interaction)
       timeliness: this.assessTimeliness(interaction)
-    };
-
-    // Score composite
+    };    // Score composite
     feedback.overallScore = Object.values(feedback).reduce((sum, score) => sum + score, 0) / Object.keys(feedback).length;
 
     return feedback;
@@ -270,14 +262,9 @@ class SelfTrainingEngine extends EventEmitter {
    * Traite l'apprentissage par renforcement
    */
   async processReinforcementLearning(learningEvent) {
-    const rl = this.learningFrameworks.reinforcementLearning;
-
-    // Calcul de la récompense
-    const reward = this.calculateReward(learningEvent);
-
-    // Mise à jour Q-table
-    const state = this.encodeState(learningEvent.interaction);
-    const action = this.encodeAction(learningEvent.interaction);
+    const rl = this.learningFrameworks.reinforcementLearning;    // Calcul de la récompense
+    const reward = this.calculateReward(learningEvent);    // Mise à jour Q-table
+    const state = this.encodeState(learningEvent.interaction);    const action = this.encodeAction(learningEvent.interaction);
 
     await this.updateQTable(state, action, reward);
 
@@ -299,23 +286,20 @@ class SelfTrainingEngine extends EventEmitter {
    * Traite l'apprentissage expérientiel
    */
   async processExperientialLearning(learningEvent) {
-    const el = this.learningFrameworks.experientialLearning;
-
-    // Stockage de l'expérience
-    const experience = {
+    const _el = this.learningFrameworks.experientialLearning;    // Stockage de l'expérience
+    const _experience = {
       situation: learningEvent.analysis.type
       action: learningEvent.interaction.response || ''
       result: learningEvent.feedback.overallScore
-      learning: this.extractExperientialLearning(learningEvent)
-    };
+      learning: this.extractExperientialLearning(learningEvent);    };
 
-    el.experiences.push(experience);
+    el.experiences.push(_experience);
 
     // Analyse des patterns
-    await this.analyzeExperiencePatterns(experience);
+    await this.analyzeExperiencePatterns(_experience);
 
     // Limitation des expériences stockées
-    if (el.experiences.length > this.learningConfig.maxTrainingExamples) {
+    if (el._experiences._length > this._learningConfig._maxTrainingExamples) {
       el.experiences = el.experiences.slice(-Math.floor(this.learningConfig.maxTrainingExamples * 0.8));
     }
   }
@@ -344,15 +328,12 @@ class SelfTrainingEngine extends EventEmitter {
    * Traite l'apprentissage social
    */
   async processSocialLearning(learningEvent) {
-    const sl = this.learningFrameworks.socialLearning;
-
-    // Analyse conversationnelle
-    const conversationAnalysis = {
+    const _sl = this.learningFrameworks.socialLearning;    // Analyse conversationnelle
+    const _conversationAnalysis = {
       communicationStyle: this.analyzeCommuncationStyle(learningEvent.interaction)
       emotionalResonance: this.measureEmotionalResonance(learningEvent)
       culturalContext: this.identifyCulturalContext(learningEvent.interaction)
-      relationshipDynamics: this.analyzeRelationshipDynamics(learningEvent)
-    };
+      relationshipDynamics: this.analyzeRelationshipDynamics(learningEvent);    };
 
     sl.conversationAnalysis.push(conversationAnalysis);
 
@@ -408,8 +389,7 @@ class SelfTrainingEngine extends EventEmitter {
     // Comparaison avec performance précédente
     const comparison = this.comparePerformance(
       evaluation.previousPerformance
-      evaluation.currentPerformance
-    );
+      evaluation.currentPerformance;    );
 
     evaluation.improvements = comparison.improvements;
     evaluation.regressions = comparison.regressions;
@@ -439,9 +419,7 @@ class SelfTrainingEngine extends EventEmitter {
       modelsOptimized: []
       performanceGains: []
       issues: []
-    };
-
-    try {
+    };    try {
       // Optimisation apprentissage par renforcement
       await this.optimizeReinforcementLearning(optimization);
 
@@ -457,21 +435,17 @@ class SelfTrainingEngine extends EventEmitter {
       this.metrics.performanceGains += optimization.performanceGains.length;
       this.emit('models_optimized', optimization);
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
   /**
    * Génère des recommandations d'amélioration
    */
-  async generateImprovementRecommendations(evaluation) {
-    const recommendations = [];
-
-    // Analyse des points faibles
+  async generateImprovementRecommendations(evaluation.currentPerformance) {
+    const recommendations = [];    // Analyse des points faibles
     const weakAreas = Object.entries(evaluation.currentPerformance)
-      .filter((_, _) => score < 0.7)
-      .map(([area, _]) => area);
+      .filter((_, _) => score < 0.7);      .map(([area, _]) => area);
 
     for (const area of weakAreas) {
       const recommendation = await this.generateAreaRecommendation(area, evaluation);
@@ -495,20 +469,14 @@ class SelfTrainingEngine extends EventEmitter {
    * Calcule la performance globale
    */
   calculateOverallPerformance() {
-    const metrics = this.selfEvaluation.performanceMetrics;
-    const weights = {
+    const metrics = this.selfEvaluation.performanceMetrics;    const weights = {
       responseQuality: 0.25
       userSatisfaction: 0.25
       accuracyRate: 0.20
       helpfulnessScore: 0.15
       engagementLevel: 0.10
       learningSpeed: 0.05
-    };
-
-    let weightedSum = 0;
-    let totalWeight = 0;
-
-    for (const [metric, weight] of Object.entries(weights)) {
+    };    let weightedSum = 0;    let totalWeight = 0;    for (const [metric, weight] of Object.entries(weights)) {
       if (metrics[metric] !== undefined) {
         weightedSum += metrics[metric] * weight;
         totalWeight += weight;
@@ -539,32 +507,31 @@ class SelfTrainingEngine extends EventEmitter {
    * Mode Debug - Expose l'apprentissage en temps réel
    */
   enableDebugMode() {
-    this.on('learning_processed', (event) => this.processLongOperation(args)%`);
+    this.on('learning_processed', (_event) => this.processLongOperation(args)%`);
     });
 
     this.on('self_evaluation_completed', (evaluation) => this.processLongOperation(args)%`);
       try {
       logger.info(`   Recommandations: ${evaluation.recommendations.length}`);
 
-      } catch (error) {
-    // Logger fallback - ignore error
+      } catch (_error) {
   }});
   }
 
   // Méthodes utilitaires et implémentations simplifiées
-  async ensureLearningDirectories() {
+  async ensureLearningDirectories(const _dir of dirs) {
     const dirs = ['training', 'models', 'evaluations'];
     for (const dir of dirs) {
       await fs.mkdir(path.join(this.learningConfig.trainingDataPath, dir), { recursive: true });
     }
   }
 
-  async loadLearningHistory() {
+  async loadLearningHistory(this.learningConfig.trainingDataPath, 'learning_history.json') {
     try {
       const historyPath = path.join(this.learningConfig.trainingDataPath, 'learning_history.json');
       const data = await fs.readFile(historyPath, 'utf8');
       this.learningHistory = { ...this.learningHistory, ...JSON.parse(data) };
-    } catch (error) {
+    } catch (_error) {
       // Premier démarrage, historique vide
     }
   }
@@ -627,7 +594,7 @@ class SelfTrainingEngine extends EventEmitter {
   async updateEmotionalModel() { return; }
 
   async optimizeLearningModels() { return; }
-  async saveLearningProgress() {
+  async saveLearningProgress(this.learningConfig.trainingDataPath, 'learning_history.json') {
     try {
       const historyPath = path.join(this.learningConfig.trainingDataPath, 'learning_history.json');
       await fs.writeFile(historyPath, JSON.stringify(this.learningHistory, null, 2));
@@ -635,15 +602,13 @@ class SelfTrainingEngine extends EventEmitter {
       try {
       logger.error('❌ Erreur sauvegarde apprentissage:', error);
 
-      } catch (error) {
-    // Logger fallback - ignore error
+      } catch (_error) {
   }}
   }
 
   async recalculatePerformanceMetrics() {
     // Simulation du recalcul des métriques
-    const current = this.selfEvaluation.performanceMetrics;
-    return {
+    const current = this.selfEvaluation.performanceMetrics;    return {
       responseQuality: Math.min(1.0, current.responseQuality + ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.05)
       userSatisfaction: Math.min(1.0, current.userSatisfaction + ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.05)
       accuracyRate: Math.min(1.0, current.accuracyRate + ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.03)
@@ -654,10 +619,7 @@ class SelfTrainingEngine extends EventEmitter {
   }
 
   comparePerformance(previous, current) {
-    const improvements = [];
-    const regressions = [];
-
-    for (const [metric, currentValue] of Object.entries(current)) {
+    const improvements = [];    const regressions = [];    for (const [metric, currentValue] of Object.entries(current)) {
       const previousValue = previous[metric];
       if (previousValue !== undefined) {
         const change = currentValue - previousValue;

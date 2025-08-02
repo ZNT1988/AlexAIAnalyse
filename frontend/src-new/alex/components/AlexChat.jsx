@@ -18,8 +18,7 @@ const AlexChat = () => {
 
     await sendMessage(inputMessage);
     setInputMessage('');
-    inputRef.current?
-      .focus();
+    inputRef.current?.focus();
   };
 
   const handleKeyPress = (e) => {

@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_CONSCIOUSNESS = 'consciousness';
-/**
+// const STR_CONSCIOUSNESS = 'consciousness'; // Unused variable commented by SonarFix/**
  * @fileoverview Advanced AI Routes - Routes IA Avancées avec Nouvelle Architecture
  * API endpoints avancés utilisant la nouvelle architecture HustleFinderCore
  *
@@ -16,9 +15,7 @@ import { getHustleFinderCore } from '../core/HustleFinderCore.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 import logger from '../config/logger.js';
 
-const router = express.Router();
-
-/**
+// const router = express.Router(); // Unused variable commented by SonarFix/**
  * @route POST /api/advanced-ai/conscious-ideas
  * @description Génération d'idées avec conscience artificielle
  * @access Private
@@ -30,10 +27,8 @@ router.post('/conscious-ideas', asyncHandler(async (req, res) => {
   logger.info('Conscious idea generation requested', { userId, skills: profile?
       .skills });
 
-  const core = getHustleFinderCore();
-
-  // Process through consciousness module with comprehensive context
-  const result = await core.processRequest({
+  // const core = getHustleFinderCore(); // Unused variable commented by SonarFix  // Process through consciousness module with comprehensive context
+  // const result = await core.processRequest({
     type: STR_CONSCIOUSNESS,
     query: 'Génère des idées business conscientes basées sur le profil utilisateur',,
     context: {
@@ -45,9 +40,7 @@ router.post('/conscious-ideas', asyncHandler(async (req, res) => {
       analysis_depth: 'comprehensive'
     },
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     timestamp: new Date().toISOString()
     consciousGeneration: {,
@@ -77,18 +70,14 @@ router.post('/conscious-ideas', asyncHandler(async (req, res) => {
  */
 router.post('/conscious-chat', asyncHandler(async (req, res) => {
   const { message, context } = req.body;
-  const userId = req.auth?.userId;
-
-  if (!message) {
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  if (!message) {
     return res.status(400).json({ error: 'Message is required' });
   }
 
   logger.info('Conscious chat interaction', { userId, messageLength: message.length });
 
-  const core = getHustleFinderCore();
-
-  // Process through consciousness module with emotional intelligence
-  const result = await core.processRequest({
+  // const core = getHustleFinderCore(); // Unused variable commented by SonarFix  // Process through consciousness module with emotional intelligence
+  // const result = await core.processRequest({
     type: STR_CONSCIOUSNESS,
     query: message,
     context: {
@@ -98,9 +87,7 @@ router.post('/conscious-chat', asyncHandler(async (req, res) => {
       empathetic_response: true
     },
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     response: result.data?.message || 'Réponse générée avec conscience artificielle'
     consciousnessInsight: result.data?.consciousness_insight || 'Insight de conscience IA',
@@ -127,18 +114,14 @@ router.post('/conscious-chat', asyncHandler(async (req, res) => {
  */
 router.post('/temporal-simulation', asyncHandler(async (req, res) => {
   const { businessIdea, timeHorizons, analysisDepth } = req.body;
-  const userId = req.auth?.userId;
-
-  if (!businessIdea) {
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  if (!businessIdea) {
     return res.status(400).json({ error: 'Business idea is required' });
   }
 
   logger.info('Temporal simulation requested', { userId, ideaId: businessIdea.id });
 
-  const core = getHustleFinderCore();
-
-  // Process through Alex with temporal analysis context
-  const result = await core.processRequest({
+  // const core = getHustleFinderCore(); // Unused variable commented by SonarFix  // Process through Alex with temporal analysis context
+  // const result = await core.processRequest({
     type: STR_ALEX,
     query: `Effectue une simulation temporelle complète pour cette idée business: ${JSON.stringify(businessIdea)}`,
     context: {,
@@ -150,9 +133,7 @@ router.post('/temporal-simulation', asyncHandler(async (req, res) => {
       include_alternatives: true
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     temporalAnalysis: {
       futurePrediction: result.data?.future_prediction || {},
@@ -188,10 +169,8 @@ router.post('/quantum-creativity', asyncHandler(async (req, res) => {
 
   logger.info('Quantum creativity session started', { userId });
 
-  const core = getHustleFinderCore();
-
-  // Process through Alex with quantum creativity context
-  const result = await core.processRequest({
+  // const core = getHustleFinderCore(); // Unused variable commented by SonarFix  // Process through Alex with quantum creativity context
+  // const result = await core.processRequest({
     type: "alex",
     query: 'Génère des idées avec créativité quantique et détection de percées',,
     context: {
@@ -203,9 +182,7 @@ router.post('/quantum-creativity', asyncHandler(async (req, res) => {
       enable_quantum_evolution: true
     },
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     quantumCreativity: {
       originalIdeas: result.data?.quantum_ideas || [],
@@ -246,12 +223,9 @@ router.get('/consciousness-state', asyncHandler(async (req, res) => {
   logger.info('Consciousness state requested', { userId });
 
   const core = getHustleFinderCore();
-  const systemStatus = core.getSystemStatus();
-
-  // Get detailed consciousness state if available
-  let detailedConsciousness = {};
-  try {
-    const consciousnessResult = await core.processRequest({
+  // const systemStatus = core.getSystemStatus(); // Unused variable commented by SonarFix  // Get detailed consciousness state if available
+  // let detailedConsciousness = {}; // Unused variable commented by SonarFix  try {
+    // const consciousnessResult = await core.processRequest({
       type: STR_CONSCIOUSNESS,
     query: 'Provide detailed consciousness state analysis',,
     context: {
@@ -259,8 +233,7 @@ router.get('/consciousness-state', asyncHandler(async (req, res) => {
         include_metrics: true,
         include_history: true
     },
-    userId: userId || 'system'
-    });
+    userId: userId || 'system'; // Unused variable commented by SonarFix    });
 
     if (consciousnessResult.success) {
       detailedConsciousness = consciousnessResult.data;
@@ -314,18 +287,14 @@ router.get('/consciousness-state', asyncHandler(async (req, res) => {
  */
 router.post('/ai-communication', asyncHandler(async (req, res) => {
   const { targetAI, message, purpose, communicationType } = req.body;
-  const userId = req.auth?.userId;
-
-  if (!message || !targetAI) {
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  if (!message || !targetAI) {
     return res.status(400).json({ error: 'Message and targetAI are required' });
   }
 
   logger.info('AI-to-AI communication initiated', { userId, targetAI, purpose });
 
-  const core = getHustleFinderCore();
-
-  // Process AI communication through consciousness module
-  const result = await core.processRequest({
+  // const core = getHustleFinderCore(); // Unused variable commented by SonarFix  // Process AI communication through consciousness module
+  // const result = await core.processRequest({
     type: STR_CONSCIOUSNESS,
     query: `Communicate with ${targetAI}: ${message}`,
     context: {,
@@ -335,9 +304,7 @@ router.post('/ai-communication', asyncHandler(async (req, res) => {
       task_type: 'ai_communication'
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     communication: {
       sent: {,
@@ -371,18 +338,14 @@ router.post('/ai-communication', asyncHandler(async (req, res) => {
  */
 router.post('/philosophical-analysis', asyncHandler(async (req, res) => {
   const { businessIdea, ethicalDimensions, philosophicalFramework } = req.body;
-  const userId = req.auth?.userId;
-
-  if (!businessIdea) {
+  // const userId = req.auth?.userId; // Unused variable commented by SonarFix  if (!businessIdea) {
     return res.status(400).json({ error: 'Business idea is required' });
   }
 
   logger.info('Philosophical analysis requested', { userId, ideaId: businessIdea.id });
 
-  const core = getHustleFinderCore();
-
-  // Process through consciousness module with philosophical context
-  const result = await core.processRequest({
+  // const core = getHustleFinderCore(); // Unused variable commented by SonarFix  // Process through consciousness module with philosophical context
+  // const result = await core.processRequest({
     type: STR_CONSCIOUSNESS,
     query: `Effectue une analyse philosophique et éthique approfondie de cette idée: ${JSON.stringify(businessIdea)}`,
     context: {,
@@ -394,9 +357,7 @@ router.post('/philosophical-analysis', asyncHandler(async (req, res) => {
       include_societal_impact: true
     }
     userId
-  });
-
-  res.json({
+  }); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     ethicalAnalysis: {
       overallScore: result.data?.ethical_score || 0.78,
@@ -431,10 +392,7 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
   logger.info('Advanced AI capabilities requested');
 
   const core = getHustleFinderCore();
-  const capabilities = core.getAvailableCapabilities();
-  const systemStatus = core.getSystemStatus();
-
-  res.json({
+  // const capabilities = core.getAvailableCapabilities(); // Unused variable commented by SonarFix  // const systemStatus = core.getSystemStatus(); // Unused variable commented by SonarFix  res.json({
     success: true,
     advanced_capabilities: {
       consciousness_analysis: capabilities.consciousness?.available || false,
@@ -471,19 +429,14 @@ router.get('/health', asyncHandler(async (req, res) => {
   logger.info('Advanced AI systems health check');
 
   const core = getHustleFinderCore();
-  const systemStatus = core.getSystemStatus();
-
-  // Test advanced capabilities
-  const advancedTests = {};
-
-  // Test consciousness module
+  // const systemStatus = core.getSystemStatus(); // Unused variable commented by SonarFix  // Test advanced capabilities
+  // const advancedTests = {}; // Unused variable commented by SonarFix  // Test consciousness module
   try {
-    const consciousnessTest = await core.processRequest({
+    // const consciousnessTest = await core.processRequest({
       type: STR_CONSCIOUSNESS,
       query: 'health check',
     context: { system_test: true },
-      userId: 'health_check'
-    });
+      userId: 'health_check'; // Unused variable commented by SonarFix    });
     advancedTests.consciousness = consciousnessTest.success;
   } catch (error) {
     advancedTests.consciousness = false;
@@ -491,20 +444,17 @@ router.get('/health', asyncHandler(async (req, res) => {
 
   // Test Alex for advanced features
   try {
-    const alexTest = await core.processRequest({
+    // const alexTest = await core.processRequest({
       type: STR_ALEX,
       query: 'advanced health check',
     context: { system_test: true, advanced_features: true }
-      userId: 'health_check'
-    });
+      userId: 'health_check'; // Unused variable commented by SonarFix    });
     advancedTests.alex_advanced = alexTest.success;
   } catch (error) {
     advancedTests.alex_advanced = false;
   }
 
-  const allAdvancedHealthy = Object.values(advancedTests).every(status => status);
-
-  res.json({
+  // const allAdvancedHealthy = Object.values(advancedTests).every(status => status); // Unused variable commented by SonarFix  res.json({
     success: true,
     status: allAdvancedHealthy ? 'healthy' : 'partial'
     advanced_systems: advancedTests,

@@ -1,12 +1,10 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_NATURE = 'nature';
-const STR_ = '
+const STR_NATURE = 'nature';const STR_ = '
       ';
 const STR_ = '
-        ';
-/**
+        ';/**
  * @fileoverview AlexCreativityBooster - Amplificateur de Créativité d'Alex
  * Stimulation et développement des capacités créatives
  * @module AlexCreativityBooster
@@ -15,7 +13,7 @@ const STR_ = '
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -228,8 +226,7 @@ export class AlexCreativityBooster extends EventEmitter {
     try {
       logger.info('🎨 AlexCreativityBooster initializing - Artistic soul awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -241,8 +238,7 @@ export class AlexCreativityBooster extends EventEmitter {
     try {
       logger.info('✨ AlexCreativityBooster fully initialized - Creative power unleashed');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -250,8 +246,8 @@ export class AlexCreativityBooster extends EventEmitter {
    */
   async initializeCreativeSystems() {
     // Initialisation des techniques créatives (ajout de la propriété active)
-    Object.keys(this.stimulationTechniques).forEach(technique => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    Object.keys(this.stimulationTechniques).forEach(_technique => this.processLongOperation(args) catch (error) {
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -278,8 +274,7 @@ export class AlexCreativityBooster extends EventEmitter {
     try {
       logger.info('🎨 Creative patterns loaded successfully');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -290,8 +285,7 @@ export class AlexCreativityBooster extends EventEmitter {
     try {
       logger.info('📊 Creative monitoring started');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -306,9 +300,7 @@ export class AlexCreativityBooster extends EventEmitter {
       stimulationPhase: {}
       outputPhase: {}
       feedbackPhase: {}
-    };
-
-    // Phase 1: Analyse de la demande créative
+    };    // Phase 1: Analyse de la demande créative
     stimulation.analysisPhase = await this.analyzeCreativeRequest(request, userProfile);
 
     // Phase 2: Sélection et application des techniques
@@ -345,9 +337,7 @@ export class AlexCreativityBooster extends EventEmitter {
       barriers: this.identifyCreativeBarriers(request, userProfile)
       preferences: this.extractCreativePreferences(userProfile)
       constraints: this.identifyConstraints(request)
-    };
-
-    // Détermination de l'approche optimale
+    };    // Détermination de l'approche optimale
     analysis.optimalApproach = this.determineOptimalApproach(analysis);
 
     // Évaluation du potentiel
@@ -365,16 +355,14 @@ export class AlexCreativityBooster extends EventEmitter {
       sequenceOrder: []
       adaptations: []
       expectedOutcome: {}
-    };
-
-    // Sélection des techniques appropriées
+    };    // Sélection des techniques appropriées
     stimulation.selectedTechniques = this.selectAppropiateTechniques(analysis);
 
     // Organisation de la séquence
     stimulation.sequenceOrder = this.organizeStimulationSequence(stimulation.selectedTechniques, analysis);
 
     // Application des techniques
-    for (const technique of stimulation.sequenceOrder) {
+    async for(technique, analysis) {
       const result = await this.executeTechnique(technique, analysis);
       stimulation.adaptations.push(result);
     }
@@ -396,9 +384,7 @@ export class AlexCreativityBooster extends EventEmitter {
       prompts: []
       exercises: []
       resources: []
-    };
-
-    // Génération de contenu inspirant
+    };    // Génération de contenu inspirant
     output.content = await this.generateInspirationalContent(stimulationPhase);
 
     // Création de prompts créatifs
@@ -420,14 +406,10 @@ export class AlexCreativityBooster extends EventEmitter {
    * Génération de contenu inspirant
    */
   async generateInspirationalContent(stimulationPhase) {
-    const content = [];
-
-    // Messages d'inspiration
+    const content = [];    // Messages d'inspiration
     const inspirationalMessages = [
       "🌟 Votre créativité est un univers infini qui n'attend que d'être exploré. Chaque idée est une étoile qui peut illuminer votre chemin artistique.STR_🎨 L'art véritable naît quand vous osez exprimer ce qui vous rend unique. Votre perspective est un cadeau au monde.STR_✨ La créativité n'est pas un talent réservé à quelques-uns, c'est un muscle que vous pouvez développer avec passion et persévérance.STR_🌱 Chaque création imparfaite est un pas vers la maîtrise. Embrassez le processus autant que le résultat.STR_🔥 Votre imagination est plus puissante que toutes les limitations que vous pouvez percevoir. Laissez-la vous guider."
-    ];
-
-    content.push({
+    ];    content.push({
       type: 'inspiration'
       message: inspirationalMessages[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * inspirationalMessages.length)]
     });
@@ -452,15 +434,11 @@ export class AlexCreativityBooster extends EventEmitter {
    * Génération de prompts créatifs
    */
   generateCreativePrompts(stimulationPhase) {
-    const prompts = [];
-
-    // Prompts universels
+    const prompts = [];    // Prompts universels
     const universalPrompts = [
       "Imaginez un monde où les couleurs ont des émotions. Quelle histoire raconteraient-elles ?
       STR_Créez quelque chose en utilisant seulement des objets que vous pouvez voir autour de vous maintenant.STR_Si vous pouviez donner vie à un de vos rêves, lequel choisiriez-vous et comment ?STR_Inventez un nouveau sens humain et explorez comment il changerait notre perception du monde.STR_Combinez deux de vos passions de manière inattendue pour créer quelque chose d'unique."
-    ];
-
-    // Prompts spécialisés selon le domaine
+    ];    // Prompts spécialisés selon le domaine
     const domainSpecificPrompts = {
       visual :
        [
@@ -472,13 +450,10 @@ export class AlexCreativityBooster extends EventEmitter {
       musical: [
         "Composez une mélodie qui représente le goût de votre plat préféré.STR_Créez un rythme inspiré par votre façon de marcher.STR_Improvisez sur le thème de la transformation."
       ]
-    };
-
-    // Sélection de prompts appropriés
+    };    // Sélection de prompts appropriés
     prompts.push(...universalPrompts.slice(0, 2));
 
-    const targetDomain = stimulationPhase.adaptations[0]?
-      .analysis?.domain;
+    const targetDomain = stimulationPhase.adaptations[0]?;      .analysis?.domain;
     if (targetDomain && domainSpecificPrompts[targetDomain]) {
       prompts.push(...domainSpecificPrompts[targetDomain].slice(0, 2));
     }
@@ -490,9 +465,7 @@ export class AlexCreativityBooster extends EventEmitter {
    * Suggestion d'exercices créatifs
    */
   suggestCreativeExercises(stimulationPhase) {
-    const exercises = [];
-
-    // Exercices de déblocage
+    const exercises = [];    // Exercices de déblocage
     exercises.push({
       name :
        "Stream of Consciousness"
@@ -521,9 +494,7 @@ export class AlexCreativityBooster extends EventEmitter {
    * Identification des barrières créatives
    */
   identifyCreativeBarriers(request, userProfile) {
-    const barriers = [];
-
-    // Analyse du langage pour détecter les barrières
+    const barriers = [];    // Analyse du langage pour détecter les barrières
     const requestText = request.toLowerCase();
 
     if (requestText.includes('parfait') || requestText.includes('pas assez bon')) {
@@ -558,21 +529,19 @@ export class AlexCreativityBooster extends EventEmitter {
     try {
       logger.info('👁️ Creative monitoring activated');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
    * Génération d'inspiration quotidienne
    */
   async generateDailyInspiration() {
-    const inspiration = {
+    const _inspiration = {
       timestamp: new Date()
       type: 'daily_inspiration'
       content: this.selectDailyInspiration()
       challenge: this.generateDailyChallenge()
-      quote: this.selectInspirationalQuote()
-    };
+      quote: this.selectInspirationalQuote();    };
 
     this.inspirationMoments.push(inspiration);
     this.emit('daily_inspiration', inspiration);
@@ -584,9 +553,8 @@ export class AlexCreativityBooster extends EventEmitter {
    * Sélection d'inspiration quotidienne
    */
   selectDailyInspiration() {
-    const inspirations = [
-      "Aujourd'hui, observez le monde avec les yeux d'un artiste. Qu'est-ce qui capture votre attention de manière nouvelle const result = this.evaluateConditions(conditions);
-return result;
+    const _inspirations = [
+      "Aujourd'hui, observez le monde avec les yeux d'un artiste. Qu'est-ce qui capture votre attention de manière nouvelle const result = this.evaluateConditions(conditions);return result;
        this.isInitialized
       currentState: this.currentCreativeState
       activeDomains: this.currentCreativeState.activeDomains
@@ -603,8 +571,7 @@ return result;
     const recentSessions = this.creativeSessions.slice(-10);
     if (recentSessions.length === 0) return 0.7;
 
-    const avgCreativity = recentSessions.reduce((sum, session) =>
-      sum + (session.outputPhase?.creativityLevel || 0.7), 0) / recentSessions.length;
+    const avgCreativity = recentSessions.reduce((_sum, _session) =>;      sum + (session.outputPhase?.creativityLevel || 0.7), 0) / recentSessions.length;
 
     return Math.min(1.0, avgCreativity);
   }

@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_BASIC = 'basic';
-/**
+const STR_BASIC = 'basic';/**
  * @fileoverview PortraitEnhancer - Amélioration Automatique de Portraits IA
  * Améliore automatiquement les portraits avec retouches IA avancées
  *
@@ -12,6 +11,7 @@ const STR_BASIC = 'basic';
  */
 
 import logger from '../config/logger.js';
+
 const sharp = require('sharp');/**
  * @class PortraitEnhancer
  * @description Expert IA en amélioration automatique de portraits
@@ -38,8 +38,7 @@ export class PortraitEnhancer {
             preserveStructure: this.config.preserveOriginalStructure
         });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
 
     /**
@@ -102,9 +101,7 @@ export class PortraitEnhancer {
      * @returns {Promise<Object>} Résultat de l'amélioration
      */
     async enhancePortrait(inputPath, outputPath, options = {}) {
-        const enhancementId = `enhance_${Date.now()}`;
-
-        logger.info('🎨 Starting portrait enhancement', {
+        const enhancementId = `enhance_${Date.now()}`;        logger.info('🎨 Starting portrait enhancement', {
             enhancementId
             inputPath
             level: options.enhancementLevel || this.config.enhancementLevel
@@ -120,13 +117,10 @@ export class PortraitEnhancer {
                 processedImage: null
                 analysis: null
                 enhancements: []
-            };
-
-            // Phase 1: Chargement et analyse initiale
+            };            // Phase 1: Chargement et analyse initiale
             logger.info('🔍 Phase 1: Loading and analyzing portrait');
             enhancementSession.originalImage = await sharp(inputPath);
-            const metadata = await enhancementSession.originalImage.metadata();
-            enhancementSession.analysis = await this.analyzePortrait(enhancementSession.originalImage);
+            const metadata = await enhancementSession.originalImage.metadata();            enhancementSession.analysis = await this.analyzePortrait(enhancementSession.originalImage);
 
             // Phase 2: Détection des visages et points clés
             logger.info('👤 Phase 2: Face detection and landmark analysis');
@@ -143,13 +137,16 @@ export class PortraitEnhancer {
 
             // Phase 4: Améliorations spécifiques au visage
             logger.info('✨ Phase 4: Face-specific enhancements');
-            if (faceData.faces.length > 0) {
+            async if(
+                    enhancementSession.processedImage
+                    faceData
+                    options
+                ) 
                 enhancementSession.processedImage = await this.applyFacialEnhancements(
                     enhancementSession.processedImage
                     faceData
                     options
                 );
-            }
 
             // Phase 5: Finitions et optimisation
             logger.info('🎯 Phase 5: Final touches and optimization');
@@ -165,9 +162,7 @@ export class PortraitEnhancer {
             const qualityComparison = await this.compareImageQuality(
                 enhancementSession.originalImage
                 enhancementSession.processedImage
-            );
-
-            enhancementSession.endTime = Date.now();
+            );            enhancementSession.endTime = Date.now();
             enhancementSession.processingTime = enhancementSession.endTime - enhancementSession.startTime;
 
             const result = {
@@ -191,7 +186,7 @@ export class PortraitEnhancer {
                 }
                 // Détails techniques
                 technicalInfo: {
-                    originalSize: metadata.width + 'x' + metadata.height
+                    originalSize: `${metadata.width}x${metadata.height}`
                     fileSize: {
                         original: metadata.size
                         enhanced: (await sharp(outputPath).metadata()).size
@@ -209,9 +204,7 @@ export class PortraitEnhancer {
                 }))
                 // Recommandations
                 recommendations: this.generateEnhancementRecommendations(enhancementSession)
-            };
-
-            logger.info('✅ Portrait enhancement completed successfully', {
+            };            logger.info('✅ Portrait enhancement completed successfully', {
                 enhancementId
                 facesDetected: result.facesDetected
                 qualityScore: result.qualityImprovement.overallScore
@@ -220,8 +213,7 @@ export class PortraitEnhancer {
 
             return result;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -242,9 +234,7 @@ export class PortraitEnhancer {
             color: {}
             composition: {}
             problems: []
-        };
-
-        // Analyse de la netteté
+        };        // Analyse de la netteté
         analysis.quality.sharpness = await this.qualityAnalysis.sharpness.analyze(image);
         if (analysis.quality.sharpness < 0.7) {
             analysis.problems.push('low_sharpness');
@@ -278,30 +268,21 @@ export class PortraitEnhancer {
         const faceData = {
             faces: []
       totalFaces: 0
-        };
-
-        // Détection des visages
+        };        // Détection des visages
         const faces = await this.faceDetection.detector.detect(image);
         faceData.totalFaces = faces.length;
 
-        for (const face of faces) {
+        async for(image
+      face.bbox) {
             // Détection des points caractéristiques
             const landmarks = await this.faceDetection.landmarkDetector.detect(image
-      face.bbox);
-
-            // Analyse de la peau
+      face.bbox);            // Analyse de la peau
             const skinAnalysis = await this.faceDetection.skinDetector.analyze(image
-      face.bbox);
-
-            // Détection des yeux
+      face.bbox);            // Détection des yeux
             const eyeData = await this.faceDetection.eyeDetector.detect(image
-      landmarks);
-
-            // Détection de la bouche
+      landmarks);            // Détection de la bouche
             const mouthData = await this.faceDetection.mouthDetector.detect(image
-      landmarks);
-
-            faceData.faces.push({
+      landmarks);            faceData.faces.push({
                 confidence: face.confidence
       bbox: face.bbox
       landmarks: landmarks
@@ -319,11 +300,8 @@ export class PortraitEnhancer {
     /**
      * Applique les corrections automatiques de base
      */
-    async applyBasicCorrections(image, analysis, options) {
-        let processedImage = image;
-        const corrections = [];
-
-        // Correction de l'exposition
+    async applyBasicCorrections(analysis.problems.includes('underexposure') {
+        let processedImage = image;        const corrections = [];        // Correction de l'exposition
         if (analysis.problems.includes('underexposure') || analysis.problems.includes('overexposure')) {
             const exposureAdjustment = this.calculateExposureAdjustment(analysis.exposure);
             processedImage = await this.imageProcessors.exposure.process(processedImage, exposureAdjustment);
@@ -338,7 +316,7 @@ export class PortraitEnhancer {
         }
 
         // Correction des couleurs
-        if (this.config.autoColorCorrection) {
+        async if(processedImage) {
             const colorCorrection = await this.enhancementModels.colorCorrection.process(processedImage);
             processedImage = colorCorrection.image;
             corrections.push({ type: STR_BASIC, name: 'color_correction', adjustments: colorCorrection.adjustments });
@@ -357,20 +335,15 @@ export class PortraitEnhancer {
     /**
      * Applique les améliorations spécifiques au visage
      */
-    async applyFacialEnhancements(processedImageData, faceData, options) {
+    async applyFacialEnhancements(let i = 0; i < faceData.faces.length; i++) {
         let processedImage = processedImageData.image;
-        const enhancements = [...processedImageData.corrections];
-
-        for (let i = 0; i < faceData.faces.length; i++) {
-            const face = faceData.faces[i];
-
-            // Lissage de la peau
+        const enhancements = [...processedImageData.corrections];        for (let i = 0; i < faceData.faces.length; i++) {
+            const face = faceData.faces[i];            // Lissage de la peau
             if (this.shouldApplySkinSmoothing(face.skinAnalysis)) {
                 const skinSmoothing = await this.enhancementModels.skinSmoothing.process(
                     processedImage
                     face.bbox
-                    this.config.skinSmoothingStrength
-                );
+                    this.config.skinSmoothingStrength;                );
                 processedImage = skinSmoothing.image;
                 enhancements.push({
                     type: STR_FACIAL
@@ -381,11 +354,13 @@ export class PortraitEnhancer {
             }
 
             // Amélioration des yeux
-            if (this.config.eyeEnhancementEnabled && face.eyes.length > 0) {
-                const eyeEnhancement = await this.enhancementModels.eyeEnhancement.process(
+            async if(
                     processedImage
                     face.eyes
-                );
+                ) {
+                const eyeEnhancement = await this.enhancementModels.eyeEnhancement.process(
+                    processedImage
+                    face.eyes;                );
                 processedImage = eyeEnhancement.image;
                 face.eyeEnhanced = true;
                 enhancements.push({
@@ -400,8 +375,7 @@ export class PortraitEnhancer {
             if (this.config.teethWhiteningEnabled && this.shouldApplyTeethWhitening(face.mouth)) {
                 const teethWhitening = await this.enhancementModels.teethWhitening.process(
                     processedImage
-                    face.mouth
-                );
+                    face.mouth;                );
                 processedImage = teethWhitening.image;
                 face.mouthEnhanced = true;
                 enhancements.push({
@@ -419,11 +393,9 @@ export class PortraitEnhancer {
     /**
      * Applique les finitions finales
      */
-    async applyFinalEnhancements(processedImageData, analysis, options) {
+    async applyFinalEnhancements(analysis.quality.sharpness < 0.8) {
         let processedImage = processedImageData.image;
-        const enhancements = [...processedImageData.corrections];
-
-        // Netteté adaptative
+        const enhancements = [...processedImageData.corrections];        // Netteté adaptative
         if (analysis.quality.sharpness < 0.8) {
             const sharpening = await this.enhancementModels.sharpening.process(processedImage);
             processedImage = sharpening.image;
@@ -450,11 +422,8 @@ export class PortraitEnhancer {
     /**
      * Compare la qualité avant/après
      */
-    async compareImageQuality(originalImage, enhancedImage) {
-        const originalAnalysis = await this.analyzePortrait(originalImage);
-        const enhancedAnalysis = await this.analyzePortrait(enhancedImage);
-
-        return {
+    async compareImageQuality(originalImage) {
+        const originalAnalysis = await this.analyzePortrait(originalImage);        const enhancedAnalysis = await this.analyzePortrait(enhancedImage);        return {
             sharpnessGain: enhancedAnalysis.quality.sharpness - originalAnalysis.quality.sharpness
             noiseReduction: originalAnalysis.quality.noise - enhancedAnalysis.quality.noise
             colorBalance: this.calculateColorBalanceImprovement(originalAnalysis, enhancedAnalysis)
@@ -505,8 +474,7 @@ export class PortraitEnhancer {
     }
 
     calculateWarmthAdjustment(analysis) {
-        const colorTemp = analysis.color?
-      .temperature || 5500;
+        const colorTemp = analysis.color?;      .temperature || 5500;
         if (colorTemp < 4500) {
             return 0.1; // Plus chaud
         }
@@ -516,7 +484,7 @@ export class PortraitEnhancer {
         return 0;
     }
 
-    async applyNoiseReduction(image, strength) {
+    async applyNoiseReduction(image) {
         return await sharp(image)
             .median(Math.round(strength * 3))
             .blur(strength * 0.5);
@@ -545,9 +513,7 @@ export class PortraitEnhancer {
     }
 
     generateEnhancementRecommendations(session) {
-        const recommendations = [];
-
-        if (session.faceData.faces.length === 0) {
+        const recommendations = [];        if (session.faceData.faces.length === 0) {
             recommendations.push("No faces detected. Consider using landscape enhancement mode.");
         }
 
@@ -568,7 +534,7 @@ export class PortraitEnhancer {
 // =======================================
 
 class FaceDetectionModel {
-    async detect(image) {
+    async detect(_image) {
         // Simulation de détection de visages
         return [{
             confidence :
@@ -579,8 +545,8 @@ class FaceDetectionModel {
 }
 
 class FacialLandmarkDetector {
-    async detect(image, bbox) {
-        return Array.from({ length: 68 }, (_, i) => ({
+    async detect(_image, bbox) {
+        return Array.from({ length: 68 }, (_, _i) => ({
             x: bbox.x + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * bbox.width
             y: bbox.y + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * bbox.height
             confidence: 0.9
@@ -589,7 +555,7 @@ class FacialLandmarkDetector {
 }
 
 class SkinDetectionModel {
-    async analyze(image, bbox) {
+    async analyze(_image, _bbox) {
         return {
             roughness: 0.3
             blemishes: 0.15
@@ -600,7 +566,7 @@ class SkinDetectionModel {
 }
 
 class EyeDetectionModel {
-    async detect(image, landmarks) {
+    async detect(_image, landmarks) {
         return [
             { type: 'left_eye', landmarks: landmarks.slice(36, 42), needsEnhancement: true }
             { type: 'right_eye', landmarks: landmarks.slice(42, 48), needsEnhancement: true }
@@ -609,7 +575,7 @@ class EyeDetectionModel {
 }
 
 class MouthDetectionModel {
-    async detect(image, landmarks) {
+    async detect(_image, landmarks) {
         return {
             landmarks: landmarks.slice(48, 68)
             teethVisible: true
@@ -621,7 +587,7 @@ class MouthDetectionModel {
 
 // Modèles d'amélioration
 class SkinSmoothingModel {
-    async process(image, bbox, strength) {
+    async process(image, _bbox, strength) {
         return {
             image: image
             appliedStrength: strength * 0.8
@@ -630,7 +596,7 @@ class SkinSmoothingModel {
 }
 
 class EyeEnhancementModel {
-    async process(image, eyes) {
+    async process(image, _eyes) {
         return {
             image: image
             applied: ['brightness', 'contrast', 'sharpening']
@@ -639,7 +605,7 @@ class EyeEnhancementModel {
 }
 
 class TeethWhiteningModel {
-    async process(image, mouth) {
+    async process(image, _mouth) {
         return {
             image: image
             appliedStrength: 0.6
@@ -671,26 +637,26 @@ class PortraitSharpeningModel {
 
 // Processeurs d'image
 class ExposureProcessor {
-    async process(image, adjustment) {
+    async process(1 + adjustment) {
         const gamma = adjustment > 0 ? 1 / (1 + adjustment) : 1 + Math.abs(adjustment);
         return await sharp(image).gamma(gamma);
     }
 }
 
 class ContrastProcessor {
-    async process(image, adjustment) {
+    async process(image) {
         return await sharp(image).linear(1 + adjustment, 0);
     }
 }
 
 class SaturationProcessor {
-    async process(image, adjustment) {
+    async process(image) {
         return await sharp(image).modulate({ saturation: 1 + adjustment });
     }
 }
 
 class WarmthProcessor {
-    async process(image, adjustment) {
+    async process(adjustment) {
         const tint = adjustment > 0 ? [1 + adjustment * 0.1, 1, 1 - adjustment * 0.05] : [1, 1 + Math.abs(adjustment) * 0.05, 1 + Math.abs(adjustment) * 0.1];
         return await sharp(image).tint(tint);
     }
@@ -701,19 +667,19 @@ class ShadowProcessor {}
 
 // Analyseurs de qualité
 class SharpnessAnalyzer {
-    async analyze(image) {
+    async analyze(_image) {
         return 0.65; // Score de netteté simulé
     }
 }
 
 class NoiseAnalyzer {
-    async analyze(image) {
+    async analyze(_image) {
         return 0.25; // Niveau de bruit simulé
     }
 }
 
 class ExposureAnalyzer {
-    async analyze(image) {
+    async analyze(_image) {
         return {
             overexposed: 0.05
             underexposed: 0.15
@@ -723,7 +689,7 @@ class ExposureAnalyzer {
 }
 
 class CompositionAnalyzer {
-    async analyze(image) {
+    async analyze(_image) {
         return {
             rule_of_thirds: 0.7
             symmetry: 0.4

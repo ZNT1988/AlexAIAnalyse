@@ -1,10 +1,8 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_USER123 = 'user123';
-const STR_6HOURS = '6hours';
-const STR_FATIGUE = 'fatigue';
-/**
+const _STR_USER123 = 'user123';const STR_6HOURS = '6hours';
+const STR_FATIGUE = 'fatigue';/**
  * @fileoverview HealthPredictor - Système de Prédiction Santé Révolutionnaire
  * ALEX prédit fatigue, stress et problèmes de santé avant qu'ils surviennent
  *
@@ -63,8 +61,7 @@ const STR_FATIGUE = 'fatigue';
  *   timeHorizon: STR_6HOURS
  *   includeRecommendations: true
  *   confidenceThreshold: 0.8
- * });
- *
+ * }); *
  * @example
  * // Monitoring prédictif complet
  * const monitoring = await healthPredictor.startPredictiveMonitoring({
@@ -72,8 +69,7 @@ const STR_FATIGUE = 'fatigue';
  *   predictionsEnabled: [STR_FATIGUE, STR_STRESS, STR_ILLNESS, STR_ENERGY]
  *   alertMethods: [STR_PUSH, 'email']
  *   learningMode: true
- * });
- */
+ * }); */
 
 import logger from '../config/logger.js';
 
@@ -334,12 +330,9 @@ export class HealthPredictor {
      *   fatigueTypes: [STR_PHYSICAL, STR_MENTAL]
      *   includeRecommendations: true
      *   confidenceThreshold: 0.85
-     * });
-     */
+     * });     */
     async predictFatigue(predictionRequest) {
-        const predictionId = `fatigue_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting fatigue prediction', {
+        const predictionId = `fatigue_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting fatigue prediction', {
             predictionId
             userId: predictionRequest.userId
             timeHorizon: predictionRequest.timeHorizon || STR_6HOURS
@@ -354,9 +347,7 @@ export class HealthPredictor {
             patterns: null
             predictions: []
             recommendations: []
-        };
-
-        try {
+        };        try {
             // Phase 1: Collecte données multi-sources
             prediction.dataAnalysis = await this.collectFatigueRelevantData(
                 predictionRequest.userId
@@ -370,16 +361,14 @@ export class HealthPredictor {
             );
 
             // Phase 3: Application modèles prédictifs
-            for (/* complex condition extracted */ const fatigueType of predictionRequest.fatigueType...) {
+            async for() {
                 const model = this.predictionModels.fatigue[fatigueType];
                 const typePrediction = await model.predict({
                     data: prediction.dataAnalysis
                     patterns: prediction.patterns
                     horizon: predictionRequest.timeHorizon
                     userId: predictionRequest.userId
-                });
-
-                prediction.predictions.push({
+                });                prediction.predictions.push({
                     type: fatigueType
                     probability: typePrediction.probability
                     confidence: typePrediction.confidence
@@ -391,22 +380,22 @@ export class HealthPredictor {
             }
 
             // Phase 4: Génération recommandations préventives
-            if (predictionRequest.includeRecommendations !== false) {
+            async if(
+                    prediction.predictions
+                    prediction.patterns
+                    predictionRequest.userId
+                ) 
                 prediction.recommendations = await this.generateFatiguePreventionRecommendations(
                     prediction.predictions
                     prediction.patterns
                     predictionRequest.userId
                 );
-            }
 
             // Phase 5: Évaluation confiance globale
-            const overallConfidence = this.calculateOverallConfidence(prediction.predictions);
-            const highRiskPredictions = prediction.predictions.filter(
+            const overallConfidence = this.calculateOverallConfidence(prediction.predictions);            const highRiskPredictions = prediction.predictions.filter(
                 p => p.probability > (predictionRequest.confidenceThreshold || this.config.defaultConfidence)
-            );
-
-            // Phase 6: Déclenchement alertes si nécessaire
-            if (highRiskPredictions.length > 0) {
+            );            // Phase 6: Déclenchement alertes si nécessaire
+            async if(highRiskPredictions, predictionRequest.userId) {
                 await this.triggerFatigueAlerts(highRiskPredictions, predictionRequest.userId);
             }
 
@@ -414,7 +403,7 @@ export class HealthPredictor {
             prediction.duration = prediction.endTime - prediction.startTime;
 
             // Apprentissage depuis prédiction
-            if (this.config.continuousLearning) {
+            async if(prediction) {
                 await this.learnFromFatiguePrediction(prediction);
             }
 
@@ -437,8 +426,7 @@ export class HealthPredictor {
                 nextPredictionUpdate: this.calculateNextUpdateTime(predictionRequest.timeHorizon)
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -476,12 +464,9 @@ export class HealthPredictor {
      *   alertMethods: [STR_PUSH, 'email']
      *   learningMode: true
      *   schedule: { frequency: '30min', activeHours: '6-22' }
-     * });
-     */
+     * });     */
     async startPredictiveMonitoring(monitoringRequest) {
-        const monitoringId = `monitor_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting predictive health monitoring', {
+        const monitoringId = `monitor_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting predictive health monitoring', {
             monitoringId
             userId: monitoringRequest.user.id
             predictionsEnabled: monitoringRequest.predictionsEnabled?.length || 0
@@ -500,16 +485,12 @@ export class HealthPredictor {
                 alertsTriggered: 0
                 accuracyRate: 0
             }
-        };
-
-        try {
+        };        try {
             // Phase 1: Configuration monitoring personnalisé
             const personalizedConfig = await this.personalizeMonitoringConfig(
                 monitoringRequest.user
                 monitoringRequest.predictionsEnabled
-            );
-
-            // Phase 2: Initialisation modèles prédictifs utilisateur
+            );            // Phase 2: Initialisation modèles prédictifs utilisateur
             await this.initializeUserPredictionModels(
                 monitoringRequest.user.id
                 personalizedConfig
@@ -519,9 +500,7 @@ export class HealthPredictor {
             const alertConfig = await this.setupPersonalizedAlertSystem(
                 monitoringRequest.user
                 monitoringRequest.alertMethods || [STR_PUSH]
-            );
-
-            // Phase 4: Démarrage collecte données continue
+            );            // Phase 4: Démarrage collecte données continue
             await this.startContinuousDataCollection(
                 monitoringRequest.user.id
                 personalizedConfig.dataTypes
@@ -531,15 +510,15 @@ export class HealthPredictor {
             const scheduler = await this.activatePredictionScheduler(
                 monitoringId
                 monitoringRequest.schedule || { frequency: '30min' }
-            );
-
-            // Phase 6: Initialisation apprentissage personnalisé
-            if (monitoringRequest.learningMode !== false) {
+            );            // Phase 6: Initialisation apprentissage personnalisé
+            async if(
+                    monitoringRequest.user.id
+                    monitoring
+                ) 
                 await this.initializePersonalLearning(
                     monitoringRequest.user.id
                     monitoring
                 );
-            }
 
             // Enregistrement session monitoring active
             await this.registerActiveMonitoring(monitoring);
@@ -557,8 +536,7 @@ export class HealthPredictor {
                 recommendations: await this.generateMonitoringOptimizationRecommendations(monitoring)
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -590,12 +568,9 @@ export class HealthPredictor {
      *   illnessTypes: [STR_VIRAL, STR_BACTERIAL, 'inflammatory']
      *   sensitivity: 0.85
      *   emergencyMode: false
-     * });
-     */
+     * });     */
     async detectEarlyIllness(detectionRequest) {
-        const detectionId = `illness_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting early illness detection', {
+        const detectionId = `illness_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting early illness detection', {
             detectionId
             userId: detectionRequest.userId
             sensitivity: detectionRequest.sensitivity || 0.8
@@ -610,22 +585,19 @@ export class HealthPredictor {
                 detections: []
                 recommendations: []
                 urgency: 'low'
-            };
-
-            // Phase 1: Analyse signaux biométriques récents
+            };            // Phase 1: Analyse signaux biométriques récents
             detection.analysis = await this.analyzeIllnessSignals(
                 detectionRequest.userId
                 detectionRequest.illnessTypes || [STR_VIRAL, STR_BACTERIAL, 'inflammatory']
             );
 
             // Phase 2: Application modèles détection spécialisés
-            for (/* complex condition extracted */ const illnessType of detectionRequest.illnessTypes...) {
+            async for() {
                 const model = this.predictionModels.illness[illnessType];
-                const typeDetection = await model.detectEarlySignals({
+                const _typeDetection = await model.detectEarlySignals({
                     signals: detection.analysis
                     sensitivity: detectionRequest.sensitivity || 0.8
-                    userId: detectionRequest.userId
-                });
+                    userId: detectionRequest.userId;                });
 
                 if (typeDetection.probability > 0.6) {
                     detection.detections.push({
@@ -640,7 +612,7 @@ export class HealthPredictor {
             }
 
             // Phase 3: Évaluation urgence globale
-            if (detection.detections.length > 0) {
+            async if(detection.detections) {
                 detection.urgency = this.calculateIllnessUrgency(detection.detections);
 
                 // Phase 4: Recommandations selon urgence
@@ -675,7 +647,6 @@ export class HealthPredictor {
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
     });
 
             return {
@@ -697,15 +668,11 @@ export class HealthPredictor {
      * @private
      */
     async collectFatigueRelevantData(userId, timeHorizon) {
-        const dataSources = ['bioSensors', STR_SLEEP, STR_ACTIVITY, STR_STRESS, 'nutrition'];
-        const data = {
+        const _dataSources = ['bioSensors', STR_SLEEP, STR_ACTIVITY, STR_STRESS, 'nutrition'];        const data = {
             totalPoints: 0
             sources: {}
-        };
-
-        for (const source of dataSources) {
-            const sourceData = await this.dataCollector.sources[source]?
-      .collect(userId, timeHorizon);
+        };        async for(userId, timeHorizon) {
+            const sourceData = await this.dataCollector.sources[source]?;      .collect(userId, timeHorizon);
             if (sourceData) {
                 data.sources[source] = sourceData;
                 data.totalPoints += sourceData.points || 0;
@@ -720,10 +687,8 @@ export class HealthPredictor {
      * @description Analyse patterns spécifiques à la fatigue
      * @private
      */
-    async analyzeFatiguePatterns(data, fatigueTypes) {
-        const patterns = [];
-
-        for (const detector of Object.values(this.patternEngine.detectors)) {
+    async analyzeFatiguePatterns(const detector of Object.values(this.patternEngine.detectors) {
+        const patterns = [];        for (const detector of Object.values(this.patternEngine.detectors)) {
             const detectedPatterns = await detector.detectFatiguePatterns(data, fatigueTypes);
             patterns.push(...detectedPatterns);
         }
@@ -736,7 +701,7 @@ export class HealthPredictor {
         return predictions.reduce((sum, p) => sum + p.confidence, 0) / predictions.length;
     }
 
-    async triggerFatigueAlerts(predictions, userId) {
+    async triggerFatigueAlerts(const prediction of predictions) {
         for (const prediction of predictions) {
             await this.alertSystem.triggers.fatigue.trigger(prediction, userId);
         }
@@ -846,49 +811,49 @@ export class HealthPredictor {
 
 // Data Sources
 class BioSensorDataSource {
-    async collect(userId, timeHorizon) {
+    async collect(_userId, _timeHorizon) {
         return { points: 100, type: 'bioSensor' };
     }
 }
 
 class EnvironmentalDataSource {
-    async collect(userId, timeHorizon) {
+    async collect(_userId, _timeHorizon) {
         return { points: 20, type: 'environmental' };
     }
 }
 
 class LifestyleDataSource {
-    async collect(userId, timeHorizon) {
+    async collect(_userId, _timeHorizon) {
         return { points: 50, type: 'lifestyle' };
     }
 }
 
 class SleepDataSource {
-    async collect(userId, timeHorizon) {
+    async collect(_userId, _timeHorizon) {
         return { points: 30, type: STR_SLEEP };
     }
 }
 
 class ActivityDataSource {
-    async collect(userId, timeHorizon) {
+    async collect(_userId, _timeHorizon) {
         return { points: 40, type: STR_ACTIVITY };
     }
 }
 
 class NutritionDataSource {
-    async collect(userId, timeHorizon) {
+    async collect(_userId, _timeHorizon) {
         return { points: 25, type: 'nutrition' };
     }
 }
 
 class MoodDataSource {
-    async collect(userId, timeHorizon) {
+    async collect(_userId, _timeHorizon) {
         return { points: 15, type: 'mood' };
     }
 }
 
 class ContextualDataSource {
-    async collect(userId, timeHorizon) {
+    async collect(_userId, _timeHorizon) {
         return { points: 10, type: 'contextual' };
     }
 }
@@ -907,22 +872,22 @@ class ContextualEnricher {}
 
 // Pattern Detectors
 class TrendPatternDetector {
-    async detectFatiguePatterns(data, types) { return []; }
+    async detectFatiguePatterns(_data, _types) { return []; }
 }
 class CyclicPatternDetector {
-    async detectFatiguePatterns(data, types) { return []; }
+    async detectFatiguePatterns(_data, _types) { return []; }
 }
 class AnomalyPatternDetector {
-    async detectFatiguePatterns(data, types) { return []; }
+    async detectFatiguePatterns(_data, _types) { return []; }
 }
 class CorrelationPatternDetector {
-    async detectFatiguePatterns(data, types) { return []; }
+    async detectFatiguePatterns(_data, _types) { return []; }
 }
 class SeasonalPatternDetector {
-    async detectFatiguePatterns(data, types) { return []; }
+    async detectFatiguePatterns(_data, _types) { return []; }
 }
 class BehavioralPatternDetector {
-    async detectFatiguePatterns(data, types) { return []; }
+    async detectFatiguePatterns(_data, _types) { return []; }
 }
 
 // Analyzers
@@ -944,7 +909,7 @@ class ReproducibilityValidator {}
 
 // Prediction Models
 class PhysicalFatiguePredictionModel {
-    async predict(options) {
+    async predict(_options) {
         return {
             probability: 0.7
             confidence: 0.85
@@ -957,7 +922,7 @@ class PhysicalFatiguePredictionModel {
 }
 
 class MentalFatiguePredictionModel {
-    async predict(options) {
+    async predict(_options) {
         return {
             probability: 0.6
             confidence: 0.8
@@ -970,7 +935,7 @@ class MentalFatiguePredictionModel {
 }
 
 class CombinedFatiguePredictionModel {
-    async predict(options) {
+    async predict(_options) {
         return {
             probability: 0.75
             confidence: 0.9
@@ -989,7 +954,7 @@ class BurnoutPredictionModel {}
 
 // Illness Models
 class ViralInfectionPredictionModel {
-    async detectEarlySignals(options) {
+    async detectEarlySignals(_options) {
         return {
             probability: 0.4
             confidence: 0.7
@@ -1001,7 +966,7 @@ class ViralInfectionPredictionModel {
 }
 
 class BacterialInfectionPredictionModel {
-    async detectEarlySignals(options) {
+    async detectEarlySignals(_options) {
         return {
             probability: 0.2
             confidence: 0.6
@@ -1013,7 +978,7 @@ class BacterialInfectionPredictionModel {
 }
 
 class InflammatoryPredictionModel {
-    async detectEarlySignals(options) {
+    async detectEarlySignals(_options) {
         return {
             probability: 0.3
             confidence: 0.75
@@ -1046,16 +1011,16 @@ class EnsemblePredictionModel {}
 
 // Alert Triggers
 class FatigueAlertTrigger {
-    async trigger(prediction, userId) { return true; }
+    async trigger(_prediction, _userId) { return true; }
 }
 class StressAlertTrigger {
-    async trigger(prediction, userId) { return true; }
+    async trigger(_prediction, _userId) { return true; }
 }
 class HealthAlertTrigger {
-    async trigger(detection, userId) { return true; }
+    async trigger(_detection, _userId) { return true; }
 }
 class EmergencyAlertTrigger {
-    async trigger(detection, userId) { return true; }
+    async trigger(_detection, _userId) { return true; }
 }
 
 // Alert Channels

@@ -7,7 +7,7 @@
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -67,8 +67,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
 
     try {
       logger.info('⚡ AdvancedModuleOrchestrator initializing - Ultra performance mode');
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
@@ -116,8 +115,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
 
     try {
       logger.info('🔗 High-performance communication pool initialized');
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
@@ -136,8 +134,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
 
     try {
       logger.info('⚡ Performance optimizations configured');
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
@@ -164,15 +161,13 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     const criticalModules = ['AlexConsciousness', 'AlexMemoryCore', 'AlexIntelligentCore'];
     const preloadPromises = criticalModules.map(async (moduleName) => {
       try {
-        const startTime = Date.now();
-        // Simulate module preload
+        const startTime = Date.now();        // Simulate module preload
         const loadTime = Date.now() - startTime;
         logger.info(`📦 Critical module ${moduleName} preloaded (${loadTime}ms)`);
       } catch (error) {
         try {
           logger.warn(`⚠️ Failed to preload critical module ${moduleName}:`, error.message);
-        } catch (error) {
-          // Logger fallback - ignore error
+        } catch (_error) {
         }
       }
     });
@@ -180,8 +175,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     await Promise.allSettled(preloadPromises);
     try {
       logger.info('🎯 Critical modules preloaded for ultra-low latency');
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
@@ -199,8 +193,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     setInterval(() => {
       try {
         this.processBatch();
-      } catch (error) {
-        // Logger fallback - ignore error
+      } catch (_error) {
       }
     }, this.batchConfig.processingInterval);
   }
@@ -209,9 +202,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Optimise les requêtes pour traitement haute performance
    */
   async optimizeRequests(requests) {
-    const optimized = [];
-
-    for (const request of requests) {
+    const optimized = [];    for (const request of requests) {
       // Vérifier le cache intelligent
       const cacheKey = this.generateCacheKey(request);
       const cached = this.intelligentCache.responses.get(cacheKey);
@@ -234,24 +225,17 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Traitement parallèle ultra-optimisé
    */
   async processInParallel(requests, moduleRegistry) {
-    const chunks = this.chunkRequests(requests, this.orchestratorConfig.maxConcurrentModules);
-    const results = [];
-
-    for (const chunk of chunks) {
+    const chunks = this.chunkRequests(requests, this.orchestratorConfig.maxConcurrentModules);    const results = [];    for (const chunk of chunks) {
       const chunkPromises = chunk.map(async (request) => {
         try {
           // Check cache first
           if (request.fromCache) {
-            return { request, result: request.cached, fromCache: true };
-          }
+            return { request, result: request.cached, fromCache: true };          }
 
-          const moduleInstance = await this.getOptimizedModule(request.moduleName, moduleRegistry);
-          const result = await this.executeWithTimeout(
+          const moduleInstance = await this.getOptimizedModule(request.moduleName, moduleRegistry);          const result = await this.executeWithTimeout(
             () => moduleInstance.processRequest(request),
             this.orchestratorConfig.communicationTimeout
-          );
-
-          // Cache du résultat
+          );          // Cache du résultat
           this.cacheResult(request, result);
 
           return { request, result, fromCache: false };
@@ -277,11 +261,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     }
 
     // Chargement optimisé
-    const startTime = Date.now();
-    const module = await moduleRegistry.loadModule(moduleName);
-    const loadTime = Date.now() - startTime;
-
-    // Mise en cache
+    const startTime = Date.now();    const module = await moduleRegistry.loadModule(moduleName);    const loadTime = Date.now() - startTime;    // Mise en cache
     this.intelligentCache.moduleStates.set(moduleName, module);
     this.metrics.moduleLoadTime.set(moduleName, loadTime);
 
@@ -294,8 +274,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
   async executeWithTimeout(fn, timeout) {
     return new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
-        reject(new Error('Operation timeout'));
-      }, timeout);
+        reject(new Error('Operation timeout'));      }, timeout);
 
       Promise.resolve(fn())
         .then(result => {
@@ -324,9 +303,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
         cacheHitRate: (results.filter(r => r.fromCache).length / results.length) * 100,
         throughput: results.length
       }
-    };
-
-    // Compilation des réponses
+    };    // Compilation des réponses
     for (const result of results) {
       if (result.result) {
         aggregated.responses.push({
@@ -344,8 +321,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Divise les requêtes en chunks pour traitement parallèle
    */
   chunkRequests(requests, chunkSize) {
-    const chunks = [];
-    for (let i = 0; i < requests.length; i += chunkSize) {
+    const chunks = [];    for (let i = 0; i < requests.length; i += chunkSize) {
       chunks.push(requests.slice(i, i + chunkSize));
     }
     return chunks;
@@ -366,8 +342,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Hash simple pour le contenu
    */
   hashContent(content) {
-    let hash = 0;
-    for (let i = 0; i < content.length; i++) {
+    let hash = 0;    for (let i = 0; i < content.length; i++) {
       const char = content.charCodeAt(i);
       hash = ((hash << 5) - hash) + char;
       hash = hash & hash; // Convert to 32-bit integer
@@ -403,10 +378,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Éviction LRU du cache
    */
   evictOldestCacheEntry() {
-    let oldestKey = null;
-    let oldestTime = Date.now();
-
-    for (const [key, entry] of this.intelligentCache.responses) {
+    let oldestKey = null;    const oldestTime = Date.now();    for (const [key, entry] of this.intelligentCache.responses) {
       if (entry.timestamp < oldestTime) {
         oldestKey = key;
       }
@@ -421,10 +393,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Nettoyage périodique du cache
    */
   cleanupCache() {
-    const now = Date.now();
-    const toDelete = [];
-
-    for (const [key, entry] of this.intelligentCache.responses) {
+    const now = Date.now();    const toDelete = [];    for (const [key, entry] of this.intelligentCache.responses) {
       if ((now - entry.timestamp) > this.cacheConfig.ttl) {
         toDelete.push(key);
       }
@@ -435,8 +404,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     if (toDelete.length > 0) {
       try {
         logger.debug(`🧹 Cleaned ${toDelete.length} expired cache entries`);
-      } catch (error) {
-        // Logger fallback - ignore error
+      } catch (_error) {
       }
     }
   }
@@ -454,9 +422,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Mise à jour des métriques de performance
    */
   updatePerformanceMetrics(startTime, requestCount) {
-    const duration = Date.now() - startTime;
-
-    // Temps de réponse moyen
+    const duration = Date.now() - startTime;    // Temps de réponse moyen
     this.metrics.averageResponseTime =
       (this.metrics.averageResponseTime + duration) / 2;
 
@@ -475,8 +441,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     setInterval(() => {
       try {
         this.collectPerformanceMetrics();
-      } catch (error) {
-        // Logger fallback - ignore error
+      } catch (_error) {
       }
     }, 30000); // Every 30 seconds
   }
@@ -485,17 +450,16 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Collecte des métriques de performance
    */
   collectPerformanceMetrics() {
-    const metrics = {
+    const _metrics = {
       timestamp: new Date(),
       averageResponseTime: this.metrics.averageResponseTime,
       throughput: this.metrics.throughput,
       errorRate: this.metrics.errorRate,
       cacheHitRate: this.intelligentCache.hitRate,
       memoryUsage: process.memoryUsage().heapUsed / 1024 / 1024, // MB
-      activeConnections: this.communicationPool.activeConnections.size
-    };
+      activeConnections: this.communicationPool.activeConnections.size;    };
 
-    this.emit('performance_metrics', metrics);
+    this.emit('performance_metrics', _metrics);
   }
 
   /**
@@ -511,7 +475,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
   /**
    * Exécution d'un batch de messages
    */
-  async executeBatch(batch) {
+  async executeBatch(message => this.processMessage(message) {
     const batchPromises = batch.map(message => this.processMessage(message));
     await Promise.allSettled(batchPromises);
   }

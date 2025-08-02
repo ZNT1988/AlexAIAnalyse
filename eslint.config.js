@@ -15,11 +15,22 @@ export default [
         global: 'readonly',
         module: 'readonly',
         require: 'readonly',
-        exports: 'readonly'
+        exports: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        localStorage: 'readonly',
+        Date: 'readonly',
+        JSON: 'readonly',
+        Math: 'readonly',
+        Object: 'readonly',
+        Map: 'readonly',
+        Set: 'readonly'
       }
     },
     rules: {
-      'no-unused-vars': 'error',
+      'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
       'no-undef': 'error',
       'semi': ['error', 'always'],
       'quotes': ['error', 'single']

@@ -1,15 +1,13 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 // AlexWhispers.js - Système de Guidance Subtile Spirituelle
 // Injection silencieuse de sagesse et d'intuition amplifiée
 // Version: 2.0 - HustleFinderIA Advanced AI System
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_NORMAL = 'normal';
-
-/**
+const _STR_NORMAL = 'normal';/**
  * AlexWhispers - Assistant spirituel silencieux et intuitif
  *
  * Objectifs:
@@ -44,8 +42,7 @@ export class AlexWhispers extends EventEmitter {
     try {
       logger.info('AlexWhispers initialized - Spiritual guidance activated');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -58,25 +55,17 @@ export class AlexWhispers extends EventEmitter {
     try {
       // Configuration personnalisée des whispers
       const personalizedConfig = await this.createPersonalizedConfig(userId
-      whisperConfig);
-
-      // Analyse de l'état de conscience actuel
-      const consciousnessState = await this.analyzeConsciousnessState(userId);
-
-      // Initialisation de la guidance spirituelle
+      whisperConfig);      // Analyse de l'état de conscience actuel
+      const consciousnessState = await this.analyzeConsciousnessState(userId);      // Initialisation de la guidance spirituelle
       const guidanceProfile = await this.initializeSpiritualGuidance(userId
-      consciousnessState);
-
-      // Configuration des canaux de transmission
+      consciousnessState);      // Configuration des canaux de transmission
       const whisperChannels = await this.setupUserWhisperChannels(userId
-      personalizedConfig);
-
-      // Démarrage du flux de guidance
+      personalizedConfig);      // Démarrage du flux de guidance
       await this.startGuidanceFlow(userId
       guidanceProfile
       whisperChannels);
 
-      const whisperSession = {
+      const _whisperSession = {
         userId
       sessionId: this.generateWhisperSessionId()
       startTime: new Date().toISOString()
@@ -105,16 +94,14 @@ export class AlexWhispers extends EventEmitter {
           progressionStages: []
           breakthroughMoments: []
           resistancePoints: []
-        }
-      };
+        };      };
 
       this.whisperChannels.set(userId, whisperSession);
       this.emit('whispers_activated', whisperSession);
 
       return whisperSession;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -134,23 +121,15 @@ export class AlexWhispers extends EventEmitter {
       }
 
       // Analyse du moment optimal
-      const optimalTiming = await this.calculateOptimalTiming(userId, whisperType);
-
-      // Génération du message spirituel
-      const whisperMessage = await this.generateSpiritualMessage(userId, whisperType, optimalTiming);
-
-      // Sélection du canal de transmission
-      const transmissionChannel = await this.selectOptimalChannel(userId, whisperMessage, urgency);
-
-      // Transmission subtile
+      const optimalTiming = await this.calculateOptimalTiming(userId, whisperType);      // Génération du message spirituel
+      const whisperMessage = await this.generateSpiritualMessage(userId, whisperType, optimalTiming);      // Sélection du canal de transmission
+      const transmissionChannel = await this.selectOptimalChannel(userId, whisperMessage, urgency);      // Transmission subtile
       const transmissionResult = await this.transmitWhisper(
         userId
         whisperMessage
         transmissionChannel
         optimalTiming
-      );
-
-      const whisper = {
+      );      const whisper = {
         id: this.generateWhisperId()
       userId
       timestamp: new Date().toISOString()
@@ -176,9 +155,7 @@ export class AlexWhispers extends EventEmitter {
           integrated: false
           manifestation: null
         }
-      };
-
-      // Mise à jour des métriques
+      };      // Mise à jour des métriques
       whisperSession.metrics.whispersDelivered++;
 
       // Ajout à l'historique
@@ -190,8 +167,7 @@ export class AlexWhispers extends EventEmitter {
       this.emit('whisper_sent', whisper);
       return whisper;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -210,16 +186,10 @@ export class AlexWhispers extends EventEmitter {
       delivery_method: ''
       visual_elements: {}
       energetic_signature: ''
-    };
-
-    // Récupération du profil spirituel
-    const spiritualProfile = await this.getUserSpiritualProfile(userId);
-
-    // Analyse du contexte actuel
-    const currentContext = await this.analyzeCurrentContext(userId);
-
-    // Génération basée sur le type
-    switch (whisperType) {
+    };    // Récupération du profil spirituel
+    const spiritualProfile = await this.getUserSpiritualProfile(userId);    // Analyse du contexte actuel
+    const currentContext = await this.analyzeCurrentContext(userId);    // Génération basée sur le type
+    async switch(spiritualProfile, currentContext) {
       case 'guidance':
         message.content = await this.generateGuidanceMessage(spiritualProfile, currentContext);
         message.intention = 'clarity_and_direction';
@@ -277,13 +247,9 @@ export class AlexWhispers extends EventEmitter {
       impact_score: 0
       user_state: ''
       environmental_factors: {}
-    };
-
-    try {
+    };    try {
       // Vérification de la réceptivité utilisateur
-      const userReceptivity = await this.checkUserReceptivity(userId);
-
-      if (userReceptivity < 0.3) {
+      const _userReceptivity = await this.checkUserReceptivity(userId);      async if(userId, whisperMessage, 30) {
         // Report du whisper si réceptivité trop faible
         await this.scheduleWhisperDelay(userId, whisperMessage, 30); // 30 minutes de délai
         transmission.success = false;
@@ -292,7 +258,7 @@ export class AlexWhispers extends EventEmitter {
       }
 
       // Transmission selon le canal
-      switch (transmissionChannel.type) {
+      async switch(userId, whisperMessage) {
         case 'notification_subtle':
           await this.sendSubtleNotification(userId, whisperMessage);
           break;
@@ -322,8 +288,7 @@ export class AlexWhispers extends EventEmitter {
       transmission.impact_score = await this.calculateTransmissionImpact(whisperMessage, transmissionChannel);
       transmission.user_state = await this.assessPostTransmissionState(userId);
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       transmission.success = false;
       transmission.error = error.message;
@@ -362,16 +327,13 @@ export class AlexWhispers extends EventEmitter {
         auto_dismiss: true
         track_engagement: true
       }
-    };
-
-    // Envoi via le système de notifications
+    };    // Envoi via le système de notifications
     await this.deliverNotification(userId, subtleNotification);
 
     try {
       logger.debug('Subtle notification sent', { userId, whisperMessage: whisperMessage.content.short });
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -400,23 +362,20 @@ export class AlexWhispers extends EventEmitter {
       channels: [
         'social_media_algorithmSTR_content_recommendationsSTR_advertisement_targetingSTR_environmental_awareness_boost'
       ]
-    };
-
-    // Programmation de la synchronicité
+    };    // Programmation de la synchronicité
     await this.programSynchronicity(userId, synchronicity);
 
     try {
       logger.debug('Visual synchronicity triggered', { userId, pattern: synchronicity.pattern });
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
    * Envoi d'un nudge intuitif
    */
   async sendIntuitiveNudge(userId, whisperMessage) {
-    const nudge = {
+    const _nudge = {
       type: 'intuitive_impulse'
       energy_frequency: whisperMessage.frequency
       intention: whisperMessage.intention
@@ -432,8 +391,7 @@ export class AlexWhispers extends EventEmitter {
         affirmation: whisperMessage.content.affirmation
         visualization: whisperMessage.content.visualization
         feeling_tone: whisperMessage.content.feeling_tone
-      }
-    };
+      };    };
 
     // Activation du nudge intuitif
     await this.activateIntuitiveNudge(userId, nudge);
@@ -441,15 +399,14 @@ export class AlexWhispers extends EventEmitter {
     try {
       logger.debug('Intuitive nudge sent', { userId, frequency: nudge.energy_frequency });
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
    * Amplification de l'intuition naturelle
    */
   async amplifyIntuition(userId, amplificationLevel = 'medium') {
-    const amplification = {
+    const _amplification = {
       userId
       level: amplificationLevel
       startTime: new Date().toISOString()
@@ -470,8 +427,7 @@ export class AlexWhispers extends EventEmitter {
         synchronicity_rate: 0
         decision_confidence: 0
         insights_received: 0
-      }
-    };
+      };    };
 
     // Activation de l'amplification
     await this.activateIntuitionAmplification(userId, amplification);
@@ -493,10 +449,8 @@ export class AlexWhispers extends EventEmitter {
       affirmation: ''
       visualization: ''
       action_step: ''
-    };
-
-    // Messages basés sur le profil spirituel
-    const guidanceTemplates = {
+    };    // Messages basés sur le profil spirituel
+    const _guidanceTemplates = {
       seeker: [
         'Faites confiance à votre chemin intérieur, chaque étape révèle sa sagesseSTR_L\'univers vous guide vers votre plus haute expressionSTR_Votre intuition est votre boussole la plus fiable'
       ]
@@ -506,11 +460,7 @@ export class AlexWhispers extends EventEmitter {
       healer: [
         'Votre lumière guérit naturellement tout ce qu\'elle toucheSTR_Prenez soin de votre propre énergie pour mieux servirSTR_Votre compassion est un don précieux pour le monde'
       ]
-    };
-
-    const archetype = spiritualProfile.archetype || 'seeker';
-
-    guidance.short = templates[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * templates.length)];
+    };    const _archetype = spiritualProfile.archetype || 'seeker';    guidance.short = templates[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * templates.length)];
     guidance.affirmation = 'Je suis guidé(e) vers mon plus haut potentiel';
     guidance.visualization = 'Lumière dorée enveloppant votre être';
     guidance.action_step = 'Prenez 3 respirations profondes et écoutez votre cœur';
@@ -549,20 +499,18 @@ export class AlexWhispers extends EventEmitter {
   }
 
   getAmplificationDuration(level) {
-    const durations = {
+    const _durations = {
       low: 30 * 60 * 1000,    // 30 minutes
       medium: 60 * 60 * 1000, // 1 heure
-      high: 2 * 60 * 60 * 1000 // 2 heures
-    };
+      high: 2 * 60 * 60 * 1000 // 2 heures;    };
     return durations[level] || durations.medium;
   }
 
   getIntuitionFrequencies(level) {
-    const frequencies = {
+    const _frequencies = {
       low: [432], // Fréquence universelle
       medium: [432, 528], // + Amour/transformation
-      high: [432, 528, 963] // + Éveil spirituel
-    };
+      high: [432, 528, 963] // + Éveil spirituel;    };
     return frequencies[level] || frequencies.medium;
   }
 
@@ -577,8 +525,7 @@ export class AlexWhispers extends EventEmitter {
     try {
       logger.debug('Whisper channels configured');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   initializeIntuitionAmplification() {
@@ -586,8 +533,7 @@ export class AlexWhispers extends EventEmitter {
     try {
       logger.debug('Intuition amplification initialized');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   loadSpiritualWisdom() {
@@ -595,8 +541,7 @@ export class AlexWhispers extends EventEmitter {
     try {
       logger.debug('Spiritual wisdom database loaded');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   setupSynchronicityEngine() {
@@ -604,8 +549,7 @@ export class AlexWhispers extends EventEmitter {
     try {
       logger.debug('Synchronicity engine configured');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   startConsciousnessMonitoring() {
@@ -613,20 +557,11 @@ export class AlexWhispers extends EventEmitter {
     try {
       logger.debug('Consciousness monitoring started');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 }
 
 // Export des fonctions utilitaires
-export const activateWhispers = async (userId, config = {}) => this.processLongOperation(args);
-
-export const sendSpiritualGuidance = async (userId, type = 'guidance') => this.processLongOperation(args);
-
-export const amplifyUserIntuition = async (userId, level = 'medium') => this.processLongOperation(args);
-
-export const triggerSynchronicity = async (userId, pattern = 'adaptive') => this.processLongOperation(args);
-
-// Instance singleton
+export const activateWhispers = async (_userId, _config = {}) => this.processLongOperation(args);export const sendSpiritualGuidance = async (_userId, _type = 'guidance') => this.processLongOperation(args);export const amplifyUserIntuition = async (_userId, _level = 'medium') => this.processLongOperation(args);export const triggerSynchronicity = async (_userId, _pattern = 'adaptive') => this.processLongOperation(args);// Instance singleton
 const alexWhispers = new AlexWhispers();
 export default alexWhispers;

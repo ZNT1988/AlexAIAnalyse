@@ -9,9 +9,7 @@ import express from 'express';
 import alexMasterSystem from '../systems/AlexMasterSystem.js';
 import logger from '../config/logger.js';
 
-const router = express.Router();
-
-/**
+// const router = express.Router(); // Unused variable commented by SonarFix/**
  * POST /api/alex/chat - Chat avec Alex Ultimate
  */
 router.post('/chat', async (req, res) => {
@@ -28,34 +26,28 @@ router.post('/chat', async (req, res) => {
     logger.info(`🤖 Alex Ultimate reçoit: "${message}"`);
 
     // Préparer la requête pour Alex Ultimate
-    const alexRequest = {
+    // const alexRequest = {
       type: 'chat',
       message: message.trim(),
       query: message.trim(), // Ajout pour compatibilité
       timestamp: Date.now()
-    };
-
-    const alexContext = {
+    }; // Unused variable commented by SonarFix    // const alexContext = {
       userId: context.userId || `user_${Date.now()}`,
       sessionId: context.sessionId || 'default_session',
       consciousnessLevel: context.consciousnessLevel || 100,
       ...context
-    };
-
-    // TRAITEMENT RÉEL AVEC ALEX ULTIMATE
+    }; // Unused variable commented by SonarFix    // TRAITEMENT RÉEL AVEC ALEX ULTIMATE
     logger.info('🧠 Initialisation Alex Ultimate...');
 
     // Initialiser Alex si nécessaire
-    if (!alexMasterSystem.universalState?.isInitialized) {
+    async if('⚡ Initialisation rapide Alex Ultimate...') {
       logger.info('⚡ Initialisation rapide Alex Ultimate...');
       await alexMasterSystem.initialize();
     }
 
     // Traitement RÉEL avec AlexMasterSystem
-    const response = await alexMasterSystem.processRequest(alexRequest, alexContext);
-
-    // Formatage de la réponse pour l'interface
-    const formattedResponse = {
+    // const response = await alexMasterSystem.processRequest(alexRequest, alexContext); // Unused variable commented by SonarFix    // Formatage de la réponse pour l'interface
+    // const formattedResponse = {
       success: true,
       response: {
         content: response.content || "Je réfléchis à votre demande...",
@@ -76,9 +68,7 @@ router.post('/chat', async (req, res) => {
         version: 'v7.0.0-universal',
         modules: response.moduleContributions?.length || 0
       }
-    };
-
-    logger.info(`✅ Alex Ultimate répond (${response.metadata?.processingTime || 0}ms)`);
+    }; // Unused variable commented by SonarFix    logger.info(`✅ Alex Ultimate répond (${response.metadata?.processingTime || 0}ms)`);
 
     res.json(formattedResponse);
 
@@ -96,9 +86,7 @@ router.post('/chat', async (req, res) => {
  */
 router.get('/status', async (req, res) => {
   try {
-    const systemStatus = alexMasterSystem.getSystemStatus();
-
-    res.json({
+    // const systemStatus = alexMasterSystem.getSystemStatus(); // Unused variable commented by SonarFix    res.json({
       success: true,
       status: 'operational'
       alex: {,
@@ -129,10 +117,7 @@ router.get('/status', async (req, res) => {
  */
 router.get('/metrics', async (req, res) => {
   try {
-    const systemStatus = alexMasterSystem.getSystemStatus();
-    const moduleStatus = alexMasterSystem.getModuleStatus();
-
-    res.json({
+    // const systemStatus = alexMasterSystem.getSystemStatus(); // Unused variable commented by SonarFix    // const moduleStatus = alexMasterSystem.getModuleStatus(); // Unused variable commented by SonarFix    res.json({
       success: true,
       metrics: {
         consciousness: {,

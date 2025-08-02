@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const crypto = require('node:crypto');
 class PhotoPromptGenerator {
     constructor() {
         this.themes = {
@@ -34,16 +34,8 @@ class PhotoPromptGenerator {
             includeCamera: options.includeCamera || false
             includeLighting: options.includeLighting || true
             style: options.style || null
-        };
-
-        const baseThemes = this.themes[category] || this.themes.portrait;
-        const selectedTheme = baseThemes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * baseThemes.length)];
-        const selectedMood = this.moods[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * this.moods.length)];
-        const selectedTechnique = this.techniques[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * this.techniques.length)];
-
-        let prompt = `${selectedMood} ${category} photo with ${selectedTheme}`;
-
-        if (config.complexity === 'high') {
+        };        const baseThemes = this.themes[category] || this.themes.portrait;
+        const selectedTheme = baseThemes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * baseThemes.length)];        const selectedMood = this.moods[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * this.moods.length)];        const selectedTechnique = this.techniques[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * this.techniques.length)];        let prompt = `${selectedMood} ${category} photo with ${selectedTheme}`;        if (config.complexity === 'high') {
             prompt += `, using ${selectedTechnique} technique`;
         }
 
@@ -80,13 +72,10 @@ class PhotoPromptGenerator {
     }
 
     generateMultiplePrompts(category, count = 5, options = {}) {
-        const prompts = [];
-
-        for (let i = 0; i < count; i++) {
-            const prompt = this.generatePrompt(category, {
+        const prompts = [];        for (let i = 0; i < count; i++) {
+            const _prompt = this.generatePrompt(category, {
                 ...options
-                complexity: ['simple', 'medium', 'high'][i % 3]
-            });
+                complexity: ['simple', 'medium', 'high'][i % 3];            });
             prompts.push(prompt);
         }
 

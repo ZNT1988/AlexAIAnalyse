@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_HEART_RATE = 'heart_rate';
-const STR_1WEEK = '1week';
+const STR_HEART_RATE = 'heart_rate';const STR_1WEEK = '1week';
 
 /**
  * @fileoverview BioSensorAdapter - Système d'Intégration Capteurs Biométriques Révolutionnaire
@@ -64,8 +63,7 @@ const STR_1WEEK = '1week';
  *   monitoring: [STR_HEART_RATE, STR_SLEEP, STR_STRESS, STR_ACTIVITY]
  *   alerting: true
  *   predictions: true
- * });
- *
+ * }); *
  * @example
  * // Monitoring santé temps réel
  * const monitoring = await bioAdapter.startHealthMonitoring({
@@ -73,8 +71,7 @@ const STR_1WEEK = '1week';
  *   continuous: true
  *   alertThresholds: 'personalized'
  *   learningMode: true
- * });
- */
+ * }); */
 
 import logger from '../config/logger.js';
 
@@ -357,12 +354,9 @@ export class BioSensorAdapter {
      *     heart_rate: { min: 60, max: 100, resting: 55 }
      *     glucose: { target: 90, alert_high: 180, alert_low: 70 }
      *   }
-     * });
-     */
+     * });     */
     async connectBioEcosystem(ecosystemRequest) {
-        const ecosystemId = `eco_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting bio-ecosystem connection', {
+        const ecosystemId = `eco_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting bio-ecosystem connection', {
             ecosystemId
             devicesCount: ecosystemRequest.devices.length
             monitoring: ecosystemRequest.monitoring?.length || 0
@@ -375,11 +369,9 @@ export class BioSensorAdapter {
             connections: []
             monitoring: null
             status: 'initializing'
-        };
-
-        try {
+        };        try {
             // Phase 1: Découverte et connexion périphériques
-            for (const deviceSpec of ecosystemRequest.devices) {
+            async for(deviceSpec, ecosystem) {
                 const connection = await this.connectBioDevice(deviceSpec, ecosystem);
                 ecosystem.connections.push(connection);
             }
@@ -391,23 +383,27 @@ export class BioSensorAdapter {
             );
 
             // Phase 3: Initialisation système alertes
-            if (ecosystemRequest.alerting !== false) {
+            async if(
+                    ecosystem.monitoring
+                    ecosystemRequest.thresholds
+                ) 
                 ecosystem.alerting = await this.setupAlertingSystem(
                     ecosystem.monitoring
                     ecosystemRequest.thresholds
                 );
-            }
 
             // Phase 4: Activation mode prédictif
-            if (ecosystemRequest.predictions !== false) {
+            async if(
+                    ecosystem.monitoring
+                    ecosystemRequest
+                ) 
                 ecosystem.predictions = await this.activatePredictiveMode(
                     ecosystem.monitoring
                     ecosystemRequest
                 );
-            }
 
             // Phase 5: Démarrage monitoring temps réel
-            if (this.config.continuousMonitoring) {
+            async if(ecosystem) {
                 await this.startContinuousMonitoring(ecosystem);
             }
 
@@ -436,8 +432,7 @@ export class BioSensorAdapter {
                 recommendations: await this.generateEcosystemRecommendations(ecosystem)
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -479,12 +474,9 @@ export class BioSensorAdapter {
      *   alertThresholds: 'personalized'
      *   learningMode: true
      *   focusAreas: ['cardiovascular', STR_STRESS, STR_SLEEP]
-     * });
-     */
+     * });     */
     async startHealthMonitoring(monitoringRequest) {
-        const monitoringId = `monitor_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting health monitoring session', {
+        const monitoringId = `monitor_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting health monitoring session', {
             monitoringId
             userId: monitoringRequest.user.id
             continuous: monitoringRequest.continuous !== false
@@ -502,16 +494,12 @@ export class BioSensorAdapter {
                 insights: []
                 alerts: []
             }
-        };
-
-        try {
+        };        try {
             // Phase 1: Analyse profil utilisateur et personnalisation
             const personalizedConfig = await this.personalizeMonitoringConfig(
                 monitoringRequest.user
                 monitoringRequest.focusAreas
-            );
-
-            // Phase 2: Établissement baselines personnelles
+            );            // Phase 2: Établissement baselines personnelles
             monitoring.session.baselines = await this.establishPersonalBaselines(
                 monitoringRequest.user
                 personalizedConfig
@@ -521,16 +509,14 @@ export class BioSensorAdapter {
             const alertConfig = await this.configurePersonalizedAlerts(
                 monitoring.session.baselines
                 monitoringRequest.alertThresholds
-            );
-
-            // Phase 4: Activation monitoring paramètres sélectionnés
+            );            // Phase 4: Activation monitoring paramètres sélectionnés
             monitoring.session.parameters = await this.activateParameterMonitoring(
                 personalizedConfig.parameters
                 alertConfig
             );
 
             // Phase 5: Démarrage apprentissage patterns personnels
-            if (monitoringRequest.learningMode !== false) {
+            async if(monitoring) {
                 await this.initializePersonalLearning(monitoring);
             }
 
@@ -555,8 +541,7 @@ export class BioSensorAdapter {
                 estimatedImprovements: await this.predictHealthImprovements(monitoring)
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -588,12 +573,9 @@ export class BioSensorAdapter {
      *   timeframe: '2weeks'
      *   focusMetrics: ['stress_level', 'sleep_quality', 'energy']
      *   includeRisks: true
-     * });
-     */
+     * });     */
     async predictHealthTrend(predictionRequest) {
-        const predictionId = `pred_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting health trend prediction', {
+        const predictionId = `pred_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting health trend prediction', {
             predictionId
             userId: predictionRequest.userId
             timeframe: predictionRequest.timeframe || STR_1WEEK
@@ -609,37 +591,38 @@ export class BioSensorAdapter {
                 predictions: []
                 risks: []
                 recommendations: []
-            };
-
-            // Phase 1: Collecte et analyse données historiques
+            };            // Phase 1: Collecte et analyse données historiques
             const historicalData = await this.collectHistoricalBioData(
                 predictionRequest.userId
                 predictionRequest.timeframe
-            );
-
-            // Phase 2: Analyse patterns et tendances actuelles
+            );            // Phase 2: Analyse patterns et tendances actuelles
             prediction.analysis = await this.analyzeCurrentHealthPatterns(
                 historicalData
                 predictionRequest.focusMetrics
             );
 
             // Phase 3: Génération prédictions spécifiques
-            for (const metric of predictionRequest.focusMetrics || ['general_wellness']) {
-                const metricPrediction = await this.predictMetricTrend(
+            async for(
                     metric
                     prediction.analysis
                     predictionRequest.timeframe
-                );
+                ) {
+                const metricPrediction = await this.predictMetricTrend(
+                    metric
+                    prediction.analysis
+                    predictionRequest.timeframe;                );
                 prediction.predictions.push(metricPrediction);
             }
 
             // Phase 4: Évaluation risques santé
-            if (predictionRequest.includeRisks !== false) {
+            async if(
+                    prediction.predictions
+                    predictionRequest.userId
+                ) 
                 prediction.risks = await this.assessHealthRisks(
                     prediction.predictions
                     predictionRequest.userId
                 );
-            }
 
             // Phase 5: Génération recommandations personnalisées
             prediction.recommendations = await this.generatePersonalizedRecommendations(
@@ -668,8 +651,7 @@ export class BioSensorAdapter {
                 nextUpdate: this.calculateNextUpdateTime(predictionRequest.timeframe)
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -696,9 +678,7 @@ export class BioSensorAdapter {
             throw new Error(`Device type not supported: ${deviceSpec.type}`);
         }
 
-        const connection = await driver.connect(deviceSpec.id);
-
-        return {
+        const connection = await driver.connect(deviceSpec.id);        return {
             deviceType: deviceSpec.type
             deviceId: deviceSpec.id
             connected: connection.success
@@ -716,9 +696,7 @@ export class BioSensorAdapter {
      */
     async setupGlobalMonitoring(connections, parameters) {
         const availableParameters = this.extractAvailableParameters(connections);
-        const selectedParameters = parameters.filter(p => availableParameters.includes(p));
-
-        return {
+        const selectedParameters = parameters.filter(p => availableParameters.includes(p));        return {
             parameters: selectedParameters
             frequency: this.config.syncFrequency
             dataTypes: this.mapParametersToDataTypes(selectedParameters)
@@ -885,7 +863,7 @@ export class BioSensorAdapter {
 
 // Device Drivers
 class AppleWatchDriver {
-    async connect(deviceId) {
+    async connect(_deviceId) {
         return {
             success: true
             capabilities: [STR_HEART_RATE, 'ecg', 'spo2']
@@ -895,37 +873,37 @@ class AppleWatchDriver {
 }
 
 class GalaxyWatchDriver {
-    async connect(deviceId) {
+    async connect(_deviceId) {
         return { success: true, capabilities: [STR_HEART_RATE, STR_SLEEP] };
     }
 }
 
 class FitbitDriver {
-    async connect(deviceId) {
+    async connect(_deviceId) {
         return { success: true, capabilities: ['steps', STR_HEART_RATE] };
     }
 }
 
 class OuraRingDriver {
-    async connect(deviceId) {
+    async connect(_deviceId) {
         return { success: true, capabilities: ['hrv', STR_TEMPERATURE, STR_SLEEP] };
     }
 }
 
 class FreestyleLibreDriver {
-    async connect(deviceId) {
+    async connect(_deviceId) {
         return { success: true, capabilities: [STR_GLUCOSE] };
     }
 }
 
 class OmronBloodPressureDriver {
-    async connect(deviceId) {
+    async connect(_deviceId) {
         return { success: true, capabilities: ['blood_pressure'] };
     }
 }
 
 class WithingsScaleDriver {
-    async connect(deviceId) {
+    async connect(_deviceId) {
         return { success: true, capabilities: ['weight', 'body_composition'] };
     }
 }

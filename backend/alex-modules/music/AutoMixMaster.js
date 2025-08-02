@@ -1,8 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_MELODIC_LEAD = 'melodic_lead';
-
-/**
+const STR_MELODIC_LEAD = 'melodic_lead';/**
  * @fileoverview AutoMixMaster - Système de Mix et Master Automatique IA
  * Équilibre, compresse, EQ et masterise automatiquement les pistes
  *
@@ -37,8 +35,7 @@ export class AutoMixMaster {
             dynamicRange: this.config.dynamicRange
         });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
 
     /**
@@ -198,9 +195,7 @@ export class AutoMixMaster {
      * @returns {Promise<Object>} Mix final traité
      */
     async applyMixAndMaster(tracks, options = {}) {
-        const sessionId = `mix_${Date.now()}`;
-
-        logger.info('🎛️ Starting automatic mix and master', {
+        const sessionId = `mix_${Date.now()}`;        logger.info('🎛️ Starting automatic mix and master', {
             sessionId
             tracksCount: Object.keys(tracks).length
             style: options.style?.name
@@ -215,16 +210,13 @@ export class AutoMixMaster {
                 processedTracks: {}
                 masterBus: null
                 analysis: null
-            };
-
-            // Phase 1: Analyse des pistes individuelles
+            };            // Phase 1: Analyse des pistes individuelles
             logger.info('📊 Phase 1: Analyzing individual tracks');
             mixSession.analysis = await this.analyzeAllTracks(tracks);
 
             // Phase 2: Application template de mix selon style
             logger.info('🎚️ Phase 2: Applying mixing template');
-            const mixTemplate = this.selectMixingTemplate(options.style);
-            mixSession.processedTracks = await this.applyIndividualProcessing(
+            const mixTemplate = this.selectMixingTemplate(options.style);            mixSession.processedTracks = await this.applyIndividualProcessing(
                 tracks
                 mixTemplate
                 mixSession.analysis
@@ -246,13 +238,9 @@ export class AutoMixMaster {
             const finalMaster = await this.applyFinalLimiting(
                 mixSession.masterBus
                 options.targetLoudness || this.config.targetLoudness
-            );
-
-            // Phase 6: Analyse qualité finale
+            );            // Phase 6: Analyse qualité finale
             logger.info('✅ Phase 6: Quality analysis');
-            const qualityAnalysis = await this.analyzeFinalQuality(finalMaster);
-
-            mixSession.endTime = Date.now();
+            const qualityAnalysis = await this.analyzeFinalQuality(finalMaster);            mixSession.endTime = Date.now();
             mixSession.duration = mixSession.endTime - mixSession.startTime;
 
             const result = {
@@ -280,9 +268,7 @@ export class AutoMixMaster {
                 }
                 // Paramètres pour export
                 exportSettings: this.generateExportSettings(finalMaster, options)
-            };
-
-            logger.info('✅ Mix and master completed successfully', {
+            };            logger.info('✅ Mix and master completed successfully', {
                 sessionId
                 loudnessAchieved: result.quality.loudness
                 dynamicRange: result.quality.dynamicRange
@@ -291,8 +277,7 @@ export class AutoMixMaster {
 
             return result;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -315,9 +300,7 @@ export class AutoMixMaster {
                 stereoWidth: 0
                 phaseCoherence: 0
             }
-        };
-
-        // Analyse de chaque piste
+        };        // Analyse de chaque piste
         for (const [trackName, trackData] of Object.entries(tracks)) {
             analysis.individual[trackName] = await this.analyzeSingleTrack(trackName, trackData);
         }
@@ -367,9 +350,7 @@ export class AutoMixMaster {
      * Sélectionne le template de mix approprié
      */
     selectMixingTemplate(style) {
-        const styleId = style?.id || 'house';
-
-        return {
+        const styleId = style?.id || 'house';        return {
             name: styleId
             settings: template
             adaptations: this.calculateTemplateAdaptations(template, style)
@@ -380,14 +361,10 @@ export class AutoMixMaster {
      * Applique le traitement individuel à chaque piste
      */
     async applyIndividualProcessing(tracks, mixTemplate, analysis) {
-        const processedTracks = {};
-
-        for (const [trackName, trackData] of Object.entries(tracks)) {
+        const processedTracks = {};        for (const [trackName, trackData] of Object.entries(tracks)) {
             // Récupération des paramètres pour cette piste
             const trackSettings = mixTemplate.settings[trackName] ||
-                                this.generateDefaultSettings(trackName, analysis.individual[trackName]);
-
-            // Application du traitement
+                                this.generateDefaultSettings(trackName, analysis.individual[trackName]);            // Application du traitement
             processedTracks[trackName] = await this.processIndividualTrack(
                 trackName
                 trackData
@@ -403,11 +380,8 @@ export class AutoMixMaster {
      * Traite une piste individuelle
      */
     async processIndividualTrack(trackName, trackData, settings, trackAnalysis) {
-        let processedAudio = { ...trackData };
-        const processing = { applied: [] };
-
-        // 1. EQ
-        if (settings.eq) {
+        let processedAudio = { ...trackData };        const processing = { applied: [] };        // 1. EQ
+        async if() {
             processedAudio = await this.processors.eq.process(processedAudio, {
                 low: settings.eq.low || 0
                 lowMid: settings.eq.lowMid || 0
@@ -420,7 +394,11 @@ export class AutoMixMaster {
         }
 
         // 2. Compression
-        if (settings.compression) {
+        async if(processedAudio, {
+                ratio: settings.compression.ratio || 1
+                attack: settings.compression.attack || 0.1
+                release: settings.compression.release || 0.1
+                threshold: this.calculateCompressorThreshold(trackAnalysis.dynamics) {
             processedAudio = await this.processors.compressor.process(processedAudio, {
                 ratio: settings.compression.ratio || 1
                 attack: settings.compression.attack || 0.1
@@ -433,7 +411,10 @@ export class AutoMixMaster {
         }
 
         // 3. Volume/Gain
-        if (settings.volume !== undefined) {
+        async if(
+                processedAudio
+                settings.volume
+            ) {
             processedAudio = await this.applyVolumeAdjustment(
                 processedAudio
                 settings.volume
@@ -442,13 +423,15 @@ export class AutoMixMaster {
         }
 
         // 4. Pan
-        if (settings.pan !== undefined) {
+        async if(processedAudio, settings.pan) {
             processedAudio = await this.applyPanning(processedAudio, settings.pan);
             processing.applied.push('pan');
         }
 
         // 5. Reverb
-        if (settings.reverb && settings.reverb > 0) {
+        async if(processedAudio, {
+                amount: settings.reverb
+                roomSize: this.getReverbRoomSize(trackName) {
             processedAudio = await this.processors.reverb.process(processedAudio, {
                 amount: settings.reverb
                 roomSize: this.getReverbRoomSize(trackName)
@@ -459,7 +442,9 @@ export class AutoMixMaster {
         }
 
         // 6. Delay
-        if (settings.delay && settings.delay > 0) {
+        async if(processedAudio, {
+                amount: settings.delay
+                time: this.calculateDelayTime(settings, trackAnalysis) {
             processedAudio = await this.processors.delay.process(processedAudio, {
                 amount: settings.delay
                 time: this.calculateDelayTime(settings, trackAnalysis)
@@ -481,19 +466,12 @@ export class AutoMixMaster {
     /**
      * Équilibre automatiquement les niveaux
      */
-    async autoBalanceLevels(processedTracks, analysis) {
+    async autoBalanceLevels(processedTracks) {
         // Analyse des conflits de fréquences
-        const frequencyConflicts = this.analyzeFrequencyConflicts(processedTracks);
-
-        // Ajustement des niveaux selon importance et conflits
+        const frequencyConflicts = this.analyzeFrequencyConflicts(processedTracks);        // Ajustement des niveaux selon importance et conflits
         for (const [trackName, trackData] of Object.entries(processedTracks)) {
-            const importance = analysis.individual[trackName].musical.importance;
-            const conflicts = frequencyConflicts[trackName] || [];
-
-            // Calcul ajustement de niveau
-            let levelAdjustment = 0;
-
-            // Boost selon importance
+            const importance = analysis.individual[trackName].musical.importance;            const conflicts = frequencyConflicts[trackName] || [];            // Calcul ajustement de niveau
+            let levelAdjustment = 0;            // Boost selon importance
             levelAdjustment += (importance - 0.5) * 6; // ±3dB selon importance
 
             // Réduction selon conflits
@@ -515,16 +493,12 @@ export class AutoMixMaster {
     /**
      * Traite le bus master
      */
-    async processMasterBus(processedTracks, options) {
+    async processMasterBus(processedTracks) {
         // Mixage de toutes les pistes
-        const mixedAudio = await this.mixAllTracks(processedTracks);
-
-        const masterBus = {
+        const mixedAudio = await this.mixAllTracks(processedTracks);        const masterBus = {
             audio: mixedAudio
             processing: { applied: [] }
-        };
-
-        // EQ du master
+        };        // EQ du master
         const masterEQ = this.calculateMasterEQ(mixedAudio, options.style);
         if (this.shouldApplyMasterEQ(masterEQ)) {
             masterBus.audio = await this.processors.eq.process(masterBus.audio, masterEQ);
@@ -533,8 +507,7 @@ export class AutoMixMaster {
         }
 
         // Compression du master
-        const masterCompression = this.calculateMasterCompression(options.style);
-        masterBus.audio = await this.processors.compressor.process(
+        const masterCompression = this.calculateMasterCompression(options.style);        masterBus.audio = await this.processors.compressor.process(
             masterBus.audio
             masterCompression
         );
@@ -542,15 +515,16 @@ export class AutoMixMaster {
         masterBus.processing.masterCompression = masterCompression;
 
         // Enhancement stéréo
-        const stereoEnhancement = this.calculateStereoEnhancement(options);
-        if (stereoEnhancement.width !== 1.0) {
+        const stereoEnhancement = this.calculateStereoEnhancement(options);        async if(
+                masterBus.audio
+                stereoEnhancement
+            ) 
             masterBus.audio = await this.processors.stereo.process(
                 masterBus.audio
                 stereoEnhancement
             );
             masterBus.processing.applied.push('stereo_enhancement');
             masterBus.processing.stereoEnhancement = stereoEnhancement;
-        }
 
         return masterBus;
     }
@@ -558,24 +532,18 @@ export class AutoMixMaster {
     /**
      * Applique le limiting final
      */
-    async applyFinalLimiting(masterBus, targetLoudness) {
+    async applyFinalLimiting(masterBus.audio) {
         const currentLoudness = await this.processors.loudness.analyze(masterBus.audio);
-        const loudnessAdjustment = targetLoudness - currentLoudness;
-
-        const limitingSettings = {
+        const loudnessAdjustment = targetLoudness - currentLoudness;        const limitingSettings = {
             threshold: -0.5, // dBFS
             release: 0.05
             lookahead: 5, // ms
             isr: 4, // Internal Sample Rate multiplication
             gain: loudnessAdjustment
-        };
-
-        const limitedAudio = await this.processors.limiter.process(
+        };        const limitedAudio = await this.processors.limiter.process(
             masterBus.audio
             limitingSettings
-        );
-
-        return {
+        );        return {
             audio: limitedAudio
             limiting: {
                 settings: limitingSettings
@@ -589,7 +557,7 @@ export class AutoMixMaster {
     /**
      * Analyse la qualité finale du mix
      */
-    async analyzeFinalQuality(finalMaster) {
+    async analyzeFinalQuality(finalMaster.audio) {
         return {
             loudness: await this.processors.loudness.analyze(finalMaster.audio)
             peak: await this.analyzePeak(finalMaster.audio)
@@ -609,7 +577,7 @@ export class AutoMixMaster {
      * Identifie le rôle d'une piste dans le mix
      */
     identifyTrackRole(trackName) {
-        const roleMap = {
+        const _roleMap = {
             kick: 'rhythmic_foundation'
             snare: 'rhythmic_accent'
             hihat_closed: 'rhythmic_texture'
@@ -619,8 +587,7 @@ export class AutoMixMaster {
             chords: 'harmonic_support'
             pads: 'atmospheric'
             lead: STR_MELODIC_LEAD
-            vocals: STR_MELODIC_LEAD
-        };
+            vocals: STR_MELODIC_LEAD;        };
 
         return roleMap[trackName] || 'support';
     }
@@ -629,7 +596,7 @@ export class AutoMixMaster {
      * Calcule l'importance d'une piste (0-1)
      */
     calculateTrackImportance(trackName, trackData) {
-        const importanceMap = {
+        const _importanceMap = {
             kick: 0.9
             snare: 0.8
             bass: 0.85
@@ -639,8 +606,7 @@ export class AutoMixMaster {
             chords: 0.7
             pads: 0.4
             hihat_closed: 0.6
-            hihat_open: 0.5
-        };
+            hihat_open: 0.5;        };
 
         return importanceMap[trackName] || 0.5;
     }
@@ -672,10 +638,8 @@ export class AutoMixMaster {
      */
     calculateMasterEQ(mixedAudio, style) {
         // Analyse spectrale du mix
-        const spectrum = this.analyzeSpectrum(mixedAudio);
-
-        // Ajustements selon style
-        const styleEQ = {
+        const _spectrum = this.analyzeSpectrum(mixedAudio);        // Ajustements selon style
+        const _styleEQ = {
             trap: { low: 1
       lowMid: 0
       highMid: -1
@@ -687,8 +651,7 @@ export class AutoMixMaster {
       jazz: { low: 0
       lowMid: 1
       highMid: 0
-      high: 1 }
-        };
+      high: 1 };        };
 
         return styleEQ[style?.id] || { low: 0, lowMid: 0, highMid: 0, high: 0 };
     }
@@ -701,7 +664,7 @@ export class AutoMixMaster {
      * Calcule compression du master
      */
     calculateMasterCompression(style) {
-        const compressionSettings = {
+        const _compressionSettings = {
             trap: { ratio: 2
       attack: 0.3
       release: 0.1
@@ -713,8 +676,7 @@ export class AutoMixMaster {
       jazz: { ratio: 1.2
       attack: 1.0
       release: 0.5
-      threshold: -12 }
-        };
+      threshold: -12 };        };
 
         return compressionSettings[style?
       .id] || compressionSettings.house;
@@ -779,9 +741,7 @@ export class AutoMixMaster {
 
     calculateOverallQualityScore(finalMaster) {
         // Score basé sur plusieurs critères
-        let score = 0;
-
-        // Loudness dans la cible
+        let score = 0;        // Loudness dans la cible
         const loudnessDiff = Math.abs(finalMaster.limiting.finalLoudness - this.config.targetLoudness);
         score += Math.max(0, 1 - loudnessDiff / 5) * 0.3;
 
@@ -799,8 +759,7 @@ export class AutoMixMaster {
     }
 
     summarizeIndividualProcessing(processedTracks) {
-        const summary = {};
-        for (const [trackName, trackData] of Object.entries(processedTracks)) {
+        const summary = {};        for (const [trackName, trackData] of Object.entries(processedTracks)) {
             summary[trackName] = {
                 processesApplied :
        trackData.processing.applied.length
@@ -927,7 +886,7 @@ class StereoProcessor {
  * Analyseur Spectrum
  */
 class SpectrumAnalyzer {
-    analyze(audio) {
+    analyze(_audio) {
         return { spectrum: 'analyzed' };
     }
 }
@@ -936,7 +895,7 @@ class SpectrumAnalyzer {
  * Analyseur Loudness
  */
 class LoudnessAnalyzer {
-    async analyze(audio) {
+    async analyze(_audio) {
         return -16; // LUFS simulé
     }
 }

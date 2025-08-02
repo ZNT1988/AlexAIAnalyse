@@ -1,8 +1,7 @@
 import crypto from 'crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_UNIT = 'unit';
-/**
+const STR_UNIT = 'unit';/**
  * @fileoverview TestAutoCreator - Générateur Automatique de Tests Révolutionnaire
  * ALEX crée ses propres tests autonomes pour validation continue et amélioration qualité
  *
@@ -57,16 +56,14 @@ const STR_UNIT = 'unit';
  * // Auto-génération tests pour module
  * import { TestAutoCreator } from './TestAutoCreator.js';
  * const creator = new TestAutoCreator();
- * const tests = await creator.generateTestsForModule('./UserService.js');
- *
+ * const tests = await creator.generateTestsForModule('./UserService.js'); *
  * @example
  * // Tests complets projet
  * const testSuite = await creator.generateProjectTests({
  *   path: './src'
  *   types: [STR_UNIT, STR_INTEGRATION]
  *   coverage: 0.95
- * });
- */
+ * }); */
 
 import logger from '../config/logger.js';
 import path from 'path';
@@ -339,12 +336,9 @@ export class TestAutoCreator {
      *   coverage: 0.90
      *   includeMocks: true
      *   framework: STR_JEST
-     * });
-     */
+     * });     */
     async generateTestsForModule(modulePath, options = {}) {
-        const sessionId = `module_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting module test generation', {
+        const sessionId = `module_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting module test generation', {
             sessionId
             modulePath
             testTypes: options.testTypes || this.config.testTypes
@@ -363,24 +357,28 @@ export class TestAutoCreator {
                 coverageAchieved: 0
                 estimatedExecutionTime: 0
             }
-        };
-
-        try {
+        };        try {
             // Phase 1: Analyse du module
             generation.analysis = await this.analyzeModule(modulePath, generation);
 
             // Phase 2: Génération tests selon types demandés
-            for (const testType of testTypes) {
-                const typeTests = await this.generateTestsByType(
+            async for(
                     generation.analysis
                     testType
                     options
-                );
+                ) {
+                const typeTests = await this.generateTestsByType(
+                    generation.analysis
+                    testType
+                    options;                );
                 generation.tests.push(...typeTests);
             }
 
             // Phase 3: Génération mocks si requis
-            if (options.includeMocks !== false && this.config.generateMocks) {
+            async if(
+                    generation.analysis
+                    options
+                ) {
                 generation.mocks = await this.generateMocksForModule(
                     generation.analysis
                     options
@@ -388,17 +386,14 @@ export class TestAutoCreator {
             }
 
             // Phase 4: Optimisation suite de tests
-            if (this.config.autoOptimization) {
+            async if(generation.tests) {
                 const optimized = await this.optimizeTestSuite(generation.tests);
                 generation.tests = optimized.tests;
                 generation.metadata.optimizations = optimized.improvements;
             }
 
             // Phase 5: Validation et finalisation
-            const validation = await this.validateGeneratedTests(generation.tests);
-            const coverage = await this.estimateCoverage(generation.analysis, generation.tests);
-
-            // Finaliser génération
+            const validation = await this.validateGeneratedTests(generation.tests);            const coverage = await this.estimateCoverage(generation.analysis, generation.tests);            // Finaliser génération
             generation.endTime = Date.now();
             generation.duration = generation.endTime - generation.startTime;
             generation.metadata.functionsAnalyzed = generation.analysis.functions.length;
@@ -422,7 +417,7 @@ export class TestAutoCreator {
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -457,12 +452,9 @@ export class TestAutoCreator {
      *   exclude: ['**\/*.test.*', '**\/node_modules\/**']
      *   testTypes: [STR_UNIT, STR_INTEGRATION, 'e2e']
      *   coverage: 0.95
-     * });
-     */
+     * });     */
     async generateProjectTests(projectOptions) {
-        const projectId = `project_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting project-wide test generation', {
+        const projectId = `project_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting project-wide test generation', {
             projectId
             path: projectOptions.path
             coverage: projectOptions.coverage || this.config.targetCoverage
@@ -482,22 +474,20 @@ export class TestAutoCreator {
       coverageAchieved: 0
       executionTimeEstimate: 0
             }
-        };
-
-        try {
+        };        try {
             // Phase 1: Découverte et analyse modules
             const moduleFiles = await this.discoverProjectModules(
                 projectOptions.path
                 projectOptions.include
                 projectOptions.exclude
-            );
-
-            // Phase 2: Génération tests par module
-            for (const moduleFile of moduleFiles) {
-                const moduleTests = await this.generateTestsForModule(
+            );            // Phase 2: Génération tests par module
+            async for(
                     moduleFile
                     projectOptions
-                );
+                ) {
+                const moduleTests = await this.generateTestsForModule(
+                    moduleFile
+                    projectOptions;                );
 
                 if (moduleTests.success) {
                     projectGeneration.testSuites.push(moduleTests);
@@ -522,10 +512,7 @@ export class TestAutoCreator {
 
             // Phase 5 :
        Orchestration et optimisation globale
-            const orchestration = await this.orchestrateProjectTests(projectGeneration);
-            const globalCoverage = await this.calculateProjectCoverage(projectGeneration);
-
-            // Finaliser génération projet
+            const orchestration = await this.orchestrateProjectTests(projectGeneration);            const globalCoverage = await this.calculateProjectCoverage(projectGeneration);            // Finaliser génération projet
             projectGeneration.endTime = Date.now();
             projectGeneration.duration = projectGeneration.endTime - projectGeneration.startTime;
             projectGeneration.metadata.filesAnalyzed = moduleFiles.length;
@@ -548,7 +535,7 @@ export class TestAutoCreator {
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -580,12 +567,9 @@ export class TestAutoCreator {
      *   parallel: true
      *   framework: STR_JEST
      *   timeout: 300000
-     * });
-     */
+     * });     */
     async executeGeneratedTests(testSuite, executionOptions = {}) {
-        const executionId = `exec_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting test execution', {
+        const executionId = `exec_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting test execution', {
             executionId
             testsCount: this.countTests(testSuite)
             parallel: executionOptions.parallel !== false
@@ -605,9 +589,7 @@ export class TestAutoCreator {
       coverage: 0
       duration: 0
             }
-        };
-
-        try {
+        };        try {
             // Configuration exécution
             const framework = executionOptions.framework || this.detectBestFramework(testSuite);
             const runner = this.executionEngine.runners[framework];
@@ -617,17 +599,14 @@ export class TestAutoCreator {
             }
 
             // Exécution tests avec optimisation
-            if (executionOptions.parallel !== false) {
+            async if(testSuite, runner, executionOptions) {
                 execution.results = await this.executeTestsParallel(testSuite, runner, executionOptions);
             } else {
                 execution.results = await this.executeTestsSequential(testSuite, runner, executionOptions);
             }
 
             // Collecte métriques et coverage
-            const coverage = await this.collectCoverageMetrics(execution.results);
-            const performance = await this.analyzeTestPerformance(execution.results);
-
-            // Finaliser exécution
+            const coverage = await this.collectCoverageMetrics(execution.results);            const performance = await this.analyzeTestPerformance(execution.results);            // Finaliser exécution
             execution.endTime = Date.now();
             execution.duration = execution.endTime - execution.startTime;
             execution.summary = this.calculateExecutionSummary(execution.results);
@@ -635,9 +614,7 @@ export class TestAutoCreator {
             execution.performance = performance;
 
             // Recommandations post-exécution
-            const recommendations = await this.generateExecutionRecommendations(execution);
-
-            return {
+            const recommendations = await this.generateExecutionRecommendations(execution);            return {
                 success: true
                 executionId
                 framework
@@ -650,7 +627,7 @@ export class TestAutoCreator {
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -671,18 +648,15 @@ export class TestAutoCreator {
      * @description Analyse complète d'un module pour génération tests
      * @private
      */
-    async analyzeModule(modulePath, generation) {
-        const content = await fs.readFile(modulePath, 'utf-8');
-        const language = this.detectLanguage(modulePath);
+    async analyzeModule(modulePath, 'utf-8') {
+        const content = await fs.readFile(modulePath, 'utf-8');        const language = this.detectLanguage(modulePath);
         const parser = this.codeAnalyzer.parsers[language];
 
         if (!parser) {
             throw new Error(`Language not supported: ${language}`);
         }
 
-        const ast = await parser.parse(content);
-
-        return {
+        const ast = await parser.parse(content);        return {
             path: modulePath
             language
             content
@@ -718,8 +692,7 @@ export class TestAutoCreator {
 
     // Méthodes de stub pour les fonctionnalités avancées
     detectLanguage(filePath) {
-        const ext = path.extname(filePath);
-        const langMap = { '.js': 'javascript', '.ts': 'typescript', '.py': 'python' };
+        const ext = path.extname(filePath);        const langMap = { '.js': 'javascript', '.ts': 'typescript', '.py': 'python' };
         return langMap[ext] || 'javascript';
     }
 

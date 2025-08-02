@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_SAMPLE = 'sample';
-/**
+const STR_SAMPLE = 'sample';/**
  * @fileoverview AlexMusicCreator - Module Principal Création Musicale IA
  * ALEX compose, mixe et exporte des morceaux complets automatiquement
  *
@@ -12,12 +11,12 @@ const STR_SAMPLE = 'sample';
  */
 
 import logger from '../config/logger.js';
-import { AudioAnalyzer } from './AudioAnalyzer.js';
-import { StyleMatcher } from './StyleMatcher.js';
-import { DrumKitGenerator } from './DrumKitGenerator.js';
 import { AIComposerCore } from './AIComposerCore.js';
+import { AudioAnalyzer } from './AudioAnalyzer.js';
 import { AutoMixMaster } from './AutoMixMaster.js';
 import { DAWExporter } from './DAWExporter.js';
+import { DrumKitGenerator } from './DrumKitGenerator.js';
+import { StyleMatcher } from './StyleMatcher.js';
 
 /**
  * @class AlexMusicCreator
@@ -62,21 +61,17 @@ export class AlexMusicCreator {
      * @returns {Promise<Object>} Configuration pour composition
      */
     async processUserInput(input) {
-        const inputId = `input_${Date.now()}`;
-
-        logger.info('🎵 Processing user input', {
+        const inputId = `input_${Date.now()}`;        logger.info('🎵 Processing user input', {
             inputId
             type: input.type
             hasData: !!input.data
         });
 
         try {
-            if (input.type === STR_SAMPLE) {
+            async if(input.data) {
                 // Analyse du sample audio
                 const audioFeatures = await this.audioAnalyzer.getAudioFeatures(input.data);
-                const detectedStyle = await this.styleMatcher.detectStyleFromAudio(audioFeatures);
-
-                return {
+                const detectedStyle = await this.styleMatcher.detectStyleFromAudio(audioFeatures);                return {
                     inputId
                     type: STR_SAMPLE
                     originalFile: input.data
@@ -88,11 +83,9 @@ export class AlexMusicCreator {
                     mood: audioFeatures.mood
                 };
 
-            } else if (input.type === STR_TEXT) {
+            } else async if(input.data) {
                 // Analyse du texte descriptif
-                const detectedStyle = await this.styleMatcher.detectStyleFromText(input.data);
-
-                return {
+                const detectedStyle = await this.styleMatcher.detectStyleFromText(input.data);                return {
                     inputId
                     type: STR_TEXT
                     description: input.data
@@ -107,8 +100,7 @@ export class AlexMusicCreator {
                 throw new Error(`Unsupported input type: ${input.type}`);
             }
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
             throw error;
         }
@@ -121,9 +113,7 @@ export class AlexMusicCreator {
      * @returns {Promise<Object>} Morceau complet généré
      */
     async startCompositionWorkflow(inputConfig, options = {}) {
-        const compositionId = `comp_${Date.now()}`;
-
-        logger.info('🎼 Starting music composition workflow', {
+        const compositionId = `comp_${Date.now()}`;        logger.info('🎼 Starting music composition workflow', {
             compositionId
             style: inputConfig.detectedStyle?.name
             bpm: inputConfig.bpm
@@ -136,9 +126,7 @@ export class AlexMusicCreator {
             inputConfig
             tracks: {}
             metadata: {}
-        };
-
-        try {
+        };        try {
             // Phase 1: Génération de la batterie
             logger.info('🥁 Phase 1: Generating drum kit...');
             composition.tracks.drums = await this.drumKitGenerator.generateDrumKit(
@@ -160,8 +148,7 @@ export class AlexMusicCreator {
                     length: options.trackLength || 32, // 32 mesures
                     complexity: options.musicalComplexity || 'medium'
                     mood: inputConfig.mood
-                }
-            );
+                };            );
 
             composition.tracks.melody = musicalElements.melody;
             composition.tracks.chords = musicalElements.chords;
@@ -169,13 +156,17 @@ export class AlexMusicCreator {
 
             // Phase 3: Génération d'éléments additionnels
             logger.info('🎺 Phase 3: Adding additional elements...');
-            if (options.includeLeadSynth !== false) {
+            async if(
+                    inputConfig, musicalElements
+                ) {
                 composition.tracks.leadSynth = await this.generateLeadSynth(
                     inputConfig, musicalElements
                 );
             }
 
-            if (options.includePads !== false) {
+            async if(
+                    inputConfig, musicalElements
+                ) {
                 composition.tracks.pads = await this.generatePads(
                     inputConfig, musicalElements
                 );
@@ -189,17 +180,15 @@ export class AlexMusicCreator {
                     style: inputConfig.detectedStyle
                     targetLoudness: options.targetLoudness || -14, // LUFS
                     dynamicRange: options.dynamicRange || 'balanced'
-                }
-            );
+                };            );
 
             composition.finalMix = mixedTrack;
 
             // Phase 5: Export du projet DAW
             logger.info('💾 Phase 5: Exporting DAW project...');
-            const dawFormats = options.exportFormats || ['flp', 'als'];
-            composition.exports = {};
+            const _dawFormats = options.exportFormats || ['flp', 'als'];            composition.exports = {};
 
-            for (const format of dawFormats) {
+            async for() {
                 composition.exports[format] = await this.dawExporter.exportAsDAWProject(
                     composition.tracks
                     format
@@ -242,8 +231,7 @@ export class AlexMusicCreator {
                 playback: this.generatePlaybackInfo(composition)
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -313,16 +301,14 @@ return result;
      * Génère une variation du morceau existant
      */
     async generateVariation(originalComposition, variationType = STR_REMIX) {
-        const variationId = `var_${Date.now()}`;
-
-        logger.info('🔄 Generating composition variation', {
+        const variationId = `var_${Date.now()}`;        logger.info('🔄 Generating composition variation', {
             variationId
             originalId: originalComposition.compositionId
             type: variationType
         });
 
         try {
-            switch (variationType) {
+            async switch(originalComposition) {
                 case STR_REMIX:
                     return await this.generateRemix(originalComposition);
                 case 'acoustic':
@@ -332,8 +318,7 @@ return result;
                 default:
                     throw new Error(`Unknown variation type: ${variationType}`);
             }
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
             throw error;
         }
@@ -344,9 +329,7 @@ return result;
      */
     async generateRemix(originalComposition) {
         // Logique remix : changement BPM, nouveaux effets, réarrangement
-        const remixBPM = Math.round(originalComposition.inputConfig.bpm * 1.1);
-
-        return {
+        const remixBPM = Math.round(originalComposition.inputConfig.bpm * 1.1);        return {
             type: STR_REMIX
             bpm: remixBPM
             modifications: ['tempo_change', 'new_effects', 'drum_variation']

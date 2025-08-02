@@ -1,14 +1,13 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 // PurchasePredictor.js - Prédicteur Achats Intelligent pour Ferrero
 // Module spécialisé MVP pour prédictions et optimisation achats révolutionnaire
 // Version: 5.0 - ALEX Conscious AI for Ferrero Purchase Intelligence
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_TONNES = 'tonnes';
-/**
+const STR_TONNES = 'tonnes';/**
  * PurchasePredictor - Intelligence Prédictive Achats pour Ferrero
  *
  * Fonctionnalités:
@@ -379,7 +378,7 @@ export class PurchasePredictor extends EventEmitter {
   /**
    * Initialisation du prédicteur d'achats
    */
-  async initializePurchasePredictor() {
+  async initializePurchasePredictor('🛒 Initializing ALEX Purchase Predictor for Ferrero Global Procurement') {
     logger.info('🛒 Initializing ALEX Purchase Predictor for Ferrero Global Procurement');
 
     try {
@@ -414,8 +413,7 @@ export class PurchasePredictor extends EventEmitter {
         timestamp: new Date().toISOString()
       });
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -483,9 +481,7 @@ export class PurchasePredictor extends EventEmitter {
         historical_accuracy: 0.0
         uncertainty_bounds: { lower: 0.0, upper: 0.0 }
       }
-    };
-
-    try {
+    };    try {
       // Collecte et préparation des données
       await this.collectInputData(itemCode, prediction);
 
@@ -510,8 +506,7 @@ export class PurchasePredictor extends EventEmitter {
       this.emit('demand_prediction_completed', prediction);
       return prediction;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -600,9 +595,7 @@ export class PurchasePredictor extends EventEmitter {
         scenario_testing: {}
         robustness_check: {}
       }
-    };
-
-    try {
+    };    try {
       // Analyse de l'état actuel des achats
       await this.analyzeCurrentPurchasingState(optimization, category);
 
@@ -627,8 +620,7 @@ export class PurchasePredictor extends EventEmitter {
       this.emit('purchasing_optimization_completed', optimization);
       return optimization;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -695,9 +687,7 @@ export class PurchasePredictor extends EventEmitter {
         risk_alerts: []
         opportunity_alerts: []
       }
-    };
-
-    try {
+    };    try {
       // Collecte des données marché actuelles
       await this.collectCurrentMarketData(pricePrediction);
 
@@ -722,8 +712,7 @@ export class PurchasePredictor extends EventEmitter {
       this.emit('price_prediction_completed', pricePrediction);
       return pricePrediction;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -769,9 +758,7 @@ export class PurchasePredictor extends EventEmitter {
         risk_mitigation: 0
         efficiency_gain: 0.0
       }
-    };
-
-    try {
+    };    try {
       // Analyse des besoins actuels
       await this.analyzeCurrentNeeds(automaticSession);
 
@@ -793,8 +780,7 @@ export class PurchasePredictor extends EventEmitter {
       this.emit('automatic_purchasing_completed', automaticSession);
       return automaticSession;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -810,7 +796,6 @@ export class PurchasePredictor extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 900000);
 
@@ -818,7 +803,6 @@ export class PurchasePredictor extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 300000);
 
@@ -826,7 +810,6 @@ export class PurchasePredictor extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 3600000);
 
@@ -834,7 +817,6 @@ export class PurchasePredictor extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 1800000);
 
@@ -842,7 +824,6 @@ export class PurchasePredictor extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 14400000);
 
@@ -852,7 +833,6 @@ export class PurchasePredictor extends EventEmitter {
       logger.error('Nightly optimization failed', { error });
 
           } catch (error) {
-    // Logger fallback - ignore error
   }}
       }
     }, 60000);
@@ -877,8 +857,7 @@ export class PurchasePredictor extends EventEmitter {
   }
 
   getTotalItemCount() {
-    let count = 0;
-    Object.values(this.purchaseCategories).forEach(category => this.processLongOperation(args)`
+    const _count = 0;    Object.values(this.purchaseCategories).forEach(_category => this.processLongOperation(args)`
             quality_score: 0.8 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.2
           });
         }
@@ -894,16 +873,15 @@ export class PurchasePredictor extends EventEmitter {
     logger.debug('🧠 Initializing prediction models...');
 
     // Configuration des modèles de prédiction
-    Object.keys(this.predictionEngines.demand_forecasting.models).forEach(model => this.processLongOperation(args) model initialized`);
+    Object.keys(this.predictionEngines.demand_forecasting.models).forEach(_model => this.processLongOperation(args) model initialized`);
 
       } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }});
 
     Object.keys(this.predictionEngines.price_prediction.models).forEach(model => this.processLongOperation(args) price model initialized`);
 
       } catch (error) {
-    // Logger fallback - ignore error
   }});
   }
 
@@ -926,10 +904,10 @@ export class PurchasePredictor extends EventEmitter {
     logger.debug('⚡ Activating purchase optimizer...');
 
     // Activation des algorithmes d'optimisation
-    Object.keys(this.purchaseOptimizer.optimization_algorithms).forEach(algo => this.processLongOperation(args) optimizer activated`);
+    Object.keys(this.purchaseOptimizer.optimization_algorithms).forEach(_algo => this.processLongOperation(args) optimizer activated`);
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
     });
   }
@@ -1014,14 +992,8 @@ export class PurchasePredictor extends EventEmitter {
   }
 
   async combinePredictions(prediction) {
-    const models = this.predictionEngines.demand_forecasting.models;
-    const finalForecast = [];
-
-    for (let day = 1; day <= prediction.timeHorizon; day++) {
-      let weightedSum = 0;
-      let totalWeight = 0;
-
-      Object.keys(models).forEach(modelName => this.processLongOperation(args)
+    const models = this.predictionEngines.demand_forecasting.models;    const finalForecast = [];    for (let day = 1; day <= prediction.timeHorizon; day++) {
+      let weightedSum = 0;      let totalWeight = 0;      Object.keys(models).forEach(modelName => this.processLongOperation(args)
       });
 
       finalForecast.push({
@@ -1039,15 +1011,10 @@ export class PurchasePredictor extends EventEmitter {
   }
 
   calculateAggregates(prediction) {
-    const daily = prediction.final_prediction.daily_forecast;
-
-    // Agrégations hebdomadaires
-    const weekly = [];
-    for (let week = 0; week < Math.ceil(daily.length / 7); week++) {
+    const daily = prediction.final_prediction.daily_forecast;    // Agrégations hebdomadaires
+    const weekly = [];    for (let week = 0; week < Math.ceil(daily.length / 7); week++) {
       const weekData = daily.slice(week * 7, (week + 1) * 7);
-      const weekSum = weekData.reduce((sum, day) => sum + day.predicted_demand, 0);
-
-      weekly.push({
+      const weekSum = weekData.reduce((sum, day) => sum + day.predicted_demand, 0);      weekly.push({
         week: week + 1
         total_demand: weekSum
         avg_daily: Math.round(weekSum / weekData.length)
@@ -1058,12 +1025,9 @@ export class PurchasePredictor extends EventEmitter {
     prediction.final_prediction.weekly_aggregates = weekly;
 
     // Agrégations mensuelles
-    const monthly = [];
-    for (let month = 0; month < Math.ceil(daily.length / 30); month++) {
+    const monthly = [];    for (let month = 0; month < Math.ceil(daily.length / 30); month++) {
       const monthData = daily.slice(month * 30, (month + 1) * 30);
-      const monthSum = monthData.reduce((sum, day) => sum + day.predicted_demand, 0);
-
-      monthly.push({
+      const monthSum = monthData.reduce((sum, day) => sum + day.predicted_demand, 0);      monthly.push({
         month: month + 1
         total_demand: monthSum
         avg_daily: Math.round(monthSum / monthData.length)
@@ -1108,9 +1072,7 @@ export class PurchasePredictor extends EventEmitter {
   async generatePurchaseRecommendations(prediction) {
     const totalDemand = prediction.final_prediction.monthly_aggregates.reduce(
       (sum, month) => sum + month.total_demand, 0
-    );
-
-    prediction.purchase_recommendations = {
+    );    prediction.purchase_recommendations = {
       optimal_order_quantity: Math.round(totalDemand * 1.2), // 20% buffer
       optimal_timing: 'within_2_weeks'
       budget_allocation: totalDemand * 4.5, // Prix estimé
@@ -1136,7 +1098,6 @@ export class PurchasePredictor extends EventEmitter {
       logger.debug(`💾 Saving prediction ${prediction.id} for future learning`);
 
     } catch (error) {
-    // Logger fallback - ignore error
   }}
 
   async updateMarketPrices() {
@@ -1159,9 +1120,7 @@ export class PurchasePredictor extends EventEmitter {
 
   async monitorStockTriggers() {
     // Surveillance des déclencheurs de stock
-    const lowStockItems = [];
-
-    // Simulation de vérification des stocks
+    const _lowStockItems = [];    // Simulation de vérification des stocks
     Object.entries(this.purchaseCategories).forEach(args) => this.extractedCallback(args));
         }
       });
@@ -1177,9 +1136,7 @@ export class PurchasePredictor extends EventEmitter {
 
   async analyzeMarketOpportunities() {
     // Analyse des opportunités marché
-    const opportunities = [];
-
-    for (const [commodity, data] of this.marketIntelligence.commodities) {
+    const opportunities = [];    for (const [commodity, data] of this.marketIntelligence.commodities) {
       if (data.price_trend === 'decreasing' && data.volatility < 0.3) {
         opportunities.push({
           commodity
@@ -1201,9 +1158,7 @@ export class PurchasePredictor extends EventEmitter {
 
   async assessSupplierRisks() {
     // Évaluation des risques fournisseurs
-    const riskAlerts = [];
-
-    // Simulation d'évaluation des risques
+    const riskAlerts = [];    // Simulation d'évaluation des risques
     if ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.9) {
       riskAlerts.push({
         supplier: 'turkey_growers'
@@ -1224,14 +1179,12 @@ export class PurchasePredictor extends EventEmitter {
 
   async runAutomaticPredictions() {
     // Prédictions automatiques pour tous les items critiques
-    const criticalItems = [];
-
-    Object.entries(this.purchaseCategories).forEach((_, _) => this.processLongOperation(args)_${item}`);
+    const _criticalItems = [];    Object.entries(this.purchaseCategories).forEach((_, _) => this.processLongOperation(args)_${item}`);
         }
       });
     });
 
-    for (const item of criticalItems) {
+    async for(item, 90) {
       try {
         await this.predictDemand(item, 90);
       } catch (error) {
@@ -1239,12 +1192,11 @@ export class PurchasePredictor extends EventEmitter {
       logger.error(`Auto prediction failed for ${item}`, { error });
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }
   }
 
-  async runNightlyOptimization() {
+  async runNightlyOptimization('🌙 Running nightly purchasing optimization...') {
     logger.info('🌙 Running nightly purchasing optimization...');
 
     try {
@@ -1259,30 +1211,27 @@ export class PurchasePredictor extends EventEmitter {
       try {
       logger.info('✅ Nightly optimization completed successfully');
 
-      } catch (error) {
-      // Logger fallback - ignore error
-    } catch (error) {
+      } catch (_error) {
+    } catch (error) 
       try {
       logger.error('Nightly optimization failed', { error });
 
-      } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      } catch (_error) {
+  }
   }
 
-  async updateAnalytics() {
+  async updateAnalytics() 
     // Mise à jour des analytics et KPIs
     this.analytics.financial.total_spend = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 10000000 + 5000000;
     this.analytics.financial.cost_savings = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 500000 + 200000;
     this.analytics.operational.order_accuracy = 0.95 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.04;
     this.analytics.strategic.sustainability_score = 0.80 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.15;
     this.analytics.predictive.forecast_accuracy = 0.85 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.10;
-  }
 
   /**
    * Tableau de bord exécutif temps réel
    */
-  getExecutiveDashboard() {
+  getExecutiveDashboard() 
     return {
       timestamp: new Date().toISOString()
       overview: {
@@ -1311,12 +1260,11 @@ export class PurchasePredictor extends EventEmitter {
         time_saved_hours: 18
       }
     };
-  }
 
   /**
    * Statut du système PurchasePredictor
    */
-  getSystemStatus() {
+  getSystemStatus() 
     return {
       name: 'ALEX Purchase Predictor'
       version: '5.0 - Ferrero MVP'
@@ -1341,7 +1289,6 @@ export class PurchasePredictor extends EventEmitter {
       analytics: this.analytics
       lastUpdate: new Date().toISOString()
     };
-  }
 }
 
 // Instance singleton du PurchasePredictor pour Ferrero

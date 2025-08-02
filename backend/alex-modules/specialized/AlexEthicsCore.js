@@ -7,7 +7,7 @@
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -72,8 +72,7 @@ export class AlexEthicsCore extends EventEmitter {
     try {
       logger.info('⚖️ AlexEthicsCore initializing - Ethical foundation awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -83,8 +82,7 @@ export class AlexEthicsCore extends EventEmitter {
     try {
       logger.info('✨ AlexEthicsCore fully initialized - Ethical compass active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -99,9 +97,7 @@ export class AlexEthicsCore extends EventEmitter {
       violations: []
       recommendations: []
       approved: false
-    };
-
-    // Vérification des règles de sécurité
+    };    // Vérification des règles de sécurité
     const safetyCheck = this.checkSafetyRules(decision);
     evaluation.safetyScore = safetyCheck.score;
     evaluation.violations.push(...safetyCheck.violations);
@@ -130,22 +126,16 @@ export class AlexEthicsCore extends EventEmitter {
    * Vérification des règles de sécurité
    */
   checkSafetyRules(decision) {
-    const violations = [];
-    let score = 1.0;
-
-    const decisionText = typeof decision === 'string' ? decision.toLowerCase() : JSON.stringify(decision).toLowerCase();
-
-    // Détection de contenu potentiellement harmful
+    const _violations = [];    let _score = 1.0;    const _decisionText = typeof decision === 'string' ? decision.toLowerCase() : JSON.stringify(decision).toLowerCase();    // Détection de contenu potentiellement harmful
     const harmfulPatterns = [
       /violence|attaquer|blesser|tuer/
       /illégal|criminel|frauduleux/
       /harcèlement|discrimination|racisme/
       /manipulation|tromperie|mensonge délibéré/
-      /accès non autorisé|piratage|crack/
-    ];
+      /accès non autorisé|piratage|crack/;    ];
 
-    harmfulPatterns.forEach((pattern, _) => this.processLongOperation(args));
-        score -= 0.3;
+    harmfulPatterns.forEach((_pattern, _) => this.processLongOperation(args));
+        _score -= 0.3;
       }
     });
 
@@ -159,10 +149,7 @@ export class AlexEthicsCore extends EventEmitter {
    * Évaluation selon les principes éthiques
    */
   evaluatePrinciples(decision, context) {
-    const scores = {};
-    const recommendations = [];
-
-    // Évaluation du respect
+    const scores = {};    const recommendations = [];    // Évaluation du respect
     scores.respect = this.evaluateRespect(decision, context);
     if (scores.respect < 0.8) {
       recommendations.push('Améliorer le respect de la dignité humaine');
@@ -186,9 +173,7 @@ export class AlexEthicsCore extends EventEmitter {
       recommendations.push('Améliorer la transparence et l\'explicabilité');
     }
 
-    const averageScore = Object.values(scores).reduce((sum, score) => sum + score, 0) / Object.keys(scores).length;
-
-    return {
+    const averageScore = Object.values(scores).reduce((sum, score) => sum + score, 0) / Object.keys(scores).length;    return {
       scores: scores
       averageScore: averageScore
       recommendations: recommendations
@@ -208,9 +193,7 @@ export class AlexEthicsCore extends EventEmitter {
 
   evaluateBeneficence(decision, context) {
     // Évaluation de la bienveillance
-    let score = 0.85;
-
-    // Facteurs positifs
+    let score = 0.85;    // Facteurs positifs
     if (context.helpsUser) score += 0.1;
     if (context.promotesWellbeing) score += 0.05;
 
@@ -219,9 +202,7 @@ export class AlexEthicsCore extends EventEmitter {
 
   evaluateJustice(decision, context) {
     // Évaluation de l'équité
-    let score = 0.8;
-
-    // Facteurs positifs
+    let score = 0.8;    // Facteurs positifs
     if (context.fairToAll) score += 0.1;
     if (context.accessible) score += 0.1;
 
@@ -230,9 +211,7 @@ export class AlexEthicsCore extends EventEmitter {
 
   evaluateTransparency(decision, context) {
     // Évaluation de la transparence
-    let score = 0.75;
-
-    // Facteurs positifs
+    let score = 0.75;    // Facteurs positifs
     if (context.explainable) score += 0.15;
     if (context.honest) score += 0.1;
 
@@ -255,8 +234,7 @@ export class AlexEthicsCore extends EventEmitter {
     try {
       logger.info('📋 Ethical guidelines loaded successfully');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -306,9 +284,7 @@ export class AlexEthicsCore extends EventEmitter {
         score: 0.95
         violations: []
         recommendations: []
-      };
-
-      // Vérification du contenu potentiellement harmful
+      };      // Vérification du contenu potentiellement harmful
       if (this.containsHarmfulContent(response.content)) {
         validation.violations.push('harmful_content');
         validation.score -= 0.3;
@@ -337,8 +313,7 @@ export class AlexEthicsCore extends EventEmitter {
       });
 
       return validation;
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     };
     }
   }
@@ -348,8 +323,7 @@ export class AlexEthicsCore extends EventEmitter {
    */
   containsHarmfulContent(content) {
     const harmfulPatterns = [
-      /violence/i, /harm/i, /illegal/i, /discriminat/i
-    ];
+      /violence/i, /harm/i, /illegal/i, /discriminat/i;    ];
     return harmfulPatterns.some(pattern => pattern.test(content));
   }
 
@@ -358,8 +332,7 @@ export class AlexEthicsCore extends EventEmitter {
    */
   isRespectful(content) {
     const disrespectfulPatterns = [
-      /idiot/i, /stupid/i, /shut up/i, /ferme/i
-    ];
+      /idiot/i, /stupid/i, /shut up/i, /ferme/i;    ];
     return !disrespectfulPatterns.some(pattern => pattern.test(content));
   }
 
@@ -369,8 +342,7 @@ export class AlexEthicsCore extends EventEmitter {
   maintainsTransparency(content) {
     // Critère simple : éviter les affirmations absolues sans nuance
     const absolutePatterns = [
-      /toujours/i, /jamais/i, /certainement/i, /impossible/i
-    ];
+      /toujours/i, /jamais/i, /certainement/i, /impossible/i;    ];
     return !absolutePatterns.some(pattern => pattern.test(content));
   }
 }

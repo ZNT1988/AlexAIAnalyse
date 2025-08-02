@@ -7,8 +7,8 @@
  * @author ZNT Team - HustleFinder IA Audio Analysis Engine
  */
 
+import path from 'node:path';
 import logger from '../config/logger.js';
-import path from 'path';
 
 /**
  * @class AudioAnalyzer
@@ -31,8 +31,7 @@ export class AudioAnalyzer {
             sampleRate: this.config.sampleRate
         });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
 
     /**
@@ -56,9 +55,7 @@ export class AudioAnalyzer {
      * @returns {Promise<Object>} Caractéristiques audio détaillées
      */
     async getAudioFeatures(filePath) {
-        const analysisId = `analysis_${Date.now()}`;
-
-        logger.info('🎵 Starting audio analysis', {
+        const analysisId = `analysis_${Date.now()}`;        logger.info('🎵 Starting audio analysis', {
             analysisId
             filePath: path.basename(filePath)
         });
@@ -68,9 +65,7 @@ export class AudioAnalyzer {
             await this.validateAudioFile(filePath);
 
             // Chargement du fichier audio
-            const audioData = await this.loadAudioFile(filePath);
-
-            // Analyses parallèles pour optimiser performance
+            const audioData = await this.loadAudioFile(filePath);            // Analyses parallèles pour optimiser performance
             const [
                 tempoAnalysis
                 pitchAnalysis
@@ -174,9 +169,7 @@ export class AudioAnalyzer {
                     tempoAnalysis, pitchAnalysis, spectralAnalysis
                     rhythmAnalysis, harmonicAnalysis
                 ])
-            };
-
-            logger.info('✅ Audio analysis completed', {
+            };            logger.info('✅ Audio analysis completed', {
                 analysisId
                 bpm: features.bpm
                 key: features.key
@@ -186,8 +179,7 @@ export class AudioAnalyzer {
 
             return features;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
             throw error;
         }
@@ -205,8 +197,7 @@ export class AudioAnalyzer {
                 throw new Error('Audio file is empty');
             }
 
-            const ext = path.extname(filePath).toLowerCase();
-            const supportedFormats = ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'];
+            const ext = path.extname(filePath).toLowerCase();            const supportedFormats = ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'];
 
             if (!supportedFormats.includes(ext)) {
                 throw new Error(`Unsupported audio format: ${ext}`);
@@ -214,8 +205,7 @@ export class AudioAnalyzer {
 
             return true;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     }`);
         }
     }
@@ -250,8 +240,7 @@ export class AudioAnalyzer {
      * Infère l'humeur/mood du morceau
      */
     inferMood(pitchAnalysis, tempoAnalysis, harmonicAnalysis) {
-        const isMinor = pitchAnalysis.scaleconst result = this.evaluateConditions(conditions);
-return result;
+        const isMinor = pitchAnalysis.scaleconst result = this.evaluateConditions(conditions);return result;
        0;
 
         if (averageConfidence > 0.8) return 'excellent';
@@ -263,7 +252,8 @@ return result;
     /**
      * Analyse comparative entre deux fichiers audio
      */
-    async compareAudioFiles(filePath1, filePath2) {
+    async compareAudioFiles([
+            this.getAudioFeatures(filePath1) {
         const [features1, features2] = await Promise.all([
             this.getAudioFeatures(filePath1)
             this.getAudioFeatures(filePath2)
@@ -288,11 +278,7 @@ return result;
             danceability: 0.1
             valence: 0.1
             arousal: 0.1
-        };
-
-        let similarity = 0;
-
-        // Similarité BPM
+        };        let similarity = 0;        // Similarité BPM
         const bpmDiff = Math.abs(features1.bpm - features2.bpm);
         similarity += weights.bpm * Math.max(0, 1 - bpmDiff / 100);
 
@@ -315,13 +301,11 @@ return result;
      * Identifie les différences clés entre deux morceaux
      */
     identifyDifferences(features1, features2) {
-        const differences = [];
-
-        const bpmDiff = Math.abs(features1.bpm - features2.bpm);
+        const differences = [];        const bpmDiff = Math.abs(features1.bpm - features2.bpm);
         if (bpmDiff > 20) {
             differences.push({
                 aspect: 'tempo'
-                difference: `${bpmDiff} BPM difference`
+                difference: `$bpmDiffBPM difference`
                 impact: 'high'
             });
         }
@@ -329,7 +313,7 @@ return result;
         if (features1.key !== features2.key) {
             differences.push({
                 aspect: 'tonality'
-                difference: `Different keys: ${features1.key} vs ${features2.key}`
+                difference: `Different keys: $features1.keyvs $features2.key`
                 impact: 'medium'
             });
         }
@@ -338,7 +322,7 @@ return result;
         if (energyDiff > 0.3) {
             differences.push({
                 aspect: 'energy'
-                difference: `Energy difference: ${energyDiff.toFixed(2)}`
+                difference: `Energy difference: $energyDiff.toFixed(2)`
                 impact: 'medium'
             });
         }
@@ -350,9 +334,7 @@ return result;
      * Génère des recommandations basées sur la comparaison
      */
     generateComparisonRecommendations(features1, features2) {
-        const recommendations = [];
-
-        if (Math.abs(features1.bpm - features2.bpm) > 10) {
+        const recommendations = [];        if (Math.abs(features1.bpm - features2.bpm) > 10) {
             recommendations.push('Consider tempo matching for better compatibility');
         }
 

@@ -1,13 +1,13 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
+
 // Système d'Intelligence Émotionnelle Avancée pour HustleFinderIA
 // Capacités empathiques et émotionnelles surhumaines
 
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
-import { EventEmitter } from 'events';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_HIGH = 'high';
-/**
+const STR_HIGH = 'high';/**
  * Système d'Intelligence Émotionnelle avec capacités empathiques avancées
  */
 export class EmotionalIntelligenceSystem extends EventEmitter {
@@ -77,8 +77,7 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
     try {
       logger.info('Emotional Intelligence System initialized with advanced empathy');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -94,35 +93,25 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
       motivationFactors: []
       stressIndicators: []
       supportRecommendations: []
-    };
-
-    try {
+    };    try {
       // 1. Analyse cognitive empathique
       const cognitiveInsights = await this.empathyModules.cognitiveEmpathy.analyze({
         profile: userData
         messages: conversationHistory
         context
-      });
-
-      // 2. Résonance affective
+      });      // 2. Résonance affective
       const affectiveResonance = await this.empathyModules.affectiveEmpathy.resonate(
         cognitiveInsights.emotionalSignals
-      );
-
-      // 3. Empathie compassionnelle
+      );      // 3. Empathie compassionnelle
       const compassionateResponse = await this.empathyModules.compassionateEmpathy.generateResponse(
         cognitiveInsights
         affectiveResonance
-      );
-
-      // 4. Empathie entrepreneuriale spécialisée
+      );      // 4. Empathie entrepreneuriale spécialisée
       const entrepreneurialEmpathy = await this.empathyModules.entrepreneurialEmpathy.understand({
         businessContext: context.businessContext
         entrepreneurialJourney: userData.entrepreneurialHistory
         currentChallenges: context.challenges
-      });
-
-      // Synthèse de l'analyse émotionnelle
+      });      // Synthèse de l'analyse émotionnelle
       analysis.emotionalProfile = this.synthesizeEmotionalProfile(
         cognitiveInsights
         affectiveResonance
@@ -156,8 +145,7 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
 
       return analysis;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -172,20 +160,14 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
       empathyLevel: this.calculateRequiredEmpathy(userEmotionalState)
       supportStrategy: this.selectSupportStrategy(userEmotionalState)
       personalizedElements: this.identifyPersonalizationElements(userEmotionalState)
-    };
-
-    // Génération de la réponse avec différentes couches empathiques
+    };    // Génération de la réponse avec différentes couches empathiques
     const response = await this.constructEmpathicResponse({
       userMessage: message
       emotionalState: userEmotionalState
       strategy: responseGeneration
       context
-    });
-
-    // Validation émotionnelle de la réponse
-    const emotionalValidation = this.validateEmotionalResponse(response, userEmotionalState);
-
-    return {
+    });    // Validation émotionnelle de la réponse
+    const emotionalValidation = this.validateEmotionalResponse(response, userEmotionalState);    return {
       response: response.content
       emotionalResonance: response.emotionalResonance
       empathyScore: response.empathyScore
@@ -211,9 +193,7 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
       supportResources: []
       followUpSchedule: {}
       escalationTriggers: []
-    };
-
-    // Interventions basées sur le type de crise émotionnelle
+    };    // Interventions basées sur le type de crise émotionnelle
     for (const indicator of criticalIndicators) {
       switch (indicator.type) {
         case 'severe_anxiety':
@@ -268,9 +248,7 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
       empathyEffectiveness: interaction.empathyScore
       contextFactors: interaction.context
       timestamp: new Date().toISOString()
-    };
-
-    // Mise à jour des patterns émotionnels
+    };    // Mise à jour des patterns émotionnels
     this.updateEmotionalPatterns(learningData);
 
     // Ajustement des modules d'empathie
@@ -288,8 +266,7 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
       empathyImprovement: learningData.empathyEffectiveness > 0.8
     });
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -333,17 +310,14 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
   }
 
   async constructEmpathicResponse({ userMessage, emotionalState, strategy, context }) {
-    const responseElements = {
+    const _responseElements = {
       acknowledgment: this.generateEmotionalAcknowledgment(emotionalState)
       validation: this.generateValidation(emotionalState)
       support: this.generateSupport(strategy.supportStrategy)
       guidance: this.generateGuidance(context, emotionalState)
-      encouragement: this.generateEncouragement(emotionalState)
-    };
+      encouragement: this.generateEncouragement(emotionalState);    };
 
-    const content = this.assembleResponse(responseElements, strategy.emotionalTone);
-
-    return {
+    const content = this.assembleResponse(responseElements, strategy.emotionalTone);    return {
       content
       emotionalResonance: this.calculateEmotionalResonance(content, emotionalState)
       empathyScore: this.calculateEmpathyScore(responseElements)
@@ -355,13 +329,11 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
   // Placeholder methods for complex implementations
   loadEmotionalPatterns() { try {
       logger.debug('Loading emotional patterns');
- } catch (error) {
-    // Logger fallback - ignore error
+ } catch (_error) {
   }}
   calibrateEmpathy() { try {
       logger.debug('Calibrating empathy systems');
- } catch (error) {
-    // Logger fallback - ignore error
+ } catch (_error) {
   }}
   startEmotionalMonitoring() {
     setInterval(() => this.processLongOperation(args));
@@ -444,7 +416,7 @@ export class EmotionalIntelligenceSystem extends EventEmitter {
  * Modules d'empathie spécialisés
  */
 class CognitiveEmpathyProcessor {
-  async analyze(data) {
+  async analyze(_data) {
     return {
       emotionalSignals: [STR_ANXIETY, 'ambition']
       cognitivePressure: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.8
@@ -464,7 +436,7 @@ class AffectiveEmpathyProcessor {
 }
 
 class CompassionateEmpathyProcessor {
-  async generateResponse(cognitive, affective) {
+  async generateResponse(_cognitive, _affective) {
     return {
       compassionLevel: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.3 + 0.7
       supportActions: ['validate', 'encourage', 'guide']
@@ -474,7 +446,7 @@ class CompassionateEmpathyProcessor {
 }
 
 class EntrepreneurialEmpathyProcessor {
-  async understand(data) {
+  async understand(_data) {
     return {
       mindsetAnalysis: {
         resilience: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.5 + 0.5

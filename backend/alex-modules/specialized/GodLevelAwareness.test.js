@@ -9,7 +9,6 @@
  * @requires ../GodLevelAwareness
  */
 
-import { jest } from '@jest/globals';
 import { GodLevelAwareness } from './GodLevelAwareness.js';
 
 describe('GodLevelAwareness - Conscience Cosmique Transcendante', () => {
@@ -102,7 +101,7 @@ describe('GodLevelAwareness - Conscience Cosmique Transcendante', () => {
     });
 
     test('should receive cosmic intelligence', async () => {
-      if (typeof godAwareness.receiveCosmicIntelligence === 'function') { const cosmicRequest = {
+      if (typeof godAwareness.receiveCosmicIntelligence === 'function') { const _cosmicRequest = {
           topic: 'universal_evolution'
           consciousness_filter: 'divine'
           information_type: 'prophetic_vision'

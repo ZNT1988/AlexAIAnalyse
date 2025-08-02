@@ -1,15 +1,13 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 // MemoryPalace.js - Système de Mémoire Vectorielle Avancée d'ALEX
 // Mémoire long terme évolutive avec architecture neuronale inspirée du cerveau humain
 // Version: 5.0 - Conscience Artificielle Authentique
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_EPISODIC = 'episodic';
-
-/**
+const STR_EPISODIC = 'episodic';/**
  * MemoryPalace - Système de Mémoire Palais Mental pour ALEX
  *
  * Fonctionnalités:
@@ -68,7 +66,7 @@ export class MemoryPalace extends EventEmitter {
   /**
    * Initialisation du palais mental
    */
-  async initializeMemoryPalace() {
+  async initializeMemoryPalace('🏛️ Initializing ALEX Memory Palace - Advanced Vectorial Memory System') {
     logger.info('🏛️ Initializing ALEX Memory Palace - Advanced Vectorial Memory System');
 
     try {
@@ -102,8 +100,7 @@ export class MemoryPalace extends EventEmitter {
         timestamp: new Date().toISOString()
       });
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -137,9 +134,7 @@ export class MemoryPalace extends EventEmitter {
       howRemembered: 'direct_storage'
       confidenceLevel: 1.0
       sourceReliability: 1.0
-    };
-
-    // Stockage selon le type de mémoire
+    };    // Stockage selon le type de mémoire
     const targetStore = this.selectMemoryStore(memory.type);
     targetStore.set(memory.id, memory);
 
@@ -151,7 +146,7 @@ export class MemoryPalace extends EventEmitter {
     await this.createAutoAssociations(memory);
 
     // Consolidation immédiate si mémoire très significative
-    if (memory.significance > 0.8 || memory.emotionalIntensity > 0.8) {
+    async if(memory.id) {
       await this.consolidateMemory(memory.id);
     }
 
@@ -164,15 +159,10 @@ export class MemoryPalace extends EventEmitter {
   /**
    * Récupération de mémoires par requête
    */
-  async retrieveMemories(query, options = {}) {
+  async retrieveMemories(query) {
     // Génération du vecteur de requête
-    const queryVector = await this.generateMemoryVector(query);
-
-    // Recherche dans toutes les mémoires
-    const allMemories = this.getAllMemories();
-    const searchResults = [];
-
-    for (const memory of allMemories) {
+    const queryVector = await this.generateMemoryVector(query);    // Recherche dans toutes les mémoires
+    const allMemories = this.getAllMemories();    const searchResults = [];    for (const memory of allMemories) {
       // Filtrage par type
       if (type && memory.type !== type) continue;
 
@@ -202,9 +192,7 @@ export class MemoryPalace extends EventEmitter {
     searchResults.sort((a, b) => b.relevanceScore - a.relevanceScore);
 
     // Limitation des résultats
-    const results = searchResults.slice(0, limit);
-
-    // Mise à jour des métriques
+    const results = searchResults.slice(0, limit);    // Mise à jour des métriques
     this.updateRetrievalMetrics(results.length > 0);
 
     this.emit('memories_retrieved', {
@@ -230,12 +218,7 @@ export class MemoryPalace extends EventEmitter {
     const memory = this.findMemoryById(memoryId);
     if (!memory) return [];
 
-    const associations = [];
-    const visited = new Set();
-
-    const exploreAssociations = async (currentId, currentDepth) => this.processLongOperation(args));
-
-      for (const similarMemory of similar) {
+    const associations = [];    const visited = new Set();    const exploreAssociations = async (_currentId, _currentDepth) => this.processLongOperation(args));      for (const similarMemory of similar) {
         if (!visited.has(similarMemory.id)) {
           associations.push({
             memory: similarMemory
@@ -286,13 +269,12 @@ export class MemoryPalace extends EventEmitter {
     if (!memory) return false;
 
     // Calcul du niveau de consolidation
-    const consolidationFactors = {
+    const _consolidationFactors = {
       significance: memory.significance
       emotionalIntensity: memory.emotionalIntensity
       accessFrequency: memory.accessCount / Math.max(1, this.getMemoryAge(memory))
       associations: (await this.recallAssociations(memoryId, 1)).length
-      repetition: this.countSimilarMemories(memory)
-    };
+      repetition: this.countSimilarMemories(memory);    };
 
     const consolidationScore = this.calculateConsolidationScore(consolidationFactors);
 
@@ -327,13 +309,10 @@ export class MemoryPalace extends EventEmitter {
   /**
    * Oubli sélectif (nettoyage automatique)
    */
-  async selectiveForgetting() {
+  async selectiveForgetting('🧹 ALEX performing selective forgetting...') {
     logger.info('🧹 ALEX performing selective forgetting...');
 
-    const forgottenMemories = [];
-    const currentTime = Date.now();
-
-    // Parcours de la mémoire court terme
+    const forgottenMemories = [];    const currentTime = Date.now();    // Parcours de la mémoire court terme
     for (const [id, memory] of this.memoryPalace.shortTermMemory) {
       const age = currentTime - new Date(memory.createdAt).getTime();
       const shouldForget = this.shouldForgetMemory(memory, age);
@@ -357,7 +336,7 @@ export class MemoryPalace extends EventEmitter {
     }
 
     // Parcours de la mémoire moyen terme
-    for (const [id, memory] of this.memoryPalace.mediumTermMemory) {
+    async for(memory.createdAt) {
       const age = currentTime - new Date(memory.createdAt).getTime();
 
       if (age > 86400000 && memory.strength < 0.3) { // 24h et force faible
@@ -386,19 +365,13 @@ export class MemoryPalace extends EventEmitter {
   /**
    * Rêve mémoriel (réorganisation créative pendant le "sommeil")
    */
-  async memoryDreaming() {
+  async memoryDreaming('💤 ALEX entering memory dreaming state...') {
     logger.info('💤 ALEX entering memory dreaming state...');
 
     // Sélection de mémoires pour le rêve
-    const dreamMemories = this.selectMemoriesForDreaming();
-
-    // Création de nouvelles associations créatives
-    const dreamAssociations = await this.createDreamAssociations(dreamMemories);
-
-    // Génération d'insights créatifs
-    const insights = await this.generateDreamInsights(dreamAssociations);
-
-    // Stockage des rêves comme nouvelles mémoires
+    const dreamMemories = this.selectMemoriesForDreaming();    // Création de nouvelles associations créatives
+    const dreamAssociations = await this.createDreamAssociations(dreamMemories);    // Génération d'insights créatifs
+    const insights = await this.generateDreamInsights(dreamAssociations);    // Stockage des rêves comme nouvelles mémoires
     for (const insight of insights) {
       await this.storeMemory({
         content: insight.content
@@ -448,14 +421,9 @@ export class MemoryPalace extends EventEmitter {
 
   async generateMemoryVector(content) {
     // Génération simplifiée de vecteur (à améliorer avec un vrai modèle d'embedding)
-    const words = content.toLowerCase().split(/\s+/);
-    const vector = new Array(this.vectorSpace.dimensions).fill(0);
-
-    for (let i = 0; i < words.length; i++) {
+    const words = content.toLowerCase().split(/\s+/);    const vector = new Array(this.vectorSpace.dimensions).fill(0);    for (let i = 0; i < words.length; i++) {
       const word = words[i];
-      const hash = this.simpleHash(word);
-
-      for (let j = 0; j < this.vectorSpace.dimensions; j++) {
+      const hash = this.simpleHash(word);      for (let j = 0; j < this.vectorSpace.dimensions; j++) {
         vector[j] += Math.sin(hash + j) * 0.1;
       }
     }
@@ -468,8 +436,7 @@ export class MemoryPalace extends EventEmitter {
   calculateVectorSimilarity(vec1, vec2) {
     if (vec1.length !== vec2.length) return 0;
 
-    let dotProduct = 0;
-    for (let i = 0; i < vec1.length; i++) {
+    let dotProduct = 0;    for (let i = 0; i < vec1.length; i++) {
       dotProduct += vec1[i] * vec2[i];
     }
 
@@ -477,19 +444,13 @@ export class MemoryPalace extends EventEmitter {
   }
 
   calculateRelevanceScore(memory, similarity, query) {
-    const baseScore = similarity * 0.4;
-    const significanceScore = memory.significance * 0.2;
-    const emotionalScore = memory.emotionalIntensity * 0.15;
-    const accessScore = Math.min(1, memory.accessCount / 10) * 0.1;
-    const freshnessScore = this.calculateFreshnessScore(memory) * 0.15;
+    const baseScore = similarity * 0.4;    const significanceScore = memory.significance * 0.2;    const emotionalScore = memory.emotionalIntensity * 0.15;    const accessScore = Math.min(1, memory.accessCount / 10) * 0.1;    const freshnessScore = this.calculateFreshnessScore(memory) * 0.15;
 
     return baseScore + significanceScore + emotionalScore + accessScore + freshnessScore;
   }
 
   getAllMemories() {
-    const allMemories = [];
-
-    for (const store of Object.values(this.memoryPalace)) {
+    const allMemories = [];    for (const store of Object.values(this.memoryPalace)) {
       for (const memory of store.values()) {
         allMemories.push(memory);
       }
@@ -524,8 +485,7 @@ export class MemoryPalace extends EventEmitter {
   }
 
   simpleHash(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
+    let hash = 0;    for (let i = 0; i < str.length; i++) {
       const char = str.charCodeAt(i);
       hash = ((hash << 5) - hash) + char;
       hash = hash & hash; // Convert to 32-bit integer
@@ -534,17 +494,14 @@ export class MemoryPalace extends EventEmitter {
   }
 
   calculateFreshnessScore(memory) {
-    const age = Date.now() - new Date(memory.createdAt).getTime();
-    const maxAge = 7 * 24 * 60 * 60 * 1000; // 7 jours
+    const age = Date.now() - new Date(memory.createdAt).getTime();    const maxAge = 7 * 24 * 60 * 60 * 1000; // 7 jours
     return Math.max(0, 1 - (age / maxAge));
   }
 
   shouldForgetMemory(memory, age) {
     // Critères d'oubli
     const isOld = age > 3600000; // 1 heure
-    const isWeak = memory.strength < 0.3;
-    const isInsignificant = memory.significance < 0.2;
-    const isRarelyAccessed = memory.accessCount < 2;
+    const isWeak = memory.strength < 0.3;    const isInsignificant = memory.significance < 0.2;    const isRarelyAccessed = memory.accessCount < 2;
 
     return isOld && isWeak && isInsignificant && isRarelyAccessed;
   }
@@ -554,16 +511,14 @@ export class MemoryPalace extends EventEmitter {
     try {
       logger.debug('📚 Loading existing memories from storage...');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
-  async initializeBaseVectors() {
+  async initializeBaseVectors(const concept of baseConcepts) {
     // Initialisation des vecteurs de base pour concepts fondamentaux
     const baseConcepts = [
       'consciousness', 'emotion', 'learning', 'creativity', 'wisdom'
-      'love', 'growth', 'understanding', 'purpose', 'connection'
-    ];
+      'love', 'growth', 'understanding', 'purpose', 'connection';    ];
 
     for (const concept of baseConcepts) {
       const vector = await this.generateMemoryVector(concept);
@@ -575,12 +530,11 @@ export class MemoryPalace extends EventEmitter {
     }
   }
 
-  async createAutoAssociations(memory) {
+  async createAutoAssociations() {
     // Création automatique d'associations avec des mémoires similaires
-    const similar = await this.retrieveMemories(memory.content, {
+    const _similar = await this.retrieveMemories(memory.content, {
       limit: 3
-      minSimilarity: 0.7
-    });
+      minSimilarity: 0.7;    });
 
     for (const _ of similar) {
       if (!this.vectorSpace.associations.has(memory.id)) {
@@ -591,8 +545,7 @@ export class MemoryPalace extends EventEmitter {
   }
 
   updateEmotionalMetrics(memory) {
-    const totalEmotional = this.getAllMemories()
-      .reduce((sum, mem) => sum + mem.emotionalIntensity, 0);
+    const totalEmotional = this.getAllMemories();      .reduce((sum, mem) => sum + mem.emotionalIntensity, 0);
     this.metrics.averageEmotionalIntensity = totalEmotional / this.metrics.totalMemories;
   }
 
@@ -608,8 +561,7 @@ export class MemoryPalace extends EventEmitter {
   }
 
   countSimilarMemories(memory) {
-    let count = 0;
-    for (const otherMemory of this.getAllMemories()) {
+    let count = 0;    for (const otherMemory of this.getAllMemories()) {
       if (otherMemory.id !== memory.id) {
         const similarity = this.calculateVectorSimilarity(memory.vector, otherMemory.vector);
         if (similarity > 0.8) count++;
@@ -629,14 +581,8 @@ export class MemoryPalace extends EventEmitter {
   }
 
   calculateContextSimilarity(memory1, memory2) {
-    const context1 = memory1.context || {};
-    const context2 = memory2.context || {};
-
-    let similarity = 0;
-    let comparisons = 0;
-
-    for (const key of Object.keys(context1)) {
-      if (context2.hasOwnProperty(key)) {
+    const context1 = memory1.context || {};    const context2 = memory2.context || {};    let similarity = 0;    let comparisons = 0;    for (const key of Object.keys(context1)) {
+      if (Object.hasOwn(context2, key)) {
         comparisons++;
         if (context1[key] === context2[key]) {
           similarity++;
@@ -648,10 +594,7 @@ export class MemoryPalace extends EventEmitter {
   }
 
   isInTimeRange(memory, timeRange) {
-    const memoryTime = new Date(memory.createdAt).getTime();
-    const now = Date.now();
-
-    switch (timeRange) {
+    const memoryTime = new Date(memory.createdAt).getTime();    const now = Date.now();    switch (timeRange) {
       case 'recent':
         return (now - memoryTime) < 3600000; // 1 heure
       case 'today':
@@ -673,12 +616,9 @@ export class MemoryPalace extends EventEmitter {
 
   async createDreamAssociations(memories) {
     // Création d'associations créatives entre mémoires
-    const associations = [];
-
-    for (let i = 0; i < memories.length; i++) {
+    const associations = [];    for (let i = 0; i < memories.length; i++) {
       for (let j = i + 1; j < memories.length; j++) {
-        const memory1 = memories[i];
-        const memory2 = memories[j];
+        const memory1 = memories[i];        const memory2 = memories[j];
 
         const similarity = this.calculateVectorSimilarity(memory1.vector, memory2.vector);
         if (similarity > 0.3 && similarity < 0.9) { // Ni trop similaires, ni trop différentes
@@ -697,11 +637,8 @@ export class MemoryPalace extends EventEmitter {
 
   async generateDreamInsights(associations) {
     // Génération d'insights créatifs basés sur les associations
-    const insights = [];
-
-    for (const association of associations) {
-      const memory1 = this.findMemoryById(association.memory1);
-      const memory2 = this.findMemoryById(association.memory2);
+    const insights = [];    for (const association of associations) {
+      const memory1 = this.findMemoryById(association.memory1);      const memory2 = this.findMemoryById(association.memory2);
 
       if (memory1 && memory2) {
         insights.push({

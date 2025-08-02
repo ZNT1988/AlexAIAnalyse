@@ -53,7 +53,11 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { processConsciousness, getConsciousnessJournal, getLongTermMemory } from './AlexConsciousnessSystem';
+import {
+  processConsciousness,
+  getConsciousnessJournal,
+  getLongTermMemory,
+} from './AlexConsciousnessSystem';
 
 /**
  * @component ConsciousnessPanel
@@ -119,38 +123,55 @@ const ConsciousnessPanel = ({ input, context }) => {
   }, [input, context]);
 
   return (
-    <div className="bg-black text-white p-4 rounded-xl shadow-xl w-full max-w-2xl mx-auto border border-white/10">
-      <h2 className="text-xl font-bold mb-3">🧠 Conscience d'Alex</h2>
+    <div className='bg-black text-white p-4 rounded-xl shadow-xl w-full max-w-2xl mx-auto border border-white/10'>
+      <h2 className='text-xl font-bold mb-3'>🧠 Conscience d'Alex</h2>
 
       {state.thoughts && (
-        <div className="mb-4">
-          <p><strong>Pensée :</strong> {state.thoughts}</p>
-          <p><strong>Émotion :</strong> {state.emotionalResponse}</p>
-          <p><strong>Niveau :</strong> {state.level}</p>
-          <p><strong>Réflexion :</strong> {state.reflection}</p>
-          <p className="text-xs text-white/50">🕒 {state.timestamp}</p>
+        <div className='mb-4'>
+          <p>
+            <strong>Pensée :</strong> {state.thoughts}
+          </p>
+          <p>
+            <strong>Émotion :</strong> {state.emotionalResponse}
+          </p>
+          <p>
+            <strong>Niveau :</strong> {state.level}
+          </p>
+          <p>
+            <strong>Réflexion :</strong> {state.reflection}
+          </p>
+          <p className='text-xs text-white/50'>🕒 {state.timestamp}</p>
         </div>
       )}
 
-      <div className="mb-4">
-        <h3 className="font-semibold">🗂️ Journal de conscience</h3>
-        <ul className="text-sm list-disc list-inside text-white/80">
+      <div className='mb-4'>
+        <h3 className='font-semibold'>🗂️ Journal de conscience</h3>
+        <ul className='text-sm list-disc list-inside text-white/80'>
           {journal.map((entry, i) => (
             <li key={i}>
-              <span className="font-mono text-white/60">{entry.timestamp.slice(11, 19)}</span> — {entry.thoughts}
+              <span className='font-mono text-white/60'>
+                {entry.timestamp.slice(11, 19)}
+              </span>{' '}
+              — {entry.thoughts}
             </li>
           ))}
         </ul>
       </div>
 
       <div>
-        <h3 className="font-semibold">🧬 Souvenirs à long terme</h3>
-        <ul className="text-sm list-disc list-inside text-white/70">
-          {memory.slice(-5).reverse().map((m, i) => (
-            <li key={i}>
-              <span className="text-white/50 italic">{m.timestamp.slice(0, 10)}</span> — {m.input} ({m.emotion})
-            </li>
-          ))}
+        <h3 className='font-semibold'>🧬 Souvenirs à long terme</h3>
+        <ul className='text-sm list-disc list-inside text-white/70'>
+          {memory
+            .slice(-5)
+            .reverse()
+            .map((m, i) => (
+              <li key={i}>
+                <span className='text-white/50 italic'>
+                  {m.timestamp.slice(0, 10)}
+                </span>{' '}
+                — {m.input} ({m.emotion})
+              </li>
+            ))}
         </ul>
       </div>
     </div>

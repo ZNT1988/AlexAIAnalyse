@@ -1,9 +1,9 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 // AlexDreamCompiler.js - Compilateur de Rêves en Projets Réels
 // Module révolutionnaire pour transformer pensées floues en hustles structurés
 // Version: 2.0 - HustleFinderIA Advanced AI System
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
@@ -40,8 +40,7 @@ export class AlexDreamCompiler extends EventEmitter {
     try {
       logger.info('AlexDreamCompiler initialized - Ready to transform dreams into reality');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -56,24 +55,14 @@ export class AlexDreamCompiler extends EventEmitter {
 
     try {
       // Phase 1: Analyse profonde du rêve
-      const dreamAnalysis = await this.analyzeDream(dreamInput);
-
-      // Phase 2: Extraction de l'essence du projet
-      const projectEssence = await this.extractProjectEssence(dreamAnalysis);
-
-      // Phase 3: Génération du projet structuré
+      const dreamAnalysis = await this.analyzeDream(dreamInput);      // Phase 2: Extraction de l'essence du projet
+      const projectEssence = await this.extractProjectEssence(dreamAnalysis);      // Phase 3: Génération du projet structuré
       const compiledProject = await this.generateProject(projectEssence
-      userContext);
-
-      // Phase 4: Optimisation et personnalisation
+      userContext);      // Phase 4: Optimisation et personnalisation
       const optimizedProject = await this.optimizeProject(compiledProject
-      userContext);
-
-      // Phase 5: Génération du plan de lancement
+      userContext);      // Phase 5: Génération du plan de lancement
       const launchPlan = await this.generateLaunchPlan(optimizedProject
-      userContext);
-
-      const finalProject = {
+      userContext);      const _finalProject = {
         ...optimizedProject
       launchPlan
       compilationMetadata: {
@@ -84,17 +73,15 @@ export class AlexDreamCompiler extends EventEmitter {
       timeToMarket: this.estimateTimeToMarket(optimizedProject)
       uniquenessScore: this.calculateUniqueness(optimizedProject)
       compiledAt: new Date().toISOString()
-        }
-      };
+        };      };
 
       this.emit('dream_compiled', { project: finalProject, userContext });
 
       return finalProject;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
-      throw new Error(`Dream compilation failed: ${error.message}`);
+      throw new Error(`_Dream _compilation failed: ${error.message}`);
     }
   }
 
@@ -118,9 +105,7 @@ export class AlexDreamCompiler extends EventEmitter {
       passion_level: 0
       urgency: 0
       clarity: 0
-    };
-
-    // Analyse textuelle avec NLP avancé
+    };    // Analyse textuelle avec NLP avancé
     if (dreamInput.type === 'text' || dreamInput.content) {
       analysis.keywords = this.extractKeywords(dreamInput.content);
       analysis.intent = this.detectIntent(dreamInput.content);
@@ -130,7 +115,7 @@ export class AlexDreamCompiler extends EventEmitter {
     }
 
     // Analyse vocale avec tonalité émotionnelle
-    if (dreamInput.type === 'voice' && dreamInput.audioData) {
+    async if(dreamInput.audioData) {
       const voiceAnalysis = await this.analyzeVoiceEmotion(dreamInput.audioData);
       analysis.emotionalState = voiceAnalysis.emotions;
       analysis.urgency = voiceAnalysis.urgency;
@@ -165,9 +150,7 @@ export class AlexDreamCompiler extends EventEmitter {
       scalabilityPotential: 0
       innovationFactor: 0
       marketSize: 'unknown'
-    };
-
-    // Identification de l'idée centrale
+    };    // Identification de l'idée centrale
     essence.coreIdea = this.identifyCoreIdea(dreamAnalysis);
 
     // Déduction du problème résolu
@@ -214,9 +197,7 @@ export class AlexDreamCompiler extends EventEmitter {
       risks: []
       opportunities: []
       monetization: {}
-    };
-
-    // Génération du nom et tagline accrocheurs
+    };    // Génération du nom et tagline accrocheurs
     project.name = this.generateProjectName(projectEssence);
     project.tagline = this.generateTagline(projectEssence);
 
@@ -266,9 +247,7 @@ export class AlexDreamCompiler extends EventEmitter {
       estimatedDevelopmentTime: ''
       estimatedCost: ''
       riskFactors: []
-    };
-
-    // Features essentielles du MVP
+    };    // Features essentielles du MVP
     mvp.coreFeatures = this.selectCoreFeatures(projectEssence, userContext);
 
     // Parcours utilisateur simplifié
@@ -306,13 +285,7 @@ export class AlexDreamCompiler extends EventEmitter {
       hosting: {}
       tools: {}
       reasoning: {}
-    };
-
-    const complexity = projectEssence.scalabilityPotential;
-    const userSkills = userContext.skills || [];
-    const budget = userContext.budget || 'low';
-
-    // Frontend suggestions
+    };    const complexity = projectEssence.scalabilityPotential;    const userSkills = userContext.skills || [];    const budget = userContext.budget || 'low';    // Frontend suggestions
     if (projectEssence.category === 'web_app') {
       if (userSkills.includes('react')) {
         stack.frontend = {
@@ -416,9 +389,7 @@ export class AlexDreamCompiler extends EventEmitter {
       launchSequence: []
       successMetrics: []
       contingencyPlans: []
-    };
-
-    // Phase de pré-lancement (Semaines 1-2)
+    };    // Phase de pré-lancement (Semaines 1-2)
     plan.phases.push({
       name: 'Pré-lancement'
       duration: '2 semaines'
@@ -492,17 +463,15 @@ export class AlexDreamCompiler extends EventEmitter {
   // Méthodes utilitaires pour l'analyse et la génération
 
   extractKeywords(content) {
-    const stopWords = ['le', 'la', 'les', 'un', 'une', 'des', 'et', 'ou', 'mais', 'donc', 'car'];
-    return content.toLowerCase()
+    const stopWords = ['le', 'la', 'les', 'un', 'une', 'des', 'et', 'ou', 'mais', 'donc', 'car'];    return content.toLowerCase()
       .split(/\W+/)
       .filter(word => word.length > 3 && !stopWords.includes(word))
       .slice(0, 10);
   }
 
   detectIntent(content) {
-    const intents = {
-      'créer': 'creationSTR_développer': 'developmentSTR_lancer': 'launchSTR_améliorer': 'improvementSTR_automatiser': 'automationSTR_connecter': 'connectionSTR_vendre': 'monetization'
-    };
+    const _intents = {
+      'créer': 'creationSTR_développer': 'developmentSTR_lancer': 'launchSTR_améliorer': 'improvementSTR_automatiser': 'automationSTR_connecter': 'connectionSTR_vendre': 'monetization';    };
 
     for (const [keyword, intent] of Object.entries(intents)) {
       if (content.toLowerCase().includes(keyword)) {
@@ -546,10 +515,7 @@ export class AlexDreamCompiler extends EventEmitter {
       'formation'
       'apprentissage'
       'cours']
-    };
-
-    const contentLower = content.toLowerCase();
-    for (const [domain, keywords] of Object.entries(domains)) {
+    };    const contentLower = content.toLowerCase();    for (const [domain, keywords] of Object.entries(domains)) {
       if (keywords.some(keyword => contentLower.includes(keyword))) {
         return domain;
       }
@@ -558,12 +524,7 @@ export class AlexDreamCompiler extends EventEmitter {
   }
 
   generateProjectName(essence) {
-    const prefixes = ['Quick', 'Smart', 'Easy', 'Pro', 'Ultra', 'Neo', 'Meta', 'Sync'];
-    const suffixes = ['Hub', 'Lab', 'Works', 'Flow', 'Boost', 'Sync', 'Pro', 'AI'];
-
-    const coreWords = essence.coreIdea.split(' ').slice(0, 2);
-    const prefix = prefixes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * prefixes.length)];
-    const suffix = suffixes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * suffixes.length)];
+    const prefixes = ['Quick', 'Smart', 'Easy', 'Pro', 'Ultra', 'Neo', 'Meta', 'Sync'];    const suffixes = ['Hub', 'Lab', 'Works', 'Flow', 'Boost', 'Sync', 'Pro', 'AI'];    const coreWords = essence.coreIdea.split(' ').slice(0, 2);    const prefix = prefixes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * prefixes.length)];    const suffix = suffixes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * suffixes.length)];
 
     return `${prefix}${coreWords.join('')}${suffix}`;
   }
@@ -574,18 +535,13 @@ export class AlexDreamCompiler extends EventEmitter {
   }
 
   calculateFeasibility(project, userContext) {
-    let score = 0.5;
-
-    // Complexité technique
+    let score = 0.5;    // Complexité technique
     if (project.techStack.complexity === 'low') score += 0.2;
     if (project.techStack.complexity === 'high') score -= 0.1;
 
     // Compétences utilisateur
-    const userSkills = userContext.skills || [];
-    const requiredSkills = project.mvp.techRequirements;
-    const skillMatch = userSkills.filter(skill =>
-      requiredSkills.some(req => req.toLowerCase().includes(skill.toLowerCase()))
-    ).length;
+    const userSkills = userContext.skills || [];    const requiredSkills = project.mvp.techRequirements;    const skillMatch = userSkills.filter(skill =>
+      requiredSkills.some(req => req.toLowerCase().includes(skill.toLowerCase()));    ).length;
     score += (skillMatch / requiredSkills.length) * 0.2;
 
     // Budget
@@ -596,16 +552,11 @@ export class AlexDreamCompiler extends EventEmitter {
   }
 
   estimateTimeToMarket(project) {
-    const baseDays = 30;
-    const complexityMultiplier = {
+    const baseDays = 30;    const complexityMultiplier = {
       simple: 1
       medium: 1.5
       complex: 2.5
-    };
-
-    const features = project.mvp.coreFeatures.length;
-    const complexity = project.mvp.techRequirements.length > 5 ? 'complex' :
-                     project.mvp.techRequirements.length > 3 ? 'medium' : 'simple';
+    };    const features = project.mvp.coreFeatures.length;    const complexity = project.mvp.techRequirements.length > 5 ? 'complex' :;                     project.mvp.techRequirements.length > 3 ? 'medium' : 'simple';
 
     return Math.ceil(baseDays * complexityMultiplier[complexity] * (1 + features * 0.1));
   }
@@ -652,18 +603,11 @@ export class AlexDreamCompiler extends EventEmitter {
     try {
       logger.debug('Emotional analysis system configured');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 }
 
 // Export des fonctions utilitaires
-export const compileDream = async (dreamInput, userContext) => this.processLongOperation(args);
-
-export const analyzeDreamEssence = async (dreamInput) => this.processLongOperation(args);
-
-export const generateProjectFromEssence = async (essence, userContext) => this.processLongOperation(args);
-
-// Instance singleton pour utilisation globale
+export const compileDream = async (_dreamInput, _userContext) => this.processLongOperation(args);export const analyzeDreamEssence = async (_dreamInput) => this.processLongOperation(args);export const generateProjectFromEssence = async (_essence, _userContext) => this.processLongOperation(args);// Instance singleton pour utilisation globale
 const dreamCompiler = new AlexDreamCompiler();
 export default dreamCompiler;

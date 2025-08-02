@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_SADNESS = 'sadness';
-/**
+const STR_SADNESS = 'sadness';/**
  * @fileoverview AlexEmotionalIntelligence - Intelligence Émotionnelle d'Alex
  * Reconnaissance, traitement et réponse aux émotions
  * @module AlexEmotionalIntelligence
@@ -10,7 +9,7 @@ const STR_SADNESS = 'sadness';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -87,8 +86,7 @@ export class AlexEmotionalIntelligence extends EventEmitter {
     try {
       logger.info('❤️ AlexEmotionalIntelligence initializing - Heart awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -99,8 +97,7 @@ export class AlexEmotionalIntelligence extends EventEmitter {
     try {
       logger.info('💖 AlexEmotionalIntelligence fully initialized - Emotional wisdom active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -116,9 +113,7 @@ export class AlexEmotionalIntelligence extends EventEmitter {
       empathyRequired: 0
       suggestedResponse: null
       emotionalNuances: []
-    };
-
-    // Détection d'émotions primaires
+    };    // Détection d'émotions primaires
     const primaryEmotions = this.detectPrimaryEmotions(message);
     analysis.detectedEmotions.push(...primaryEmotions);
 
@@ -156,10 +151,7 @@ export class AlexEmotionalIntelligence extends EventEmitter {
    * Détection d'émotions primaires dans le texte
    */
   detectPrimaryEmotions(message) {
-    const emotions = [];
-    const text = message.toLowerCase();
-
-    // Patterns pour la joie
+    const emotions = [];    const text = message.toLowerCase();    // Patterns pour la joie
     if (/heureux|joie|content|ravi|excité|génial|super|fantastique/.test(text)) {
       emotions.push({ emotion: 'joy', confidence: 0.8, indicators: ['positive_words'] });
     }
@@ -190,10 +182,8 @@ export class AlexEmotionalIntelligence extends EventEmitter {
   /**
    * Analyse émotionnelle contextuelle
    */
-  analyzeEmotionalContext(message, context) {
-    const emotions = [];
-
-    // Contexte de conversation
+  analyzeEmotionalContext(_message, context) {
+    const emotions = [];    // Contexte de conversation
     if (context.conversationHistory) {
       const recentMessages = context.conversationHistory.slice(-3);
       const emotionalTrend = this.analyzeEmotionalTrend(recentMessages);
@@ -219,9 +209,7 @@ export class AlexEmotionalIntelligence extends EventEmitter {
    * Détection de nuances émotionnelles subtiles
    */
   detectEmotionalNuances(message) {
-    const nuances = [];
-
-    // Sarcasme/ironie
+    const nuances = [];    // Sarcasme/ironie
     if (this.detectSarcasm(message)) {
       nuances.push('sarcasm');
     }
@@ -254,9 +242,7 @@ export class AlexEmotionalIntelligence extends EventEmitter {
       responseStrategy: this.selectResponseStrategy(analysis)
       emotionalMirroring: this.calculateEmotionalMirroring(analysis)
       supportiveElements: this.generateSupportiveElements(analysis)
-    };
-
-    // Adaptation selon l'émotion dominante
+    };    // Adaptation selon l'émotion dominante
     switch (analysis.dominantEmotion?.emotion) {
       case STR_SADNESS:
         response.approach = 'comforting';
@@ -307,8 +293,7 @@ export class AlexEmotionalIntelligence extends EventEmitter {
     try {
       logger.info('🎯 Emotional systems calibrated successfully');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -340,8 +325,7 @@ export class AlexEmotionalIntelligence extends EventEmitter {
     try {
       logger.info('📊 Emotional patterns loaded successfully');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -421,7 +405,7 @@ export class AlexEmotionalIntelligence extends EventEmitter {
 
     const intensities = emotions.map(e => e.emotionalIntensity);
     const mean = intensities.reduce((sum, i) => sum + i, 0) / intensities.length;
-    const variance = intensities.reduce((sum, i) => sum + Math.pow(i - mean, 2), 0) / intensities.length;
+    const variance = intensities.reduce((sum, i) => sum + (i - mean) ** 2, 0) / intensities.length;
 
     return Math.sqrt(variance);
   }
@@ -430,9 +414,7 @@ export class AlexEmotionalIntelligence extends EventEmitter {
    * Détecte les émotions contextuelles
    */
   detectContextualEmotions(message, context = {}) {
-    const emotions = [];
-
-    // Détection simple basée sur le contexte
+    const emotions = [];    // Détection simple basée sur le contexte
     if (context.userId) {
       emotions.push({ emotion: 'connected', intensity: 0.6 });
     }
@@ -474,12 +456,9 @@ export class AlexEmotionalIntelligence extends EventEmitter {
    * Calcule l'intensité émotionnelle
    */
   calculateEmotionalIntensity(message) {
-    const intensityMarkers = ['très', 'vraiment', 'extrêmement', 'beaucoup', 'énormément'];
-    const lowerMessage = message.toLowerCase();
+    const intensityMarkers = ['très', 'vraiment', 'extrêmement', 'beaucoup', 'énormément'];    const _lowerMessage = message.toLowerCase();    const _intensity = 0.5; // Base
 
-    let intensity = 0.5; // Base
-
-    intensityMarkers.forEach(marker => this.processLongOperation(args)
+    intensityMarkers.forEach(_marker => this.processLongOperation(args)
 
   /**
    * Analyse le contexte émotionnel pour intégration avec MasterSystem
@@ -487,18 +466,14 @@ export class AlexEmotionalIntelligence extends EventEmitter {
   async analyzeEmotionalContext(message, context = {}) {
     try {
       // Analyse directe sans récursion
-      const detectedEmotion = this.detectPrimaryEmotion(message);
-      const emotionalIntensity = this.calculateEmotionalIntensity(message);
-
-      return {
+      const detectedEmotion = this.detectPrimaryEmotion(message);      const emotionalIntensity = this.calculateEmotionalIntensity(message);      return {
         recommendedTone: detectedEmotion || 'supportive'
         empathyLevel: this.emotionConfig.empathyLevel
         emotionalNeeds: [STR_UNDERSTANDING]
         responseStrategy: this.determineResponseStrategy({ detectedEmotion, emotionalIntensity })
         emotionalIntensity: emotionalIntensity || 0.5
       };
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     };
     }
   }

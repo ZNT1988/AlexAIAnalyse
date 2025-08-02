@@ -1,9 +1,9 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 // AlexAlchemyEngine.js - Moteur d'Alchimie des Hustles
 // Fusion révolutionnaire des passions, compétences et souffrances en hustles hybrides
 // Version: 2.0 - HustleFinderIA Advanced AI System
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -40,8 +40,7 @@ export class AlexAlchemyEngine extends EventEmitter {
     try {
       logger.info('AlexAlchemyEngine initialized - Ready to transmute life into gold');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -55,24 +54,12 @@ export class AlexAlchemyEngine extends EventEmitter {
 
     try {
       // Phase 1: Purification et analyse des éléments bruts
-      const purifiedElements = await this.purifyElements(personalElements);
-
-      // Phase 2: Identification des synergies cachées
-      const synergies = await this.identifyHiddenSynergies(purifiedElements);
-
-      // Phase 3: Application des formules d'alchimie
-      const alchemicalCombinations = await this.applyAlchemyFormulas(purifiedElements, synergies);
-
-      // Phase 4: Transmutation en hustles hybrides
-      const hybridHustles = await this.transmutateToHustles(alchemicalCombinations);
-
-      // Phase 5: Optimisation et scalabilité
-      const optimizedHustles = await this.optimizeForScale(hybridHustles, transmutationGoal);
-
-      // Phase 6: Validation et raffinement
-      const refinedHustles = await this.refineAndValidate(optimizedHustles, personalElements);
-
-      const alchemyResult = {
+      const purifiedElements = await this.purifyElements(personalElements);      // Phase 2: Identification des synergies cachées
+      const synergies = await this.identifyHiddenSynergies(purifiedElements);      // Phase 3: Application des formules d'alchimie
+      const alchemicalCombinations = await this.applyAlchemyFormulas(purifiedElements, synergies);      // Phase 4: Transmutation en hustles hybrides
+      const hybridHustles = await this.transmutateToHustles(alchemicalCombinations);      // Phase 5: Optimisation et scalabilité
+      const optimizedHustles = await this.optimizeForScale(hybridHustles, transmutationGoal);      // Phase 6: Validation et raffinement
+      const refinedHustles = await this.refineAndValidate(optimizedHustles, personalElements);      const _alchemyResult = {
         transmutedHustles: refinedHustles
         originalElements: personalElements
         synergiesDiscovered: synergies
@@ -83,16 +70,14 @@ export class AlexAlchemyEngine extends EventEmitter {
           scalabilityFactor: this.calculateScalabilityFactor(refinedHustles)
           authenticityResonance: this.calculateAuthenticityResonance(refinedHustles, personalElements)
           transmutedAt: new Date().toISOString()
-        }
-      };
+        };      };
 
       this.emit('alchemy_completed', alchemyResult);
       return alchemyResult;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
-      throw new Error(`Alchemy failed: ${error.message}`);
+      throw new Error(`_Alchemy failed: ${error.message}`);
     }
   }
 
@@ -146,37 +131,37 @@ export class AlexAlchemyEngine extends EventEmitter {
         drain_patterns: {}
         restoration_methods: {}
       }
-    };
-
-    // Purification des passions
-    if (rawElements.passions) {
+    };    // Purification des passions
+    async if(rawElements.passions) {
       purified.passions = await this.purifyPassions(rawElements.passions);
     }
 
     // Purification des compétences
-    if (rawElements.competences || rawElements.skills) {
+    async if(rawElements.competences || rawElements.skills) {
       purified.competences = await this.purifyCompetences(rawElements.competences || rawElements.skills);
     }
 
     // Transmutation des souffrances en pouvoir
-    if (rawElements.souffrances || rawElements.pains || rawElements.struggles) {
+    async if(
+        rawElements.souffrances || rawElements.pains || rawElements.struggles
+      ) {
       purified.souffrances = await this.transmutateSuffering(
         rawElements.souffrances || rawElements.pains || rawElements.struggles
       );
     }
 
     // Extraction de la sagesse des expériences
-    if (rawElements.experiences) {
+    async if(rawElements.experiences) {
       purified.experiences = await this.extractWisdom(rawElements.experiences);
     }
 
     // Identification des valeurs profondes
-    if (rawElements.values) {
+    async if(rawElements.values) {
       purified.values = await this.clarifyValues(rawElements.values);
     }
 
     // Analyse des patterns énergétiques
-    if (rawElements.energy_patterns) {
+    async if(rawElements.energy_patterns) {
       purified.energy = await this.analyzeEnergyPatterns(rawElements.energy_patterns);
     }
 
@@ -196,9 +181,7 @@ export class AlexAlchemyEngine extends EventEmitter {
       value_consistent: []
       unexpected: []
       dormant: []
-    };
-
-    // Synergies Passion + Compétence
+    };    // Synergies Passion + Compétence
     for (const passion of purifiedElements.passions.core) {
       for (const skill of purifiedElements.competences.technical) {
         const synergyScore = this.calculatePassionSkillSynergy(passion, skill);
@@ -277,10 +260,8 @@ export class AlexAlchemyEngine extends EventEmitter {
       silver: [], // Formules prometteuses
       experimental: [], // Nouvelles formules à tester
       catalyst_enhanced: [] // Formules boostées par des catalyseurs
-    };
-
-    // Formule d'Or : Passion + Compétence Maîtrisée + Souffrance Transformée
-    for (const triangular of synergies.triangular) {
+    };    // Formule d'Or : Passion + Compétence Maîtrisée + Souffrance Transformée
+    async for(triangular, purifiedElements) {
       const goldFormula = await this.applyGoldFormula(triangular, purifiedElements);
       if (goldFormula.power > 0.8) {
         combinations.golden.push(goldFormula);
@@ -288,7 +269,7 @@ export class AlexAlchemyEngine extends EventEmitter {
     }
 
     // Formule d'Argent : Passion + Compétence OU Compétence + Souffrance
-    for (const passionSkill of synergies.passion_skill) {
+    async for(passionSkill, purifiedElements) {
       const silverFormula = await this.applySilverFormula(passionSkill, purifiedElements);
       if (silverFormula.power > 0.65) {
         combinations.silver.push(silverFormula);
@@ -317,22 +298,20 @@ export class AlexAlchemyEngine extends EventEmitter {
       innovative: [], // Hustles innovants (silver formulas)
       experimental: [], // Hustles expérimentaux
       hybrid: [] // Hustles hybrides multi-formules
-    };
-
-    // Transmutation des formules d'or
-    for (const goldCombination of alchemicalCombinations.golden) {
+    };    // Transmutation des formules d'or
+    async for(goldCombination) {
       const revolutionaryHustle = await this.transmuteToRevolutionaryHustle(goldCombination);
       hustles.revolutionary.push(revolutionaryHustle);
     }
 
     // Transmutation des formules d'argent
-    for (const silverCombination of alchemicalCombinations.silver) {
+    async for(silverCombination) {
       const innovativeHustle = await this.transmuteToInnovativeHustle(silverCombination);
       hustles.innovative.push(innovativeHustle);
     }
 
     // Transmutation des formules expérimentales
-    for (const experimentalCombination of alchemicalCombinations.experimental) {
+    async for(experimentalCombination) {
       const experimentalHustle = await this.transmuteToExperimentalHustle(experimentalCombination);
       hustles.experimental.push(experimentalHustle);
     }
@@ -364,9 +343,7 @@ export class AlexAlchemyEngine extends EventEmitter {
       timeline: {}
       resources: {}
       successMetrics: {}
-    };
-
-    // Génération du nom révolutionnaire
+    };    // Génération du nom révolutionnaire
     hustle.name = this.generateRevolutionaryName(goldCombination);
 
     // Description de la vision transformatrice
@@ -423,9 +400,7 @@ export class AlexAlchemyEngine extends EventEmitter {
       scalability_enhanced: []
       market_validated: []
       resource_optimized: []
-    };
-
-    // Priorisation basée sur le potentiel
+    };    // Priorisation basée sur le potentiel
     optimized.prioritized = this.prioritizeByPotential(hybridHustles, transmutationGoal);
 
     // Enhancement de la scalabilité
@@ -435,13 +410,13 @@ export class AlexAlchemyEngine extends EventEmitter {
     }
 
     // Validation de marché intelligente
-    for (const hustle of optimized.scalability_enhanced) {
+    async for(hustle) {
       const validated = await this.validateMarketFit(hustle);
       optimized.market_validated.push(validated);
     }
 
     // Optimisation des resources
-    for (const hustle of optimized.market_validated) {
+    async for(hustle) {
       const resourceOptimized = await this.optimizeResources(hustle);
       optimized.resource_optimized.push(resourceOptimized);
     }
@@ -459,11 +434,8 @@ export class AlexAlchemyEngine extends EventEmitter {
       intensity: {}
       authenticity: {}
       sustainability: {}
-    };
-
-    if (Array.isArray(rawPassions)) {
-      for (const passion of rawPassions) {        const intensity = this.measurePassionIntensity(passion);
-        const authenticity = this.validatePassionAuthenticity(passion);
+    };    if (Array.isArray(rawPassions)) {
+      for (const passion of rawPassions) {        const intensity = this.measurePassionIntensity(passion);        const authenticity = this.validatePassionAuthenticity(passion);
 
         if (authenticity > 0.8 && intensity > 0.7) {
           purified.core.push(passion);
@@ -484,14 +456,9 @@ export class AlexAlchemyEngine extends EventEmitter {
       intensity: {}
       healing_potential: {}
       transformation_power: {}
-    };
-
-    if (Array.isArray(rawSuffering)) {
+    };    if (Array.isArray(rawSuffering)) {
       for (const suffering of rawSuffering) {
-        const transformationPower = this.calculateSufferingTransformationPower(suffering);
-        const healingPotential = this.assessHealingPotential(suffering);
-
-        if (transformationPower > 0.5) {
+        const transformationPower = this.calculateSufferingTransformationPower(suffering);        const healingPotential = this.assessHealingPotential(suffering);        if (transformationPower > 0.5) {
           transmuted.personal.push(suffering);
           transmuted.transformation_power[suffering] = transformationPower;
           transmuted.healing_potential[suffering] = healingPotential;
@@ -503,11 +470,9 @@ export class AlexAlchemyEngine extends EventEmitter {
   }
 
   findTriangularSynergies(passionSkill, passionPain, skillPain) {
-    const triangular = [];
-
-    // Extracted to separate functions for better readability
+    const triangular = [];    // Extracted to separate functions for better readability
 const result = this.processNestedData(data);
-return result;const sp of skillPain) {
+return result;const sp of skillPain) 
           if (ps.passion === pp.passion && ps.skill === sp.skill && pp.pain === sp.pain) {
             triangular.push({
               passion: ps.passion
@@ -518,7 +483,6 @@ return result;const sp of skillPain) {
               uniqueness: this.calculateTriangularUniqueness(ps, pp, sp)
             });
           }
-        }
       }
     }
 
@@ -526,14 +490,8 @@ return result;const sp of skillPain) {
   }
 
   async discoverUnexpectedSynergies(purifiedElements) {
-    const unexpected = [];
-
-    // IA créative pour découvrir des connexions non-évidentes
-    const crossDomainConnections = this.findCrossDomainConnections(purifiedElements);
-    const metaphoricalLinks = this.findMetaphoricalLinks(purifiedElements);
-    const quantumLeaps = this.findQuantumLeaps(purifiedElements);
-
-    unexpected.push(...crossDomainConnections);
+    const unexpected = [];    // IA créative pour découvrir des connexions non-évidentes
+    const crossDomainConnections = this.findCrossDomainConnections(purifiedElements);    const metaphoricalLinks = this.findMetaphoricalLinks(purifiedElements);    const quantumLeaps = this.findQuantumLeaps(purifiedElements);    unexpected.push(...crossDomainConnections);
     unexpected.push(...metaphoricalLinks);
     unexpected.push(...quantumLeaps);
 
@@ -541,19 +499,13 @@ return result;const sp of skillPain) {
   }
 
   generateRevolutionaryName(goldCombination) {
-    const passionWord = this.extractEssentialWord(goldCombination.passion);
-    const skillWord = this.extractEssentialWord(goldCombination.skill);    const powerPrefixes = ['Neo', 'Quantum', 'Meta', 'Ultra', 'Hyper', 'Phoenix'];
-    const visionSuffixes = ['Genesis', 'Evolution', 'Revolution', 'Transformation', 'Awakening'];
-
-    const prefix = powerPrefixes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * powerPrefixes.length)];
-    const suffix = visionSuffixes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * visionSuffixes.length)];
+    const passionWord = this.extractEssentialWord(goldCombination.passion);    const skillWord = this.extractEssentialWord(goldCombination.skill);    const powerPrefixes = ['Neo', 'Quantum', 'Meta', 'Ultra', 'Hyper', 'Phoenix'];    const visionSuffixes = ['Genesis', 'Evolution', 'Revolution', 'Transformation', 'Awakening'];    const prefix = powerPrefixes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * powerPrefixes.length)];    const suffix = visionSuffixes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * visionSuffixes.length)];
 
     return `${prefix}${passionWord}${skillWord}${suffix}`;
   }
 
   calculateTransmutationScore(refinedHustles) {
-    let totalScore = 0;
-    for (const hustle of refinedHustles) {
+    let totalScore = 0;    for (const hustle of refinedHustles) {
       totalScore += (hustle.personalAlignment || 0.5) *
                    (hustle.scalability?
       .factor || 0.5) *
@@ -583,8 +535,7 @@ return result;const sp of skillPain) {
     try {
       logger.debug('Transmutation matrix configured');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   initializeCatalysts() {
@@ -599,18 +550,11 @@ return result;const sp of skillPain) {
     try {
       logger.debug('Success patterns loaded for alchemy optimization');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 }
 
 // Export des fonctions utilitaires
-export const performAlchemy = async (personalElements, goal = 'max_potential') => this.processLongOperation(args);
-
-export const identifyPersonalSynergies = async (personalElements) => this.processLongOperation(args);
-
-export const transmuteElementsToHustle = async (elements, transmutationType = 'revolutionary') => this.processLongOperation(args);
-
-// Instance singleton
+export const performAlchemy = async (_personalElements, _goal = 'max_potential') => this.processLongOperation(args);export const identifyPersonalSynergies = async (_personalElements) => this.processLongOperation(args);export const transmuteElementsToHustle = async (_elements, _transmutationType = 'revolutionary') => this.processLongOperation(args);// Instance singleton
 const alchemyEngine = new AlexAlchemyEngine();
 export default alchemyEngine;

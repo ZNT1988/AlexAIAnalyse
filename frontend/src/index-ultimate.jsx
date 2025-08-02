@@ -11,4 +11,6 @@ const AlexUltimatePage = () => {
   );
 };
 
-ReactDOM.createRoot(document.getElementById('root')).render(<AlexUltimatePage />);
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <AlexUltimatePage />
+);

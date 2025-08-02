@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const crypto = require('node:crypto');
 
 class PhotoStyleTransfer {
     constructor() {
@@ -54,9 +54,9 @@ class PhotoStyleTransfer {
         };
     }
 
-    async processStyleTransformation(imageData) {
+    async processStyleTransformation(_imageData) {
         // Simulate processing delay
-        return new Promise(resolve => this.processLongOperation(args));
+        return new Promise(_resolve => this.processLongOperation(args));
     }
 
     async getAvailableStyles() {

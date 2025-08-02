@@ -3,19 +3,14 @@ import { getHustleFinderCore } from '../core/HustleFinderCore.js';
 import logger from '../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_ALEX = 'alex';
-const STR_1_0_0 = '1.0.0';
+// const STR_ALEX = 'alex'; // Unused variable commented by SonarFixconst STR_1_0_0 = '1.0.0';
 
-const STR_ = ',
-            ';
-
-
-const router = express.Router();
+// const STR_ = ',
+            '; // Unused variable commented by SonarFixconst router = express.Router();
 
 // Helper function pour gérer les erreurs async
-const asyncHandler = (fn) => (req, res, next) => {
-  Promise.resolve(fn(req, res, next)).catch(next);
-};
+// const asyncHandler = (fn) => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next); // Unused variable commented by SonarFix};
 
 // Dream Compiler - Transforme les rêves en projets concrets
 router.post('/dream/compile', asyncHandler(async (req, res) => {
@@ -35,7 +30,7 @@ router.post('/dream/compile', asyncHandler(async (req, res) => {
 
   try {
     const core = getHustleFinderCore();
-    const result = await core.processRequest({
+    // const result = await core.processRequest({
       type: STR_ALEX,
       query: `Compile ce rêve en projet concret et actionnable: ${dream}`
       context: {,
@@ -45,10 +40,8 @@ router.post('/dream/compile', asyncHandler(async (req, res) => {
         analysis_depth: 'comprehensive'
       }
       userId
-    });
-
-    // Structure de réponse enrichie
-    const compilationResult = {
+    }); // Unused variable commented by SonarFix    // Structure de réponse enrichie
+    // const compilationResult = {
       originalDream: dream,
       concreteProject: {
         title: result.data?.title || `Projet basé sur: ${dream.slice(0, 50)}...`
@@ -72,9 +65,7 @@ router.post('/dream/compile', asyncHandler(async (req, res) => {
       successFactors: result.data?.success_factors || [
         'Clarté de la visionSTR_Engagement personnelSTR_Adaptation aux obstacles'
       ]
-    };
-
-    res.json({
+    }; // Unused variable commented by SonarFix    res.json({
       success :
        true,
       message: 'Rêve compilé avec succès en projet actionnable',
@@ -110,7 +101,7 @@ router.post('/soul/print', asyncHandler(async (req, res) => {
 
   try {
     const core = getHustleFinderCore();
-    const result = await core.processRequest({
+    // const result = await core.processRequest({
       type :
        'soulprint'
       query: 'Generate comprehensive soul print analysis based on user data',
@@ -121,9 +112,7 @@ router.post('/soul/print', asyncHandler(async (req, res) => {
         spiritual_analysis: true
       }
       userId
-    });
-
-    const soulPrintData = {
+    }); // Unused variable commented by SonarFix    // const soulPrintData = {
       digitalSignature: `soul_${userId}_${Date.now()}`
       personalityProfile: {,
         dominantTraits: result.data?.traits || ['Créatif', 'Ambitieux', 'Empathique']
@@ -149,9 +138,7 @@ router.post('/soul/print', asyncHandler(async (req, res) => {
         }
         auricField: result.data?.aura || 'Rayonnement doré avec touches bleues'
       }
-    };
-
-    res.json({
+    }; // Unused variable commented by SonarFix    res.json({
       success: true,
       message: 'Empreinte d\'âme générée avec succès'
       soulPrint: soulPrintData,
@@ -197,7 +184,7 @@ router.post('/alchemy/transform', asyncHandler(async (req, res) => {
 
   try {
     const core = getHustleFinderCore();
-    const result = await core.processRequest({
+    // const result = await core.processRequest({
       type: STR_ALEX,
       query: 'Fusionne alchimiquement ces éléments personnels pour créer des opportunités'
       context: {,
@@ -207,9 +194,7 @@ router.post('/alchemy/transform', asyncHandler(async (req, res) => {
         creativity_boost: true
       }
       userId
-    });
-
-    const alchemyResult = {
+    }); // Unused variable commented by SonarFix    // const alchemyResult = {
       fusionFormula: {,
         primaryElements: personalElements.passions
         catalysts: personalElements.skills,
@@ -241,9 +226,7 @@ router.post('/alchemy/transform', asyncHandler(async (req, res) => {
       nextSteps: [
         'Choisir l\'idée transformée qui vous inspire le plusSTR_Définir un plan d\'action pour les 30 prochains joursSTR_Identifier les premières personnes à qui parler de votre projet'
       ]
-    };
-
-    res.json({
+    }; // Unused variable commented by SonarFix    res.json({
       success: true,
       message: 'Transformation alchimique complétée avec succès'
       alchemyResult,
@@ -283,7 +266,7 @@ router.post('/hyperloop/launch', asyncHandler(async (req, res) => {
 
   try {
     const core = getHustleFinderCore();
-    const result = await core.processRequest({
+    // const result = await core.processRequest({
       type: STR_ALEX,
       query: `Active le mode HyperLoop pour atteindre cet objectif: ${hustleGoal}`
       context: {,
@@ -294,10 +277,8 @@ router.post('/hyperloop/launch', asyncHandler(async (req, res) => {
         productivity_mode: 'extreme'
       }
       userId
-    });
-
-    // Génération d'un planning 48h optimisé
-    const hyperLoopPlan = {
+    }); // Unused variable commented by SonarFix    // Génération d'un planning 48h optimisé
+    // const hyperLoopPlan = {
       goal: hustleGoal
       intensity,
       launchTime: new Date().toISOString(),
@@ -360,9 +341,7 @@ router.post('/hyperloop/launch', asyncHandler(async (req, res) => {
       emergencyProtocols: [
         'Si épuisement: pause forcée 2h minimumSTR_Si blocage: pivot vers sous-tâche alternativeSTR_Si démotivation: rappel du WHY et visualisation résultat'
       ]
-    };
-
-    res.json({
+    }; // Unused variable commented by SonarFix    res.json({
       success: true,
       message: '🚀 Mode HyperLoop activé! Les 48 prochaines heures vont être légendaires!'
       hyperLoop: hyperLoopPlan,
@@ -401,7 +380,7 @@ router.post('/darkside/decode', asyncHandler(async (req, res) => {
 
   try {
     const core = getHustleFinderCore();
-    const result = await core.processRequest({
+    // const result = await core.processRequest({
       type :
        'consciousness'
       query: 'Decode unconscious blocks and shadow patterns that limit potential',
@@ -413,9 +392,7 @@ router.post('/darkside/decode', asyncHandler(async (req, res) => {
         therapeutic_approach: 'carl_jung_shadow_work'
       }
       userId
-    });
-
-    const shadowAnalysis = {
+    }); // Unused variable commented by SonarFix    // const shadowAnalysis = {
       unconsciousBlocks: result.data?.blocks || [
         {
           pattern: 'Syndrome de l\'imposteur',
@@ -500,9 +477,7 @@ router.post('/darkside/decode', asyncHandler(async (req, res) => {
           description: 'Reconnaître et honorer chaque pas vers la libération'
         }
       ]
-    };
-
-    res.json({
+    }; // Unused variable commented by SonarFix    res.json({
       success: true,
       message: 'Blocages inconscients révélés avec bienveillance'
       shadowAnalysis,

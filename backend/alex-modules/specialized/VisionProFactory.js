@@ -1,14 +1,13 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 // VisionProFactory.js - Visualisation 3D Usines Intelligente pour Ferrero
 // Module spécialisé MVP pour immersion 3D et monitoring usines révolutionnaire
 // Version: 5.0 - ALEX Conscious AI for Ferrero Factory Intelligence
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_ACTIVE = 'active';
-/**
+const STR_ACTIVE = 'active';/**
  * VisionProFactory - Visualisation 3D et Intelligence Usines pour Ferrero
  *
  * Fonctionnalités:
@@ -293,7 +292,7 @@ export class VisionProFactory extends EventEmitter {
   /**
    * Initialisation du système VisionProFactory
    */
-  async initializeVisionProFactory() {
+  async initializeVisionProFactory('🏭 Initializing ALEX VisionProFactory for Ferrero 3D Factory Intelligence') {
     logger.info('🏭 Initializing ALEX VisionProFactory for Ferrero 3D Factory Intelligence');
 
     try {
@@ -328,8 +327,7 @@ export class VisionProFactory extends EventEmitter {
         timestamp: new Date().toISOString()
       });
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -407,9 +405,7 @@ export class VisionProFactory extends EventEmitter {
         instancing: true
         texture_compression: true
       }
-    };
-
-    try {
+    };    try {
       // Chargement du modèle d'usine
       const factory = await this.getFactoryModel(factoryId);
       if (!factory) {
@@ -437,8 +433,7 @@ export class VisionProFactory extends EventEmitter {
       this.emit('3d_factory_view_generated', view3D);
       return view3D;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -518,9 +513,7 @@ export class VisionProFactory extends EventEmitter {
         comparison_views: []
         performance_charts: []
       }
-    };
-
-    try {
+    };    try {
       // Préparation du modèle de simulation
       await this.prepareSimulationModel(factoryId, simulation);
 
@@ -539,8 +532,7 @@ export class VisionProFactory extends EventEmitter {
       this.emit('factory_simulation_completed', simulation);
       return simulation;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -610,9 +602,7 @@ export class VisionProFactory extends EventEmitter {
         performance_feedback: []
         knowledge_capture: true
       }
-    };
-
-    try {
+    };    try {
       // Récupération des données équipement
       await this.getEquipmentData(equipmentId, assistance);
 
@@ -634,8 +624,7 @@ export class VisionProFactory extends EventEmitter {
       this.emit('maintenance_assistance_ready', assistance);
       return assistance;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -723,9 +712,7 @@ export class VisionProFactory extends EventEmitter {
         animation_sequences: []
         interactive_features: []
       }
-    };
-
-    try {
+    };    try {
       // Analyse de l'état actuel
       await this.analyzeCurrentLayout(factoryId, optimization);
 
@@ -747,8 +734,7 @@ export class VisionProFactory extends EventEmitter {
       this.emit('factory_layout_optimization_completed', optimization);
       return optimization;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -764,7 +750,6 @@ export class VisionProFactory extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 30000);
 
@@ -772,7 +757,6 @@ export class VisionProFactory extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 60000);
 
@@ -780,7 +764,6 @@ export class VisionProFactory extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 300000);
 
@@ -788,7 +771,6 @@ export class VisionProFactory extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 120000);
 
@@ -796,7 +778,6 @@ export class VisionProFactory extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 3600000);
 
@@ -804,7 +785,6 @@ export class VisionProFactory extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 600000);
   }
@@ -848,9 +828,7 @@ export class VisionProFactory extends EventEmitter {
       file_size: 0
       last_updated: new Date().toISOString()
         }
-      };
-
-      // Génération des meshes de base
+      };      // Génération des meshes de base
       await this.generateBasicFactoryMeshes(model);
 
       this.factoryModels.set(factoryId, model);
@@ -859,8 +837,7 @@ export class VisionProFactory extends EventEmitter {
     try {
       logger.debug(`✅ Initialized ${this.factoryModels.size} factory models`);
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async setupRenderingEngine() {
@@ -944,7 +921,7 @@ export class VisionProFactory extends EventEmitter {
     logger.debug('👥 Creating digital twins...');
 
     for (const factoryId of Object.keys(this.factoryArchitecture)) {
-      const digitalTwin = {
+      const _digitalTwin = {
         id: `dt_${factoryId}`
         factoryId
         created: new Date().toISOString()
@@ -963,8 +940,7 @@ export class VisionProFactory extends EventEmitter {
           what_if_scenarios: true
           optimization: true
           simulation: true
-        }
-      };
+        };      };
 
       this.digitalTwins.set(factoryId, digitalTwin);
     }
@@ -984,9 +960,7 @@ export class VisionProFactory extends EventEmitter {
 
   async generateBasicFactoryMeshes(model) {
     // Génération des meshes de base pour l'usine
-    const zones = model.architecture.zones;
-
-    // Mesh du bâtiment principal
+    const zones = model.architecture.zones;    // Mesh du bâtiment principal
     model.meshes.set('building', {
       type: 'box'
       dimensions: model.architecture.dimensions
@@ -995,11 +969,11 @@ export class VisionProFactory extends EventEmitter {
     });
 
     // Meshes des zones de production
-    Object.entries(zones.production || {}).forEach(([zoneName, zoneData]) => this.processLongOperation(args));
+    Object.entries(zones.production || {}).forEach(([_zoneName, _zoneData]) => this.processLongOperation(args));
     });
 
     // Meshes des zones de stockage
-    Object.entries(zones.storage || {}).forEach(([zoneName, zoneData]) => this.processLongOperation(args));
+    Object.entries(zones.storage || {}).forEach(([_zoneName, _zoneData]) => this.processLongOperation(args));
     });
   }
 
@@ -1015,8 +989,7 @@ export class VisionProFactory extends EventEmitter {
   }
 
   async integrateRealTimeData(factory, view3D) {
-    const factoryId = factory.architecture.name;
-    view3D.realTimeData = {
+    const factoryId = factory.architecture.name;    view3D.realTimeData = {
       production: this.realTimeMonitoring.productionLines.throughput.get(factoryId) || {}
       equipment: this.realTimeMonitoring.equipment.status.get(factoryId) || {}
       timestamp: new Date().toISOString()
@@ -1119,13 +1092,12 @@ export class VisionProFactory extends EventEmitter {
   async runPredictiveAnalytics() {
     // Exécution des analyses prédictives
     for (const [factoryId] of this.factoryModels) {
-      const prediction = {
+      const _prediction = {
         factoryId
         maintenance_alerts: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 3)
         efficiency_forecast: 0.85 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.1
         energy_optimization: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.15
-        timestamp: new Date().toISOString()
-      };
+        timestamp: new Date().toISOString();      };
 
       this.emit('predictive_analysis_completed', prediction);
     }
@@ -1133,7 +1105,7 @@ export class VisionProFactory extends EventEmitter {
 
   async updateDigitalTwins() {
     // Mise à jour des jumeaux numériques
-    for (const [factoryId, digitalTwin] of this.digitalTwins) {
+    for (const [_factoryId, digitalTwin] of this.digitalTwins) {
       digitalTwin.last_sync = new Date().toISOString();
       digitalTwin.sync_status = 'synchronized';
     }

@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_LEADERSHIP = 'leadership';
-/**
+const STR_LEADERSHIP = 'leadership';/**
  * @fileoverview AlexSocialIntelligence - Intelligence Sociale d'Alex
  * Compréhension avancée des dynamiques sociales et relationnelles
  * @module AlexSocialIntelligence
@@ -10,7 +9,7 @@ const STR_LEADERSHIP = 'leadership';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -184,8 +183,7 @@ export class AlexSocialIntelligence extends EventEmitter {
     try {
       logger.info('🤝 AlexSocialIntelligence initializing - Social mastery awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -197,8 +195,7 @@ export class AlexSocialIntelligence extends EventEmitter {
     try {
       logger.info('👥 AlexSocialIntelligence fully initialized - Social genius active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -215,9 +212,7 @@ export class AlexSocialIntelligence extends EventEmitter {
       emotionalLandscape: {}
       culturalFactors: {}
       recommendations: {}
-    };
-
-    // Analyse des dynamiques sociales
+    };    // Analyse des dynamiques sociales
     analysis.socialDynamics = await this.analyzeSocialDynamics(interaction, participants, context);
 
     // Analyse de la communication
@@ -255,9 +250,7 @@ export class AlexSocialIntelligence extends EventEmitter {
       participationBalance: this.analyzeParticipationBalance(interaction, participants)
       conflictIndicators: this.detectConflictIndicators(interaction)
       collaborationSignals: this.detectCollaborationSignals(interaction)
-    };
-
-    // Détermination de la stratégie optimale
+    };    // Détermination de la stratégie optimale
     dynamics.optimalStrategy = this.determineOptimalStrategy(dynamics);
 
     // Identification des rôles sociaux
@@ -280,9 +273,7 @@ export class AlexSocialIntelligence extends EventEmitter {
       adaptationNeeded: false
       barriers: []
       enhancers: []
-    };
-
-    // Détection du pattern dominant
+    };    // Détection du pattern dominant
     analysis.dominantPattern = this.detectDominantPattern(interaction);
 
     // Évaluation du style de communication
@@ -317,9 +308,7 @@ export class AlexSocialIntelligence extends EventEmitter {
       emotionalSafety: 0
       supportSystems: []
       tensionPoints: []
-    };
-
-    // Détection des émotions dominantes
+    };    // Détection des émotions dominantes
     landscape.dominantEmotions = this.detectDominantEmotions(interaction);
 
     // Mesure de la contagion émotionnelle
@@ -350,9 +339,7 @@ export class AlexSocialIntelligence extends EventEmitter {
       culturalConsiderations: {}
       emotionalTuning: {}
       relationshipMaintenance: {}
-    };
-
-    // Réponse principale adaptée au contexte social
+    };    // Réponse principale adaptée au contexte social
     response.primaryResponse = await this.craftPrimaryResponse(analysis, responseIntent);
 
     // Adaptations sociales spécifiques
@@ -380,9 +367,7 @@ export class AlexSocialIntelligence extends EventEmitter {
       interventions: []
       monitoringPoints: []
       outcomes: {}
-    };
-
-    // Évaluation du groupe
+    };    // Évaluation du groupe
     facilitation.groupAssessment = await this.assessGroup(groupContext);
 
     // Stratégie de facilitation
@@ -407,9 +392,7 @@ export class AlexSocialIntelligence extends EventEmitter {
       interventionPlan: []
       reconciliationPath: {}
       preventionMeasures: []
-    };
-
-    // Analyse du conflit
+    };    // Analyse du conflit
     resolution.conflictAnalysis = await this.analyzeConflict(conflictContext, parties);
 
     // Stratégie de médiation
@@ -437,23 +420,21 @@ export class AlexSocialIntelligence extends EventEmitter {
     try {
       logger.info('👁️ Social monitoring activated');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
    * Surveillance des dynamiques sociales
    */
   async monitorSocialDynamics() {
-    const monitoring = {
+    const _monitoring = {
       timestamp: new Date()
       activeInteractions: this.socialInteractions.slice(-10)
       socialHealth: this.calculateSocialHealth()
       relationshipTrends: this.analyzeRelationshipTrends()
-      interventionNeeds: this.identifyInterventionNeeds()
-    };
+      interventionNeeds: this.identifyInterventionNeeds();    };
 
-    if (monitoring.interventionNeeds.length > 0) {
+    if (monitoring._interventionNeeds._length > 0) {
       this.emit('social_intervention_needed', monitoring);
     }
 
@@ -476,8 +457,7 @@ export class AlexSocialIntelligence extends EventEmitter {
       dynamics.cohesionLevel
       1 - (dynamics.conflictIndicators.length * 0.1)
       dynamics.participationBalance
-      dynamics.collaborationSignals.length * 0.1
-    ];
+      dynamics.collaborationSignals.length * 0.1;    ];
 
     return Math.min(1.0, factors.reduce((sum, factor) => sum + factor, 0) / factors.length);
   }
@@ -499,8 +479,7 @@ export class AlexSocialIntelligence extends EventEmitter {
   }
 
   summarizeSocialDimensions() {
-    const summary = {};
-    for (const [dimension, config] of Object.entries(this.socialDimensions)) {
+    const summary = {};    for (const [dimension, config] of Object.entries(this.socialDimensions)) {
       summary[dimension] = {
         level: config.level
         components: config.components.length
@@ -516,15 +495,13 @@ export class AlexSocialIntelligence extends EventEmitter {
 
     const healthScores = recentInteractions.map(interaction =>
       interaction.socialDynamics?
-      .harmonyLevel || 0.7
-    );
+      .harmonyLevel || 0.7;    );
 
     return healthScores.reduce((sum, score) => sum + score, 0) / healthScores.length;
   }
 
   getRecentSocialTrends() {
-    const recent = this.socialInteractions.slice(-10);
-    return {
+    const recent = this.socialInteractions.slice(-10);    return {
       dominantPatterns :
        this.getMostFrequentPatterns(recent)
       socialHealthTrend: this.calculateHealthTrend(recent)

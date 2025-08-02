@@ -1,41 +1,41 @@
-import crypto from 'crypto';
-
-
-// Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_PENDING = 'pending';
+import crypto from "crypto";
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-import logger from '../../config/logger.js';
+const STR_PENDING = "pending";
 
-const STR_ACTIVE = 'active';
-const STR_PRICE_FEED = 'price_feed';
-const STR_COINBASE = 'coinbase';
-const STR_BINANCE = 'binance';
-const STR_KRAKEN = 'kraken';
-const STR_WEATHER_DATA = 'weather_data';
-const STR_OPENWEATHER = 'openweather';
-const STR_ECONOMIC_INDICATORS = 'economic_indicators';
-const STR_FRED = 'fred';
-const STR_SOCIAL_SENTIMENT = 'social_sentiment';
-const STR_TWITTER = 'twitter';
-const STR_REDDIT = 'reddit';
-const STR_0X6080604052348015610010576000 = '0x608060405234801561001057600080fd5b50...';
-const STR_ALEX_DEX = 'alex_dex';
-const STR_FUNCTION = 'function';
-const STR_UINT256 = 'uint256';
+// Constantes pour chaînes dupliquées (optimisation SonarJS)
+import logger from "../../config/logger.js";
+
+const STR_ACTIVE = "active";
+const STR_PRICE_FEED = "price_feed";
+const STR_COINBASE = "coinbase";
+const STR_BINANCE = "binance";
+const STR_KRAKEN = "kraken";
+const STR_WEATHER_DATA = "weather_data";
+const STR_OPENWEATHER = "openweather";
+const STR_ECONOMIC_INDICATORS = "economic_indicators";
+const STR_FRED = "fred";
+const STR_SOCIAL_SENTIMENT = "social_sentiment";
+const STR_TWITTER = "twitter";
+const STR_REDDIT = "reddit";
+const STR_0X6080604052348015610010576000 =
+  "0x608060405234801561001057600080fd5b50...";
+const STR_ALEX_DEX = "alex_dex";
+const STR_FUNCTION = "function";
+const STR_UINT256 = "uint256";
 
 /**
  * Alex Blockchain Oracle - Phase 2 Batch 4 Final
  * Module d'oracle blockchain et d'économie décentralisée
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from "events";
 
 class AlexBlockchainOracle extends EventEmitter {
   constructor() {
     super();
-    this.name = 'AlexBlockchainOracle';
-    this.version = '2.0.0';
+    this.name = "AlexBlockchainOracle";
+    this.version = "2.0.0";
     this.isActive = false;
 
     // Système Oracle
@@ -85,11 +85,11 @@ class AlexBlockchainOracle extends EventEmitter {
     this.implementSecurityMeasures();
     this.startOracleServices();
 
-    this.emit('blockchainOracleReady', {
+    this.emit("blockchainOracleReady", {
       status: STR_ACTIVE,
       oracle_nodes: this.oracleNodes.size,
       blockchain_connections: this.blockchainConnections.size,
-      defi_protocols: this.defiProtocols.size
+      defi_protocols: this.defiProtocols.size,
     });
 
     return this;
@@ -99,40 +99,40 @@ class AlexBlockchainOracle extends EventEmitter {
     // Configuration du réseau d'oracles
     const oracleConfigs = [
       {
-        id: 'price_oracle',
+        id: "price_oracle",
         type: STR_PRICE_FEED,
-        sources: [STR_COINBASE, STR_BINANCE, STR_KRAKEN, 'uniswap'],
+        sources: [STR_COINBASE, STR_BINANCE, STR_KRAKEN, "uniswap"],
         update_frequency: 60000, // 1 minute
-        reliability: 0.99
+        reliability: 0.99,
       },
       {
-        id: 'weather_oracle',
+        id: "weather_oracle",
         type: STR_WEATHER_DATA,
-        sources: [STR_OPENWEATHER, 'weatherapi', 'noaa'],
+        sources: [STR_OPENWEATHER, "weatherapi", "noaa"],
         update_frequency: 300000, // 5 minutes
-        reliability: 0.95
+        reliability: 0.95,
       },
       {
-        id: 'sports_oracle',
-        type: 'sports_results',
-        sources: ['espn', 'sportsradar', 'thescore'],
+        id: "sports_oracle",
+        type: "sports_results",
+        sources: ["espn", "sportsradar", "thescore"],
         update_frequency: 30000, // 30 seconds
-        reliability: 0.98
+        reliability: 0.98,
       },
       {
-        id: 'economic_oracle',
+        id: "economic_oracle",
         type: STR_ECONOMIC_INDICATORS,
-        sources: [STR_FRED, 'yahoo_finance', 'bloomberg'],
+        sources: [STR_FRED, "yahoo_finance", "bloomberg"],
         update_frequency: 3600000, // 1 hour
-        reliability: 0.97
+        reliability: 0.97,
       },
       {
-        id: 'social_oracle',
+        id: "social_oracle",
         type: STR_SOCIAL_SENTIMENT,
-        sources: [STR_TWITTER, STR_REDDIT, 'news_apis'],
+        sources: [STR_TWITTER, STR_REDDIT, "news_apis"],
         update_frequency: 120000, // 2 minutes
-        reliability: 0.85
-      }
+        reliability: 0.85,
+      },
     ];
 
     for (const config of oracleConfigs) this.buildComplexObject(config);
@@ -160,7 +160,7 @@ class AlexBlockchainOracle extends EventEmitter {
         rate_limit: this.getSourceRateLimit(source),
         last_request: null,
         success_rate: 1.0,
-        average_latency: 100
+        average_latency: 100,
       });
     }
 
@@ -169,10 +169,10 @@ class AlexBlockchainOracle extends EventEmitter {
 
   getSourceEndpoint(source) {
     const endpoints = {
-      'blockchain': 'https://api.blockchain.info/',
-      'ethereum': 'https://api.etherscan.io/',
-      'bitcoin': 'https://blockstream.info/api/',
-      'binance': 'https://api.binance.com/'
+      blockchain: "https://api.blockchain.info/",
+      ethereum: "https://api.etherscan.io/",
+      bitcoin: "https://blockstream.info/api/",
+      binance: "https://api.binance.com/",
     };
 
     return endpoints[source] || `https://api.${source}.com/`;
@@ -180,7 +180,7 @@ class AlexBlockchainOracle extends EventEmitter {
 
   getSourceApiKey(source) {
     // Simulation des clés API
-    return `${source}_api_key_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 9)}`;
+    return `${source}_api_key_${(crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff).toString(36).substr(2, 9)}`;
   }
 
   getSourceRateLimit(source) {
@@ -190,7 +190,7 @@ class AlexBlockchainOracle extends EventEmitter {
       STR_KRAKEN: 720,
       STR_OPENWEATHER: 1000,
       STR_TWITTER: 300,
-      STR_REDDIT: 600
+      STR_REDDIT: 600,
     };
 
     return rateLimits[source] || 1000; // requêtes par heure
@@ -203,11 +203,16 @@ class AlexBlockchainOracle extends EventEmitter {
     for (let i = 0; i < 5; i++) {
       const validator = {
         id: `validator_${oracle.id}_${i}`,
-        stake: 500 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1000,
-        reputation: 0.8 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.2,
-        uptime: 0.95 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.05,
+        stake:
+          500 + (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 1000,
+        reputation:
+          0.8 + (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 0.2,
+        uptime:
+          0.95 + (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 0.05,
         last_validation: new Date(),
-        total_validations: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1000)
+        total_validations: Math.floor(
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 1000,
+        ),
       };
 
       validators.add(validator);
@@ -218,35 +223,35 @@ class AlexBlockchainOracle extends EventEmitter {
 
   async configureConsensus(oracle) {
     return {
-      mechanism: 'proof_of_stake',
+      mechanism: "proof_of_stake",
       threshold: 0.67, // 67% de consensus requis
       rounds: 3,
       timeout: 30000, // 30 secondes
       slashing_rate: 0.1, // 10% de pénalité en cas de faute
-      reward_distribution: 'proportional_to_stake'
+      reward_distribution: "proportional_to_stake",
     };
   }
 
   setupAggregationMethods() {
     // Méthodes d'agrégation des données
-    this.aggregationMethods.set('weighted_median', {
-      description: 'Médiane pondérée par la réputation',
-      implementation: this.weightedMedianAggregation.bind(this)
+    this.aggregationMethods.set("weighted_median", {
+      description: "Médiane pondérée par la réputation",
+      implementation: this.weightedMedianAggregation.bind(this),
     });
 
-    this.aggregationMethods.set('stake_weighted_average', {
-      description: 'Moyenne pondérée par le stake',
-      implementation: this.stakeWeightedAverageAggregation.bind(this)
+    this.aggregationMethods.set("stake_weighted_average", {
+      description: "Moyenne pondérée par le stake",
+      implementation: this.stakeWeightedAverageAggregation.bind(this),
     });
 
-    this.aggregationMethods.set('robust_trimmed_mean', {
-      description: 'Moyenne tronquée robuste',
-      implementation: this.robustTrimmedMeanAggregation.bind(this)
+    this.aggregationMethods.set("robust_trimmed_mean", {
+      description: "Moyenne tronquée robuste",
+      implementation: this.robustTrimmedMeanAggregation.bind(this),
     });
 
-    this.aggregationMethods.set('byzantine_fault_tolerant', {
-      description: 'Agrégation tolérante aux fautes byzantines',
-      implementation: this.byzantineFaultTolerantAggregation.bind(this)
+    this.aggregationMethods.set("byzantine_fault_tolerant", {
+      description: "Agrégation tolérante aux fautes byzantines",
+      implementation: this.byzantineFaultTolerantAggregation.bind(this),
     });
   }
 
@@ -273,10 +278,11 @@ class AlexBlockchainOracle extends EventEmitter {
   stakeWeightedAverageAggregation(dataPoints, stakes) {
     // Moyenne pondérée par le stake
     const totalStake = stakes.reduce((sum, stake) => sum + stake, 0);
-    const weightedSum = dataPoints.reduce((sum, value, index) => 
-      sum + (value * stakes[index]), 0
+    const weightedSum = dataPoints.reduce(
+      (sum, value, index) => sum + value * stakes[index],
+      0,
     );
-    
+
     return weightedSum / totalStake;
   }
 
@@ -296,51 +302,51 @@ class AlexBlockchainOracle extends EventEmitter {
     // Connexions aux différentes blockchains
     const blockchains = [
       {
-        name: 'ethereum',
-        rpc_url: 'https://mainnet.infura.io/v3/',
+        name: "ethereum",
+        rpc_url: "https://mainnet.infura.io/v3/",
         chain_id: 1,
-        native_token: 'ETH',
-        supports_smart_contracts: true
+        native_token: "ETH",
+        supports_smart_contracts: true,
       },
       {
-        name: 'polygon',
-        rpc_url: 'https://polygon-rpc.com/',
+        name: "polygon",
+        rpc_url: "https://polygon-rpc.com/",
         chain_id: 137,
-        native_token: 'MATIC',
-        supports_smart_contracts: true
+        native_token: "MATIC",
+        supports_smart_contracts: true,
       },
       {
-        name: 'binance_smart_chain',
-        rpc_url: 'https://bsc-dataseed.binance.org/',
+        name: "binance_smart_chain",
+        rpc_url: "https://bsc-dataseed.binance.org/",
         chain_id: 56,
-        native_token: 'BNB',
-        supports_smart_contracts: true
+        native_token: "BNB",
+        supports_smart_contracts: true,
       },
       {
-        name: 'avalanche',
-        rpc_url: 'https://api.avax.network/ext/bc/C/rpc',
+        name: "avalanche",
+        rpc_url: "https://api.avax.network/ext/bc/C/rpc",
         chain_id: 43114,
-        native_token: 'AVAX',
-        supports_smart_contracts: true
+        native_token: "AVAX",
+        supports_smart_contracts: true,
       },
       {
-        name: 'solana',
-        rpc_url: 'https://api.mainnet-beta.solana.com',
+        name: "solana",
+        rpc_url: "https://api.mainnet-beta.solana.com",
         chain_id: null,
-        native_token: 'SOL',
-        supports_smart_contracts: true
-      }
+        native_token: "SOL",
+        supports_smart_contracts: true,
+      },
     ];
 
     for (const blockchain of blockchains) {
       this.blockchainConnections.set(blockchain.name, {
         ...blockchain,
-        status: 'connected',
+        status: "connected",
         last_block: this.simulateBlockNumber(),
         gas_price: this.simulateGasPrice(),
         connection_pool: this.createConnectionPool(),
         transaction_count: 0,
-        oracle_contracts: new Map()
+        oracle_contracts: new Map(),
       });
     }
 
@@ -348,11 +354,18 @@ class AlexBlockchainOracle extends EventEmitter {
   }
 
   simulateBlockNumber() {
-    return Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1000000) + 15000000;
+    return (
+      Math.floor(
+        (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 1000000,
+      ) + 15000000
+    );
   }
 
   simulateGasPrice() {
-    return Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 100) + 20; // Gwei
+    return (
+      Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 100) +
+      20
+    ); // Gwei
   }
 
   createConnectionPool() {
@@ -360,7 +373,7 @@ class AlexBlockchainOracle extends EventEmitter {
       max_connections: 10,
       active_connections: 3,
       idle_connections: 2,
-      queue_size: 0
+      queue_size: 0,
     };
   }
 
@@ -378,39 +391,44 @@ class AlexBlockchainOracle extends EventEmitter {
     const contracts = new Map();
 
     // Contrat principal d'oracle
-    contracts.set('main_oracle', {
+    contracts.set("main_oracle", {
       address: this.generateContractAddress(),
       abi: this.getOracleABI(),
       bytecode: this.getOracleBytecode(),
       deployed_block: this.simulateBlockNumber(),
-      gas_used: 2500000
+      gas_used: 2500000,
     });
 
     // Contrat d'agrégation
-    contracts.set('aggregator', {
+    contracts.set("aggregator", {
       address: this.generateContractAddress(),
       abi: this.getAggregatorABI(),
       bytecode: this.getAggregatorBytecode(),
       deployed_block: this.simulateBlockNumber(),
-      gas_used: 1800000
+      gas_used: 1800000,
     });
 
     // Contrat de gouvernance
-    contracts.set('governance', {
+    contracts.set("governance", {
       address: this.generateContractAddress(),
       abi: this.getGovernanceABI(),
       bytecode: this.getGovernanceBytecode(),
       deployed_block: this.simulateBlockNumber(),
-      gas_used: 3200000
+      gas_used: 3200000,
     });
 
     return contracts;
   }
 
   generateContractAddress() {
-    return '0x' + Array.from({ length: 40 }, () =>
-      Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 16).toString(16)
-    ).join('');
+    return (
+      "0x" +
+      Array.from({ length: 40 }, () =>
+        Math.floor(
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 16,
+        ).toString(16),
+      ).join("")
+    );
   }
 
   getOracleABI() {
@@ -420,23 +438,23 @@ class AlexBlockchainOracle extends EventEmitter {
         STR_NAME: "updateData",
         STR_TYPE: STR_FUNCTION,
         STR_INPUTS: [
-          {STR_NAME: "data", STR_TYPE: STR_UINT256},
-          {STR_NAME: "timestamp", STR_TYPE: STR_UINT256}
-        ]
+          { STR_NAME: "data", STR_TYPE: STR_UINT256 },
+          { STR_NAME: "timestamp", STR_TYPE: STR_UINT256 },
+        ],
       },
       {
         STR_NAME: "getData",
         STR_TYPE: STR_FUNCTION,
-        "outputs": [{STR_NAME: "", STR_TYPE: STR_UINT256}]
+        outputs: [{ STR_NAME: "", STR_TYPE: STR_UINT256 }],
       },
       {
         STR_NAME: "DataUpdated",
         STR_TYPE: "event",
         STR_INPUTS: [
-          {STR_NAME: "value", STR_TYPE: STR_UINT256, "indexed": false},
-          {STR_NAME: "timestamp", STR_TYPE: STR_UINT256, "indexed": false}
-        ]
-      }
+          { STR_NAME: "value", STR_TYPE: STR_UINT256, indexed: false },
+          { STR_NAME: "timestamp", STR_TYPE: STR_UINT256, indexed: false },
+        ],
+      },
     ];
   }
 
@@ -450,8 +468,8 @@ class AlexBlockchainOracle extends EventEmitter {
       {
         STR_NAME: "aggregate",
         STR_TYPE: STR_FUNCTION,
-        STR_INPUTS: [{STR_NAME: "values", STR_TYPE: "uint256[]"}]
-      }
+        STR_INPUTS: [{ STR_NAME: "values", STR_TYPE: "uint256[]" }],
+      },
     ];
   }
 
@@ -464,16 +482,16 @@ class AlexBlockchainOracle extends EventEmitter {
       {
         STR_NAME: "propose",
         STR_TYPE: STR_FUNCTION,
-        STR_INPUTS: [{STR_NAME: "description", STR_TYPE: "string"}]
+        STR_INPUTS: [{ STR_NAME: "description", STR_TYPE: "string" }],
       },
       {
         STR_NAME: "vote",
         STR_TYPE: STR_FUNCTION,
         STR_INPUTS: [
-          {STR_NAME: "proposalId", STR_TYPE: STR_UINT256},
-          {STR_NAME: "support", STR_TYPE: "bool"}
-        ]
-      }
+          { STR_NAME: "proposalId", STR_TYPE: STR_UINT256 },
+          { STR_NAME: "support", STR_TYPE: "bool" },
+        ],
+      },
     ];
   }
 
@@ -484,31 +502,46 @@ class AlexBlockchainOracle extends EventEmitter {
   configureEconomicIntelligence() {
     // Configuration de l'intelligence économique
     this.economicMetrics = new Map([
-      ['gdp_growth', {
-        sources: [STR_FRED, 'worldbank', 'oecd'],
-        update_frequency: 86400000, // Daily
-        importance: 0.9
-      }],
-      ['inflation_rate', {
-        sources: [STR_FRED, 'ecb', 'bls'],
-        update_frequency: 43200000, // 12 hours
-        importance: 0.95
-      }],
-      ['unemployment_rate', {
-        sources: ['bls', 'eurostat', 'oecd'],
-        update_frequency: 43200000,
-        importance: 0.8
-      }],
-      ['interest_rates', {
-        sources: ['fed', 'ecb', 'boj'],
-        update_frequency: 3600000, // Hourly
-        importance: 0.99
-      }],
-      ['stock_indices', {
-        sources: ['yahoo', 'bloomberg', 'reuters'],
-        update_frequency: 60000, // 1 minute
-        importance: 0.85
-      }]
+      [
+        "gdp_growth",
+        {
+          sources: [STR_FRED, "worldbank", "oecd"],
+          update_frequency: 86400000, // Daily
+          importance: 0.9,
+        },
+      ],
+      [
+        "inflation_rate",
+        {
+          sources: [STR_FRED, "ecb", "bls"],
+          update_frequency: 43200000, // 12 hours
+          importance: 0.95,
+        },
+      ],
+      [
+        "unemployment_rate",
+        {
+          sources: ["bls", "eurostat", "oecd"],
+          update_frequency: 43200000,
+          importance: 0.8,
+        },
+      ],
+      [
+        "interest_rates",
+        {
+          sources: ["fed", "ecb", "boj"],
+          update_frequency: 3600000, // Hourly
+          importance: 0.99,
+        },
+      ],
+      [
+        "stock_indices",
+        {
+          sources: ["yahoo", "bloomberg", "reuters"],
+          update_frequency: 60000, // 1 minute
+          importance: 0.85,
+        },
+      ],
     ]);
 
     this.setupMarketAnalysis();
@@ -520,84 +553,101 @@ class AlexBlockchainOracle extends EventEmitter {
     // Configuration de l'analyse de marché
     this.marketAnalysisTools = {
       technical_analysis: {
-        indicators: ['sma',
-      'ema',
-      'rsi',
-      'macd',
-      'bollinger_bands'],
-      timeframes: ['1m',
-      '5m',
-      '15m',
-      '1h',
-      '4h',
-      '1d'],
-      algorithms: ['trend_following',
-      'mean_reversion',
-      'momentum']
+        indicators: ["sma", "ema", "rsi", "macd", "bollinger_bands"],
+        timeframes: ["1m", "5m", "15m", "1h", "4h", "1d"],
+        algorithms: ["trend_following", "mean_reversion", "momentum"],
       },
       fundamental_analysis: {
-        metrics: ['pe_ratio', 'pb_ratio', 'debt_equity', 'roe', 'market_cap'],
-        data_sources: ['financial_statements', 'earnings_reports', 'sec_filings'],
-        scoring_models: ['dcf', 'comparative_valuation', 'asset_based']
+        metrics: ["pe_ratio", "pb_ratio", "debt_equity", "roe", "market_cap"],
+        data_sources: [
+          "financial_statements",
+          "earnings_reports",
+          "sec_filings",
+        ],
+        scoring_models: ["dcf", "comparative_valuation", "asset_based"],
       },
       sentiment_analysis: {
-        sources: ['news', 'social_media', 'analyst_reports'],
-        nlp_models: ['bert', 'gpt', 'finbert'],
-        sentiment_scores: ['bullish', 'bearish', 'neutral']
-      }
+        sources: ["news", "social_media", "analyst_reports"],
+        nlp_models: ["bert", "gpt", "finbert"],
+        sentiment_scores: ["bullish", "bearish", "neutral"],
+      },
     };
   }
 
   initializeTradingSignals() {
     // Initialisation des signaux de trading
     this.tradingSignalGenerators = new Map([
-      ['momentum_signals', {
-        algorithm: 'momentum_based',
-        parameters: { lookback: 14, threshold: 0.02 },
-        success_rate: 0.65
-      }],
-      ['mean_reversion_signals', {
-        algorithm: 'mean_reversion',
-        parameters: { window: 20, deviation: 2 },
-        success_rate: 0.58
-      }],
-      ['breakout_signals', {
-        algorithm: 'breakout_detection',
-        parameters: { volume_threshold: 1.5, price_threshold: 0.03 },
-        success_rate: 0.72
-      }],
-      ['arbitrage_signals', {
-        algorithm: 'cross_exchange_arbitrage',
-        parameters: { min_spread: 0.005, execution_time: 30 },
-        success_rate: 0.85
-      }]
+      [
+        "momentum_signals",
+        {
+          algorithm: "momentum_based",
+          parameters: { lookback: 14, threshold: 0.02 },
+          success_rate: 0.65,
+        },
+      ],
+      [
+        "mean_reversion_signals",
+        {
+          algorithm: "mean_reversion",
+          parameters: { window: 20, deviation: 2 },
+          success_rate: 0.58,
+        },
+      ],
+      [
+        "breakout_signals",
+        {
+          algorithm: "breakout_detection",
+          parameters: { volume_threshold: 1.5, price_threshold: 0.03 },
+          success_rate: 0.72,
+        },
+      ],
+      [
+        "arbitrage_signals",
+        {
+          algorithm: "cross_exchange_arbitrage",
+          parameters: { min_spread: 0.005, execution_time: 30 },
+          success_rate: 0.85,
+        },
+      ],
     ]);
   }
 
   configureRiskAssessment() {
     // Configuration de l'évaluation des risques
     this.riskModels = new Map([
-      ['var_model', {
-        method: 'historical_simulation',
-        confidence_level: 0.95,
-        time_horizon: 1, // day
-        lookback_period: 252 // trading days
-      }],
-      ['credit_risk_model', {
-        method: 'probability_of_default',
-        rating_system: 'internal',
-        loss_given_default: 0.45
-      }],
-      ['liquidity_risk_model', {
-        method: 'bid_ask_spread_analysis',
-        market_impact: 'linear',
-        execution_shortfall: 'almgren_chriss'
-      }],
-      ['operational_risk_model', {
-        method: 'loss_distribution_approach',
-        frequency_distribution: 'poisson',
-        severity_distribution: 'lognormal'
-      }]
+      [
+        "var_model",
+        {
+          method: "historical_simulation",
+          confidence_level: 0.95,
+          time_horizon: 1, // day
+          lookback_period: 252, // trading days
+        },
+      ],
+      [
+        "credit_risk_model",
+        {
+          method: "probability_of_default",
+          rating_system: "internal",
+          loss_given_default: 0.45,
+        },
+      ],
+      [
+        "liquidity_risk_model",
+        {
+          method: "bid_ask_spread_analysis",
+          market_impact: "linear",
+          execution_shortfall: "almgren_chriss",
+        },
+      ],
+      [
+        "operational_risk_model",
+        {
+          method: "loss_distribution_approach",
+          frequency_distribution: "poisson",
+          severity_distribution: "lognormal",
+        },
+      ],
     ]);
   }
 
@@ -605,44 +655,53 @@ class AlexBlockchainOracle extends EventEmitter {
     // Configuration des protocoles DeFi
     const defiProtocols = [
       {
-        name: 'alex_lending',
-        type: 'lending_protocol',
-        supported_assets: ['ETH', 'USDC', 'DAI', 'WBTC'],
-        interest_model: 'jump_rate_model',
-        collateral_factor: 0.75
+        name: "alex_lending",
+        type: "lending_protocol",
+        supported_assets: ["ETH", "USDC", "DAI", "WBTC"],
+        interest_model: "jump_rate_model",
+        collateral_factor: 0.75,
       },
       {
         name: STR_ALEX_DEX,
-        type: 'decentralized_exchange',
-        trading_pairs: ['ETH/USDC', 'DAI/USDC', 'WBTC/ETH'],
+        type: "decentralized_exchange",
+        trading_pairs: ["ETH/USDC", "DAI/USDC", "WBTC/ETH"],
         fee_structure: { swap: 0.003, liquidity: 0.0025 },
-        amm_model: 'constant_product'
+        amm_model: "constant_product",
       },
       {
-        name: 'alex_yield_farm',
-        type: 'yield_farming',
-        pools: ['ETH-USDC', 'DAI-USDC', 'ALEX-ETH'],
-        reward_token: 'ALEX',
-        emission_rate: 1000 // ALEX per day
+        name: "alex_yield_farm",
+        type: "yield_farming",
+        pools: ["ETH-USDC", "DAI-USDC", "ALEX-ETH"],
+        reward_token: "ALEX",
+        emission_rate: 1000, // ALEX per day
       },
       {
-        name: 'alex_insurance',
-        type: 'insurance_protocol',
-        coverage_types: ['smart_contract', 'oracle_failure', 'stablecoin_depeg'],
-        premium_model: 'risk_based',
-        claims_model: 'decentralized_assessment'
-      }
+        name: "alex_insurance",
+        type: "insurance_protocol",
+        coverage_types: [
+          "smart_contract",
+          "oracle_failure",
+          "stablecoin_depeg",
+        ],
+        premium_model: "risk_based",
+        claims_model: "decentralized_assessment",
+      },
     ];
 
     for (const protocol of defiProtocols) {
       this.defiProtocols.set(protocol.name, {
         ...protocol,
         status: STR_ACTIVE,
-        tvl: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 100000000, // Total Value Locked
-        users: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 50000),
-        transactions: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1000000),
-        apr: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.2, // 0-20% APR
-        security_score: 0.8 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.2
+        tvl: (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 100000000, // Total Value Locked
+        users: Math.floor(
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 50000,
+        ),
+        transactions: Math.floor(
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 1000000,
+        ),
+        apr: (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 0.2, // 0-20% APR
+        security_score:
+          0.8 + (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 0.2,
       });
     }
 
@@ -655,42 +714,45 @@ class AlexBlockchainOracle extends EventEmitter {
     // Création des pools de liquidité
     const pools = [
       {
-        id: 'eth_usdc_pool',
-        token0: 'ETH',
-        token1: 'USDC',
+        id: "eth_usdc_pool",
+        token0: "ETH",
+        token1: "USDC",
         reserve0: 1000,
         reserve1: 2000000,
         fee: 0.003,
-        protocol: STR_ALEX_DEX
+        protocol: STR_ALEX_DEX,
       },
       {
-        id: 'dai_usdc_pool',
-        token0: 'DAI',
-        token1: 'USDC',
+        id: "dai_usdc_pool",
+        token0: "DAI",
+        token1: "USDC",
         reserve0: 1500000,
         reserve1: 1498000,
         fee: 0.001,
-        protocol: STR_ALEX_DEX
+        protocol: STR_ALEX_DEX,
       },
       {
-        id: 'alex_eth_pool',
-        token0: 'ALEX',
-        token1: 'ETH',
+        id: "alex_eth_pool",
+        token0: "ALEX",
+        token1: "ETH",
         reserve0: 1000000,
         reserve1: 500,
         fee: 0.005,
-        protocol: 'alex_yield_farm'
-      }
+        protocol: "alex_yield_farm",
+      },
     ];
 
     for (const pool of pools) {
       this.liquidityPools.set(pool.id, {
         ...pool,
         liquidity_providers: new Map(),
-        trading_volume_24h: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 10000000,
-        fees_earned_24h: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 30000,
-        impermanent_loss: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.05,
-        last_update: new Date()
+        trading_volume_24h:
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 10000000,
+        fees_earned_24h:
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 30000,
+        impermanent_loss:
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 0.05,
+        last_update: new Date(),
       });
     }
   }
@@ -699,93 +761,94 @@ class AlexBlockchainOracle extends EventEmitter {
     // Configuration du yield farming
     const farmingPools = [
       {
-        id: 'eth_usdc_farm',
-        lp_token: 'ETH-USDC-LP',
-        reward_token: 'ALEX',
+        id: "eth_usdc_farm",
+        lp_token: "ETH-USDC-LP",
+        reward_token: "ALEX",
         reward_rate: 100, // ALEX per block
         multiplier: 2.0,
-        lockup_period: 0 // No lockup
+        lockup_period: 0, // No lockup
       },
       {
-        id: 'dai_usdc_farm',
-        lp_token: 'DAI-USDC-LP',
-        reward_token: 'ALEX',
+        id: "dai_usdc_farm",
+        lp_token: "DAI-USDC-LP",
+        reward_token: "ALEX",
         reward_rate: 50,
         multiplier: 1.0,
-        lockup_period: 86400 // 1 day
+        lockup_period: 86400, // 1 day
       },
       {
-        id: 'alex_eth_farm',
-        lp_token: 'ALEX-ETH-LP',
-        reward_token: 'ALEX',
+        id: "alex_eth_farm",
+        lp_token: "ALEX-ETH-LP",
+        reward_token: "ALEX",
         reward_rate: 200,
         multiplier: 3.0,
-        lockup_period: 604800 // 1 week
-      }
+        lockup_period: 604800, // 1 week
+      },
     ];
 
     for (const farm of farmingPools) {
       this.yieldFarming.set(farm.id, {
         ...farm,
-        total_staked: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1000000,
+        total_staked:
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 1000000,
         participants: new Map(),
-        apy: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 2.0, // 0-200% APY
+        apy: (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 2.0, // 0-200% APY
         start_block: this.simulateBlockNumber(),
-        end_block: this.simulateBlockNumber() + 100000
+        end_block: this.simulateBlockNumber() + 100000,
       });
     }
   }
 
   designTokenomics() {
     // Conception de la tokenomique
-    this.tokenomics.set('ALEX', {
-      name: 'Alex Token',
-      symbol: 'ALEX',
+    this.tokenomics.set("ALEX", {
+      name: "Alex Token",
+      symbol: "ALEX",
       total_supply: 1000000000, // 1 billion
       circulating_supply: 100000000, // 100 million
       distribution: {
-        team: 0.20,
+        team: 0.2,
         investors: 0.15,
-        community: 0.30,
-        treasury: 0.20,
-        liquidity_mining: 0.15
+        community: 0.3,
+        treasury: 0.2,
+        liquidity_mining: 0.15,
       },
       utility: [
-        'governance_voting',
-        'staking_rewards',
-        'fee_discounts',
-        'oracle_staking',
-        'insurance_coverage'
+        "governance_voting",
+        "staking_rewards",
+        "fee_discounts",
+        "oracle_staking",
+        "insurance_coverage",
       ],
       vesting_schedule: {
         team: { duration: 48, cliff: 12 }, // months
-        investors: { duration: 24, cliff: 6 }
+        investors: { duration: 24, cliff: 6 },
       },
       burning_mechanism: {
         enabled: true,
         burn_rate: 0.01, // 1% of fees
-        trigger: 'transaction_fees'
-      }
+        trigger: "transaction_fees",
+      },
     });
   }
 
   establishGovernanceStructures() {
     // Établissement des structures de gouvernance
-    this.daoStructures.set('alex_dao', {
-      name: 'Alex DAO',
-      governance_token: 'ALEX',
-      voting_power: 'token_weighted',
+    this.daoStructures.set("alex_dao", {
+      name: "Alex DAO",
+      governance_token: "ALEX",
+      voting_power: "token_weighted",
       quorum: 0.04, // 4% of total supply
       proposal_threshold: 1000000, // 1M ALEX to propose
       voting_period: 259200, // 3 days in seconds
       execution_delay: 172800, // 2 days timelock
       categories: [
-        'protocol_upgrades',
-        'parameter_changes',
-        'treasury_management',
-        'oracle_management',
-        'partnership_approvals'
-      ]
+        "protocol_upgrades",
+        "parameter_changes",
+        "treasury_management",
+        "oracle_management",
+        "partnership_approvals",
+      ],
     });
 
     this.setupVotingMechanisms();
@@ -794,25 +857,26 @@ class AlexBlockchainOracle extends EventEmitter {
 
   setupVotingMechanisms() {
     // Configuration des mécanismes de vote
-    this.votingMechanisms.set('quadratic_voting', {
-      description: 'Vote quadratique pour réduire l\'influence des gros détenteurs',
-      formula: 'sqrt(tokens)',
+    this.votingMechanisms.set("quadratic_voting", {
+      description:
+        "Vote quadratique pour réduire l'influence des gros détenteurs",
+      formula: "sqrt(tokens)",
       max_votes: 10000,
-      cost_curve: 'quadratic'
+      cost_curve: "quadratic",
     });
 
-    this.votingMechanisms.set('conviction_voting', {
-      description: 'Vote par conviction avec accumulation temporelle',
+    this.votingMechanisms.set("conviction_voting", {
+      description: "Vote par conviction avec accumulation temporelle",
       max_conviction: 10000000,
       half_life: 604800, // 1 week
-      minimum_threshold: 0.02
+      minimum_threshold: 0.02,
     });
 
-    this.votingMechanisms.set('ranked_choice', {
-      description: 'Vote à choix multiple classé',
+    this.votingMechanisms.set("ranked_choice", {
+      description: "Vote à choix multiple classé",
       max_choices: 5,
       elimination_rounds: true,
-      instant_runoff: true
+      instant_runoff: true,
     });
   }
 
@@ -820,60 +884,65 @@ class AlexBlockchainOracle extends EventEmitter {
     // Création de propositions de gouvernance
     const proposals = [
       {
-        id: 'prop_001',
-        title: 'Augmentation des récompenses Oracle',
-        description: 'Proposition d\'augmenter les récompenses des oracles de 20%',
-        category: 'parameter_changes',
-        proposer: '0x1234...5678',
+        id: "prop_001",
+        title: "Augmentation des récompenses Oracle",
+        description:
+          "Proposition d'augmenter les récompenses des oracles de 20%",
+        category: "parameter_changes",
+        proposer: "0x1234...5678",
         status: STR_ACTIVE,
         voting_start: new Date(),
-        voting_end: new Date(Date.now() + 259200000)
+        voting_end: new Date(Date.now() + 259200000),
       },
       {
-        id: 'prop_002',
-        title: 'Intégration Chainlink',
-        description: 'Proposition d\'intégrer les price feeds Chainlink',
-        category: 'protocol_upgrades',
-        proposer: '0xabcd...ef01',
+        id: "prop_002",
+        title: "Intégration Chainlink",
+        description: "Proposition d'intégrer les price feeds Chainlink",
+        category: "protocol_upgrades",
+        proposer: "0xabcd...ef01",
         status: STR_PENDING,
         voting_start: new Date(Date.now() + 86400000),
-        voting_end: new Date(Date.now() + 346000000)
-      }
+        voting_end: new Date(Date.now() + 346000000),
+      },
     ];
 
     for (const proposal of proposals) {
       this.proposals.set(proposal.id, {
         ...proposal,
-        votes_for: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 10000000),
-        votes_against: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 5000000),
+        votes_for: Math.floor(
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 10000000,
+        ),
+        votes_against: Math.floor(
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 5000000,
+        ),
         voters: new Map(),
         execution_eta: null,
-        executed: false
+        executed: false,
       });
     }
   }
 
   implementSecurityMeasures() {
     // Implémentation des mesures de sécurité
-    this.cryptographicTools.set('hash_functions', {
+    this.cryptographicTools.set("hash_functions", {
       sha256: true,
       sha3: true,
       blake2: true,
-      poseidon: true // ZK-friendly hash
+      poseidon: true, // ZK-friendly hash
     });
 
-    this.cryptographicTools.set('digital_signatures', {
+    this.cryptographicTools.set("digital_signatures", {
       ecdsa: true,
       eddsa: true,
       bls: true,
-      schnorr: true
+      schnorr: true,
     });
 
-    this.cryptographicTools.set('zero_knowledge', {
+    this.cryptographicTools.set("zero_knowledge", {
       zk_snarks: true,
       zk_starks: true,
       bulletproofs: true,
-      plonk: true
+      plonk: true,
     });
 
     this.setupPrivacyProtocols();
@@ -883,73 +952,73 @@ class AlexBlockchainOracle extends EventEmitter {
 
   setupPrivacyProtocols() {
     // Configuration des protocoles de confidentialité
-    this.privacyProtocols.set('commit_reveal', {
-      description: 'Schéma commit-reveal pour les données sensibles',
-      hash_function: 'sha256',
+    this.privacyProtocols.set("commit_reveal", {
+      description: "Schéma commit-reveal pour les données sensibles",
+      hash_function: "sha256",
       reveal_window: 3600, // 1 hour
-      penalty_for_no_reveal: 0.1
+      penalty_for_no_reveal: 0.1,
     });
 
-    this.privacyProtocols.set('ring_signatures', {
-      description: 'Signatures en anneau pour l\'anonymat',
+    this.privacyProtocols.set("ring_signatures", {
+      description: "Signatures en anneau pour l'anonymat",
       ring_size: 11,
       mixing_rounds: 3,
-      decoy_selection: 'gamma_distribution'
+      decoy_selection: "gamma_distribution",
     });
 
-    this.privacyProtocols.set('differential_privacy', {
-      description: 'Confidentialité différentielle pour les agrégations',
+    this.privacyProtocols.set("differential_privacy", {
+      description: "Confidentialité différentielle pour les agrégations",
       epsilon: 1.0, // Privacy parameter
       delta: 1e-6,
-      mechanism: 'laplace'
+      mechanism: "laplace",
     });
   }
 
   createAuditTrails() {
     // Création des pistes d'audit
-    this.auditTrails.set('oracle_updates', {
+    this.auditTrails.set("oracle_updates", {
       events: new Map(),
       retention_period: 31536000000, // 1 year
       immutable_storage: true,
-      encryption: true
+      encryption: true,
     });
 
-    this.auditTrails.set('governance_actions', {
+    this.auditTrails.set("governance_actions", {
       events: new Map(),
       retention_period: 94608000000, // 3 years
       immutable_storage: true,
-      public_visibility: true
+      public_visibility: true,
     });
 
-    this.auditTrails.set('financial_transactions', {
+    this.auditTrails.set("financial_transactions", {
       events: new Map(),
       retention_period: 220752000000, // 7 years
       immutable_storage: true,
-      regulatory_compliance: true
+      regulatory_compliance: true,
     });
   }
 
   configureSecurityMonitoring() {
     // Configuration du monitoring de sécurité
-    this.securityMeasures.set('anomaly_detection', {
-      algorithms: ['isolation_forest', 'one_class_svm', 'autoencoder'],
+    this.securityMeasures.set("anomaly_detection", {
+      algorithms: ["isolation_forest", "one_class_svm", "autoencoder"],
       sensitivity: 0.95,
       false_positive_rate: 0.05,
-      response_time: 30 // seconds
+      response_time: 30, // seconds
     });
 
-    this.securityMeasures.set('access_control', {
-      model: 'role_based_access_control',
+    this.securityMeasures.set("access_control", {
+      model: "role_based_access_control",
       multi_factor_auth: true,
       session_timeout: 3600, // 1 hour
-      ip_whitelisting: true
+      ip_whitelisting: true,
     });
 
-    this.securityMeasures.set('smart_contract_security', {
+    this.securityMeasures.set("smart_contract_security", {
       static_analysis: true,
       formal_verification: true,
       bug_bounty_program: true,
-      automated_testing: true
+      automated_testing: true,
     });
   }
 
@@ -968,7 +1037,7 @@ class AlexBlockchainOracle extends EventEmitter {
       try {
         await this.collectAllOracleData();
       } catch (error) {
-        this.handleOracleError('data_collection', error);
+        this.handleOracleError("data_collection", error);
       }
     }, 30000); // Collect data every 30 seconds
   }
@@ -984,7 +1053,8 @@ class AlexBlockchainOracle extends EventEmitter {
           value: data,
           timestamp: new Date(),
           source: sourceName,
-          latency: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 200 + 50 // 50-250ms
+          latency:
+            (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 200 + 50, // 50-250ms
         });
       } catch (error) {
         console.error(`Error fetching data from ${sourceName}:`, error.message);
@@ -999,17 +1069,22 @@ class AlexBlockchainOracle extends EventEmitter {
     // Simulation de requête à une source de données
     switch (dataType) {
       case STR_PRICE_FEED:
-        return 2000 + ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 200; // $2000 ± $100
+        return (
+          2000 +
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff - 0.5) * 200
+        ); // $2000 ± $100
       case STR_WEATHER_DATA:
-        return (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 40 - 10; // -10°C to 30°C
-      case 'sports_results':
-        return (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.5 ? 'team_a' : 'team_b';
+        return (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 40 - 10; // -10°C to 30°C
+      case "sports_results":
+        return crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff > 0.5
+          ? "team_a"
+          : "team_b";
       case STR_ECONOMIC_INDICATORS:
-        return (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 10; // 0-10%
+        return (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 10; // 0-10%
       case STR_SOCIAL_SENTIMENT:
-        return (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 2 - 1; // -1 to 1
+        return (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 2 - 1; // -1 to 1
       default:
-        return (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 100;
+        return (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 100;
     }
   }
 
@@ -1022,11 +1097,12 @@ class AlexBlockchainOracle extends EventEmitter {
         is_valid: true,
         confidence: 1.0,
         anomaly_score: 0.0,
-        reasons: []
+        reasons: [],
       };
 
       // Validation de plausibilité
-      if (await this.isDataPlausible(oracle.type, data.value)) this.buildComplexObject(config);
+      if (await this.isDataPlausible(oracle.type, data.value))
+        this.buildComplexObject(config);
 
       oracle.data_history.push(aggregatedValue);
       oracle.last_update = new Date();
@@ -1036,21 +1112,23 @@ class AlexBlockchainOracle extends EventEmitter {
         oracle.data_history.shift();
       }
 
-      this.emit('oracleDataUpdated', {
+      this.emit("oracleDataUpdated", {
         oracleId: oracle.id,
         value: aggregatedValue,
-        confidence: oracle.current_data.confidence
+        confidence: oracle.current_data.confidence,
       });
     }
   }
 
   async aggregateOracleData(oracle, validData) {
     // Agrégation des données Oracle
-    const values = Array.from(validData.values()).map(data => data.value);
-    const weights = Array.from(validData.keys()).map(sourceName => this.processLongOperation(args));
+    const values = Array.from(validData.values()).map((data) => data.value);
+    const weights = Array.from(validData.keys()).map((sourceName) =>
+      this.processLongOperation(args),
+    );
 
     // Utilisation de la méthode d'agrégation configurée
-    const method = this.aggregationMethods.get('weighted_median');
+    const method = this.aggregationMethods.get("weighted_median");
     return method.implementation(values, weights);
   }
 
@@ -1074,7 +1152,7 @@ class AlexBlockchainOracle extends EventEmitter {
     oracle.last_error = {
       message: error.message,
       timestamp: new Date(),
-      stack: error.stack
+      stack: error.stack,
     };
 
     // Réduction de la réputation en cas d'erreurs répétées
@@ -1082,10 +1160,10 @@ class AlexBlockchainOracle extends EventEmitter {
       oracle.reputation_score *= 0.95;
     }
 
-    this.emit('oracleError', {
+    this.emit("oracleError", {
       oracleId: oracle.id,
       error: error.message,
-      errorCount: oracle.error_count
+      errorCount: oracle.error_count,
     });
   }
 
@@ -1095,7 +1173,7 @@ class AlexBlockchainOracle extends EventEmitter {
       try {
         await this.runConsensusForAllOracles();
       } catch (error) {
-        console.error('Consensus process error:', error.message);
+        console.error("Consensus process error:", error.message);
       }
     }, 60000); // Run consensus every minute
   }
@@ -1112,7 +1190,10 @@ class AlexBlockchainOracle extends EventEmitter {
     }
 
     // Calcul du consensus
-    const consensusResult = await this.calculateConsensus(votes, oracle.consensus);
+    const consensusResult = await this.calculateConsensus(
+      votes,
+      oracle.consensus,
+    );
 
     // Mise à jour de l'état de l'oracle
     if (consensusResult.reached) {
@@ -1123,10 +1204,10 @@ class AlexBlockchainOracle extends EventEmitter {
       // Récompenses pour les validateurs qui ont voté correctement
       await this.distributeValidatorRewards(oracle, votes, consensusResult);
 
-      this.emit('consensusReached', {
+      this.emit("consensusReached", {
         oracleId: oracle.id,
         value: consensusResult.value,
-        confidence: consensusResult.confidence
+        confidence: consensusResult.confidence,
       });
     }
   }
@@ -1134,36 +1215,45 @@ class AlexBlockchainOracle extends EventEmitter {
   async getValidatorVote(validator, oracleData) {
     // Simulation du vote d'un validateur
     const accuracy = validator.reputation;
-    const isAccurate = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) < accuracy;
+    const isAccurate =
+      crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff < accuracy;
 
     return {
       validator: validator.id,
-      value: isAccurate ? oracleData.value : oracleData.value * (1 + ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 0.1),
+      value: isAccurate
+        ? oracleData.value
+        : oracleData.value *
+          (1 +
+            (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff - 0.5) * 0.1),
       timestamp: new Date(),
       signature: this.generateSignature(validator, oracleData),
-      stake: validator.stake
+      stake: validator.stake,
     };
   }
 
   generateSignature(validator, data) {
     // Génération d'une signature simulée
-    return 'sig_' + validator.id + '_' + data.timestamp.getTime();
+    return "sig_" + validator.id + "_" + data.timestamp.getTime();
   }
 
   async calculateConsensus(votes, consensusConfig) {
     // Calcul du consensus
-    const totalStake = Array.from(votes.values()).reduce((sum, vote) => sum + vote.stake, 0);
+    const totalStake = Array.from(votes.values()).reduce(
+      (sum, vote) => sum + vote.stake,
+      0,
+    );
     const threshold = totalStake * consensusConfig.threshold;
 
     let supportingStake = 0;
     let weightedSum = 0;
 
-    const values = Array.from(votes.values()).map(vote => vote.value);
+    const values = Array.from(votes.values()).map((vote) => vote.value);
     const median = this.calculateMedian(values);
 
     // Votes qui supportent la valeur médiane (avec tolérance)
     for (const vote of votes.values()) {
-      if (Math.abs(vote.value - median) / median < 0.05) { // 5% tolerance
+      if (Math.abs(vote.value - median) / median < 0.05) {
+        // 5% tolerance
         supportingStake += vote.stake;
         weightedSum += vote.value * vote.stake;
       }
@@ -1178,7 +1268,7 @@ class AlexBlockchainOracle extends EventEmitter {
       value: finalValue,
       confidence,
       supporting_stake: supportingStake,
-      total_stake: totalStake
+      total_stake: totalStake,
     };
   }
 
@@ -1187,9 +1277,9 @@ class AlexBlockchainOracle extends EventEmitter {
     const sorted = [...values].sort((a, b) => a - b);
     const mid = Math.floor(sorted.length / 2);
 
-    return sorted.length % 2 === 0 ?
-      (sorted[mid - 1] + sorted[mid]) / 2 :
-      sorted[mid];
+    return sorted.length % 2 === 0
+      ? (sorted[mid - 1] + sorted[mid]) / 2
+      : sorted[mid];
   }
 
   async distributeValidatorRewards(oracle, votes, consensusResult) {
@@ -1198,8 +1288,10 @@ class AlexBlockchainOracle extends EventEmitter {
     const correctVotes = [];
 
     for (const [validatorId, vote] of votes.entries()) {
-      const deviation = Math.abs(vote.value - consensusResult.value) / consensusResult.value;
-      if (deviation < 0.05) { // 5% tolerance
+      const deviation =
+        Math.abs(vote.value - consensusResult.value) / consensusResult.value;
+      if (deviation < 0.05) {
+        // 5% tolerance
         correctVotes.push({ validatorId, vote });
       }
     }
@@ -1208,9 +1300,12 @@ class AlexBlockchainOracle extends EventEmitter {
       const rewardPerValidator = rewardPool / correctVotes.length;
 
       for (const { validatorId, vote } of correctVotes) {
-        const validator = Array.from(oracle.validators).find(v => v.id === validatorId);
+        const validator = Array.from(oracle.validators).find(
+          (v) => v.id === validatorId,
+        );
         if (validator) {
-          validator.earned_rewards = (validator.earned_rewards || 0) + rewardPerValidator;
+          validator.earned_rewards =
+            (validator.earned_rewards || 0) + rewardPerValidator;
           validator.reputation = Math.min(1.0, validator.reputation * 1.01); // Petit boost
         }
       }
@@ -1223,26 +1318,26 @@ class AlexBlockchainOracle extends EventEmitter {
       try {
         await this.aggregateOracleData();
       } catch (error) {
-        console.error('Data aggregation error:', error.message);
+        console.error("Data aggregation error:", error.message);
       }
     }, 45000); // Aggregate data every 45 seconds
   }
 
   async aggregateOracleData() {
     const dataFeeds = new Map();
-    
+
     // Initialize data feeds for each oracle type
     for (const [oracleId, oracle] of this.oracles.entries()) {
       if (!dataFeeds.has(oracle.type)) {
         dataFeeds.set(oracle.type, []);
       }
-      
+
       if (oracle.final_value !== null) {
         dataFeeds.get(oracle.type).push({
           oracleId,
           value: oracle.final_value,
           confidence: oracle.consensus_confidence,
-          timestamp: oracle.last_update
+          timestamp: oracle.last_update,
         });
       }
     }
@@ -1250,14 +1345,17 @@ class AlexBlockchainOracle extends EventEmitter {
     // Agrégation finale par type
     for (const [dataType, oracles] of dataFeeds.entries()) {
       if (oracles.length > 1) {
-        const aggregatedData = await this.performFinalAggregation(dataType, oracles);
+        const aggregatedData = await this.performFinalAggregation(
+          dataType,
+          oracles,
+        );
         this.dataFeeds.set(dataType, aggregatedData);
 
-        this.emit('dataFeedUpdated', {
+        this.emit("dataFeedUpdated", {
           dataType,
           value: aggregatedData.value,
           confidence: aggregatedData.confidence,
-          sources: oracles.length
+          sources: oracles.length,
         });
       }
     }
@@ -1265,15 +1363,16 @@ class AlexBlockchainOracle extends EventEmitter {
 
   async performFinalAggregation(dataType, oracleData) {
     // Agrégation finale des données
-    const values = oracleData.map(data => data.value);
-    const confidences = oracleData.map(data => data.confidence);
+    const values = oracleData.map((data) => data.value);
+    const confidences = oracleData.map((data) => data.confidence);
 
     // Moyenne pondérée par la confiance
-    const weightedSum = values.reduce((sum, value, index) => 
-      sum + (value * confidences[index]), 0
+    const weightedSum = values.reduce(
+      (sum, value, index) => sum + value * confidences[index],
+      0,
     );
     const totalConfidence = confidences.reduce((sum, conf) => sum + conf, 0);
-    
+
     return totalConfidence > 0 ? weightedSum / totalConfidence : null;
   }
 
@@ -1283,7 +1382,7 @@ class AlexBlockchainOracle extends EventEmitter {
       try {
         await this.updateBlockchainData();
       } catch (error) {
-        console.error('Blockchain update error:', error.message);
+        console.error("Blockchain update error:", error.message);
       }
     }, 120000); // Update blockchain every 2 minutes
   }
@@ -1293,7 +1392,7 @@ class AlexBlockchainOracle extends EventEmitter {
     const chain = this.blockchainConnections.get(chainName);
     if (!chain || !chain.oracle_contracts) return;
 
-    const contract = chain.oracle_contracts.get('main_oracle');
+    const contract = chain.oracle_contracts.get("main_oracle");
     if (!contract) return;
 
     try {
@@ -1307,33 +1406,47 @@ class AlexBlockchainOracle extends EventEmitter {
         data_type: dataType,
         value: feedData.value,
         timestamp: new Date(),
-        gas_used: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 100000) + 50000,
-        status: 'confirmed'
+        gas_used:
+          Math.floor(
+            (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 100000,
+          ) + 50000,
+        status: "confirmed",
       });
 
       chain.transaction_count++;
 
-      this.emit('blockchainUpdated', {
+      this.emit("blockchainUpdated", {
         chain: chainName,
         dataType,
         txHash,
-        value: feedData.value
+        value: feedData.value,
       });
-
     } catch (error) {
-      console.error(`Error updating oracle contract for ${dataType}:`, error.message);
+      console.error(
+        `Error updating oracle contract for ${dataType}:`,
+        error.message,
+      );
     }
   }
 
   async submitOracleUpdate(chain, contract, feedData) {
     // Soumission d'une mise à jour Oracle
     // Simulation de transaction blockchain
-    const txHash = '0x' + Array.from({ length: 64 }, () =>
-      Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 16).toString(16)
-    ).join('');
+    const txHash =
+      "0x" +
+      Array.from({ length: 64 }, () =>
+        Math.floor(
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 16,
+        ).toString(16),
+      ).join("");
 
     // Simulation de délai de transaction
-    await new Promise(resolve => setTimeout(resolve, (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 5000 + 1000));
+    await new Promise((resolve) =>
+      setTimeout(
+        resolve,
+        (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 5000 + 1000,
+      ),
+    );
 
     return txHash;
   }
@@ -1344,7 +1457,7 @@ class AlexBlockchainOracle extends EventEmitter {
       try {
         await this.processGovernanceProposals();
       } catch (error) {
-        console.error('Governance system error:', error.message);
+        console.error("Governance system error:", error.message);
       }
     }, 300000); // Process governance every 5 minutes
   }
@@ -1352,12 +1465,12 @@ class AlexBlockchainOracle extends EventEmitter {
   async finalizeProposal(proposal) {
     // Finalisation d'une proposition
     const totalVotes = proposal.votes_for + proposal.votes_against;
-    const quorum = this.daoStructures.get('alex_dao').quorum;
+    const quorum = this.daoStructures.get("alex_dao").quorum;
     const requiredQuorum = 1000000000 * quorum; // 4% of 1B total supply
 
     if (totalVotes >= requiredQuorum) {
       if (proposal.votes_for > proposal.votes_against) {
-        proposal.status = 'passed';
+        proposal.status = "passed";
         proposal.execution_eta = new Date(Date.now() + 172800000); // 2 days delay
 
         // Planifier l'exécution
@@ -1365,21 +1478,21 @@ class AlexBlockchainOracle extends EventEmitter {
           try {
             await this.executeProposal(proposal);
           } catch (error) {
-            console.error('Proposal execution error:', error.message);
+            console.error("Proposal execution error:", error.message);
           }
         }, 172800000); // Execute after 2 days
       } else {
-        proposal.status = 'failed';
+        proposal.status = "failed";
       }
     } else {
-      proposal.status = 'failed_quorum';
+      proposal.status = "failed_quorum";
     }
 
-    this.emit('proposalFinalized', {
+    this.emit("proposalFinalized", {
       proposalId: proposal.id,
       status: proposal.status,
       votesFor: proposal.votes_for,
-      votesAgainst: proposal.votes_against
+      votesAgainst: proposal.votes_against,
     });
   }
 
@@ -1387,31 +1500,30 @@ class AlexBlockchainOracle extends EventEmitter {
     // Exécution d'une proposition
     try {
       switch (proposal.category) {
-        case 'parameter_changes':
+        case "parameter_changes":
           await this.executeParameterChange(proposal);
           break;
-        case 'protocol_upgrades':
+        case "protocol_upgrades":
           await this.executeProtocolUpgrade(proposal);
           break;
-        case 'treasury_management':
+        case "treasury_management":
           await this.executeTreasuryAction(proposal);
           break;
-        case 'oracle_management':
+        case "oracle_management":
           await this.executeOracleManagement(proposal);
           break;
       }
 
-      proposal.status = 'executed';
+      proposal.status = "executed";
       proposal.executed = true;
       proposal.execution_timestamp = new Date();
 
-      this.emit('proposalExecuted', {
+      this.emit("proposalExecuted", {
         proposalId: proposal.id,
-        category: proposal.category
+        category: proposal.category,
       });
-
     } catch (error) {
-      console.error('Error executing proposal:', error.message);
+      console.error("Error executing proposal:", error.message);
     }
   }
 
@@ -1444,7 +1556,7 @@ class AlexBlockchainOracle extends EventEmitter {
       confidence: feedData.confidence,
       timestamp: feedData.timestamp,
       sources: feedData.sources,
-      data_type: feedData.data_type
+      data_type: feedData.data_type,
     };
   }
 
@@ -1457,16 +1569,19 @@ class AlexBlockchainOracle extends EventEmitter {
     // Vérification de la signature
     const isValidSignature = await this.verifySignature(data, signature);
     if (!isValidSignature) {
-      throw new Error('Invalid signature');
+      throw new Error("Invalid signature");
     }
 
     // Soumission des données
-    await this.updateOracleData(oracle, new Map([['external', { value: data.value, timestamp: new Date() }]]));
+    await this.updateOracleData(
+      oracle,
+      new Map([["external", { value: data.value, timestamp: new Date() }]]),
+    );
 
     return {
       success: true,
       oracleId,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
   }
 
@@ -1477,18 +1592,18 @@ class AlexBlockchainOracle extends EventEmitter {
       const isValid = signature && signature.length > 10;
       return {
         isValid,
-        publicKey: 'simulated_public_key',
-        algorithm: 'secp256k1'
+        publicKey: "simulated_public_key",
+        algorithm: "secp256k1",
       };
     } catch (error) {
-      console.error('Signature verification error:', error.message);
+      console.error("Signature verification error:", error.message);
       return { isValid: false };
     }
   }
 
   async createGovernanceProposal(proposalData) {
     const proposalId = `prop_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
+
     const proposal = {
       id: proposalId,
       title: proposalData.title,
@@ -1499,15 +1614,15 @@ class AlexBlockchainOracle extends EventEmitter {
       votes_against: 0,
       created_at: new Date(),
       voting_deadline: new Date(Date.now() + 604800000), // 7 days
-      status: 'active'
+      status: "active",
     };
 
     this.proposals.set(proposalId, proposal);
 
-    this.emit('proposalCreated', {
+    this.emit("proposalCreated", {
       proposalId,
       title: proposal.title,
-      proposer: proposal.proposer
+      proposer: proposal.proposer,
     });
 
     return proposal;
@@ -1524,14 +1639,14 @@ class AlexBlockchainOracle extends EventEmitter {
     }
 
     if (proposal.voters.has(voterAddress)) {
-      throw new Error('Voter has already voted');
+      throw new Error("Voter has already voted");
     }
 
     // Enregistrer le vote
     proposal.voters.set(voterAddress, {
       support,
       voting_power: votingPower,
-      timestamp: new Date()
+      timestamp: new Date(),
     });
 
     // Mettre à jour les compteurs
@@ -1541,11 +1656,11 @@ class AlexBlockchainOracle extends EventEmitter {
       proposal.votes_against += votingPower;
     }
 
-    this.emit('voteSubmitted', {
+    this.emit("voteSubmitted", {
       proposalId,
       voter: voterAddress,
       support,
-      votingPower
+      votingPower,
     });
 
     return {
@@ -1553,67 +1668,79 @@ class AlexBlockchainOracle extends EventEmitter {
       proposalId,
       currentVotes: {
         for: proposal.votes_for,
-        against: proposal.votes_against
-      }
+        against: proposal.votes_against,
+      },
     };
   }
 
   // Génération de rapports
   generateBlockchainOracleReport() {
-    const activeOracles = Array.from(this.oracleNodes.values())
-      .filter(oracle => oracle.status === STR_ACTIVE).length;
+    const activeOracles = Array.from(this.oracleNodes.values()).filter(
+      (oracle) => oracle.status === STR_ACTIVE,
+    ).length;
 
     const totalTransactions = this.transactions.size;
-    const connectedChains = Array.from(this.blockchainConnections.values())
-      .filter(chain => chain.status === 'connected').length;
+    const connectedChains = Array.from(
+      this.blockchainConnections.values(),
+    ).filter((chain) => chain.status === "connected").length;
 
-    const activeProposals = Array.from(this.proposals.values())
-      .filter(proposal => proposal.status === STR_ACTIVE).length;
+    const activeProposals = Array.from(this.proposals.values()).filter(
+      (proposal) => proposal.status === STR_ACTIVE,
+    ).length;
 
     return {
       oracle_system: this.name,
       version: this.version,
-      status: this.isActive ? STR_ACTIVE : 'inactive',
+      status: this.isActive ? STR_ACTIVE : "inactive",
       oracle_network: {
         total_oracles: this.oracleNodes.size,
         active_oracles: activeOracles,
         data_feeds: this.dataFeeds.size,
-        consensus_reached: Array.from(this.oracleNodes.values())
-          .filter(oracle => oracle.consensus_reached).length
+        consensus_reached: Array.from(this.oracleNodes.values()).filter(
+          (oracle) => oracle.consensus_reached,
+        ).length,
       },
       blockchain_integration: {
         connected_chains: connectedChains,
         total_transactions: totalTransactions,
-        deployed_contracts: Array.from(this.blockchainConnections.values())
-          .reduce((sum, chain) => sum + (chain.oracle_contracts?.size || 0), 0)
+        deployed_contracts: Array.from(
+          this.blockchainConnections.values(),
+        ).reduce((sum, chain) => sum + (chain.oracle_contracts?.size || 0), 0),
       },
       defi_ecosystem: {
-        active_protocols: Array.from(this.defiProtocols.values())
-          .filter(protocol => protocol.status === STR_ACTIVE).length,
-        total_tvl: Array.from(this.defiProtocols.values())
-          .reduce((sum, protocol) => sum + protocol.tvl, 0),
+        active_protocols: Array.from(this.defiProtocols.values()).filter(
+          (protocol) => protocol.status === STR_ACTIVE,
+        ).length,
+        total_tvl: Array.from(this.defiProtocols.values()).reduce(
+          (sum, protocol) => sum + protocol.tvl,
+          0,
+        ),
         liquidity_pools: this.liquidityPools.size,
-        yield_farms: this.yieldFarming.size
+        yield_farms: this.yieldFarming.size,
       },
       governance: {
         total_proposals: this.proposals.size,
         active_proposals: activeProposals,
-        dao_members: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 10000) + 1000, // Simulation
-        voting_participation: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.3 + 0.1 // 10-40%
+        dao_members:
+          Math.floor(
+            (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 10000,
+          ) + 1000, // Simulation
+        voting_participation:
+          (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 0.3 + 0.1, // 10-40%
       },
       security: {
         cryptographic_tools: this.cryptographicTools.size,
         privacy_protocols: this.privacyProtocols.size,
         audit_trails: this.auditTrails.size,
-        security_incidents: 0 // Simulation
+        security_incidents: 0, // Simulation
       },
       performance: {
         average_oracle_latency: this.calculateAverageOracleLatency(),
         consensus_success_rate: this.calculateConsensusSuccessRate(),
         data_accuracy: this.calculateDataAccuracy(),
-        system_uptime: 0.999 // 99.9% uptime
+        system_uptime: 0.999, // 99.9% uptime
       },
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 
@@ -1622,19 +1749,24 @@ class AlexBlockchainOracle extends EventEmitter {
     if (oracles.length === 0) return 0;
 
     // Simulation de latence moyenne
-    return oracles.reduce((sum, _) => this.processLongOperation(args), 0) / oracles.length;
+    return (
+      oracles.reduce((sum, _) => this.processLongOperation(args), 0) /
+      oracles.length
+    );
   }
 
   calculateConsensusSuccessRate() {
     const oracles = Array.from(this.oracleNodes.values());
-    const successfulConsensus = oracles.filter(oracle => oracle.consensus_reached).length;
+    const successfulConsensus = oracles.filter(
+      (oracle) => oracle.consensus_reached,
+    ).length;
 
     return oracles.length > 0 ? successfulConsensus / oracles.length : 0;
   }
 
   calculateDataAccuracy() {
     // Simulation de précision des données
-    return 0.95 + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.05; // 95-100%
+    return 0.95 + (crypto.randomBytes(4).readUInt32BE(0) / 0xffffffff) * 0.05; // 95-100%
   }
 
   async getOracleNetworkStatus() {
@@ -1647,78 +1779,90 @@ class AlexBlockchainOracle extends EventEmitter {
         last_update: oracle.last_update,
         consensus_reached: oracle.consensus_reached,
         current_value: oracle.current_data?.value,
-        confidence: oracle.current_data?.confidence
+        confidence: oracle.current_data?.confidence,
       })),
       data_feeds: Array.from(this.dataFeeds.entries()).map(([type, feed]) => ({
         type,
         value: feed.value,
         confidence: feed.confidence,
         timestamp: feed.timestamp,
-        sources: feed.sources
+        sources: feed.sources,
       })),
-      blockchain_connections: Array.from(this.blockchainConnections.entries()).map(([name, chain]) => ({
+      blockchain_connections: Array.from(
+        this.blockchainConnections.entries(),
+      ).map(([name, chain]) => ({
         name,
         status: chain.status,
         last_block: chain.last_block,
-        transaction_count: chain.transaction_count
-      }))
+        transaction_count: chain.transaction_count,
+      })),
     };
   }
 
   async getDeFiMetrics() {
     return {
-      protocols: Array.from(this.defiProtocols.entries()).map(([name, protocol]) => ({
-        name,
-        type: protocol.type,
-        tvl: protocol.tvl,
-        users: protocol.users,
-        apr: protocol.apr,
-        security_score: protocol.security_score
-      })),
-      liquidity_pools: Array.from(this.liquidityPools.entries()).map(([id, pool]) => ({
-        id,
-        tokens: [pool.token0, pool.token1],
-        reserves: [pool.reserve0, pool.reserve1],
-        volume_24h: pool.trading_volume_24h,
-        fees_24h: pool.fees_earned_24h
-      })),
-      yield_farming: Array.from(this.yieldFarming.entries()).map(([id, farm]) => ({
-        id,
-        lp_token: farm.lp_token,
-        reward_token: farm.reward_token,
-        apy: farm.apy,
-        total_staked: farm.total_staked
-      })),
-      tokenomics: Array.from(this.tokenomics.entries()).map(([symbol, token]) => ({
-        symbol,
-        name: token.name,
-        total_supply: token.total_supply,
-        circulating_supply: token.circulating_supply,
-        utility: token.utility
-      }))
+      protocols: Array.from(this.defiProtocols.entries()).map(
+        ([name, protocol]) => ({
+          name,
+          type: protocol.type,
+          tvl: protocol.tvl,
+          users: protocol.users,
+          apr: protocol.apr,
+          security_score: protocol.security_score,
+        }),
+      ),
+      liquidity_pools: Array.from(this.liquidityPools.entries()).map(
+        ([id, pool]) => ({
+          id,
+          tokens: [pool.token0, pool.token1],
+          reserves: [pool.reserve0, pool.reserve1],
+          volume_24h: pool.trading_volume_24h,
+          fees_24h: pool.fees_earned_24h,
+        }),
+      ),
+      yield_farming: Array.from(this.yieldFarming.entries()).map(
+        ([id, farm]) => ({
+          id,
+          lp_token: farm.lp_token,
+          reward_token: farm.reward_token,
+          apy: farm.apy,
+          total_staked: farm.total_staked,
+        }),
+      ),
+      tokenomics: Array.from(this.tokenomics.entries()).map(
+        ([symbol, token]) => ({
+          symbol,
+          name: token.name,
+          total_supply: token.total_supply,
+          circulating_supply: token.circulating_supply,
+          utility: token.utility,
+        }),
+      ),
     };
   }
 
   async getGovernanceOverview() {
     return {
-      dao: Array.from(this.daoStructures.values()).map(dao => ({
+      dao: Array.from(this.daoStructures.values()).map((dao) => ({
         name: dao.name,
         governance_token: dao.governance_token,
         quorum: dao.quorum,
-        proposal_threshold: dao.proposal_threshold
+        proposal_threshold: dao.proposal_threshold,
       })),
-      proposals: Array.from(this.proposals.values()).map(proposal => ({
+      proposals: Array.from(this.proposals.values()).map((proposal) => ({
         id: proposal.id,
         title: proposal.title,
         status: proposal.status,
         votes_for: proposal.votes_for,
         votes_against: proposal.votes_against,
-        voting_end: proposal.voting_end
+        voting_end: proposal.voting_end,
       })),
-      voting_mechanisms: Array.from(this.votingMechanisms.entries()).map(([type, mechanism]) => ({
-        type,
-        description: mechanism.description
-      }))
+      voting_mechanisms: Array.from(this.votingMechanisms.entries()).map(
+        ([type, mechanism]) => ({
+          type,
+          description: mechanism.description,
+        }),
+      ),
     };
   }
 }

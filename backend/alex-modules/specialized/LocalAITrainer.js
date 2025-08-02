@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 /**
  * @fileoverview LocalAITrainer - Entraîneur IA Local d'Alex
  * Apprentissage autonome sans dépendance externe
@@ -6,7 +6,7 @@ import crypto from 'crypto';
  * @version 1.0.0 - Independent Learning System
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 export class LocalAITrainer extends EventEmitter {
@@ -40,8 +40,7 @@ export class LocalAITrainer extends EventEmitter {
     try {
       logger.info('🎓 LocalAITrainer initializing - Alex independent learning system starting');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -51,8 +50,7 @@ export class LocalAITrainer extends EventEmitter {
     try {
       logger.info('📚 LocalAITrainer fully initialized - Independent learning active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async startContinuousLearning() {
@@ -61,7 +59,7 @@ export class LocalAITrainer extends EventEmitter {
 
     // Optimisation des patterns toutes les 10 minutes
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   performLocalTraining() {
@@ -167,8 +165,8 @@ export class LocalAITrainer extends EventEmitter {
 
     logger.info('⚡ Learning patterns optimized', {
       patternsRefined: optimization.patternsRefined
-      efficiencyGain: Math.round(optimization.efficiencyGain * 100) + '%'
-      newIndependenceLevel: Math.round(this.trainingMetrics.independenceLevel * 100) + '%'
+      efficiencyGain: `${Math.round(optimization.efficiencyGain * 100)}%`
+      newIndependenceLevel: `${Math.round(this.trainingMetrics.independenceLevel * 100)}%`
     });
 
     this.emit('pattern_optimization_complete', optimization);

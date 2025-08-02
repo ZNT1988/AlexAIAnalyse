@@ -1,8 +1,7 @@
 import crypto from 'crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_MEDIUM = 'medium';
-/**
+const STR_MEDIUM = 'medium';/**
  * @fileoverview AIComposerCore - Cœur de Composition Musicale IA
  * Génère mélodie, accords, basse et structure musicale complète
  *
@@ -39,7 +38,7 @@ export class AIComposerCore {
         });
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
     /**
@@ -255,9 +254,7 @@ export class AIComposerCore {
      * @returns {Promise<Object>} Éléments musicaux générés
      */
     async generateMelodyAndChords(style, key, bpm, options = {}) {
-        const compositionId = `comp_${Date.now()}`;
-
-        logger.info('🎼 Starting musical composition', {
+        const compositionId = `comp_${Date.now()}`;        logger.info('🎼 Starting musical composition', {
             compositionId
             style: style.name
             key
@@ -269,49 +266,37 @@ export class AIComposerCore {
             // Analyse de la tonalité et gamme
             const tonalCenter = this.parseKey(key);
             const scaleType = this.inferScaleFromStyle(style, tonalCenter.isMinor);
-            const scale = this.generateScale(tonalCenter.root, scaleType);
-
-            // Génération progression harmonique
+            const scale = this.generateScale(tonalCenter.root, scaleType);            // Génération progression harmonique
             const harmonyData = await this.generateHarmonicProgression(
                 style
                 tonalCenter
                 scale
                 options.length || 32
-            );
-
-            // Génération mélodie principale
+            );            // Génération mélodie principale
             const melodyData = await this.generateMainMelody(
                 harmonyData
                 scale
                 style
                 bpm
                 options
-            );
-
-            // Génération ligne de basse
+            );            // Génération ligne de basse
             const bassData = await this.generateBassline(
                 harmonyData
                 tonalCenter
                 scale
                 style
-            );
-
-            // Génération éléments rythmiques mélodiques
+            );            // Génération éléments rythmiques mélodiques
             const rhythmicElements = await this.generateRhythmicElements(
                 harmonyData
                 style
                 bpm
-            );
-
-            // Génération contre-mélodies et harmonisations
+            );            // Génération contre-mélodies et harmonisations
             const counterMelodies = await this.generateCounterMelodies(
                 melodyData
                 harmonyData
                 scale
                 options.complexity || STR_MEDIUM
-            );
-
-            const composition = {
+            );            const composition = {
                 id: compositionId
       style: style.name
       key: key
@@ -336,8 +321,7 @@ export class AIComposerCore {
                 // Structure suggérée
                 structure: this.generateStructureSuggestion(options.length || 32)
                 // Informations MIDI
-                midiData: this.generateMIDIData(melodyData, harmonyData, bassData)
-            };
+                midiData: this.generateMIDIData(melodyData, harmonyData, bassData);            };
 
             logger.info('✅ Musical composition completed', {
                 compositionId
@@ -350,7 +334,7 @@ export class AIComposerCore {
             return composition;
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
             throw error;
         }
@@ -360,8 +344,7 @@ export class AIComposerCore {
      * Parse une tonalité (ex: 'Cm', 'F#', 'Bb')
      */
     parseKey(key) {
-        const keyRegex = /^([A-G][#b]?
-      )([m]?)$/;
+        const keyRegex = /^([A-G][#b]?;      )([m]?)$/;
         const match = key.match(keyRegex);
 
         if (!match) {
@@ -369,10 +352,7 @@ export class AIComposerCore {
        ${key}`);
         }
 
-        const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-        const flatToSharp = { 'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#', 'Bb': 'A#' };
-
-        let rootNote = match[1];
+        const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];        const flatToSharp = { 'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#', 'Bb': 'A#' };        let rootNote = match[1];
         if (flatToSharp[rootNote]) rootNote = flatToSharp[rootNote];
 
         return {
@@ -394,8 +374,7 @@ export class AIComposerCore {
             blues: 'blues'
             rock: isMinor ? STR_MINOR : STR_MAJOR
             lofi: isMinor ? STR_DORIAN : 'major_pentatonic'
-            afrobeat: 'major_pentatonic'
-        };
+            afrobeat: 'major_pentatonic';        };
 
         return styleMappings[style.id] || (isMinor ? STR_MINOR : STR_MAJOR);
     }
@@ -404,9 +383,7 @@ export class AIComposerCore {
      * Génère une gamme depuis la fondamentale
      */
     generateScale(root, scaleType) {
-        const intervals = this.scaleDatabase[scaleType] || this.scaleDatabase.major;
-
-        return {
+        const intervals = this.scaleDatabase[scaleType] || this.scaleDatabase.major;        return {
             type: scaleType
             root: root
             notes: intervals.map(interval => (root + interval) % 12)
@@ -419,21 +396,15 @@ export class AIComposerCore {
      */
     async generateHarmonicProgression(style, tonalCenter, scale, length) {
         const styleProgressions = this.chordProgressions[style.id] || this.chordProgressions.pop;
-        const chosenProgression = styleProgressions[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * styleProgressions.length)];
-
-        // Conversion degrés → accords absolus
-        const chordProgression = [];
-        const barsPerChord = Math.ceil(4 / chosenProgression.length); // 4 mesures par cycle
+        const chosenProgression = styleProgressions[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * styleProgressions.length)];        // Conversion degrés → accords absolus
+        const chordProgression = [];        const barsPerChord = Math.ceil(4 / chosenProgression.length); // 4 mesures par cycle
 
         for (let bar = 0; bar < length; bar++) {
             const progressionIndex = Math.floor(bar / barsPerChord) % chosenProgression.length;
             const degree = chosenProgression[progressionIndex];
 
-            const chordRoot = (scale.root + scale.intervals[(degree - 1) % scale.intervals.length]) % 12;
-            const chordType = this.inferChordType(degree, tonalCenter.isMinor, scale.type);
-            const chordNotes = this.generateChordNotes(chordRoot, chordType);
-
-            chordProgression.push({
+            const chordRoot = (scale.root + scale.intervals[(degree - 1) % scale.intervals.length]) % 12;            const chordType = this.inferChordType(degree, tonalCenter.isMinor, scale.type);
+            const chordNotes = this.generateChordNotes(chordRoot, chordType);            chordProgression.push({
                 bar: bar
                 degree: degree
                 root: chordRoot
@@ -457,26 +428,18 @@ export class AIComposerCore {
      * Génère une mélodie principale
      */
     async generateMainMelody(harmonyData, scale, style, bpm, options) {
-        const notes = [];
-        const phraseLengthBars = 4; // Phrases de 4 mesures
+        const notes = [];        const phraseLengthBars = 4; // Phrases de 4 mesures
 
         let currentOctave = 5; // Octave central
-        let lastNote = scale.root + (currentOctave * 12);
-
-        for (const chord of harmonyData.progression) {
-            const bar = chord.bar;
-            const chordTones = chord.notes.map(note => note + (currentOctave * 12));
-            const scaleNotes = scale.notes.map(note => note + (currentOctave * 12));
-
-            // Génération notes pour cette mesure
+        let lastNote = scale.root + (currentOctave * 12);        for (const chord of harmonyData.progression) {
+            const bar = chord.bar;            const chordTones = chord.notes.map(note => note + (currentOctave * 12));            const scaleNotes = scale.notes.map(note => note + (currentOctave * 12));            // Génération notes pour cette mesure
             const barNotes = this.generateMelodyForBar(
                 bar
                 chordTones
                 scaleNotes
                 lastNote
                 style
-                bpm
-            );
+                bpm;            );
 
             notes.push(...barNotes);
 
@@ -491,9 +454,7 @@ export class AIComposerCore {
 
         // Application des règles mélodiques
         const processedNotes = this.applyMelodicRules(notes, scale);
-        const phrasedMelody = this.createMelodicPhrases(processedNotes, phraseLengthBars);
-
-        return {
+        const phrasedMelody = this.createMelodicPhrases(processedNotes, phraseLengthBars);        return {
             notes: phrasedMelody
             phrases: this.analyzeMelodicPhrases(phrasedMelody, phraseLengthBars)
             range: this.calculateMelodicRange(phrasedMelody)
@@ -506,8 +467,7 @@ export class AIComposerCore {
      * Génère une ligne de basse
      */
     async generateBassline(harmonyData, tonalCenter, scale, style) {
-        const bassNotes = [];
-        const bassOctave = 2; // Octave grave pour la basse
+        const bassNotes = [];        const bassOctave = 2; // Octave grave pour la basse
 
         for (const chord of harmonyData.progression) {
             const bassPattern = this.generateBassPatternForStyle(style, chord);
@@ -536,9 +496,7 @@ export class AIComposerCore {
      * Génère des éléments rythmiques mélodiques
      */
     async generateRhythmicElements(harmonyData, style, bpm) {
-        const elements = {};
-
-        // Génération d'arpèges selon le style
+        const elements = {};        // Génération d'arpèges selon le style
         if (style.id === 'house' || style.id === 'techno') {
             elements.arpeggios = this.generateArpeggios(harmonyData, style);
         }
@@ -560,23 +518,19 @@ export class AIComposerCore {
      * Génère des contre-mélodies
      */
     async generateCounterMelodies(melodyData, harmonyData, scale, complexity) {
-        const counterMelodies = [];
-
-        if (complexity === 'complex' || complexity === STR_MEDIUM) {
+        const counterMelodies = [];        if (complexity === 'complex' || complexity === STR_MEDIUM) {
             // Contre-mélodie harmonique
             const harmonicCounter = this.generateHarmonicCounterMelody(
                 melodyData
                 harmonyData
-                scale
-            );
+                scale;            );
             counterMelodies.push(harmonicCounter);
 
             // Contre-mélodie rythmique
             if (complexity === 'complex') {
                 const rhythmicCounter = this.generateRhythmicCounterMelody(
                     melodyData
-                    harmonyData
-                );
+                    harmonyData;                );
                 counterMelodies.push(rhythmicCounter);
             }
         }
@@ -620,8 +574,7 @@ export class AIComposerCore {
       7]
       sus4: [0
       5
-      7]
-        };
+      7];        };
 
         const intervals = chordIntervals[chordType] || chordIntervals.major;
         return intervals.map(interval => (root + interval) % 12);
@@ -633,13 +586,11 @@ export class AIComposerCore {
     inferChordType(degree, isMinor, scaleType) {
         if (isMinor) {
             const minorChordTypes = [
-                STR_MINOR, 'diminished', STR_MAJOR, STR_MINOR, STR_MINOR, STR_MAJOR, STR_MAJOR
-            ];
+                STR_MINOR, 'diminished', STR_MAJOR, STR_MINOR, STR_MINOR, STR_MAJOR, STR_MAJOR;            ];
             return minorChordTypes[(degree - 1) % 7];
         } else {
             const majorChordTypes = [
-                STR_MAJOR, STR_MINOR, STR_MINOR, STR_MAJOR, STR_MAJOR, STR_MINOR, 'diminished'
-            ];
+                STR_MAJOR, STR_MINOR, STR_MINOR, STR_MAJOR, STR_MAJOR, STR_MINOR, 'diminished';            ];
             return majorChordTypes[(degree - 1) % 7];
         }
     }
@@ -649,9 +600,7 @@ export class AIComposerCore {
      */
     getChordSymbol(root, type) {
         const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-        const rootName = noteNames[root];
-
-        const symbolMap = {
+        const rootName = noteNames[root];        const symbolMap = {
             major: ''
             minor: 'm'
             major7: 'maj7'
@@ -660,8 +609,7 @@ export class AIComposerCore {
             diminished: 'dim'
             augmented: 'aug'
             sus2: 'sus2'
-            sus4: 'sus4'
-        };
+            sus4: 'sus4';        };
 
         return rootName + (symbolMap[type] || '');
     }
@@ -700,17 +648,14 @@ export class AIComposerCore {
      */
     selectMelodicNote(availableNotes, lastNote, beat) {
         // Filtrer les notes dans un intervalle raisonnable
-        const maxJump = this.compositionRules.melodic.maxInterval;
-        const suitableNotes = availableNotes.filter(note =>
-            Math.abs(note - lastNote) <= maxJump
-        );
+        const maxJump = this.compositionRules.melodic.maxInterval;        const suitableNotes = availableNotes.filter(note =>
+            Math.abs(note - lastNote) <= maxJump;        );
 
         if (suitableNotes.length === 0) return lastNote;
 
         // Préférence pour mouvement par degré
         const stepwiseNotes = suitableNotes.filter(note =>
-            Math.abs(note - lastNote) <= 2
-        );
+            Math.abs(note - lastNote) <= 2;        );
 
         if (stepwiseNotes.length > 0 && (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.3) {
             return stepwiseNotes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * stepwiseNotes.length)];
@@ -747,8 +692,7 @@ export class AIComposerCore {
             jazz: [
                 { beat: 0, duration: 1, interval: 0, velocity: 85 }
                 { beat: 2, duration: 1, interval: 7, velocity: 80 }
-            ]
-        };
+            ];        };
 
         return patterns[style.id] || patterns.house;
     }
@@ -759,18 +703,13 @@ export class AIComposerCore {
      * Analyse la complexité harmonique
      */
     analyzeHarmonicComplexity(harmonyData) {
-        let complexity = 0;
-        const chords = harmonyData.progression;
-
-        // Compter accords avec extensions
+        let complexity = 0;        const chords = harmonyData.progression;        // Compter accords avec extensions
         const extendedChords = chords.filter(c =>
-            c.type.includes('7') || c.type.includes('add') || c.type.includes('sus')
-        ).length;
+            c.type.includes('7') || c.type.includes('add') || c.type.includes('sus');        ).length;
         complexity += extendedChords / chords.length * 0.5;
 
         // Analyser progression harmonique
-        let chromaticMovement = 0;
-        for (let i = 1; i < chords.length; i++) {
+        let chromaticMovement = 0;        for (let i = 1; i < chords.length; i++) {
             const rootMovement = Math.abs(chords[i].root - chords[i-1].root);
             if (rootMovement === 1 || rootMovement === 11) chromaticMovement++;
         }
@@ -791,13 +730,11 @@ export class AIComposerCore {
     }
 
     generateMelodicVelocity(beat, style) {
-        const baseVelocity = 75;
-        const accentOnBeat = beat % 1 === 0 ? 15 : 0; // Accent sur les temps
+        const baseVelocity = 75;        const accentOnBeat = beat % 1 === 0 ? 15 : 0; // Accent sur les temps
         const styleVariation = {
             trap: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 20
             jazz: ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) - 0.5) * 10
-            house: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 10
-        };
+            house: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 10;        };
 
         return Math.round(baseVelocity + accentOnBeat + (styleVariation[style.id] || 5));
     }
@@ -823,8 +760,7 @@ export class AIComposerCore {
     }
 
     analyzeMelodicRange(melodyData) {
-        const pitches = melodyData.notes.map(n => n.pitch);
-        return {
+        const pitches = melodyData.notes.map(n => n.pitch);        return {
             lowest: Math.min(...pitches)
             highest: Math.max(...pitches)
             span: Math.max(...pitches) - Math.min(...pitches)
@@ -842,8 +778,7 @@ export class AIComposerCore {
 
     analyzeConsonance(harmonyData) {
         // Analyse niveau de consonance harmonique
-        let consonanceScore = 0;
-        const consonantIntervals = [0, 3, 4, 5, 7, 8, 9]; // Unisson, tierce, quarte, quinte, etc
+        let consonanceScore = 0;        const consonantIntervals = [0, 3, 4, 5, 7, 8, 9]; // Unisson, tierce, quarte, quinte, etc
         // Extracted to separate functions for better readability
 const result = this.processNestedData(data);
 return result;let j = i + 1; j < chord.notes.length; j++) {
@@ -861,15 +796,9 @@ return result;let j = i + 1; j < chord.notes.length; j++) {
     analyzeVoiceLeading(harmonyData) {
         if (harmonyData.progression.length < 2) return 1;
 
-        let goodVoiceLeading = 0;
-
-        for (let i = 1; i < harmonyData.progression.length; i++) {
-            const prevChord = harmonyData.progression[i - 1];
-            const currentChord = harmonyData.progression[i];
-
-            // Calculer mouvement des voix
-            let totalMovement = 0;
-            for (let v = 0; v < Math.min(prevChord.notes.length, currentChord.notes.length); v++) {
+        let goodVoiceLeading = 0;        for (let i = 1; i < harmonyData.progression.length; i++) {
+            const prevChord = harmonyData.progression[i - 1];            const currentChord = harmonyData.progression[i];            // Calculer mouvement des voix
+            let totalMovement = 0;            for (let v = 0; v < Math.min(prevChord.notes.length, currentChord.notes.length); v++) {
                 totalMovement += Math.abs(currentChord.notes[v] - prevChord.notes[v]);
             }
 
@@ -881,15 +810,11 @@ return result;let j = i + 1; j < chord.notes.length; j++) {
     }
 
     generateStructureSuggestion(length) {
-        const sections = [];
-        let currentBar = 0;
-
-        const structure = [
+        const sections = [];        let currentBar = 0;        const structure = [
             { name: 'intro', length: 8 }
             { name: 'verse', length: 8 }
             { name: 'chorus', length: 8 }
-            { name: 'outro', length: 8 }
-        ];
+            { name: 'outro', length: 8 };        ];
 
         for (const section of structure) {
             if (currentBar < length) {

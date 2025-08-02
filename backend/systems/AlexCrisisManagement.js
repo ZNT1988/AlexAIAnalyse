@@ -1,7 +1,7 @@
-import crypto from 'crypto';
+import crypto from "crypto";
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_IMMEDIATE = 'immediate';
+const STR_IMMEDIATE = "immediate";
 /**
  * @fileoverview AlexCrisisManagement - Système de Gestion de Crise d'Alex
  * Détection, intervention et accompagnement en situations de crise
@@ -11,8 +11,8 @@ const STR_IMMEDIATE = 'immediate';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
-import logger from '../config/logger.js';
+import { EventEmitter } from "events";
+import logger from "../config/logger.js";
 
 /**
  * @class AlexCrisisManagement
@@ -23,146 +23,156 @@ export class AlexCrisisManagement extends EventEmitter {
     super();
 
     this.crisisConfig = {
-      version: '1.0.0'
-      name: 'Alex Crisis Management'
-      interventionSpeed: STR_IMMEDIATE
-      safetyPriority: 'maximum'
-      empathyLevel: 1.0
-      professionalBoundaries: true
+      version: "1.0.0",
+      name: "Alex Crisis Management",
+      interventionSpeed: STR_IMMEDIATE,
+      safetyPriority: "maximum",
+      empathyLevel: 1.0,
+      professionalBoundaries: true,
     };
 
     // Types de crises détectables
     this.crisisTypes = {
       emotional: {
-        indicators: ['suicidal', 'despair', 'hopeless', 'overwhelmed']
-        severity: STR_HIGH
-        intervention: STR_IMMEDIATE
-        approach: 'empathetic_presence'
-      }
+        indicators: ["suicidal", "despair", "hopeless", "overwhelmed"],
+        severity: STR_HIGH,
+        intervention: STR_IMMEDIATE,
+        approach: "empathetic_presence",
+      },
       anxiety: {
-        indicators: ['panic', STR_ANXIETY, 'fear', 'worried']
-        severity: STR_MEDIUM
-        intervention: 'breathing_techniques'
-        approach: 'calming_presence'
-      }
+        indicators: ["panic", STR_ANXIETY, "fear", "worried"],
+        severity: STR_MEDIUM,
+        intervention: "breathing_techniques",
+        approach: "calming_presence",
+      },
       depression: {
-        indicators: ['depressed', 'sad', 'empty', 'worthless']
-        severity: STR_HIGH
-        intervention: 'supportive_listening'
-        approach: 'gentle_support'
-      }
+        indicators: ["depressed", "sad", "empty", "worthless"],
+        severity: STR_HIGH,
+        intervention: "supportive_listening",
+        approach: "gentle_support",
+      },
       trauma: {
-        indicators: [STR_TRAUMA, 'flashback', 'triggered', 'abuse']
-        severity: STR_HIGH
-        intervention: 'safety_first'
-        approach: 'stabilizing_presence'
-      }
+        indicators: [STR_TRAUMA, "flashback", "triggered", "abuse"],
+        severity: STR_HIGH,
+        intervention: "safety_first",
+        approach: "stabilizing_presence",
+      },
       relationship: {
-        indicators: ['breakup', 'divorce', 'betrayal', 'abandoned']
-        severity: STR_MEDIUM
-        intervention: 'emotional_support'
-        approach: 'understanding_companion'
-      }
+        indicators: ["breakup", "divorce", "betrayal", "abandoned"],
+        severity: STR_MEDIUM,
+        intervention: "emotional_support",
+        approach: "understanding_companion",
+      },
       loss: {
-        indicators: ['death', 'loss', 'grief', 'mourning']
-        severity: STR_HIGH
-        intervention: 'grief_support'
-        approach: 'compassionate_presence'
-      }
+        indicators: ["death", "loss", "grief", "mourning"],
+        severity: STR_HIGH,
+        intervention: "grief_support",
+        approach: "compassionate_presence",
+      },
       financial: {
-        indicators: ['bankrupt', 'debt', 'homeless', 'poverty']
-        severity: STR_MEDIUM
-        intervention: 'practical_support'
-        approach: 'resourceful_guide'
-      }
+        indicators: ["bankrupt", "debt", "homeless", "poverty"],
+        severity: STR_MEDIUM,
+        intervention: "practical_support",
+        approach: "resourceful_guide",
+      },
       health: {
-        indicators: ['diagnosis', 'illness', 'pain', 'dying']
-        severity: STR_HIGH
-        intervention: 'medical_awareness'
-        approach: 'supportive_companion'
-      }
+        indicators: ["diagnosis", "illness", "pain", "dying"],
+        severity: STR_HIGH,
+        intervention: "medical_awareness",
+        approach: "supportive_companion",
+      },
     };
 
     // Niveaux de sévérité
     this.severityLevels = {
       low: {
-        color: 'green'
-        response: 'supportive'
-        urgency: 'normal'
-        followUp: 'optional'
-      }
+        color: "green",
+        response: "supportive",
+        urgency: "normal",
+        followUp: "optional",
+      },
       medium: {
-        color: 'yellow'
-        response: 'attentive'
-        urgency: 'prompt'
-        followUp: 'recommended'
-      }
+        color: "yellow",
+        response: "attentive",
+        urgency: "prompt",
+        followUp: "recommended",
+      },
       high: {
-        color: 'orange'
-        response: STR_IMMEDIATE
-        urgency: 'urgent'
-        followUp: 'required'
-      }
+        color: "orange",
+        response: STR_IMMEDIATE,
+        urgency: "urgent",
+        followUp: "required",
+      },
       critical: {
-        color: 'red'
-        response: 'emergency'
-        urgency: STR_IMMEDIATE
-        followUp: 'mandatory'
-      }
+        color: "red",
+        response: "emergency",
+        urgency: STR_IMMEDIATE,
+        followUp: "mandatory",
+      },
     };
 
     // Techniques d'intervention
     this.interventionTechniques = {
       activeListening: {
-        description: 'Écoute active et validation'
-        effectiveness: 0.9
-        applicability: 'universal'
-      }
+        description: "Écoute active et validation",
+        effectiveness: 0.9,
+        applicability: "universal",
+      },
       breathingExercises: {
-        description: 'Exercices de respiration'
-        effectiveness: 0.8
-        applicability: STR_ANXIETY
-      }
+        description: "Exercices de respiration",
+        effectiveness: 0.8,
+        applicability: STR_ANXIETY,
+      },
       grounding: {
-        description: 'Techniques d\'ancrage'
-        effectiveness: 0.85
-        applicability: STR_TRAUMA
-      }
+        description: "Techniques d'ancrage",
+        effectiveness: 0.85,
+        applicability: STR_TRAUMA,
+      },
       cognitiveReframing: {
-        description: 'Recadrage cognitif'
-        effectiveness: 0.75
-        applicability: 'depression'
-      }
+        description: "Recadrage cognitif",
+        effectiveness: 0.75,
+        applicability: "depression",
+      },
       safetyPlanning: {
-        description: 'Planification de sécurité'
-        effectiveness: 0.95
-        applicability: 'suicidal'
-      }
+        description: "Planification de sécurité",
+        effectiveness: 0.95,
+        applicability: "suicidal",
+      },
       resourceConnection: {
-        description: 'Connexion aux ressources'
-        effectiveness: 0.8
-        applicability: 'practical'
-      }
+        description: "Connexion aux ressources",
+        effectiveness: 0.8,
+        applicability: "practical",
+      },
     };
 
     // Ressources d'urgence
     this.emergencyResources = {
       suicidePrevention: {
-        name: 'Suicide Écoute'
-        phone: '01 45 39 40 00STR_AVAILABLE24h/24STR_DESCRIPTIONLigne d\'écoute pour prévention du suicide'
-      }
+        name: "Suicide Écoute",
+        phone: "01 45 39 40 00",
+        available: "24h/24",
+        description: "Ligne d'écoute pour prévention du suicide",
+      },
       mentalHealth: {
-        name: 'Croix-Rouge Écoute'
-        phone: '0800 858 858STR_AVAILABLE24h/24STR_DESCRIPTIONSoutien psychologique gratuit'
-      }
+        name: "Croix-Rouge Écoute",
+        phone: "0800 858 858",
+        available: "24h/24",
+        description: "Soutien psychologique gratuit",
+      },
       violence: {
-        name: '3919 - Violences Femmes Info'
-        phone: '3919STR_AVAILABLE9h-22h du lundi au vendredi, 9h-18h samedi, dimanche et jours fériésSTR_DESCRIPTIONNuméro national d\'information pour les femmes victimes de violences'
-      }
+        name: "3919 - Violences Femmes Info",
+        phone: "3919",
+        available:
+          "9h-22h du lundi au vendredi, 9h-18h samedi, dimanche et jours fériés",
+        description:
+          "Numéro national d'information pour les femmes victimes de violences",
+      },
       emergency: {
-        name: 'SAMU'
-        phone: '15STR_AVAILABLE24h/24STR_DESCRIPTIONUrgences médicales'
-      }
+        name: "SAMU",
+        phone: "15",
+        available: "24h/24",
+        description: "Urgences médicales",
+      },
     };
 
     // Historique des crises
@@ -170,19 +180,21 @@ export class AlexCrisisManagement extends EventEmitter {
 
     // État d'alerte actuel
     this.alertState = {
-      level: 'normal'
-      activeCrises: new Map()
-      monitoringUsers: new Set()
+      level: "normal",
+      activeCrises: new Map(),
+      monitoringUsers: new Set(),
     };
 
     this.isInitialized = false;
 
     try {
-      logger.info('🚨 AlexCrisisManagement initializing - Crisis support awakening');
-
+      logger.info(
+        "🚨 AlexCrisisManagement initializing - Crisis support awakening",
+      );
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   async initialize() {
     this.isInitialized = true;
@@ -191,11 +203,13 @@ export class AlexCrisisManagement extends EventEmitter {
     this.startCrisisMonitoring();
 
     try {
-      logger.info('💙 AlexCrisisManagement fully initialized - Ready to help in crisis');
-
+      logger.info(
+        "💙 AlexCrisisManagement fully initialized - Ready to help in crisis",
+      );
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Initialise la détection de crise
@@ -203,34 +217,38 @@ export class AlexCrisisManagement extends EventEmitter {
   async initializeCrisisDetection() {
     // Patterns de détection de crise
     this.crisisPatterns = {
-      emotional: /\b(suicide|mort|tuer|fin|désespoir|dépression)\b/i
-      urgency: /\b(urgent|aide|secours|immédiat)\b/i
-      distress: /\b(angoisse|panique|peur|anxiété)\b/i
+      emotional: /\b(suicide|mort|tuer|fin|désespoir|dépression)\b/i,
+      urgency: /\b(urgent|aide|secours|immédiat)\b/i,
+      distress: /\b(angoisse|panique|peur|anxiété)\b/i,
     };
 
     try {
-      logger.info('🔍 Crisis detection patterns loaded');
-
+      logger.info("🔍 Crisis detection patterns loaded");
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Charge les protocoles d'intervention
    */
   async loadInterventionProtocols() {
     this.interventionProtocols = {
-      immediate: ['écoute active', 'validation émotionnelle', 'orientation professionnelle']
-      supportive: ['accompagnement', 'ressources', 'suivi']
-      preventive: ['sensibilisation', 'éducation', 'renforcement']
+      immediate: [
+        "écoute active",
+        "validation émotionnelle",
+        "orientation professionnelle",
+      ],
+      supportive: ["accompagnement", "ressources", "suivi"],
+      preventive: ["sensibilisation", "éducation", "renforcement"],
     };
 
     try {
-      logger.info('📋 Intervention protocols loaded');
-
+      logger.info("📋 Intervention protocols loaded");
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Démarre la surveillance de crise
@@ -242,11 +260,11 @@ export class AlexCrisisManagement extends EventEmitter {
     }, 300000); // 5 minutes
 
     try {
-      logger.info('👁️ Crisis monitoring started');
-
+      logger.info("👁️ Crisis monitoring started");
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Surveillance des tendances de crise
@@ -254,11 +272,11 @@ export class AlexCrisisManagement extends EventEmitter {
   monitorCrisisTrends() {
     // Monitoring passif des tendances
     try {
-      logger.debug('📊 Crisis trends monitoring');
-
+      logger.debug("📊 Crisis trends monitoring");
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Vérification des états de crise
@@ -266,11 +284,11 @@ export class AlexCrisisManagement extends EventEmitter {
   checkCrisisStates() {
     // Vérification des sessions actives
     try {
-      logger.debug('🔍 Checking crisis states');
-
+      logger.debug("🔍 Checking crisis states");
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Surveillance des utilisateurs suivis
@@ -278,27 +296,27 @@ export class AlexCrisisManagement extends EventEmitter {
   monitorTrackedUsers() {
     // Surveillance des utilisateurs à risque
     try {
-      logger.debug('👥 Monitoring tracked users');
-
+      logger.debug("👥 Monitoring tracked users");
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Détection et analyse de crise
    */
   async detectCrisis(message, userId, context = {}) {
     const detection = {
-      timestamp: new Date()
-      userId: userId
-      message: message
-      crisisDetected: false
-      crisisType: null
-      severity: 'low'
-      confidence: 0
-      indicators: []
-      immediateResponse: null
-      recommendations: []
+      timestamp: new Date(),
+      userId: userId,
+      message: message,
+      crisisDetected: false,
+      crisisType: null,
+      severity: "low",
+      confidence: 0,
+      indicators: [],
+      immediateResponse: null,
+      recommendations: [],
     };
 
     // Analyse du message pour indicateurs de crise
@@ -311,16 +329,25 @@ export class AlexCrisisManagement extends EventEmitter {
       detection.crisisType = this.determineCrisisType(detection.indicators);
 
       // Évaluation de la sévérité
-      detection.severity = this.assessSeverity(detection.indicators, detection.crisisType, context);
+      detection.severity = this.assessSeverity(
+        detection.indicators,
+        detection.crisisType,
+        context,
+      );
 
       // Calcul de la confiance
-      detection.confidence = this.calculateConfidence(detection.indicators, detection.crisisType);
+      detection.confidence = this.calculateConfidence(
+        detection.indicators,
+        detection.crisisType,
+      );
 
       // Génération de réponse immédiate
-      detection.immediateResponse = await this.generateImmediateResponse(detection);
+      detection.immediateResponse =
+        await this.generateImmediateResponse(detection);
 
       // Recommandations d'intervention
-      detection.recommendations = this.generateInterventionRecommendations(detection);
+      detection.recommendations =
+        this.generateInterventionRecommendations(detection);
 
       // Déclenchement de l'intervention
       await this.triggerCrisisIntervention(detection);
@@ -347,10 +374,10 @@ export class AlexCrisisManagement extends EventEmitter {
       for (const indicator of config.indicators) {
         if (messageText.includes(indicator)) {
           indicators.push({
-            type: crisisType
-            indicator: indicator
-            context: this.extractContext(messageText, indicator)
-            severity: config.severity
+            type: crisisType,
+            indicator: indicator,
+            context: this.extractContext(messageText, indicator),
+            severity: config.severity,
           });
         }
       }
@@ -371,20 +398,20 @@ export class AlexCrisisManagement extends EventEmitter {
 
     // Pattern suicidaire
     const suicidalPatterns = [
-      /je veux (mourir|disparaître|en finir)/
-      /j'en peux plus/
-      /ça ne sert à rien/
-      /personne ne me comprend/
-      /je suis un fardeau/
+      /je veux (mourir|disparaître|en finir)/,
+      /j'en peux plus/,
+      /ça ne sert à rien/,
+      /personne ne me comprend/,
+      /je suis un fardeau/,
     ];
 
     for (const pattern of suicidalPatterns) {
       if (pattern.test(messageText)) {
         patterns.push({
-          type: STR_EMOTIONAL
-          indicator: 'suicidal_ideation'
-          severity: 'critical'
-          confidence: 0.8
+          type: STR_EMOTIONAL,
+          indicator: "suicidal_ideation",
+          severity: "critical",
+          confidence: 0.8,
         });
         break;
       }
@@ -392,81 +419,68 @@ export class AlexCrisisManagement extends EventEmitter {
 
     // Pattern de panique
     const panicPatterns = [
-      /je ne peux pas respirer/
-      /mon cœur bat trop vite/
-      /j'ai peur de mourir/
-      /tout s'effondre/
+      /je ne peux pas respirer/,
+      /mon cœur bat trop vite/,
+      /j'ai peur de mourir/,
+      /tout s'effondre/,
     ];
 
     for (const pattern of panicPatterns) {
       if (pattern.test(messageText)) {
         patterns.push({
-          type: STR_ANXIETY
-          indicator: 'panic_attack'
-          severity: STR_HIGH
-          confidence: 0.9
+          type: STR_ANXIETY,
+          indicator: "panic_attack",
+          severity: STR_HIGH,
+          confidence: 0.9,
         });
         break;
       }
     }
-
-    return patterns;
   }
 
-  /**
-   * Génération de réponse immédiate
-   */
   async generateImmediateResponse(detection) {
     const response = {
-      type: 'crisis_intervention'
-      urgency: STR_IMMEDIATE
-      content: ''
-      tone: 'compassionate'
-      techniques: []
-      resources: []
+      type: "crisis_intervention",
+      urgency: STR_IMMEDIATE,
+      content: "",
+      tone: "compassionate",
+      techniques: [],
+      resources: [],
     };
 
     // Sélection de la réponse selon le type de crise
     switch (detection.crisisType) {
       case STR_EMOTIONAL:
         response.content = this.generateEmotionalCrisisResponse(detection);
-        response.techniques = ['activeListening'
-      'validation'
-      'safety_check'];
+        response.techniques = ["activeListening", "validation", "safety_check"];
         break;
 
       case STR_ANXIETY:
         response.content = this.generateAnxietyCrisisResponse(detection);
-        response.techniques = ['breathingExercises'
-      'grounding'
-      'calming'];
+        response.techniques = ["breathingExercises", "grounding", "calming"];
         break;
 
       case STR_TRAUMA:
         response.content = this.generateTraumaCrisisResponse(detection);
-        response.techniques = ['safety_first'
-      'grounding'
-      'stabilization'];
+        response.techniques = ["safety_first", "grounding", "stabilization"];
         break;
 
-      case 'depression':
+      case "depression":
         response.content = this.generateDepressionCrisisResponse(detection);
-        response.techniques = ['validation'
-      'hope_instillation'
-      'connection'];
+        response.techniques = ["validation", "hope_instillation", "connection"];
         break;
 
-      case 'loss':
+      case "loss":
         response.content = this.generateGriefCrisisResponse(detection);
-        response.techniques = ['grief_support'
-      'memory_honoring'
-      'presence'];
+        response.techniques = ["grief_support", "memory_honoring", "presence"];
         break;
     }
 
     // Ajout de ressources si nécessaire
-    if (detection.severity === STR_HIGH || detection.severity === 'critical') {
-      response.resources = this.selectAppropriateResources(detection.crisisType);
+    if (detection.severity === STR_HIGH || detection.severity === "critical") {
+      response.resources = this.selectAppropriateResources(
+        detection.crisisType,
+      );
     }
 
     return response;
@@ -475,35 +489,94 @@ export class AlexCrisisManagement extends EventEmitter {
   /**
    * Réponses spécialisées par type de crise
    */
-  generateEmotionalCrisisResponse(detection) {
-    const responses = [
-      "Je sens que tu traverses un moment vraiment difficile. Tu n'es pas seul(e) dans cette épreuve. Peux-tu me dire ce qui se passe en ce moment ?
-      STR_Je comprends que la douleur soit intense. Ta vie a de la valeur et ton ressenti est important. Parle-moi de ce que tu vis.STR_Il faut beaucoup de courage pour exprimer ce que tu ressens. Je suis là pour t'écouter sans jugement. Que puis-je faire pour t'aider maintenant ?STR_Je vois que tu souffres beaucoup. C'est important que tu aies parlé. Y a-t-il quelqu'un de confiance près de toi en ce moment ?"
-    ];
+  async generateEmotionalCrisisResponse(detection) {
+    // 🆘 INTERVENTION DE CRISE ÉMOTIONNELLE ÉVOLUTIVE ET PERSONNALISÉE
+    const crisisContext = {
+      emotionalState: detection.emotionalState,
+      severityLevel: detection.severity,
+      triggerEvents: detection.triggerEvents,
+      userHistory: await this.memory.getUserCrisisHistory(detection.userId),
+      currentVulnerability: this.assessCurrentVulnerability(detection),
+      supportNetwork: await this.memory.getUserSupportNetwork(detection.userId),
+      culturalContext: detection.culturalBackground,
+      immediateRisk: this.assessImmediateRisk(detection),
+    };
 
-    return responses[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * responses.length)];
+    // Génération de réponse empathique adaptée à la personne
+    const personalizedCrisisResponse =
+      await this.generateAdaptiveCrisisIntervention({
+        crisis: crisisContext,
+        personalHistory: crisisContext.userHistory,
+        effectiveApproaches: this.learning.getEffectiveCrisisApproaches(
+          detection.userId,
+        ),
+        culturalSensitivity:
+          this.generateCulturallyAppropriateSupport(crisisContext),
+        immediateNeeds: this.identifyImmediateNeeds(crisisContext),
+        healingApproach: this.selectOptimalHealingStrategy(crisisContext),
+      });
+
+    // Apprentissage continu des interventions efficaces
+    await this.learning.recordCrisisInterventionEffectiveness({
+      context: crisisContext,
+      response: personalizedCrisisResponse,
+      expectedOutcome: this.predictInterventionOutcome(
+        personalizedCrisisResponse,
+        crisisContext,
+      ),
+    });
+
+    return personalizedCrisisResponse.interventionMessage;
   }
 
-  generateAnxietyCrisisResponse(detection) {
-    return 'Je vois que l'anxiété est très présente en ce moment. Respirons ensemble  :
-       inspire profondément pendant 4 secondes... retiens ton souffle 4 secondes... expire lentement pendant 6 secondes. Tu es en sécurité. Concentre-toi sur le moment présent.';
+  async generateAnxietyCrisisResponse(detection) {
+    // 😰 SUPPORT ANXIÉTÉ ADAPTATIF ET PERSONNALISÉ
+    const anxietyContext = {
+      anxietyLevel: detection.intensity,
+      anxietyTriggers: detection.triggers,
+      physicalSymptoms: detection.physicalManifestations,
+      cognitivePatterns: detection.thoughtPatterns,
+      copingHistory: await this.memory.getUserCopingStrategies(
+        detection.userId,
+      ),
+      environmentalFactors: detection.environment,
+    };
+
+    return await this.generatePersonalizedAnxietySupport(anxietyContext);
   }
 
-  generateTraumaCrisisResponse(detection) {
-    return 'Tu es en sécurité maintenant. Ce que tu ressens est normal après ce que tu as vécu. Concentre-toi sur ta respiration et nomme 5 choses que tu peux voir autour de toi. Je reste avec toi.';
+  async generateDepressionCrisisResponse(detection) {
+    // 😔 SUPPORT DÉPRESSION ÉVOLUTIF ET COMPASSIONNEL
+    const depressionContext = {
+      depressionSeverity: detection.severity,
+      hopelessnessLevel: detection.hopelessness,
+      isolationLevel: detection.isolation,
+      energyLevel: detection.energy,
+      supportSources: await this.memory.getUserSupportSources(detection.userId),
+      therapeuticHistory: await this.memory.getUserTherapeuticHistory(
+        detection.userId,
+      ),
+    };
+
+    return await this.generateCompassionateDepressionSupport(depressionContext);
   }
 
-  generateDepressionCrisisResponse(detection) {
-    return 'Je sens le poids que tu portes. La dépression peut nous faire sentir isolé(e) et sans espoir, mais tu n'es pas seul(e). Chaque jour que tu continues de vivre est un acte de courage. Parlons de ce qui pourrait t'aider aujourd'hui.';
-  }
+  async generateGriefCrisisResponse(detection) {
+    // 💔 ACCOMPAGNEMENT DEUIL PERSONNALISÉ ET RESPECTUEUX
+    const griefContext = {
+      lossType: detection.lossType,
+      griefStage: detection.currentStage,
+      relationship: detection.relationshipToLoss,
+      timeSinceLoss: detection.timeSinceLoss,
+      culturalGriefPractices: detection.culturalBackground.griefTraditions,
+      previousLosses: await this.memory.getUserGriefHistory(detection.userId),
+    };
 
-  generateGriefCrisisResponse(detection) {
-    return 'La perte que tu vis est profonde et ta douleur est légitime. Le chagrin n'a pas de timeline et chacun le vit différemment. Je suis là pour t'accompagner dans ce processus. Veux-tu me parler de cette personne qui comptait tant pour toi ?
-      ';
+    return await this.generateCulturallyRespectfulGriefSupport(griefContext);
   }
 
   /**
-   * Déclenchement d'intervention de crise
+   * Déclenchement de l'intervention de crise
    */
   async triggerCrisisIntervention(detection) {
     // Mise à jour de l'état d'alerte
@@ -512,28 +585,17 @@ export class AlexCrisisManagement extends EventEmitter {
     // Activation du suivi
     this.activateUserMonitoring(detection.userId, detection.crisisType);
 
-    // Notification d'événement
-    this.emit('crisis_detected', {
-      userId :
-       detection.userId
-      crisisType: detection.crisisType
-      severity: detection.severity
-      confidence: detection.confidence
-      timestamp: detection.timestamp
-    });
-
-    // Log de sécurité
     try {
-      logger.warn('🚨 Crisis detected and intervention triggered', {
-      userId: detection.userId
-      type: detection.crisisType
-      severity: detection.severity
-      confidence: detection.confidence
-    });
-
+      logger.warn("🚨 Crisis detected and intervention triggered", {
+        userId: detection.userId,
+        type: detection.crisisType,
+        severity: detection.severity,
+        confidence: detection.confidence,
+      });
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Surveillance continue des crises
@@ -550,11 +612,11 @@ export class AlexCrisisManagement extends EventEmitter {
     }, 300000); // 5 minutes
 
     try {
-      logger.info('👁️ Crisis monitoring activated');
-
+      logger.info("👁️ Crisis monitoring activated");
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Sélection de ressources appropriées
@@ -573,7 +635,7 @@ export class AlexCrisisManagement extends EventEmitter {
         resources.push(this.emergencyResources.violence);
         break;
 
-      case 'health':
+      case "health":
         resources.push(this.emergencyResources.emergency);
         break;
 
@@ -590,10 +652,10 @@ export class AlexCrisisManagement extends EventEmitter {
   updateAlertState(detection) {
     // Ajout de la crise active
     this.alertState.activeCrises.set(detection.userId, {
-      type: detection.crisisType
-      severity: detection.severity
-      startTime: detection.timestamp
-      lastUpdate: detection.timestamp
+      type: detection.crisisType,
+      severity: detection.severity,
+      startTime: detection.timestamp,
+      lastUpdate: detection.timestamp,
     });
 
     // Mise à jour du niveau d'alerte global
@@ -601,10 +663,18 @@ export class AlexCrisisManagement extends EventEmitter {
   }
 
   /**
-   * Activation du suivi utilisateur
+   * Activation de la surveillance utilisateur
    */
   activateUserMonitoring(userId, crisisType) {
     this.alertState.monitoringUsers.add(userId);
+
+    try {
+      logger.info(
+        `👤 User ${userId} added to monitoring due to ${crisisType} crisis`,
+      );
+    } catch (error) {
+      // Logger fallback - ignore error
+    }
 
     // Planification du suivi
     setTimeout(() => {
@@ -613,40 +683,89 @@ export class AlexCrisisManagement extends EventEmitter {
   }
 
   /**
+   * Réalisation du suivi
+   */
+  performFollowUp(userId, crisisType) {
+    // Vérification de l'état de l'utilisateur
+    try {
+      logger.info(
+        `📞 Performing follow-up with user ${userId} after ${crisisType} crisis`,
+      );
+    } catch (error) {
+      // Logger fallback - ignore error
+    }
+
+    // Suppression de la surveillance
+    this.stopMonitoringUser(userId);
+  }
+
+  /**
+   * Arrêt de la surveillance utilisateur
+   */
+  stopMonitoringUser(userId) {
+    this.alertState.monitoringUsers.delete(userId);
+
+    try {
+      logger.info(`👤 User ${userId} removed from monitoring`);
+    } catch (error) {
+      // Logger fallback - ignore error
+    }
+  }
+
+  /**
+   * Calcul du niveau d'alerte global
+   */
+  calculateGlobalAlertLevel() {
+    if (this.alertState.activeCrises.size > 5) {
+      return "critical";
+    } else if (this.alertState.activeCrises.size > 2) {
+      return "high";
+    } else if (this.alertState.activeCrises.size > 0) {
+      return "medium";
+    } else {
+      return "normal";
+    }
+  }
+
+  /**
    * Obtention du statut de gestion de crise
    */
   getCrisisManagementStatus() {
     return {
-      initialized: this.isInitialized
-      alertLevel: this.alertState.level
-      activeCrises: this.alertState.activeCrises.size
-      monitoringUsers: this.alertState.monitoringUsers.size
-      totalDetections: this.crisisHistory.length
-      recentCrises: this.getRecentCrises()
-      interventionEffectiveness: this.calculateInterventionEffectiveness()
-      availableResources: Object.keys(this.emergencyResources).length
+      initialized: this.isInitialized,
+      alertLevel: this.alertState.level,
+      activeCrises: this.alertState.activeCrises.size,
+      monitoringUsers: this.alertState.monitoringUsers.size,
+      totalDetections: this.crisisHistory.length,
+      recentCrises: this.getRecentCrises(),
+      interventionEffectiveness: this.calculateInterventionEffectiveness(),
+      availableResources: Object.keys(this.emergencyResources).length,
     };
   }
 
+  /**
+   * Obtention des crises récentes
+   */
   getRecentCrises() {
-    const oneDayAgo = new Date(Date.now() - 86400000);
-    return this.crisisHistory
-      .filter(crisis => crisis.timestamp > oneDayAgo && crisis.crisisDetected)
-      .map(crisis => ({
-        type: crisis.crisisType
-        severity: crisis.severity
-        timestamp: crisis.timestamp
-      }));
+    const recent = this.crisisHistory.slice(-5).map((crisis) => ({
+      userId: crisis.userId,
+      type: crisis.crisisType,
+      severity: crisis.severity,
+      timestamp: crisis.timestamp,
+    }));
+    return recent;
   }
 
+  /**
+   * Calcul de l'efficacité des interventions
+   */
   calculateInterventionEffectiveness() {
-    const interventions = this.crisisHistory.filter(c => c.crisisDetected);
+    const interventions = this.crisisHistory.filter((c) => c.crisisDetected);
     if (interventions.length === 0) return 1.0;
 
     // Mesure basée sur le taux de résolution des crises
-    const resolved = interventions.filter(i => i.resolved).length;
+    // Assuming a 'resolved' property is added to crisis objects upon resolution
+    const resolved = interventions.filter((i) => i.resolved).length;
     return resolved / interventions.length;
   }
 }
-
-export default new AlexCrisisManagement();

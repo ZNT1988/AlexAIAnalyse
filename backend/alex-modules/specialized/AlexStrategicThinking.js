@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_MEDIUM = 'medium';
-/**
+const STR_MEDIUM = 'medium';/**
  * @fileoverview AlexStrategicThinking - Pensée Stratégique d'Alex
  * Planification avancée et vision systémique
  * @module AlexStrategicThinking
@@ -10,7 +9,7 @@ const STR_MEDIUM = 'medium';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -192,8 +191,7 @@ export class AlexStrategicThinking extends EventEmitter {
     try {
       logger.info('🎯 AlexStrategicThinking initializing - Strategic mind awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -205,8 +203,7 @@ export class AlexStrategicThinking extends EventEmitter {
     try {
       logger.info('🧠 AlexStrategicThinking fully initialized - Strategic intelligence active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -221,9 +218,7 @@ export class AlexStrategicThinking extends EventEmitter {
       strategicOptions: []
       recommendations: {}
       implementationPlan: {}
-    };
-
-    // Phase 1: Analyse de situation
+    };    // Phase 1: Analyse de situation
     analysis.situationAnalysis = await this.analyzeSituation(context);
 
     // Phase 2: Génération d'options stratégiques
@@ -257,9 +252,7 @@ export class AlexStrategicThinking extends EventEmitter {
       trendAnalysis: {}
       riskAssessment: {}
       resourceAudit: {}
-    };
-
-    // Analyse SWOT
+    };    // Analyse SWOT
     situation.swotAnalysis = await this.performSWOTAnalysis(context);
 
     // Cartographie des parties prenantes
@@ -290,9 +283,7 @@ export class AlexStrategicThinking extends EventEmitter {
       opportunities: []
       threats: []
       strategicImplications: []
-    };
-
-    // Analyse des forces internes
+    };    // Analyse des forces internes
     swot.strengths = this.identifyStrengths(context);
 
     // Analyse des faiblesses internes
@@ -313,10 +304,8 @@ export class AlexStrategicThinking extends EventEmitter {
   /**
    * Génération d'options stratégiques
    */
-  async generateStrategicOptions(situationAnalysis, objectives) {
-    const options = [];
-
-    // Options basées sur les forces et opportunités (SO)
+  async generateStrategicOptions(_SO) {
+    const options = [];    // Options basées sur les forces et opportunités (SO)
     const soOptions = this.generateSOStrategies(situationAnalysis.swotAnalysis);
     options.push(...soOptions);
 
@@ -358,9 +347,7 @@ export class AlexStrategicThinking extends EventEmitter {
       pessimistic: {}
       disruptive: {}
       contingencyPlans: new Map()
-    };
-
-    // Scénario optimiste
+    };    // Scénario optimiste
     scenarios.optimistic = await this.buildOptimisticScenario(context, timeHorizon);
 
     // Scénario réaliste
@@ -391,9 +378,7 @@ export class AlexStrategicThinking extends EventEmitter {
       leveragePoints: []
       emergentProperties: []
       interventionStrategy: {}
-    };
-
-    // Cartographie du système
+    };    // Cartographie du système
     systems.systemMap = this.mapSystemComponents(context);
 
     // Identification des boucles de rétroaction
@@ -421,9 +406,7 @@ export class AlexStrategicThinking extends EventEmitter {
       sensingSystem: {}
       responseStrategies: []
       learningLoop: {}
-    };
-
-    // Déclencheurs d'adaptation
+    };    // Déclencheurs d'adaptation
     adaptive.adaptationTriggers = this.identifyAdaptationTriggers(dynamicContext, uncertainties);
 
     // Mécanismes de flexibilité
@@ -444,14 +427,13 @@ export class AlexStrategicThinking extends EventEmitter {
   /**
    * Innovation stratégique
    */
-  async strategicInnovation(context, innovationFocus = 'breakthrough') {
-    const innovation = {
+  async strategicInnovation(_context, _innovationFocus = 'breakthrough') {
+    const _innovation = {
       innovationAudit: {}
       innovationOpportunities: []
       innovationStrategy: {}
       innovationRoadmap: []
-      innovationMetrics: {}
-    };
+      innovationMetrics: {};    };
 
     // Audit d'innovation
     innovation.innovationAudit = this.auditInnovationCapacity(context);
@@ -481,8 +463,7 @@ export class AlexStrategicThinking extends EventEmitter {
     try {
       logger.info('📡 Strategic monitoring activated');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -494,8 +475,7 @@ export class AlexStrategicThinking extends EventEmitter {
       this.assessCapabilityMatch(option, situationAnalysis.swotAnalysis.strengths)
       this.assessStakeholderSupport(option, situationAnalysis.stakeholderMap)
       this.assessTechnicalFeasibility(option)
-      this.assessRegulatoryCompliance(option)
-    ];
+      this.assessRegulatoryCompliance(option);    ];
 
     return factors.reduce((sum, factor) => sum + factor, 0) / factors.length;
   }
@@ -504,12 +484,8 @@ export class AlexStrategicThinking extends EventEmitter {
    * Évaluation d'impact
    */
   assessImpact(option, objectives) {
-    let totalImpact = 0;
-    let weightSum = 0;
-
-    for (const objective of objectives) {
-      const weight = objective.weight || 1;
-      const alignment = this.assessObjectiveAlignment(option, objective);
+    let totalImpact = 0;    let weightSum = 0;    for (const objective of objectives) {
+      const weight = objective.weight || 1;      const alignment = this.assessObjectiveAlignment(option, objective);
       totalImpact += alignment * weight;
       weightSum += weight;
     }
@@ -539,8 +515,7 @@ export class AlexStrategicThinking extends EventEmitter {
       this.strategicSessions.length / 100, // Experience
       this.scenarios.size / 50, // Scenario planning maturity
       this.currentStrategicState.innovationPriority, // Innovation focus
-      Object.keys(this.strategicFrameworks).length / 10 // Framework diversity
-    ];
+      Object.keys(this.strategicFrameworks).length / 10 // Framework diversity;    ];
 
     return Math.min(1.0, factors.reduce((sum, factor) => sum + factor, 0) / factors.length);
   }

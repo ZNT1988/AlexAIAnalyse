@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_MINIMAL = 'minimal';
-/**
+const STR_MINIMAL = 'minimal';/**
  * @fileoverview AlexDecisionEngine - Moteur de Décision d'Alex
  * Système avancé de prise de décision et d'analyse décisionnelle
  * @module AlexDecisionEngine
@@ -11,7 +10,7 @@ const STR_MINIMAL = 'minimal';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -184,8 +183,7 @@ export class AlexDecisionEngine extends EventEmitter {
     try {
       logger.info('🧭 AlexDecisionEngine initializing - Decision mastery awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -197,8 +195,7 @@ export class AlexDecisionEngine extends EventEmitter {
     try {
       logger.info('⚖️ AlexDecisionEngine fully initialized - Decision intelligence active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -217,8 +214,7 @@ export class AlexDecisionEngine extends EventEmitter {
     try {
       logger.info('🔧 Decision systems initialized');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -233,8 +229,7 @@ export class AlexDecisionEngine extends EventEmitter {
     try {
       logger.info('⚖️ Decision engine calibrated');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -245,8 +240,7 @@ export class AlexDecisionEngine extends EventEmitter {
     try {
       logger.info('📊 Decision monitoring started');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -262,9 +256,7 @@ export class AlexDecisionEngine extends EventEmitter {
       frameworkPhase: {}
       evaluationPhase: {}
       selectionPhase: {}
-    };
-
-    // Phase 1: Analyse du contexte décisionnel
+    };    // Phase 1: Analyse du contexte décisionnel
     decision.analysisPhase = await this.analyzeDecisionContext(decisionContext);
 
     // Phase 2: Application du framework approprié
@@ -297,9 +289,7 @@ export class AlexDecisionEngine extends EventEmitter {
       stakeholders: []
       constraints: []
       information: {}
-    };
-
-    // Classification du type de décision
+    };    // Classification du type de décision
     analysis.decisionType = this.classifyDecisionType(context);
 
     // Évaluation de la complexité
@@ -326,13 +316,12 @@ export class AlexDecisionEngine extends EventEmitter {
   /**
    * Application du framework de décision
    */
-  async applyDecisionFramework(analysis, preferences) {
-    const framework = {
+  async applyDecisionFramework(_analysis, _preferences) {
+    const _framework = {
       selectedFramework: ''
       reasoning: ''
       process: {}
-      adaptations: []
-    };
+      adaptations: [];    };
 
     // Sélection du framework optimal
     framework.selectedFramework = this.selectOptimalFramework(analysis, preferences);
@@ -357,9 +346,7 @@ export class AlexDecisionEngine extends EventEmitter {
       scores: new Map()
       rankings: []
       sensitivityAnalysis: {}
-    };
-
-    // Collecte des options
+    };    // Collecte des options
     evaluation.options = this.collectOptions(frameworkPhase);
 
     // Définition des critères
@@ -389,9 +376,7 @@ export class AlexDecisionEngine extends EventEmitter {
       weightedScores: new Map()
       finalRankings: []
       robustnessCheck: {}
-    };
-
-    // Normalisation des scores
+    };    // Normalisation des scores
     analysis.normalizedScores = this.normalizeScores(options, criteria);
 
     // Application des poids
@@ -416,9 +401,7 @@ export class AlexDecisionEngine extends EventEmitter {
       mitigationStrategies: []
       contingencyPlans: {}
       riskScore: 0
-    };
-
-    // Catégories de risques
+    };    // Catégories de risques
     riskAnalysis.riskCategories = this.categorizeRisks(decision);
 
     // Analyse de scénarios
@@ -445,9 +428,7 @@ export class AlexDecisionEngine extends EventEmitter {
       preventionMeasures: []
       processAdjustments: []
       validationChecks: []
-    };
-
-    // Identification des biais potentiels
+    };    // Identification des biais potentiels
     biasPreventuin.identifiedBiases = this.identifyPotentialBiases(decisionProcess);
 
     // Mesures de prévention
@@ -473,9 +454,7 @@ export class AlexDecisionEngine extends EventEmitter {
       lessons: []
       improvements: []
       profileUpdates: {}
-    };
-
-    // Récupération de la décision
+    };    // Récupération de la décision
     learning.decision = this.decisionHistory.find(d => d.id === decisionId);
     if (!learning.decision) {
       throw new Error(`Decision ${decisionId} not found`);
@@ -515,8 +494,7 @@ export class AlexDecisionEngine extends EventEmitter {
     try {
       logger.info('👁️ Decision monitoring activated');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -558,11 +536,7 @@ export class AlexDecisionEngine extends EventEmitter {
   }
 
   calculateOverallRiskScore(riskAnalysis) {
-    const categoryScores = Object.values(riskAnalysis.riskCategories).map(cat => cat.score || 0);
-    const scenarioScores = Object.values(riskAnalysis.scenarioAnalysis).map(scenario => scenario.riskLevel || 0);
-
-    const avgCategoryScore = categoryScores.reduce((sum, score) => sum + score, 0) / categoryScores.length;
-    const avgScenarioScore = scenarioScores.reduce((sum, score) => sum + score, 0) / scenarioScores.length;
+    const categoryScores = Object.values(riskAnalysis.riskCategories).map(cat => cat.score || 0);    const scenarioScores = Object.values(riskAnalysis.scenarioAnalysis).map(scenario => scenario.riskLevel || 0);    const avgCategoryScore = categoryScores.reduce((sum, score) => sum + score, 0) / categoryScores.length;    const avgScenarioScore = scenarioScores.reduce((sum, score) => sum + score, 0) / scenarioScores.length;
 
     return (avgCategoryScore + avgScenarioScore) / 2;
   }
@@ -616,14 +590,10 @@ export class AlexDecisionEngine extends EventEmitter {
       decisionQuality: STR_HIGH
       alternatives: []
       riskAssessment: {}
-      };
-
-      // Analyse de la réponse comme décision
+      };      // Analyse de la réponse comme décision
       const responseAnalysis = await this.analyzeResponseAsDecision(response
       request
-      context);
-
-      // Évaluation de la confiance
+      context);      // Évaluation de la confiance
       optimization.confidence = this.evaluateResponseConfidence(responseAnalysis);
 
       // Construction du raisonnement
@@ -646,8 +616,7 @@ export class AlexDecisionEngine extends EventEmitter {
       context);
 
       return optimization;
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
       };
     }
@@ -684,9 +653,7 @@ export class AlexDecisionEngine extends EventEmitter {
    * Construit le raisonnement de la réponse
    */
   buildResponseReasoning(analysis) {
-    const reasoning = [];
-
-    if (analysis.contextRelevance > 0.8) {
+    const reasoning = [];    if (analysis.contextRelevance > 0.8) {
       reasoning.push('Réponse hautement pertinente au contexte');
     }
     if (analysis.informationCompleteness > 0.8) {
@@ -716,8 +683,7 @@ export class AlexDecisionEngine extends EventEmitter {
 
   assessBiasRisk(response, request) {
     // Analyse simple des patterns de biais
-    const biasPatterns = ['toujours', 'jamais', 'tous', 'aucun'];
-    const content = response.content.toLowerCase();
+    const biasPatterns = ['toujours', 'jamais', 'tous', 'aucun'];    const content = response.content.toLowerCase();
     const biasCount = biasPatterns.filter(pattern => content.includes(pattern)).length;
     return Math.min(1.0, biasCount * 0.2);
   }

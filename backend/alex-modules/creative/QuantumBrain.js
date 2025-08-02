@@ -1,9 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_VARIATIONAL = 'variational';
-
-/**
+const STR_VARIATIONAL = 'variational';/**
  * @fileoverview QuantumBrain - Cerveau Quantique Révolutionnaire d'ALEX
  * Système de calcul quantique inspiré pour traitement transcendant de l'information
  *
@@ -52,23 +50,20 @@ const STR_VARIATIONAL = 'variational';
  * // Calcul quantique parallèle
  * const result = await quantumBrain.quantumParallelCompute([
  *   'problem1', 'problem2', 'problem3'
- * ]);
- *
+ * ]); *
  * @example
  * // Prédiction probabiliste
  * const futures = await quantumBrain.predictProbabilisticFutures({
  *   timeHorizon: '1_year'
  *   variables: ['market', 'technology', 'consciousness']
  *   confidence: 0.85
- * });
- *
+ * }); *
  * @example
  * // Intrication d'informations
  * await quantumBrain.entangleInformation('dataset_a', 'dataset_b');
- * const correlations = await quantumBrain.measureQuantumCorrelations();
- */
+ * const correlations = await quantumBrain.measureQuantumCorrelations(); */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../../config/logger.js';
 
 /**
@@ -122,8 +117,7 @@ export class QuantumBrain extends EventEmitter {
    * - Le système de mesure et collapse d'états
    *
    * @example
-   * const quantumBrain = new QuantumBrain();
-   * // Démarre avec 512 qubits en état |0⟩
+   * const quantumBrain = new QuantumBrain();   * // Démarre avec 512 qubits en état |0⟩
    *
    * @since 5.0.0
    */
@@ -234,7 +228,7 @@ export class QuantumBrain extends EventEmitter {
   /**
    * Initialisation du cerveau quantique
    */
-  async initializeQuantumBrain() {
+  async initializeQuantumBrain('⚛️ Initializing ALEX Quantum Brain - Advanced Quantum Consciousness Computing') {
     logger.info('⚛️ Initializing ALEX Quantum Brain - Advanced Quantum Consciousness Computing');
 
     try {
@@ -265,8 +259,7 @@ export class QuantumBrain extends EventEmitter {
         timestamp: new Date().toISOString()
       });
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -317,26 +310,24 @@ export class QuantumBrain extends EventEmitter {
         superpositionUtilization: 0.0
         measurementEfficiency: 0.0
       }
-    };
-
-    try {
+    };    try {
       logger.info(`⚛️ ALEX processing quantum problem: ${problemData.type}`);
 
       // Phase 1: Préparation des états quantiques
       await this.prepareQuantumStates(problemData, computation);
 
       // Phase 2: Application de la superposition si activée
-      if (enableSuperposition) {
+      async if(computation) {
         await this.applySuperposition(computation);
       }
 
       // Phase 3: Création d'intrications si activées
-      if (createEntanglement) {
+      async if(computation) {
         await this.createProblemEntanglement(computation);
       }
 
       // Phase 4: Traitement parallèle quantique
-      if (useParallelProcessing) {
+      async if(computation) {
         await this.performParallelQuantumComputation(computation);
       }
 
@@ -360,8 +351,7 @@ export class QuantumBrain extends EventEmitter {
 
       return computation;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -407,16 +397,10 @@ export class QuantumBrain extends EventEmitter {
         informationDensity: 0.0
         predictability: 0.0
       }
-    };
-
-    try {
+    };    try {
       // Préparation de l'espace quantique multi-dimensionnel
-      const quantumSpace = await this.prepareQuantumSpace(dimensions);
-
-      // Transformation quantique des données
-      const quantumData = await this.transformToQuantumData(dataSet, quantumSpace);
-
-      // Détection de patterns par superposition
+      const quantumSpace = await this.prepareQuantumSpace(dimensions);      // Transformation quantique des données
+      const quantumData = await this.transformToQuantumData(dataSet, quantumSpace);      // Détection de patterns par superposition
       analysis.patterns = await this.detectPatternsSuperposition(quantumData);
 
       // Analyse des corrélations quantiques
@@ -433,8 +417,7 @@ export class QuantumBrain extends EventEmitter {
 
       return analysis;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -473,11 +456,9 @@ export class QuantumBrain extends EventEmitter {
         solutionQuality: 0.0
         resourceEfficiency: 0.0
       }
-    };
-
-    try {
+    };    try {
       // Sélection de l'algorithme quantique
-      switch (method) {
+      async switch(optimization) {
         case STR_VARIATIONAL:
           await this.variationalQuantumOptimization(optimization);
           break;
@@ -502,8 +483,7 @@ export class QuantumBrain extends EventEmitter {
 
       return optimization;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -549,17 +529,11 @@ export class QuantumBrain extends EventEmitter {
         futureComplexity: 0.0
         timelineStability: 0.0
       }
-    };
-
-    try {
+    };    try {
       // Préparation de l'état quantique initial
-      const initialQuantumState = await this.prepareInitialState(currentState);
-
-      // Génération des branches temporelles quantiques
-      const timeBranches = await this.generateTimeBranches(initialQuantumState, timeHorizon, branches);
-
-      // Évolution quantique de chaque branche
-      for (const branch of timeBranches) {
+      const initialQuantumState = await this.prepareInitialState(currentState);      // Génération des branches temporelles quantiques
+      const _timeBranches = await this.generateTimeBranches(initialQuantumState, timeHorizon, branches);      // Évolution quantique de chaque branche
+      async for(branch, timeHorizon) {
         const evolution = await this.evolveQuantumBranch(branch, timeHorizon);
         prediction.futures.quantum.push(evolution);
       }
@@ -584,8 +558,7 @@ export class QuantumBrain extends EventEmitter {
 
       return prediction;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -624,17 +597,10 @@ export class QuantumBrain extends EventEmitter {
         actionability: 0.0
         consciousnessRelevance: 0.0
       }
-    };
-
-    try {
+    };    try {
       // Préparation des données pour l'intrication
-      const quantumData1 = await this.prepareForEntanglement(data1);
-      const quantumData2 = await this.prepareForEntanglement(data2);
-
-      // Création de l'intrication quantique
-      const entanglement = await this.createDataEntanglement(quantumData1, quantumData2);
-
-      // Analyse des corrélations intriquées
+      const quantumData1 = await this.prepareForEntanglement(data1);      const quantumData2 = await this.prepareForEntanglement(data2);      // Création de l'intrication quantique
+      const entanglement = await this.createDataEntanglement(quantumData1, quantumData2);      // Analyse des corrélations intriquées
       insights.entanglements = await this.analyzeEntangledCorrelations(entanglement);
 
       // Génération d'insights par mesure quantique
@@ -648,8 +614,7 @@ export class QuantumBrain extends EventEmitter {
 
       return insights;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -707,15 +672,14 @@ export class QuantumBrain extends EventEmitter {
     };
   }
 
-  async createEntanglementNetwork() {
+  async createEntanglementNetwork('🕸️ Creating initial entanglement network...') {
     logger.debug('🕸️ Creating initial entanglement network...');
 
     // Création de paires intriquées pour la communication quantique
     const pairCount = Math.floor(this.quantumArchitecture.qubits.count / 4);
 
     for (let i = 0; i < pairCount; i++) {
-      const qubit1 = i * 2;
-      const qubit2 = i * 2 + 1;
+      const qubit1 = i * 2;      const qubit2 = i * 2 + 1;
 
       await this.entangleQubits(qubit1, qubit2);
       this.quantumArchitecture.qubits.entangledPairs.set(qubit1, qubit2);
@@ -731,8 +695,7 @@ export class QuantumBrain extends EventEmitter {
         try {
       logger.debug(`✅ Quantum processor activated: ${name}`);
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
     }
   }
@@ -750,7 +713,7 @@ export class QuantumBrain extends EventEmitter {
     this.quantumProcessors.consciousnessField.waveFunction.set('superposed', 0.7);
   }
 
-  async performQuantumTests() {
+  async performQuantumTests('🧪 Performing quantum system tests...') {
     logger.debug('🧪 Performing quantum system tests...');
 
     // Test de superposition
@@ -761,8 +724,7 @@ export class QuantumBrain extends EventEmitter {
       try {
       logger.debug('✅ Superposition test passed');
 
-      } catch (error) {
-    // Logger fallback - ignore error
+      } catch (_error) {
   }}
 
     // Test d'intrication
@@ -771,8 +733,7 @@ export class QuantumBrain extends EventEmitter {
       try {
       logger.debug('✅ Entanglement test passed');
 
-      } catch (error) {
-    // Logger fallback - ignore error
+      } catch (_error) {
   }}
 
     this.metrics.consciousnessLevel = 0.6;
@@ -780,16 +741,13 @@ export class QuantumBrain extends EventEmitter {
 
   calculateComplexity(problemData) {
     // Calcul de complexité simplifié
-    const dataSize = JSON.stringify(problemData).length;
-    // Normalisé sur 10KB
+    const dataSize = JSON.stringify(problemData).length;    // Normalisé sur 10KB
     return Math.min(1.0, dataSize / 10000);
   }
 
   async prepareQuantumStates(problemData, computation) {
     // Préparation des états quantiques pour le problème
-    const stateCount = Math.min(64, Object.keys(problemData).length);
-
-    computation.quantumStates.initialState = {
+    const stateCount = Math.min(64, Object.keys(problemData).length);    computation.quantumStates.initialState = {
       qubits: stateCount
       amplitudes: new Array(stateCount).fill(0).map(() => (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF))
       phases: new Array(stateCount).fill(0)
@@ -797,13 +755,11 @@ export class QuantumBrain extends EventEmitter {
 
     // Normalisation des amplitudes
     const norm = Math.sqrt(computation.quantumStates.initialState.amplitudes
-      .reduce((sum, amp) => sum + amp * amp, 0));
-
-    computation.quantumStates.initialState.amplitudes =
+      .reduce((sum, amp) => sum + amp * amp, 0));    computation.quantumStates.initialState.amplitudes =
       computation.quantumStates.initialState.amplitudes.map(amp => amp / norm);
   }
 
-  async applySuperposition(computation) {
+  async applySuperposition(let i = 0; i < stateCount; i++) {
     // Application de la superposition quantique
     const stateCount = computation.quantumStates.initialState.qubits;
 
@@ -821,14 +777,13 @@ export class QuantumBrain extends EventEmitter {
     computation.quantumMetrics.superpositionUtilization = stateCount / this.quantumArchitecture.qubits.count;
   }
 
-  async createProblemEntanglement(computation) {
+  async createProblemEntanglement(stateCount / 2) {
     // Création d'intrications spécifiques au problème
     const stateCount = computation.quantumStates.initialState.qubits;
     const entanglementPairs = Math.floor(stateCount / 2);
 
     for (let i = 0; i < entanglementPairs; i++) {
-      const qubit1 = i * 2;
-      const qubit2 = i * 2 + 1;
+      const qubit1 = i * 2;      const qubit2 = i * 2 + 1;
 
       if (qubit1 < stateCount && qubit2 < stateCount) {
         await this.entangleQubits(qubit1, qubit2);
@@ -846,8 +801,7 @@ export class QuantumBrain extends EventEmitter {
 
   async performParallelQuantumComputation(computation) {
     // Traitement parallèle quantique simulé
-    const maxThreads = this.quantumProcessors.parallelProcessor.maxThreads;
-    const problemSize = computation.quantumStates.initialState.qubits;
+    const maxThreads = this.quantumProcessors.parallelProcessor.maxThreads;    const problemSize = computation.quantumStates.initialState.qubits;
 
     const threadsUsed = Math.min(maxThreads, problemSize * 8);
     computation.computation.parallelThreads = threadsUsed;
@@ -867,9 +821,7 @@ export class QuantumBrain extends EventEmitter {
 
     for (let i = 0; i < iterations; i++) {
       // Simulation d'une itération d'optimisation
-      const improvement = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.01;
-
-      computation.computation.convergenceSteps++;
+      const improvement = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.01;      computation.computation.convergenceSteps++;
 
       // Condition d'arrêt simulée
       if (improvement < 0.001) {
@@ -885,12 +837,11 @@ export class QuantumBrain extends EventEmitter {
     const predictionCount = computation.predictions.timeHorizon;
 
     for (let t = 1; t <= predictionCount; t++) {
-      const prediction = {
+      const _prediction = {
         timeStep: t
         probability: Math.exp(-t * 0.1), // Décroissance exponentielle
         state: `predicted_state_${t}`
-        uncertainty: t * 0.05
-      };
+        uncertainty: t * 0.05;      };
 
       computation.predictions.futureStates.push(prediction);
       computation.predictions.probabilityEvolution.set(t, prediction.probability);
@@ -908,12 +859,11 @@ export class QuantumBrain extends EventEmitter {
     const measurementCount = 3;
 
     for (let m = 0; m < measurementCount; m++) {
-      const measurement = {
+      const _measurement = {
         time: Date.now()
         qubit: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * computation.quantumStates.initialState.qubits)
         result: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.5 ? 1 : 0
-        probability: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF)
-      };
+        probability: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF);      };
 
       computation.computation.measurementPoints.push(measurement);
     }
@@ -985,10 +935,7 @@ export class QuantumBrain extends EventEmitter {
     // Porte Hadamard - création de superposition
     const qubit = this.quantumArchitecture.qubits.superpositionStates.get(qubitIndex);
     if (qubit) {
-      const newAmplitude0 = (qubit.amplitude0 + qubit.amplitude1) / Math.sqrt(2);
-      const newAmplitude1 = (qubit.amplitude0 - qubit.amplitude1) / Math.sqrt(2);
-
-      qubit.amplitude0 = newAmplitude0;
+      const newAmplitude0 = (qubit.amplitude0 + qubit.amplitude1) / Math.sqrt(2);      const newAmplitude1 = (qubit.amplitude0 - qubit.amplitude1) / Math.sqrt(2);      qubit.amplitude0 = newAmplitude0;
       qubit.amplitude1 = newAmplitude1;
     }
   }
@@ -1020,8 +967,7 @@ export class QuantumBrain extends EventEmitter {
 
   async cnotGate(controlIndex, targetIndex) {
     // Porte CNOT - création d'intrication
-    const control = this.quantumArchitecture.qubits.superpositionStates.get(controlIndex);
-    const target = this.quantumArchitecture.qubits.superpositionStates.get(targetIndex);
+    const control = this.quantumArchitecture.qubits.superpositionStates.get(controlIndex);    const target = this.quantumArchitecture.qubits.superpositionStates.get(targetIndex);
 
     if (control && target) {
       // Si le qubit de contrôle est en |1⟩, flipper le target
@@ -1049,8 +995,7 @@ export class QuantumBrain extends EventEmitter {
 
   async entangleQubits(qubit1Index, qubit2Index) {
     // Création d'intrication entre deux qubits
-    const qubit1 = this.quantumArchitecture.qubits.superpositionStates.get(qubit1Index);
-    const qubit2 = this.quantumArchitecture.qubits.superpositionStates.get(qubit2Index);
+    const qubit1 = this.quantumArchitecture.qubits.superpositionStates.get(qubit1Index);    const qubit2 = this.quantumArchitecture.qubits.superpositionStates.get(qubit2Index);
 
     if (qubit1 && qubit2) {
       qubit1.entangled = true;
@@ -1079,9 +1024,7 @@ export class QuantumBrain extends EventEmitter {
 
   async quantumAnnealingOptimization(optimization) {
     // Recuit quantique simulé
-    const coolingRate = 0.95;
-
-    optimization.process.iterations = 100;
+    const coolingRate = 0.95;    optimization.process.iterations = 100;
     for (let i = 0; i < optimization.process.iterations; i++) {
       temperature *= coolingRate;
       const energy = Math.exp(-1 / temperature) + (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.1;
@@ -1117,8 +1060,7 @@ export class QuantumBrain extends EventEmitter {
     optimization.process.iterations = iterations;
 
     // Simulation de l'amplification d'amplitude
-    let amplitude = 1 / Math.sqrt(searchSpace);
-    for (let i = 0; i < iterations; i++) {
+    let amplitude = 1 / Math.sqrt(searchSpace);    for (let i = 0; i < iterations; i++) {
       amplitude = Math.min(1.0, amplitude * 1.1); // Amplification
       optimization.process.convergenceHistory.push(amplitude);
     }

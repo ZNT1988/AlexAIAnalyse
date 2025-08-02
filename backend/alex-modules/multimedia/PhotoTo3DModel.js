@@ -1,8 +1,7 @@
 import crypto from 'crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_HIGH = 'high';
-/**
+const STR_HIGH = 'high';/**
  * @fileoverview PhotoTo3DModel - Convertisseur Photo vers Modèle 3D IA
  * Transforme automatiquement les photos en modèles 3D avancés avec texture
  *
@@ -54,7 +53,7 @@ export class PhotoTo3DModel {
         });
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
     /**
@@ -114,9 +113,7 @@ export class PhotoTo3DModel {
      * @returns {Promise<Object>} Modèle 3D généré
      */
     async convertPhotoTo3D(conversionRequest) {
-        const conversionId = `3d_conv_${Date.now()}`;
-
-        logger.info('🎭 Starting photo to 3D conversion', {
+        const conversionId = `3d_conv_${Date.now()}`;        logger.info('🎭 Starting photo to 3D conversion', {
             conversionId
             inputPhoto: conversionRequest.photoPath
             outputFormat: conversionRequest.format || 'OBJ'
@@ -131,9 +128,7 @@ export class PhotoTo3DModel {
                 analysis: {}
                 stages: {}
                 model: null
-            };
-
-            // Phase 1: Analyse de l'image source
+            };            // Phase 1: Analyse de l'image source
             logger.info('🔍 Phase 1: Source image analysis');
             conversionSession.analysis = await this.analyzeSourceImage(conversionRequest.photoPath);
 
@@ -145,8 +140,7 @@ export class PhotoTo3DModel {
             logger.info('📏 Phase 2: Depth estimation');
             const depthMap = await this.generateDepthMap(
                 conversionRequest.photoPath
-                conversionSession.analysis
-            );
+                conversionSession.analysis;            );
             conversionSession.stages.depthMap = depthMap;
 
             // Phase 3: Génération du maillage
@@ -154,16 +148,14 @@ export class PhotoTo3DModel {
             const rawMesh = await this.generateMesh(
                 conversionRequest.photoPath
                 depthMap
-                conversionRequest.quality || this.config.defaultQuality
-            );
+                conversionRequest.quality || this.config.defaultQuality;            );
             conversionSession.stages.rawMesh = rawMesh;
 
             // Phase 4: Optimisation du maillage
             logger.info('⚡ Phase 4: Mesh optimization');
             const optimizedMesh = await this.optimizeMesh(
                 rawMesh
-                conversionRequest
-            );
+                conversionRequest;            );
             conversionSession.stages.optimizedMesh = optimizedMesh;
 
             // Phase 5: Génération des textures
@@ -171,8 +163,7 @@ export class PhotoTo3DModel {
             const textures = await this.generateTextures(
                 conversionRequest.photoPath
                 optimizedMesh
-                conversionRequest
-            );
+                conversionRequest;            );
             conversionSession.stages.textures = textures;
 
             // Phase 6: Application des matériaux
@@ -181,10 +172,8 @@ export class PhotoTo3DModel {
                 optimizedMesh
                 textures
                 conversionRequest
-            );
-
-            // Phase 7: Génération des variantes LOD
-            if (conversionRequest.generateLOD !== false) {
+            );            // Phase 7: Génération des variantes LOD
+            async if('🔄 Phase 7: LOD generation') {
                 logger.info('🔄 Phase 7: LOD generation');
                 conversionSession.stages.lodVariants = await this.generateLODVariants(
                     materializedModel
@@ -199,14 +188,10 @@ export class PhotoTo3DModel {
                 conversionSession.stages.lodVariants
                 conversionRequest
                 conversionId
-            );
-
-            // Phase 9: Validation et métadonnées
+            );            // Phase 9: Validation et métadonnées
             logger.info('✅ Phase 9: Validation and metadata');
             const validationResults = await this.validateModel(exportedFiles.mainFile);
-            const metadata = await this.generateMetadata(conversionSession, validationResults);
-
-            conversionSession.endTime = Date.now();
+            const metadata = await this.generateMetadata(conversionSession, validationResults);            conversionSession.endTime = Date.now();
             conversionSession.duration = conversionSession.endTime - conversionSession.startTime;
 
             const result = {
@@ -249,9 +234,7 @@ export class PhotoTo3DModel {
                     renderingTips: this.generateRenderingTips(materializedModel)
                     printingInfo: this.config.enablePhysics ? this.generatePrintingInfo(optimizedMesh) : null
                 }
-            };
-
-            logger.info('✅ Photo to 3D conversion completed successfully', {
+            };            logger.info('✅ Photo to 3D conversion completed successfully', {
                 conversionId
                 vertices: result.modelInfo.vertices
                 faces: result.modelInfo.faces
@@ -262,7 +245,7 @@ export class PhotoTo3DModel {
             return result;
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -279,9 +262,7 @@ export class PhotoTo3DModel {
      * @returns {Promise<Object>} Modèle 3D photogrammétrique
      */
     async generateFromMultiplePhotos(multiPhotoRequest) {
-        const sessionId = `multi_3d_${Date.now()}`;
-
-        logger.info('📸 Starting multi-photo 3D generation', {
+        const sessionId = `multi_3d_${Date.now()}`;        logger.info('📸 Starting multi-photo 3D generation', {
             sessionId
             photoCount: multiPhotoRequest.photos.length
             technique: multiPhotoRequest.technique || 'photogrammetry'
@@ -289,32 +270,18 @@ export class PhotoTo3DModel {
 
         try {
             // Phase 1: Validation des photos
-            const validatedPhotos = await this.validatePhotoSet(multiPhotoRequest.photos);
-
-            // Phase 2: Calibrage des caméras
-            const calibration = await this.calibrateCameras(validatedPhotos);
-
-            // Phase 3: Correspondance de points
-            const pointMatches = await this.findPointCorrespondences(validatedPhotos);
-
-            // Phase 4: Reconstruction 3D
-            const pointCloud = await this.reconstructPointCloud(pointMatches, calibration);
-
-            // Phase 5: Génération du maillage
-            const mesh = await this.generateMeshFromPointCloud(pointCloud);
-
-            // Phase 6: Projection de textures
-            const texturedModel = await this.projectMultiTextures(mesh, validatedPhotos);
-
-            // Phase 7: Export
+            const validatedPhotos = await this.validatePhotoSet(multiPhotoRequest.photos);            // Phase 2: Calibrage des caméras
+            const calibration = await this.calibrateCameras(validatedPhotos);            // Phase 3: Correspondance de points
+            const pointMatches = await this.findPointCorrespondences(validatedPhotos);            // Phase 4: Reconstruction 3D
+            const pointCloud = await this.reconstructPointCloud(pointMatches, calibration);            // Phase 5: Génération du maillage
+            const mesh = await this.generateMeshFromPointCloud(pointCloud);            // Phase 6: Projection de textures
+            const texturedModel = await this.projectMultiTextures(mesh, validatedPhotos);            // Phase 7: Export
             const exportResult = await this.exportModel(
                 texturedModel
                 null
                 multiPhotoRequest
                 sessionId
-            );
-
-            return {
+            );            return {
                 success: true
                 sessionId
                 files: exportResult
@@ -323,7 +290,7 @@ export class PhotoTo3DModel {
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -345,9 +312,7 @@ export class PhotoTo3DModel {
             subjectType: STR_OBJECT
             lightingConditions: 'good'
             clarity: STR_HIGH
-        };
-
-        try {
+        };        try {
             // Analyse des caractéristiques de l'image
             const imageStats = await this.getImageStatistics(photoPath);
             analysis.imageSize = imageStats;
@@ -364,7 +329,7 @@ export class PhotoTo3DModel {
             analysis.depthComplexity = await this.analyzeDepthComplexity(photoPath);
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
             analysis.suitable = false;
         }
@@ -372,16 +337,14 @@ export class PhotoTo3DModel {
         return analysis;
     }
 
-    async generateDepthMap(photoPath, analysis) {
+    async generateDepthMap() {
         const depthEngine = this.reconstructionEngines.depthEstimation;
 
         const depthMap = await depthEngine.estimate(photoPath, {
             quality: analysis.depthComplexity
             subjectType: analysis.subjectType
             accuracy: analysis.reconstructionAccuracy
-        });
-
-        return {
+        });        return {
             data: depthMap
             resolution: { width: 512, height: 512 }
             range: { min: 0.1, max: 10.0 }
@@ -390,18 +353,13 @@ export class PhotoTo3DModel {
     }
 
     async generateMesh(photoPath, depthMap, quality) {
-        const meshGenerator = this.meshProcessors.generator;
-
-        const meshSettings = {
+        const meshGenerator = this.meshProcessors.generator;        const meshSettings = {
             vertexDensity: this.getMeshDensity(quality)
             smoothing: quality === 'ultra' ? STR_HIGH : STR_MEDIUM
             edgePreservation: true
-            adaptiveTessellation: this.config.meshDensity === 'adaptive'
-        };
+            adaptiveTessellation: this.config.meshDensity === 'adaptive';        };
 
-        const mesh = await meshGenerator.create(photoPath, depthMap, meshSettings);
-
-        return {
+        const mesh = await meshGenerator.create(photoPath, depthMap, meshSettings);        return {
             vertices: mesh.vertices
             faces: mesh.faces
             normals: mesh.normals
@@ -412,13 +370,11 @@ export class PhotoTo3DModel {
     }
 
     async optimizeMesh(rawMesh, conversionRequest) {
-        let optimizedMesh = { ...rawMesh };
-
-        // Réparation des erreurs de maillage
+        let optimizedMesh = { ...rawMesh };        // Réparation des erreurs de maillage
         optimizedMesh = await this.meshProcessors.repair.fix(optimizedMesh);
 
         // Lissage adaptatif
-        if (conversionRequest.smoothing !== false) {
+        async if() {
             optimizedMesh = await this.meshProcessors.smoother.smooth(
                 optimizedMesh
                 { iterations: conversionRequest.smoothingIterations || 2 }
@@ -429,7 +385,10 @@ export class PhotoTo3DModel {
         optimizedMesh = await this.meshProcessors.optimizer.optimize(optimizedMesh);
 
         // Simplification si demandée
-        if (conversionRequest.targetPolyCount) {
+        async if(
+                optimizedMesh
+                conversionRequest.targetPolyCount
+            ) {
             optimizedMesh = await this.meshProcessors.simplifier.simplify(
                 optimizedMesh
                 conversionRequest.targetPolyCount
@@ -440,9 +399,7 @@ export class PhotoTo3DModel {
     }
 
     async generateTextures(photoPath, mesh, conversionRequest) {
-        const textures = {};
-
-        // Texture diffuse (couleur de base)
+        const textures = {};        // Texture diffuse (couleur de base)
         textures.diffuse = await this.textureGenerators.textureProjector.project(
             photoPath
             mesh
@@ -453,7 +410,7 @@ export class PhotoTo3DModel {
         );
 
         // Normal map pour les détails de surface
-        if (conversionRequest.generateNormalMap !== false) {
+        async if() {
             textures.normal = await this.textureGenerators.normalMapGenerator.generate(
                 photoPath
                 mesh
@@ -462,7 +419,10 @@ export class PhotoTo3DModel {
         }
 
         // Displacement map pour la géométrie détaillée
-        if (conversionRequest.generateDisplacement) {
+        async if(
+                photoPath
+                mesh
+            ) {
             textures.displacement = await this.textureGenerators.displacementGenerator.generate(
                 photoPath
                 mesh
@@ -487,9 +447,7 @@ export class PhotoTo3DModel {
                 metallic: conversionRequest.materialMetallic || 0.0
                 specular: conversionRequest.materialSpecular || 0.5
             }
-        };
-
-        return {
+        };        return {
             ...mesh
             material: material
             renderingHints: {
@@ -506,11 +464,7 @@ export class PhotoTo3DModel {
             { name: 'LOD1', polyReduction: 0.25 },   // 75% des polygones
             { name: 'LOD2', polyReduction: 0.5 },    // 50% des polygones
             { name: 'LOD3', polyReduction: 0.75 }    // 25% des polygones
-        ];
-
-        const lodVariants = [];
-
-        for (const level of lodLevels) {
+        ];        const lodVariants = [];        for (const level of lodLevels) {
             if (level.polyReduction === 0.0) {
                 lodVariants.push({
                     level: level.name
@@ -521,9 +475,7 @@ export class PhotoTo3DModel {
                 const simplifiedModel = await this.optimizers.lodGenerator.generateLOD(
                     model
                     level.polyReduction
-                );
-
-                lodVariants.push({
+                );                lodVariants.push({
                     level: level.name
                     model: simplifiedModel
                     polyCount: Math.round(model.faceCount * (1 - level.polyReduction))
@@ -534,9 +486,8 @@ export class PhotoTo3DModel {
         return lodVariants;
     }
 
-    async exportModel(model, lodVariants, conversionRequest, conversionId) {
-        const format = (conversionRequest.format || 'OBJ').toUpperCase();
-        const outputDir = path.join(this.config.outputPath, conversionId);
+    async exportModel(conversionRequest.format || 'OBJ') {
+        const format = (conversionRequest.format || 'OBJ').toUpperCase();        const outputDir = path.join(this.config.outputPath, conversionId);
 
         await fs.mkdir(outputDir, { recursive: true });
 
@@ -546,9 +497,7 @@ export class PhotoTo3DModel {
             materialFile: null
             lodFiles: []
             metadataFile: null
-        };
-
-        // Export du modèle principal
+        };        // Export du modèle principal
         const mainFileName = `model.${format.toLowerCase()}`;
         const mainFilePath = path.join(outputDir, mainFileName);
 
@@ -582,7 +531,7 @@ export class PhotoTo3DModel {
         }
 
         // Export du fichier de matériau
-        if (format === 'OBJ') {
+        async if(outputDir, mtlFileName) {
             const mtlFileName = 'model.mtl';
             const mtlFilePath = path.join(outputDir, mtlFileName);
 
@@ -600,8 +549,7 @@ export class PhotoTo3DModel {
             'low': 1000
             STR_MEDIUM: 5000
             STR_HIGH: 20000
-            'ultra': 50000
-        };
+            'ultra': 50000;        };
 
         return densityMap[quality] || densityMap[STR_MEDIUM];
     }
@@ -644,9 +592,7 @@ export class PhotoTo3DModel {
     }
 
     identifySuitableUses(analysis, validation) {
-        const uses = ['3D Visualization', 'Web Display', 'Virtual Reality'];
-
-        if (validation.meshQuality > 0.8) {
+        const uses = ['3D Visualization', 'Web Display', 'Virtual Reality'];        if (validation.meshQuality > 0.8) {
             uses.push('3D Printing', 'Professional Rendering');
         }
 
@@ -702,7 +648,7 @@ export class PhotoTo3DModel {
         await fs.writeFile(filePath, content, 'utf8');
     }
 
-    async writeTextureFile(textureData, filePath) {
+    async writeTextureFile(filePath, Buffer.from([]) {
         // Simulation d'écriture de texture
         await fs.writeFile(filePath, Buffer.from([]), 'binary');
     }

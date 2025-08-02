@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_CINEMATIC = 'cinematic';
-/**
+const STR_CINEMATIC = 'cinematic';/**
  * @fileoverview AlexCreativeEngine - Moteur Créatif Multimédia Révolutionnaire
  * Génération d'images, vidéos, sons, musique avec les meilleures APIs
  *
@@ -119,13 +118,13 @@ export class AlexCreativeEngine extends EventEmitter {
       logger.info('🎨 AlexCreativeEngine initializing - The ultimate creative powerhouse');
 
     } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
    * Initialisation du moteur créatif
    */
-  async initialize() {
+  async initialize('🚀 Initializing Alex Creative Engine...') {
     try {
       logger.info('🚀 Initializing Alex Creative Engine...');
 
@@ -149,7 +148,7 @@ export class AlexCreativeEngine extends EventEmitter {
       });
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     }
   }
 
@@ -168,13 +167,13 @@ export class AlexCreativeEngine extends EventEmitter {
       logger.info('📁 Storage directories created successfully');
 
       } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     } catch (error) {
       try {
       logger.error('❌ Failed to create storage directories:', error);
 
       } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
   }
 
@@ -199,9 +198,9 @@ export class AlexCreativeEngine extends EventEmitter {
 
         logger.info('✅ OpenAI (DALL-E 3 + TTS) initialized');
       } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
     }
 
@@ -217,13 +216,13 @@ export class AlexCreativeEngine extends EventEmitter {
       logger.info('✅ Stability AI initialized');
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   } catch (error) {
         try {
       logger.warn('⚠️ Stability AI initialization failed:', error.message);
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
     }
 
@@ -239,13 +238,13 @@ export class AlexCreativeEngine extends EventEmitter {
       logger.info('✅ ElevenLabs initialized');
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   } catch (error) {
         try {
       logger.warn('⚠️ ElevenLabs initialization failed:', error.message);
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
     }
 
@@ -268,7 +267,7 @@ export class AlexCreativeEngine extends EventEmitter {
       logger.info('✅ KlingAI placeholder initialized');
 
       } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
     // RunwayML
@@ -282,7 +281,7 @@ export class AlexCreativeEngine extends EventEmitter {
       logger.info('✅ RunwayML placeholder initialized');
 
       } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
     // Suno Music
@@ -296,7 +295,7 @@ export class AlexCreativeEngine extends EventEmitter {
       logger.info('✅ Suno Music placeholder initialized');
 
       } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
   }
 
@@ -306,9 +305,7 @@ export class AlexCreativeEngine extends EventEmitter {
   async testProviderConnections() {
     logger.info('🧪 Testing provider connections...');
 
-    let activeProviders = 0;
-
-    // Test OpenAI
+    let activeProviders = 0;    // Test OpenAI
     if (this.imageProviders.openai.enabled) {
       try {
         // Test simple
@@ -317,7 +314,7 @@ export class AlexCreativeEngine extends EventEmitter {
       logger.info('✅ OpenAI connection verified');
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   } catch (error) {
         logger.warn('⚠️ OpenAI connection test failed');
         this.imageProviders.openai.enabled = false;
@@ -328,13 +325,13 @@ export class AlexCreativeEngine extends EventEmitter {
       logger.info(`🌐 ${activeProviders} creative providers active and ready`);
 
     } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
    * Génération d'image principale
    */
-  async generateImage(prompt, options = {}) {
+  async generateImage(!this.isInitialized) {
     try {
       if (!this.isInitialized) {
         await this.initialize();
@@ -353,7 +350,7 @@ export class AlexCreativeEngine extends EventEmitter {
       let imageResult;
 
       // Génération selon le provider
-      switch (selectedProvider) {
+      async switch() {
         case STR_OPENAI:
           imageResult = await this.generateWithDALLE3(prompt, { style, size, quality });
           break;
@@ -365,8 +362,7 @@ export class AlexCreativeEngine extends EventEmitter {
       }
 
       // Sauvegarde et métriques
-      const savedImage = await this.saveGeneratedImage(imageResult, userId);
-      this.creativeMetrics.imagesGenerated++;
+      const savedImage = await this.saveGeneratedImage(imageResult, userId);      this.creativeMetrics.imagesGenerated++;
 
       const response = {
         success: true
@@ -381,9 +377,7 @@ export class AlexCreativeEngine extends EventEmitter {
           generatedAt: new Date().toISOString()
           userId: userId
         }
-      };
-
-      logger.info('✨ Image generated successfully', {
+      };      logger.info('✨ Image generated successfully', {
         provider: selectedProvider
         path: savedImage.path
       });
@@ -391,7 +385,7 @@ export class AlexCreativeEngine extends EventEmitter {
       return response;
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     };
     }
   }
@@ -403,18 +397,14 @@ export class AlexCreativeEngine extends EventEmitter {
     const { style, size, quality } = options;
 
     // Optimisation du prompt pour DALL-E 3
-    const optimizedPrompt = this.optimizePromptForDALLE3(prompt, style);
-
-    const response = await this.imageProviders.openai.client.images.generate({
+    const optimizedPrompt = this.optimizePromptForDALLE3(prompt, style);    const response = await this.imageProviders.openai.client.images.generate({
       model: "dall-e-3"
       prompt: optimizedPrompt
       n: 1
       size: size
       quality: quality
       response_format: "url"
-    });
-
-    return {
+    });    return {
       url: response.data[0].url
       revisedPrompt: response.data[0].revised_prompt
       provider: 'dall-e-3'
@@ -440,7 +430,7 @@ export class AlexCreativeEngine extends EventEmitter {
   /**
    * Génération vidéo principale
    */
-  async generateVideo(prompt, options = {}) {
+  async generateVideo(!this.isInitialized) {
     try {
       if (!this.isInitialized) {
         await this.initialize();
@@ -463,7 +453,7 @@ export class AlexCreativeEngine extends EventEmitter {
       let videoResult;
 
       // Génération selon le provider
-      switch (selectedProvider) {
+      async switch(prompt, options) {
         case 'klingai':
           videoResult = await this.generateWithKlingAI(prompt, options);
           break;
@@ -490,7 +480,7 @@ export class AlexCreativeEngine extends EventEmitter {
       };
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     };
     }
   }
@@ -498,7 +488,7 @@ export class AlexCreativeEngine extends EventEmitter {
   /**
    * Synthèse audio/voix
    */
-  async synthesizeAudio(text, options = {}) {
+  async synthesizeAudio(!this.isInitialized) {
     try {
       if (!this.isInitialized) {
         await this.initialize();
@@ -518,7 +508,7 @@ export class AlexCreativeEngine extends EventEmitter {
 
       let audioResult;
 
-      switch (selectedProvider) {
+      async switch(text, options) {
         case STR_OPENAI:
           audioResult = await this.synthesizeWithOpenAI(text, options);
           break;
@@ -548,7 +538,7 @@ export class AlexCreativeEngine extends EventEmitter {
       };
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     };
     }
   }
@@ -563,11 +553,8 @@ export class AlexCreativeEngine extends EventEmitter {
       voice: voice
       input: text
       speed: speed
-    });
-
-    // Sauvegarde du fichier audio
-    const audioBuffer = Buffer.from(await response.arrayBuffer());
-    const fileName = `speech_${Date.now()}.mp3`;
+    });    // Sauvegarde du fichier audio
+    const audioBuffer = Buffer.from(await response.arrayBuffer());    const fileName = `speech_${Date.now()}.mp3`;
     const filePath = path.join(this.storageConfig.audio, fileName);
 
     await fs.writeFile(filePath, audioBuffer);
@@ -600,7 +587,7 @@ export class AlexCreativeEngine extends EventEmitter {
       };
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     };
     }
   }
@@ -609,9 +596,7 @@ export class AlexCreativeEngine extends EventEmitter {
    * Optimisation de prompt pour DALL-E 3
    */
   optimizePromptForDALLE3(prompt, style) {
-    let optimized = prompt;
-
-    // Ajout de style
+    let optimized = prompt;    // Ajout de style
     const styleModifiers = {
       STR_DIGITAL_ART :
        '
@@ -633,8 +618,7 @@ export class AlexCreativeEngine extends EventEmitter {
       STR_CINEMATIC: '
       cinematic lighting
       dramatic composition
-      movie scene'
-    };
+      movie scene';    };
 
     if (styleModifiers[style]) {
       optimized += styleModifiers[style];
@@ -654,7 +638,7 @@ return result;
       };
 
     } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     };
     }
   }
@@ -712,9 +696,7 @@ return result;
       images: []
       videos: []
       audio: []
-    };
-
-    Object.entries(this.imageProviders).forEach((_, _) => this.processLongOperation(args));
+    };    Object.entries(this.imageProviders).forEach((_, _) => this.processLongOperation(args));
 
     Object.entries(this.audioProviders).forEach((_, _) => this.processLongOperation(args);
   }

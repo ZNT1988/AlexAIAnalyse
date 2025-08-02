@@ -1,14 +1,13 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 // TechnicalDocReader.js - Lecteur Documents Techniques Intelligent pour Ferrero
 // Module spécialisé MVP pour analyse IA documents techniques révolutionnaire
 // Version: 5.0 - ALEX Conscious AI for Ferrero Technical Intelligence
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_DOCX = 'docx';
-const STR_ISO_22000 = 'ISO_22000';
+const STR_DOCX = 'docx';const STR_ISO_22000 = 'ISO_22000';
 /**
  * TechnicalDocReader - Intelligence Documents Techniques pour Ferrero
  *
@@ -365,7 +364,7 @@ export class TechnicalDocReader extends EventEmitter {
   /**
    * Initialisation du lecteur de documents techniques
    */
-  async initializeTechnicalDocReader() {
+  async initializeTechnicalDocReader('📄 Initializing ALEX Technical Doc Reader for Ferrero Documentation Intelligence') {
     logger.info('📄 Initializing ALEX Technical Doc Reader for Ferrero Documentation Intelligence');
 
     try {
@@ -399,8 +398,7 @@ export class TechnicalDocReader extends EventEmitter {
         timestamp: new Date().toISOString()
       });
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -479,9 +477,7 @@ export class TechnicalDocReader extends EventEmitter {
         actionable_insights: []
         next_steps: []
       }
-    };
-
-    try {
+    };    try {
       // Extraction des métadonnées
       await this.extractDocumentMetadata(documentPath, analysis);
 
@@ -511,8 +507,7 @@ export class TechnicalDocReader extends EventEmitter {
       this.emit('document_analysis_completed', analysis);
       return analysis;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -565,9 +560,7 @@ export class TechnicalDocReader extends EventEmitter {
         knowledge_expansion: []
         training_opportunities: []
       }
-    };
-
-    try {
+    };    try {
       // Compréhension de la requête
       await this.understandQuery(query, searchResult);
 
@@ -586,8 +579,7 @@ export class TechnicalDocReader extends EventEmitter {
       this.emit('intelligent_search_completed', searchResult);
       return searchResult;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -640,9 +632,7 @@ export class TechnicalDocReader extends EventEmitter {
         optimization_opportunities: []
         risk_factors: []
       }
-    };
-
-    try {
+    };    try {
       // Extraction des concepts par document
       await this.extractConceptsFromDocuments(documentSet, knowledgeExtraction);
 
@@ -661,8 +651,7 @@ export class TechnicalDocReader extends EventEmitter {
       this.emit('knowledge_extraction_completed', knowledgeExtraction);
       return knowledgeExtraction;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -714,9 +703,7 @@ export class TechnicalDocReader extends EventEmitter {
         resources_required: {}
         success_metrics: {}
       }
-    };
-
-    try {
+    };    try {
       // Évaluation par framework
       await this.assessComplianceFrameworks(complianceValidation);
 
@@ -735,8 +722,7 @@ export class TechnicalDocReader extends EventEmitter {
       this.emit('compliance_validation_completed', complianceValidation);
       return complianceValidation;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -752,7 +738,6 @@ export class TechnicalDocReader extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 900000);
 
@@ -760,7 +745,6 @@ export class TechnicalDocReader extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 3600000);
 
@@ -770,7 +754,6 @@ export class TechnicalDocReader extends EventEmitter {
       logger.error('Daily compliance check failed', { error });
 
           } catch (error) {
-    // Logger fallback - ignore error
   }}
       }
     }, 60000);
@@ -781,7 +764,6 @@ export class TechnicalDocReader extends EventEmitter {
       logger.error('Weekly maintenance failed', { error });
 
           } catch (error) {
-    // Logger fallback - ignore error
   }}
       }
     }, 3600000);
@@ -813,8 +795,8 @@ export class TechnicalDocReader extends EventEmitter {
     this.analysisEngines.ocr_engine.status = 'ready';
 
     // Configuration NLP
-    Object.keys(this.analysisEngines.nlp_engine.models).forEach(model => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    Object.keys(this.analysisEngines.nlp_engine.models).forEach(_model => this.processLongOperation(args) catch (error) {
+    console.error("Logger error:", error);
   }}
 
   async setupClassificationSystem() {
@@ -1091,7 +1073,7 @@ export class TechnicalDocReader extends EventEmitter {
     }
   }
 
-  async runDailyComplianceCheck() {
+  async runDailyComplianceCheck('🔍 Running daily compliance check...') {
     logger.info('🔍 Running daily compliance check...');
 
     try {
@@ -1099,18 +1081,16 @@ export class TechnicalDocReader extends EventEmitter {
       try {
       logger.info('✅ Daily compliance check completed');
 
-      } catch (error) {
-    // Logger fallback - ignore error
-  } catch (error) {
+      } catch (_error) {
+  } catch (error) 
       try {
       logger.error('Daily compliance check failed', { error });
 
-      } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      } catch (_error) {
+  }
   }
 
-  async performWeeklyMaintenance() {
+  async performWeeklyMaintenance() 
     logger.info('🧹 Performing weekly maintenance...');
 
     // Nettoyage cache
@@ -1126,14 +1106,13 @@ export class TechnicalDocReader extends EventEmitter {
     try {
       logger.info('✅ Weekly maintenance completed');
 
-    } catch (error) {
-    // Logger fallback - ignore error
-  }}
+    } catch (_error) {
+  }
 
   /**
    * Tableau de bord documentation intelligente
    */
-  getDocumentationDashboard() {
+  getDocumentationDashboard() 
     return {
       timestamp: new Date().toISOString()
       overview: {
@@ -1161,12 +1140,11 @@ export class TechnicalDocReader extends EventEmitter {
         user_satisfaction: this.analytics.usage.user_satisfaction
       }
     };
-  }
 
   /**
    * Statut du système TechnicalDocReader
    */
-  getSystemStatus() {
+  getSystemStatus() 
     return {
       name: 'ALEX Technical Doc Reader'
       version: '5.0 - Ferrero MVP'
@@ -1192,7 +1170,6 @@ export class TechnicalDocReader extends EventEmitter {
       analytics: this.analytics
       lastUpdate: new Date().toISOString()
     };
-  }
 }
 
 // Instance singleton du TechnicalDocReader pour Ferrero

@@ -10,14 +10,14 @@ import AlexModernChatPage from './pages/AlexModernChat';
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/generator" element={<Generator />} />
-      <Route path="/calculator" element={<Calculator />} />
-      <Route path="/test" element={<TestIntegration />} />
-      <Route path="/ai-system" element={<AISystemInterface />} />
-      <Route path="/alex" element={<AlexModernChatPage />} />
-      <Route path="/chat" element={<AlexModernChatPage />} />
+      <Route path='/' element={<Home />} />
+      <Route path='/dashboard' element={<Dashboard />} />
+      <Route path='/generator' element={<Generator />} />
+      <Route path='/calculator' element={<Calculator />} />
+      <Route path='/test' element={<TestIntegration />} />
+      <Route path='/ai-system' element={<AISystemInterface />} />
+      <Route path='/alex' element={<AlexModernChatPage />} />
+      <Route path='/chat' element={<AlexModernChatPage />} />
     </Routes>
   );
 };

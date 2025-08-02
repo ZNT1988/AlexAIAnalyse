@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 /**
  * @fileoverview AlexAdaptiveIntelligence - Intelligence Adaptative d'Alex
  * Adaptation intelligente et évolution continue des capacités
@@ -8,7 +8,7 @@ import crypto from 'crypto';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -140,8 +140,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
     try {
       logger.info('🧠 AlexAdaptiveIntelligence initializing - Adaptive evolution beginning');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -152,8 +151,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
     try {
       logger.info('🌟 AlexAdaptiveIntelligence fully initialized - Adaptive intelligence active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -170,9 +168,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
       adaptationPhase: {}
       applicationPhase: {}
       evolutionPhase: {}
-    };
-
-    // Phase 1: Analyse de l'expérience
+    };    // Phase 1: Analyse de l'expérience
     adaptation.analysisPhase = await this.analyzeExperience(experience, outcome, feedback);
 
     // Phase 2: Identification des adaptations nécessaires
@@ -208,9 +204,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
       feedbackAnalysis: this.analyzeFeedback(feedback)
       contextAnalysis: this.analyzeExperienceContext(experience)
       performanceAnalysis: this.analyzePerformance(experience, outcome)
-    };
-
-    // Identification des facteurs de succès/échec
+    };    // Identification des facteurs de succès/échec
     analysis.successFactors = this.identifySuccessFactors(analysis);
     analysis.improvementAreas = this.identifyImprovementAreas(analysis);
 
@@ -233,9 +227,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
       knowledgeUpdates: []
       behaviorChanges: []
       priorityShifts: []
-    };
-
-    // Adaptations des capacités
+    };    // Adaptations des capacités
     adaptations.capabilityAdjustments = this.identifyCapabilityAdjustments(analysis);
 
     // Modifications des stratégies
@@ -256,16 +248,14 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
   /**
    * Application des adaptations
    */
-  async applyAdaptations(adaptationPhase) {
+  async applyAdaptations(_adaptationPhase) {
     const application = {
       timestamp: new Date()
       appliedAdaptations: []
       failedAdaptations: []
       resultingChanges: {}
-    };
-
-    // Application des ajustements de capacités
-    for (const adjustment of adaptationPhase.capabilityAdjustments) {
+    };    // Application des ajustements de capacités
+    async for(adjustment) {
       try {
         const result = await this.adjustCapability(adjustment);
         application.appliedAdaptations.push({ type: 'capability', adjustment, result });
@@ -275,7 +265,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
     }
 
     // Application des modifications de stratégies
-    for (const modification of adaptationPhase.strategyModifications) {
+    async for(modification) {
       try {
         const result = await this.modifyStrategy(modification);
         application.appliedAdaptations.push({ type: 'strategy', modification, result });
@@ -285,7 +275,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
     }
 
     // Application des mises à jour de connaissances
-    for (const update of adaptationPhase.knowledgeUpdates) {
+    async for(update) {
       try {
         const result = await this.updateKnowledge(update);
         application.appliedAdaptations.push({ type: 'knowledge', update, result });
@@ -311,12 +301,10 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
       capabilitiesEvolved: []
       newCapabilities: []
       intelligenceGrowth: 0
-    };
-
-    // Vérification du seuil d'évolution
+    };    // Vérification du seuil d'évolution
     const evolutionTrigger = this.checkEvolutionTrigger(adaptation);
 
-    if (evolutionTrigger.shouldEvolve) {
+    async if(evolutionTrigger) {
       evolution.triggered = true;
       evolution.evolutionType = evolutionTrigger.type;
 
@@ -336,8 +324,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
       try {
       logger.info(`🌟 Intelligence evolved: ${evolution.evolutionType}, growth: ${evolution.intelligenceGrowth}`);
 
-      } catch (error) {
-    // Logger fallback - ignore error
+      } catch (_error) {
   }}
 
     return evolution;
@@ -359,9 +346,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
       adjustment: adjustment.amount
       newLevel: 0
       method: adjustment.method
-    };
-
-    // Application de l'ajustement selon la méthode
+    };    // Application de l'ajustement selon la méthode
     switch (adjustment.method) {
       case 'reinforcement':
         result.newLevel = Math.min(1.0, capability.level + adjustment.amount);
@@ -401,11 +386,9 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
       previousState: { ...strategy }
       modifications: modification.changes
       newState: {}
-    };
-
-    // Application des modifications
+    };    // Application des modifications
     for (const [property, value] of Object.entries(modification.changes)) {
-      if (strategy.hasOwnProperty(property)) {
+      if (Object.hasOwn(strategy, property)) {
         strategy[property] = value;
       }
     }
@@ -424,7 +407,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
 
     // Optimisation des stratégies toutes les 2 heures
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -436,9 +419,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
       type: 'adaptive_check'
       adaptationOpportunities: 0
       optimizations: 0
-    };
-
-    // Vérification des opportunités d'adaptation
+    };    // Vérification des opportunités d'adaptation
     const opportunities = await this.identifyAdaptationOpportunities();
     check.adaptationOpportunities = opportunities.length;
 
@@ -453,9 +434,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
    * Identification des opportunités d'adaptation
    */
   async identifyAdaptationOpportunities() {
-    const opportunities = [];
-
-    // Analyse des performances récentes
+    const opportunities = [];    // Analyse des performances récentes
     const recentPerformance = this.analyzeRecentPerformance();
     if (recentPerformance.hasImprovementPotential) {
       opportunities.push({
@@ -482,9 +461,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
    * Calcul de la croissance d'intelligence
    */
   calculateIntelligenceGrowth(evolution) {
-    let totalGrowth = 0;
-
-    // Croissance des capacités évoluées
+    let totalGrowth = 0;    // Croissance des capacités évoluées
     for (const evolved of evolution.capabilitiesEvolved) {
       totalGrowth += evolved.growthAmount;
     }
@@ -520,8 +497,8 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
    */
   getActiveStrategies() {
     return Object.entries(this.adaptationStrategies)
-      .filter(([name, strategy]) => strategy.active && strategy.effectiveness > 0.5)
-      .map(([name, strategy]) => name);
+      .filter(([_name, strategy]) => strategy.active && strategy.effectiveness > 0.5)
+      .map(([name, _strategy]) => name);
   }
 
   /**
@@ -548,8 +525,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
   }
 
   summarizeCapabilities() {
-    const summary = {};
-    for (const [name, capability] of Object.entries(this.intelligenceCapabilities)) {
+    const summary = {};    for (const [name, capability] of Object.entries(this.intelligenceCapabilities)) {
       summary[name] = {
         level: Math.round(capability.level * 100) / 100
         adaptability: capability.adaptability
@@ -572,9 +548,7 @@ export class AlexAdaptiveIntelligence extends EventEmitter {
 
   calculateEvolutionPotential() {
     const avgGrowth = Object.values(this.intelligenceCapabilities)
-      .reduce((sum, cap) => sum + cap.growth, 0) / Object.keys(this.intelligenceCapabilities).length;
-
-    const adaptationSuccess = this.adaptationMetrics.successfulAdaptations / Math.max(1, this.adaptationMetrics.totalAdaptations);
+      .reduce((sum, cap) => sum + cap.growth, 0) / Object.keys(this.intelligenceCapabilities).length;    const adaptationSuccess = this.adaptationMetrics.successfulAdaptations / Math.max(1, this.adaptationMetrics.totalAdaptations);
 
     return (avgGrowth + adaptationSuccess) / 2;
   }

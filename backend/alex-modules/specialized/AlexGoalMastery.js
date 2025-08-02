@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_HIGH = 'high';
-/**
+const STR_HIGH = 'high';/**
  * @fileoverview AlexGoalMastery - Maîtrise des Objectifs d'Alex
  * Système avancé de définition, suivi et réalisation d'objectifs
  * @module AlexGoalMastery
@@ -11,7 +10,7 @@ const STR_HIGH = 'high';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -203,8 +202,7 @@ export class AlexGoalMastery extends EventEmitter {
     try {
       logger.info('🎯 AlexGoalMastery initializing - Achievement excellence awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -216,8 +214,7 @@ export class AlexGoalMastery extends EventEmitter {
     try {
       logger.info('🏆 AlexGoalMastery fully initialized - Goal mastery active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -233,9 +230,7 @@ export class AlexGoalMastery extends EventEmitter {
       planningPhase: {}
       activationPhase: {}
       trackingSystem: {}
-    };
-
-    // Phase 1: Design intelligent de l'objectif
+    };    // Phase 1: Design intelligent de l'objectif
     goal.designPhase = await this.designIntelligentGoal(goalRequest, userContext);
 
     // Phase 2: Planification stratégique
@@ -268,9 +263,7 @@ export class AlexGoalMastery extends EventEmitter {
       goalFormulation: {}
       alignmentCheck: {}
       feasibilityAssessment: {}
-    };
-
-    // Analyse de la demande
+    };    // Analyse de la demande
     design.goalAnalysis = this.analyzeGoalRequest(goalRequest);
 
     // Sélection du framework optimal
@@ -299,9 +292,7 @@ export class AlexGoalMastery extends EventEmitter {
       resourceRequirements: {}
       riskMitigation: {}
       motivationStrategy: {}
-    };
-
-    // Plan maître
+    };    // Plan maître
     plan.masterPlan = this.createMasterPlan(designPhase.goalFormulation);
 
     // Définition des jalons
@@ -339,9 +330,7 @@ export class AlexGoalMastery extends EventEmitter {
       analysis: {}
       adjustments: {}
       motivation: {}
-    };
-
-    // État actuel
+    };    // État actuel
     tracking.currentState = this.assessCurrentState(goal, progressUpdate);
 
     // Analyse de progression
@@ -354,7 +343,7 @@ export class AlexGoalMastery extends EventEmitter {
     tracking.motivation = this.provideMotivatinalSupport(goal, tracking.analysis);
 
     // Application des ajustements
-    if (tracking.adjustments.required) {
+    async if(goal, tracking.adjustments) {
       await this.applyGoalAdjustments(goal, tracking.adjustments);
     }
 
@@ -382,9 +371,7 @@ export class AlexGoalMastery extends EventEmitter {
       interventions: []
       motivationalSupport: {}
       nextSteps: []
-    };
-
-    // Évaluation de la situation
+    };    // Évaluation de la situation
     coaching.situationAssessment = this.assessCoachingSituation(goal, coachingContext);
 
     // Stratégie de coaching
@@ -417,9 +404,7 @@ export class AlexGoalMastery extends EventEmitter {
       learningIntegration: {}
       futureImplications: {}
       legacyCapture: {}
-    };
-
-    // Stratégie de célébration
+    };    // Stratégie de célébration
     celebration.celebrationStrategy = this.designCelebrationStrategy(goal, celebrationContext);
 
     // Intégration d'apprentissage
@@ -450,19 +435,18 @@ export class AlexGoalMastery extends EventEmitter {
   /**
    * Système de motivation dynamique
    */
-  async provideDynamicMotivation(goalId, motivationContext = {}) {
+  async provideDynamicMotivation(goalId, _motivationContext = {}) {
     const goal = this.activeGoals.get(goalId);
     if (!goal) {
       throw new Error(`Goal ${goalId} not found`);
     }
 
-    const motivation = {
+    const _motivation = {
       currentMotivationLevel: 0
       motivationAnalysis: {}
       interventions: []
       energizers: []
-      sustainabilityPlan: {}
-    };
+      sustainabilityPlan: {};    };
 
     // Niveau de motivation actuel
     motivation.currentMotivationLevel = this.assessMotivationLevel(goal, motivationContext);
@@ -491,7 +475,7 @@ export class AlexGoalMastery extends EventEmitter {
 
     // Optimisation mensuelle du système
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -504,11 +488,7 @@ export class AlexGoalMastery extends EventEmitter {
       obstaclePatterns: {}
       timingPatterns: {}
       strategicInsights: []
-    };
-
-    const completed = Array.from(this.completedGoals.values());
-
-    // Patterns de completion
+    };    const completed = Array.from(this.completedGoals.values());    // Patterns de completion
     patterns.completionPatterns = this.identifyCompletionPatterns(completed);
 
     // Patterns de motivation

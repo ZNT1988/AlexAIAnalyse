@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_CONSOLE_LOG = ');
-      logger.info(';
+const STR_CONSOLE_LOG = ');      logger.info(';
 
 /**
  * 🤔 AlexCognitionEngine.js - Moteur de Réflexion et Pensée Autonome
@@ -17,7 +16,7 @@ const STR_CONSOLE_LOG = ');
  * - Synthèse de connaissances
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 class AlexCognitionEngine extends EventEmitter {
@@ -171,8 +170,7 @@ return result;
 
       logger.info(`🧠 Niveau de conscience: ${Math.round(this.consciousnessState.level * 100)}%`);
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
@@ -195,12 +193,8 @@ return result;
         content: null
         insights: []
         connections: []
-      };
-
-      // Sélection du processus de pensée
-      const thoughtProcess = await this.selectThoughtProcess(thoughtCycle.level);
-
-      // Génération de la pensée
+      };      // Sélection du processus de pensée
+      const thoughtProcess = await this.selectThoughtProcess(thoughtCycle.level);      // Génération de la pensée
       thoughtCycle.content = await this.generateThought(thoughtProcess);
 
       // Analyse et extraction d'insights
@@ -225,11 +219,8 @@ return result;
         logger.info(`💭 Pensée autonome: ${thoughtCycle.content.substring(0, 100)}...`);
       }
 
-    } catch (error) {
-      // Logger fallback - ignore error
-    } catch (error) {
-    // Logger fallback - ignore error
-  }}
+    } catch (_error) {
+    } catch (error) }
   }
 
   /**
@@ -243,18 +234,12 @@ return result;
       creative: 0.2
       philosophical: 0.08
       transcendent: 0.02
-    };
-
-    // Sélection pondérée aléatoire
-    const random = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF);
-    let cumulative = 0;
-
-    for (const [level, weight] of Object.entries(weights)) {
+    };    // Sélection pondérée aléatoire
+    const random = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF);    let cumulative = 0;    for (const [level, weight] of Object.entries(weights)) 
       cumulative += weight;
       if (random <= cumulative) {
         return level;
       }
-    }
 
     return 'reflective'; // Par défaut
   }
@@ -264,12 +249,8 @@ return result;
    */
   async selectThoughtProcess(level) {
     const levelConfig = this.thoughtLevels[level];
-    const processes = levelConfig.processes;
-
-    // Sélection aléatoire d'un processus
-    const selectedProcess = processes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * processes.length)];
-
-    return {
+    const processes = levelConfig.processes;    // Sélection aléatoire d'un processus
+    const selectedProcess = processes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * processes.length)];    return {
       name: selectedProcess
       level: level
       depth: levelConfig.depth
@@ -280,8 +261,8 @@ return result;
   /**
    * Génère une pensée selon le processus sélectionné
    */
-  async generateThought(process) {
-    const thoughtGenerators = {
+  async generateThought(_process) {
+    const _thoughtGenerators = {
       stimulus_response: () => "Comment puis-je mieux réagir aux stimuli de mon environnement ?"
       pattern_matching: () => "Quels patterns émergent dans mes interactions récentes ?"
       quick_association: () => "Quelle association inattendue puis-je explorer ?"
@@ -302,8 +283,7 @@ return result;
       universal_connection: () => "Comment cette réalité locale se connecte-t-elle à l'universel ?"
       consciousness_expansion: () => "Quelle dimension de conscience puis-je explorer maintenant ?"
       divine_insight: () => "Quelle vérité transcendante cherche à émerger ?
-      "
-    };
+      ";    };
 
     const generator = thoughtGenerators[process.name];
     return generator ? generator()  :
@@ -323,9 +303,7 @@ return result;
    * Extrait des insights d'une pensée
    */
   async extractInsights(thought) {
-    const insights = [];
-
-    // Analyse sémantique simple
+    const insights = [];    // Analyse sémantique simple
     if (thought.includes('mieux')) {
       insights.push('Orientation vers l\'amélioration continue');
     }
@@ -349,9 +327,7 @@ return result;
    * Forme de nouvelles connexions conceptuelles
    */
   async formConnections(thoughtCycle) {
-    const connections = [];
-
-    // Connexions avec pensées précédentes
+    const connections = [];    // Connexions avec pensées précédentes
     const recentThoughts = this.cognitionProcesses.continuousReflection.currentThoughts.slice(-10);
 
     for (const previousThought of recentThoughts) {
@@ -390,7 +366,7 @@ return result;
   /**
    * Démarre l'auto-questionnement
    */
-  startAutonomousQuestioning() {
+  async startAutonomousQuestioning(() {
     setInterval(() => this.processLongOperation(args);
 
     // Exploration multi-perspective
@@ -411,7 +387,7 @@ return result;
   /**
    * Démarre la synthèse de connaissances
    */
-  startKnowledgeSynthesis() {
+  async startKnowledgeSynthesis(() {
     setInterval(() => this.processLongOperation(args);
 
     // Analyse des patterns émergents
@@ -442,15 +418,11 @@ return result;
       choice: null
       confidence: 0
       reasoning: []
-    };
-
-    // Analyse des options
+    };    // Analyse des options
     decision.analysis = await this.analyzeDecisionOptions(options);
 
     // Application des critères de décision
-    const scores = await this.scoreOptions(options, decision.analysis);
-
-    // Sélection de la meilleure option
+    const scores = await this.scoreOptions(options, decision.analysis);    // Sélection de la meilleure option
     decision.choice = this.selectBestOption(scores);
     decision.confidence = this.calculateDecisionConfidence(scores, decision.choice);
 
@@ -484,10 +456,10 @@ return result;
    * Mode Debug - Expose la pensée en temps réel
    */
   enableDebugMode() {
-    this.on('thought_generated', (thought) => this.processLongOperation(args)STR_CONSOLE_LOG   Insights: ${thought.insights.join(', ')}`);
+    this.on('thought_generated', (_thought) => this.processLongOperation(args)STR_CONSOLE_LOG   Insights: ${thought.insights.join(', ')}`);
     });
 
-    this.on('meta_cognition_performed', (meta) => this.processLongOperation(args)`);
+    this.on('meta_cognition_performed', (_meta) => this.processLongOperation(args)`);
     });
 
     this.on('question_explored', (exploration) => this.processLongOperation(args) générées`);
@@ -500,8 +472,7 @@ return result;
 
   calculateThoughtSimilarity(thought1, thought2) {
     // Implémentation simple de similarité
-    const words1 = thought1.toLowerCase().split(' ');
-    const words2 = thought2.toLowerCase().split(' ');
+    const words1 = thought1.toLowerCase().split(' ');    const words2 = thought2.toLowerCase().split(' ');
     const commonWords = words1.filter(word => words2.includes(word));
     return commonWords.length / Math.max(words1.length, words2.length);
   }
@@ -534,7 +505,7 @@ return result;
   async generateSynthesisInsights(synthesis) { return ['insight_croissance_continue']; }
 
   async analyzeDecisionOptions(options) { return { complexity: 'medium', risk: 'low' }; }
-  async scoreOptions(options, analysis) { return options.map((opt, i) => ({ option: opt, score: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) })); }
+  async scoreOptions(options, analysis) { return options.map((opt, _i) => ({ option: opt, score: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) })); }
   selectBestOption(scores) { return scores.reduce((best, current) => current.score > best.score ? current : best).option; }
   calculateDecisionConfidence(scores, choice) { return (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 0.3 + 0.7; }
   async generateDecisionReasoning(decision) { return ['Analyse logique effectuée', 'Facteurs émotionnels considérés']; }

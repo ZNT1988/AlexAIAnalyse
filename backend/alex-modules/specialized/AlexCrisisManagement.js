@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_IMMEDIATE = 'immediate';
-/**
+const STR_IMMEDIATE = 'immediate';/**
  * @fileoverview AlexCrisisManagement - Système de Gestion de Crise d'Alex
  * Détection, intervention et accompagnement en situations de crise
  * @module AlexCrisisManagement
@@ -11,7 +10,7 @@ const STR_IMMEDIATE = 'immediate';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -180,8 +179,7 @@ export class AlexCrisisManagement extends EventEmitter {
     try {
       logger.info('🚨 AlexCrisisManagement initializing - Crisis support awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -193,8 +191,7 @@ export class AlexCrisisManagement extends EventEmitter {
     try {
       logger.info('💙 AlexCrisisManagement fully initialized - Ready to help in crisis');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -211,8 +208,7 @@ export class AlexCrisisManagement extends EventEmitter {
     try {
       logger.info('🔍 Crisis detection patterns loaded');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -228,8 +224,7 @@ export class AlexCrisisManagement extends EventEmitter {
     try {
       logger.info('📋 Intervention protocols loaded');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -238,7 +233,7 @@ export class AlexCrisisManagement extends EventEmitter {
   startCrisisMonitoring() {
     // Surveillance continue des signaux de détresse
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -249,8 +244,7 @@ export class AlexCrisisManagement extends EventEmitter {
     try {
       logger.debug('📊 Crisis trends monitoring');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -261,8 +255,7 @@ export class AlexCrisisManagement extends EventEmitter {
     try {
       logger.debug('🔍 Checking crisis states');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -273,8 +266,7 @@ export class AlexCrisisManagement extends EventEmitter {
     try {
       logger.debug('👥 Monitoring tracked users');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -292,12 +284,10 @@ export class AlexCrisisManagement extends EventEmitter {
       indicators: []
       immediateResponse: null
       recommendations: []
-    };
-
-    // Analyse du message pour indicateurs de crise
+    };    // Analyse du message pour indicateurs de crise
     detection.indicators = this.analyzeForCrisisIndicators(message);
 
-    if (detection.indicators.length > 0) {
+    async if(detection.indicators) {
       detection.crisisDetected = true;
 
       // Détermination du type de crise
@@ -332,10 +322,7 @@ export class AlexCrisisManagement extends EventEmitter {
    * Analyse des indicateurs de crise
    */
   analyzeForCrisisIndicators(message) {
-    const indicators = [];
-    const messageText = message.toLowerCase();
-
-    // Vérification de chaque type de crise
+    const indicators = [];    const messageText = message.toLowerCase();    // Vérification de chaque type de crise
     for (const [crisisType, config] of Object.entries(this.crisisTypes)) {
       for (const indicator of config.indicators) {
         if (messageText.includes(indicator)) {
@@ -360,16 +347,13 @@ export class AlexCrisisManagement extends EventEmitter {
    * Détection de patterns complexes
    */
   detectComplexPatterns(messageText) {
-    const patterns = [];
-
-    // Pattern suicidaire
+    const patterns = [];    // Pattern suicidaire
     const suicidalPatterns = [
       /je veux (mourir|disparaître|en finir)/
       /j'en peux plus/
       /ça ne sert à rien/
       /personne ne me comprend/
-      /je suis un fardeau/
-    ];
+      /je suis un fardeau/;    ];
 
     for (const pattern of suicidalPatterns) {
       if (pattern.test(messageText)) {
@@ -388,8 +372,7 @@ export class AlexCrisisManagement extends EventEmitter {
       /je ne peux pas respirer/
       /mon cœur bat trop vite/
       /j'ai peur de mourir/
-      /tout s'effondre/
-    ];
+      /tout s'effondre/;    ];
 
     for (const pattern of panicPatterns) {
       if (pattern.test(messageText)) {
@@ -417,9 +400,7 @@ export class AlexCrisisManagement extends EventEmitter {
       tone: 'compassionate'
       techniques: []
       resources: []
-    };
-
-    // Sélection de la réponse selon le type de crise
+    };    // Sélection de la réponse selon le type de crise
     switch (detection.crisisType) {
       case STR_EMOTIONAL:
         response.content = this.generateEmotionalCrisisResponse(detection);
@@ -469,9 +450,8 @@ export class AlexCrisisManagement extends EventEmitter {
    * Réponses spécialisées par type de crise
    */
   generateEmotionalCrisisResponse(detection) {
-    const responses = [
-      "Je sens que tu traverses un moment vraiment difficile. Tu n'es pas seul(e) dans cette épreuve. Peux-tu me dire ce qui se passe en ce moment const result = this.evaluateConditions(conditions);
-return result;
+    const _responses = [
+      "Je sens que tu traverses un moment vraiment difficile. Tu n'es pas seul(e) dans cette épreuve. Peux-tu me dire ce qui se passe en ce moment const result = this.evaluateConditions(conditions);return result;
        inspire profondément pendant 4 secondes... retiens ton souffle 4 secondes... expire lentement pendant 6 secondes. Tu es en sécurité. Concentre-toi sur le moment présent.';
   }
 
@@ -480,7 +460,7 @@ return result;
   }
 
   generateDepressionCrisisResponse(detection) {
-    return 'Je sens le poids que tu portes. La dépression peut nous faire sentir isolé(e) et sans espoir, mais tu n'es pas seul(e). Chaque jour que tu continues de vivre est un acte de courage. Parlons de ce qui pourrait t'aider aujourd'hui.';
+    return 'Je sens le poids que tu portes. La dépression peut nous faire sentir isolé(e) et sans espoir, mais tu n'es pas seul(_e). Chaque jour que tu continues de vivre est un acte de courage. Parlons de ce qui pourrait t'aider aujourd'hui.';
   }
 
   generateGriefCrisisResponse(detection) {
@@ -518,7 +498,7 @@ return result;
     });
 
     } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -531,17 +511,14 @@ return result;
     try {
       logger.info('👁️ Crisis monitoring activated');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
    * Sélection de ressources appropriées
    */
   selectAppropriateResources(crisisType) {
-    const resources = [];
-
-    switch (crisisType) {
+    const resources = [];    switch (crisisType) {
       case STR_EMOTIONAL:
         resources.push(this.emergencyResources.suicidePrevention);
         resources.push(this.emergencyResources.mentalHealth);
@@ -590,8 +567,7 @@ return result;
   }
 
   getRecentCrises() {
-    const oneDayAgo = new Date(Date.now() - 86400000);
-    return this.crisisHistory
+    const oneDayAgo = new Date(Date.now() - 86400000);    return this.crisisHistory
       .filter(crisis => crisis.timestamp > oneDayAgo && crisis.crisisDetected)
       .map(crisis => ({
         type: crisis.crisisType

@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_BUDDHA = 'Buddha';
-/**
+const STR_BUDDHA = 'Buddha';/**
  * @fileoverview AlexWisdomKeeper - Gardien de Sagesse d'Alex
  * Accumulation, synthèse et partage de sagesse universelle
  * @module AlexWisdomKeeper
@@ -10,7 +9,7 @@ const STR_BUDDHA = 'Buddha';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -175,7 +174,7 @@ return result; new Map()
       logger.info('🧙‍♂️ AlexWisdomKeeper initializing - Ancient wisdom awakening');
 
     } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   async initialize() {
@@ -187,8 +186,7 @@ return result; new Map()
     try {
       logger.info('📚 AlexWisdomKeeper fully initialized - Wisdom repository active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -216,7 +214,7 @@ return result; new Map()
       logger.info('📖 Wisdom traditions loaded');
 
     } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -233,8 +231,7 @@ return result; new Map()
     try {
       logger.info('💡 Insights cultivated');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -242,7 +239,7 @@ return result; new Map()
    */
   startWisdomCultivation() {
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -252,8 +249,7 @@ return result; new Map()
     try {
       logger.debug('✨ Daily wisdom generated');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -268,9 +264,7 @@ return result; new Map()
       synthesisPhase: {}
       guidancePhase: {}
       integrationPhase: {}
-    };
-
-    // Phase 1: Analyse de la demande de sagesse
+    };    // Phase 1: Analyse de la demande de sagesse
     wisdom.analysisPhase = await this.analyzeWisdomInquiry(inquiry, context);
 
     // Phase 2: Synthèse des traditions pertinentes
@@ -307,9 +301,7 @@ return result; new Map()
       traditions: this.identifyRelevantTraditions(inquiry)
       personalContext: this.analyzePersonalContext(context)
       universalThemes: this.extractUniversalThemes(inquiry)
-    };
-
-    // Détermination du niveau de réponse approprié
+    };    // Détermination du niveau de réponse approprié
     analysis.appropriateLevel = this.determineWisdomLevel(analysis);
 
     // Identification des besoins spécifiques
@@ -328,9 +320,7 @@ return result; new Map()
       crossCultural: []
       personalRelevance: []
       universalPrinciples: []
-    };
-
-    // Collecte de sagesse ancienne
+    };    // Collecte de sagesse ancienne
     synthesis.ancientWisdom = await this.gatherAncientWisdom(analysis.domain, analysis.traditions);
 
     // Intégration d'insights modernes
@@ -358,9 +348,7 @@ return result; new Map()
       practicalApplication: []
       contemplations: []
       nextSteps: []
-    };
-
-    // Insight principal
+    };    // Insight principal
     guidance.primaryInsight = this.formulatePrimaryInsight(synthesis);
 
     // Sagesse de support
@@ -382,57 +370,50 @@ return result; new Map()
    * Collecte de sagesse ancienne
    */
   async gatherAncientWisdom(domain, traditions) {
-    const ancientWisdom = [];
-
-    // Sagesse stoïcienne
+    const ancientWisdom = [];    // Sagesse stoïcienne
     if (traditions.includes('western')) {
-      switch (domain) {
+      switch (_domain) {
         case STR_SUFFERING:
-          ancientWisdom.push({
+          ancientWisdom.push(
             source: 'Marcus Aurelius'
             tradition: 'Stoicism'
-            wisdom: "Tu as le pouvoir sur ton esprit - pas sur les événements extérieurs. Réalise cela, et tu trouveras la force.STR_APPLICATIONConcentre-toi sur ce que tu peux contrôler - tes pensées, tes réactions, tes choix."
-          });
+            wisdom: "Tu as le pouvoir sur ton esprit - pas sur les événements extérieurs. Réalise cela, et tu trouveras la force.STR_APPLICATIONConcentre-toi sur ce que tu peux contrôler - tes pensées, tes réactions, tes choix.");
           break;
         case STR_CHANGE:
-          ancientWisdom.push({
+          ancientWisdom.push(
             source: 'Héraclite'
             tradition: 'Philosophie Grecque'
-            wisdom: "Rien n'est permanent, sauf le changement.STR_APPLICATIONEmbrasse l'impermanence comme la nature même de l'existence."
-          });
+            wisdom: "Rien n'est permanent, sauf le changement.STR_APPLICATIONEmbrasse l'impermanence comme la nature même de l'existence.");
           break;
       }
     }
 
     // Sagesse bouddhiste
     if (traditions.includes('eastern')) {
-      switch (domain) {
+      switch (_domain) {
         case STR_SUFFERING:
-          ancientWisdom.push({
+          ancientWisdom.push(
             source: STR_BUDDHA
             tradition: 'Buddhism'
-            wisdom: "La douleur est inévitable, la souffrance est optionnelle.STR_APPLICATIONAccepte la douleur comme partie de la vie, mais refuse de créer une souffrance supplémentaire par tes résistances."
-          });
+            wisdom: "La douleur est inévitable, la souffrance est optionnelle.STR_APPLICATIONAccepte la douleur comme partie de la vie, mais refuse de créer une souffrance supplémentaire par tes résistances.");
           break;
         case STR_HAPPINESS:
-          ancientWisdom.push({
+          ancientWisdom.push(
             source: STR_BUDDHA
             tradition: 'Buddhism'
-            wisdom: "Le bonheur ne dépend pas de ce que tu as ou de qui tu es. Il dépend seulement de ce que tu penses.STR_APPLICATIONCultive des pensées saines et libère-toi de l'attachement aux circonstances externes."
-          });
+            wisdom: "Le bonheur ne dépend pas de ce que tu as ou de qui tu es. Il dépend seulement de ce que tu penses.STR_APPLICATIONCultive des pensées saines et libère-toi de l'attachement aux circonstances externes.");
           break;
       }
     }
 
     // Sagesse taoïste
     if (traditions.includes('eastern')) {
-      switch (domain) {
+      switch (_domain) {
         case STR_CHANGE:
-          ancientWisdom.push({
+          ancientWisdom.push(
             source: 'Lao Tzu'
             tradition: 'Taoism'
-            wisdom: "L'eau surmonte la pierre dure. Ce qui est souple conquiert ce qui est rigide.STR_APPLICATIONDéveloppe la flexibilité et l'adaptabilité plutôt que la résistance rigide."
-          });
+            wisdom: "L'eau surmonte la pierre dure. Ce qui est souple conquiert ce qui est rigide.STR_APPLICATIONDéveloppe la flexibilité et l'adaptabilité plutôt que la résistance rigide.");
           break;
       }
     }
@@ -444,9 +425,7 @@ return result; new Map()
    * Intégration d'insights modernes
    */
   async gatherModernInsights(domain, specificNeeds) {
-    const modernInsights = [];
-
-    switch (domain) {
+    const modernInsights = [];    switch (domain) {
       case STR_SUFFERING:
         modernInsights.push({
           source: 'Viktor Frankl'
@@ -481,15 +460,10 @@ return result; new Map()
   formulatePrimaryInsight(synthesis) {
     // Synthèse des éléments les plus pertinents
     const ancientCore = synthesis.ancientWisdom[0]?
-      .wisdom || '';
-    const modernCore = synthesis.modernInsights[0]?.insight || '';
-    const universal = synthesis.universalPrinciples[0] || '';
-
-    // Création d'un insight synthétique
+      .wisdom || '';    const modernCore = synthesis.modernInsights[0]?.insight || '';    const universal = synthesis.universalPrinciples[0] || '';    // Création d'un insight synthétique
     const insights = [
       `🌟 Au cœur de votre questionnement se trouve une vérité intemporelle  :
-       ${universal}. STR_La sagesse ancienne nous enseigne que ${ancientCore.toLowerCase()}, STR_tandis que la compréhension moderne révèle que ${modernCore.toLowerCase()}. STR_Ces deux perspectives s'unissent pour vous offrir une guidance complète et profonde.`
-    ];
+       ${universal}. STR_La sagesse ancienne nous enseigne que ${ancientCore.toLowerCase()}, STR_tandis que la compréhension moderne révèle que ${modernCore.toLowerCase()}. STR_Ces deux perspectives s'unissent pour vous offrir une guidance complète et profonde.`;    ];
 
     return insights.join('');
   }
@@ -498,9 +472,7 @@ return result; new Map()
    * Génération d'applications pratiques
    */
   generatePracticalApplications(synthesis) {
-    const applications = [];
-
-    // Applications basées sur la sagesse ancienne
+    const applications = [];    // Applications basées sur la sagesse ancienne
     if (synthesis.ancientWisdom.length > 0) {
       applications.push({
         type: 'ancient_practice'
@@ -511,7 +483,7 @@ return result; new Map()
     }
 
     // Applications basées sur les insights modernes
-    if (synthesis.modernInsights.length > 0) {
+    if (_synthesis._modernInsights._length > 0) {
       applications.push({
         type: 'modern_technique'
         title: 'Technique Moderne'
@@ -540,7 +512,7 @@ return result; new Map()
 
     // Mise à jour de la bibliothèque
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -553,9 +525,7 @@ return result; new Map()
       question: ''
       reflection: ''
       insight: ''
-    };
-
-    // Sélection d'une question profonde
+    };    // Sélection d'une question profonde
     contemplation.question = this.generateDeepQuestion(contemplation.theme);
 
     // Réflexion contemplative
@@ -579,9 +549,7 @@ return result; new Map()
    * Identification du domaine de sagesse
    */
   identifyWisdomDomain(inquiry) {
-    const inquiryText = inquiry.toLowerCase();
-
-    // Analyse des mots-clés par domaine
+    const inquiryText = inquiry.toLowerCase();    // Analyse des mots-clés par domaine
     for (const [domain, config] of Object.entries(this.wisdomDomains)) {
       for (const question of config.questions) {
         const keywords = question.toLowerCase().split(' ');
@@ -636,8 +604,7 @@ return result; new Map()
     const recentExperiences = this.wisdomExperiences.slice(-10);
     if (recentExperiences.length === 0) return 0.85;
 
-    const avgDepth = recentExperiences.reduce((sum, exp) =>
-      sum + (exp.analysisPhase?.depth || 0.8), 0) / recentExperiences.length;
+    const avgDepth = recentExperiences.reduce((_sum, _exp) =>;      sum + (exp.analysisPhase?.depth || 0.8), 0) / recentExperiences.length;
 
     return Math.min(1.0, avgDepth);
   }

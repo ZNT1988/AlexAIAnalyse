@@ -1,8 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_TRUE = 'true';
-
-/**
+// const STR_TRUE = 'true'; // Unused variable commented by SonarFix/**
  * @fileoverview Monitoring Routes - Performance Metrics API
  * Real-time performance monitoring and metrics endpoints
  *
@@ -17,8 +15,7 @@ import { getRedisCache } from '../cache/RedisCache.js';
 import { getSecurityManager } from '../security/EnterpriseSecurityManager.js';
 import logger from '../config/logger.js';
 
-const router = express.Router();
-const performanceMonitor = getPerformanceMonitor();
+// const router = express.Router(); // Unused variable commented by SonarFixconst performanceMonitor = getPerformanceMonitor();
 
 /**
  * @route GET /api/monitoring/status
@@ -27,13 +24,9 @@ const performanceMonitor = getPerformanceMonitor();
  */
 router.get('/status', async (req, res) => {
     try {
-        const summary = performanceMonitor.getPerformanceSummary();
-        const cache = getRedisCache();
-        const cacheHealth = await cache.healthCheck();
-        const securityManager = getSecurityManager();
-        const securityStatus = securityManager.getSecurityStatus();
-
-        const status = {
+        // const summary = performanceMonitor.getPerformanceSummary(); // Unused variable commented by SonarFix        const cache = getRedisCache();
+        // const cacheHealth = await cache.healthCheck(); // Unused variable commented by SonarFix        const securityManager = getSecurityManager();
+        // const securityStatus = securityManager.getSecurityStatus(); // Unused variable commented by SonarFix        // const status = {
             timestamp: new Date().toISOString(),
             status: 'operational'
             version: process.env.npm_package_version || '1.0.0'
@@ -76,9 +69,7 @@ router.get('/status', async (req, res) => {
                     timestamp: alert.timestamp
                 }))
             }
-        };
-
-        // Add detailed info for authenticated users
+        }; // Unused variable commented by SonarFix        // Add detailed info for authenticated users
         if (req.user) {
             status.detailed = {
                 metricsCollected: summary.summary.metricsCollected,
@@ -106,28 +97,22 @@ router.get('/status', async (req, res) => {
 router.get('/metrics', async (req, res) => {
     try {
         const { category, type } = req.query;
-        const now = Date.now();
-
-        // Parse time range
-        const ranges = {
+        // const now = Date.now(); // Unused variable commented by SonarFix        // Parse time range
+        // const ranges = {
             '1h': 3600000
             '6h': 21600000
             '24h': 86400000
-            '7d': 604800000
-        };
+            '7d': 604800000; // Unused variable commented by SonarFix        };
 
         const timeRange = ranges[range] || ranges['1h'];
-        const startTime = now - timeRange;
-
-        let metrics;
+        // const startTime = now - timeRange; // Unused variable commented by SonarFix        let metrics;
 
         if (category && type) {
             // Get specific metric
             metrics = performanceMonitor.getMetricsInRange(category, type, startTime, now);
         } else {
             // Get all metrics summary
-            const summary = performanceMonitor.getPerformanceSummary();
-            metrics = {
+            // const summary = performanceMonitor.getPerformanceSummary(); // Unused variable commented by SonarFix            metrics = {
                 summary: summary.summary,
                 current: summary.currentMetrics
                 performance: summary.performance,
@@ -161,9 +146,7 @@ router.get('/metrics', async (req, res) => {
 router.get('/alerts', (req, res) => {
     try {
         const { severity, acknowledged } = req.query;
-        let alerts = [...performanceMonitor.alerts];
-
-        // Filter by severity
+        // let alerts = [...performanceMonitor.alerts]; // Unused variable commented by SonarFix        // Filter by severity
         if (severity) { alerts = alerts.filter(alert => alert.severity === severity);
         ; return; }
 
@@ -227,11 +210,8 @@ router.post('/alerts/:id/acknowledge', (req, res) => {
  */
 router.get('/performance', async (req, res) => {
     try {
-        const summary = performanceMonitor.getPerformanceSummary();
-        const cache = getRedisCache();
-        const cacheStats = cache.getStats();
-
-        const performance = {
+        // const summary = performanceMonitor.getPerformanceSummary(); // Unused variable commented by SonarFix        const cache = getRedisCache();
+        // const cacheStats = cache.getStats(); // Unused variable commented by SonarFix        // const performance = {
             timestamp: new Date().toISOString()
             // Response time analysis
             responseTime: {,
@@ -269,9 +249,7 @@ router.get('/performance', async (req, res) => {
                 cpu: summary.currentMetrics.system.cpu?.value || 0
                 errorRate: summary.performance.errorRate
             })
-        };
-
-        res.json({
+        }; // Unused variable commented by SonarFix        res.json({
             success: true,
             data: performance
         });
@@ -340,9 +318,7 @@ router.post('/stop', (req, res) => {
 router.get('/export', (req, res) => {
     try {
 
-        const exportData = performanceMonitor.exportMetrics(format);
-
-        const filename = `performance-metrics-${new Date().toISOString().split('T')[0]}.${format}';
+        // const exportData = performanceMonitor.exportMetrics(format); // Unused variable commented by SonarFix        const filename = `performance-metrics-${new Date().toISOString().split('T')[0]}.${format}';
 
         res.setHeader('Content-Disposition', 'attachment; filename="${filename}"`);
         res.setHeader('Content-Type', format === 'json' ? 'application/json' : 'text/plain');

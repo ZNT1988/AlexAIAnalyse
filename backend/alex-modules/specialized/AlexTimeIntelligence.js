@@ -7,7 +7,7 @@
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -201,8 +201,7 @@ export class AlexTimeIntelligence extends EventEmitter {
     try {
       logger.info('⏰ AlexTimeIntelligence initializing - Temporal mastery awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -214,8 +213,7 @@ export class AlexTimeIntelligence extends EventEmitter {
     try {
       logger.info('🕐 AlexTimeIntelligence fully initialized - Time mastery active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -230,9 +228,7 @@ export class AlexTimeIntelligence extends EventEmitter {
       energyPatternAnalysis: {}
       productivityAnalysis: {}
       optimizationRecommendations: {}
-    };
-
-    // Analyse du chronotype
+    };    // Analyse du chronotype
     analysis.chronotypeAnalysis = await this.analyzeChronotype(userActivities);
 
     // Analyse des patterns d'énergie
@@ -265,9 +261,7 @@ export class AlexTimeIntelligence extends EventEmitter {
       optimizedSchedule: {}
       alternatives: []
       metrics: {}
-    };
-
-    // Analyse des tâches
+    };    // Analyse des tâches
     optimization.analysis = await this.analyzeTasks(tasks);
 
     // Création du planning optimisé
@@ -298,9 +292,7 @@ export class AlexTimeIntelligence extends EventEmitter {
       optimizations: []
       reallocationOptions: []
       efficiencyGains: []
-    };
-
-    // Détection de créneaux libres
+    };    // Détection de créneaux libres
     opportunities.gaps = this.detectTimeGaps(currentSchedule);
 
     // Opportunités d'optimisation
@@ -327,9 +319,7 @@ export class AlexTimeIntelligence extends EventEmitter {
       allocationStrategy: {}
       recoveryPlan: {}
       sustainabilityMeasures: {}
-    };
-
-    // Évaluation de l'énergie actuelle
+    };    // Évaluation de l'énergie actuelle
     management.energyAssessment = this.assessCurrentEnergy(currentState);
 
     // Stratégie d'allocation énergétique
@@ -359,9 +349,7 @@ export class AlexTimeIntelligence extends EventEmitter {
       alignmentStrategy: {}
       adaptationPlan: {}
       monitoringSystem: {}
-    };
-
-    // Analyse des rythmes
+    };    // Analyse des rythmes
     synchronization.rhythmAnalysis = this.analyzePersonalRhythms(personalRhythms);
 
     // Stratégie d'alignement
@@ -391,9 +379,7 @@ export class AlexTimeIntelligence extends EventEmitter {
       patternAnalysis: {}
       bottleneckIdentification: {}
       improvementAreas: []
-    };
-
-    // Métriques d'efficacité
+    };    // Métriques d'efficacité
     analysis.efficiencyMetrics = this.calculateEfficiencyMetrics(timeData, outputData);
 
     // Analyse de patterns
@@ -417,7 +403,7 @@ export class AlexTimeIntelligence extends EventEmitter {
 
     // Optimisation hebdomadaire
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -430,13 +416,9 @@ export class AlexTimeIntelligence extends EventEmitter {
       peakPeriods: []
       lowPeriods: []
       recommendations: []
-    };
-
-    // Analyse des patterns d'activité par heure
+    };    // Analyse des patterns d'activité par heure
     const hourlyActivity = this.groupActivitiesByHour(userActivities);
-    const hourlyProductivity = this.calculateHourlyProductivity(hourlyActivity);
-
-    // Identification des pics de performance
+    const hourlyProductivity = this.calculateHourlyProductivity(hourlyActivity);    // Identification des pics de performance
     chronotype.peakPeriods = this.identifyPeakPeriods(hourlyProductivity);
     chronotype.lowPeriods = this.identifyLowPeriods(hourlyProductivity);
 
@@ -460,12 +442,8 @@ export class AlexTimeIntelligence extends EventEmitter {
       totalDuration: 0
       efficiencyScore: 0
       balanceScore: 0
-    };
-
-    // Tri des tâches par priorité et énergie requise
-    const prioritizedTasks = this.prioritizeTasks(taskAnalysis.tasks);
-
-    // Allocation optimale des créneaux
+    };    // Tri des tâches par priorité et énergie requise
+    const prioritizedTasks = this.prioritizeTasks(taskAnalysis.tasks);    // Allocation optimale des créneaux
     schedule.slots = this.allocateTimeSlots(prioritizedTasks, constraints);
 
     // Calcul des métriques
@@ -480,12 +458,9 @@ export class AlexTimeIntelligence extends EventEmitter {
    * Détection de créneaux libres
    */
   detectTimeGaps(currentSchedule) {
-    const gaps = [];
-
-    // Analyse des intervalles libres
+    const gaps = [];    // Analyse des intervalles libres
     for (let i = 0; i < currentSchedule.length - 1; i++) {
-      const currentEnd = new Date(currentSchedule[i].endTime);
-      const nextStart = new Date(currentSchedule[i + 1].startTime);
+      const currentEnd = new Date(currentSchedule[i].endTime);      const nextStart = new Date(currentSchedule[i + 1].startTime);
 
       const gapDuration = nextStart - currentEnd;
 
@@ -507,8 +482,7 @@ export class AlexTimeIntelligence extends EventEmitter {
    * Utilitaires
    */
   classifyChronotype(peakPeriods, lowPeriods) {
-    const morningPeak = peakPeriods.some(period => period.hour < 10);
-    const eveningPeak = peakPeriods.some(period => period.hour > 18);
+    const morningPeak = peakPeriods.some(period => period.hour < 10);    const eveningPeak = peakPeriods.some(period => period.hour > 18);
 
     if (morningPeak && !eveningPeak) return 'morning';
     if (eveningPeak && !morningPeak) return 'evening';
@@ -516,10 +490,7 @@ export class AlexTimeIntelligence extends EventEmitter {
   }
 
   calculateEfficiencyMetrics(timeData, outputData) {
-    const totalTime = timeData.reduce((sum, entry) => sum + entry.duration, 0);
-    const totalOutput = outputData.reduce((sum, entry) => sum + entry.value, 0);
-
-    return {
+    const totalTime = timeData.reduce((sum, entry) => sum + entry.duration, 0);    const totalOutput = outputData.reduce((sum, entry) => sum + entry.value, 0);    return {
       timeEfficiency: totalOutput / totalTime
       focusTime: timeData.filter(entry => entry.focused).reduce((sum, entry) => sum + entry.duration, 0)
       distractionTime: timeData.filter(entry => !entry.focused).reduce((sum, entry) => sum + entry.duration, 0)

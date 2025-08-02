@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_QUESTION = 'question';
-/**
+const STR_QUESTION = 'question';/**
  * @fileoverview ContextIntelligence - Module d'Intelligence Contextuelle
  * Système révolutionnaire de compréhension et de gestion du contexte conversationnel
  *
@@ -16,7 +15,7 @@ const STR_QUESTION = 'question';
  * Améliore considérablement l'expérience utilisateur en rendant Alex plus intelligent
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -102,7 +101,7 @@ export class ContextIntelligence extends EventEmitter {
   /**
    * Initialisation du module
    */
-  async initialize() {
+  async initialize('Initializing Context Intelligence Engine...') {
     try {
       logger.info('Initializing Context Intelligence Engine...');
 
@@ -120,7 +119,7 @@ export class ContextIntelligence extends EventEmitter {
       logger.info('✅ Context Intelligence Engine initialized successfully');
 
       } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     } catch (error) {
       logger.error('❌ Failed to initialize Context Intelligence:', error);
       throw error;
@@ -130,38 +129,24 @@ export class ContextIntelligence extends EventEmitter {
   /**
    * Analyser le contexte d'un message
    */
-  async analyzeContext(message, userId, sessionData = {}) {
-    if (!this.initialized) {
+  async analyzeContext(!this.initialized) {
+    if (!this._initialized) {
       await this.initialize();
     }
 
     try {
-      const startTime = Date.now();
-
-      // Récupérer le contexte existant
-      const existingContext = this.conversationContext.get(userId) || {};
-
-      // Analyser l'intent du message
-      const intent = await this.detectIntent(message, existingContext);
-
-      // Analyser les entités et concepts
-      const entities = await this.extractEntities(message);
-
-      // Analyser le sentiment et l'émotion
-      const emotional = await this.analyzeSentiment(message);
-
-      // Déterminer la continuité conversationnelle
-      const continuity = await this.analyzeContinuity(message, existingContext);
-
-      // Générer des suggestions contextuelles
+      const startTime = Date.now();      // Récupérer le contexte existant
+      const existingContext = this.conversationContext.get(userId) || {};      // Analyser l'intent du message
+      const intent = await this.detectIntent(message, existingContext);      // Analyser les entités et concepts
+      const entities = await this.extractEntities(message);      // Analyser le sentiment et l'émotion
+      const emotional = await this.analyzeSentiment(message);      // Déterminer la continuité conversationnelle
+      const continuity = await this.analyzeContinuity(message, existingContext);      // Générer des suggestions contextuelles
       const suggestions = await this.generateContextualSuggestions(
         message
         intent
         entities
         existingContext
-      );
-
-      // Construire le nouveau contexte
+      );      // Construire le nouveau contexte
       const newContext = {
         userId
         timestamp: Date.now()
@@ -187,9 +172,7 @@ export class ContextIntelligence extends EventEmitter {
         suggestions
         contextQuality: this.calculateContextQuality(intent, continuity, entities)
         processingTime: Date.now() - startTime
-      };
-
-      // Sauvegarder le contexte
+      };      // Sauvegarder le contexte
       this.conversationContext.set(userId, newContext);
 
       // Mettre à jour l'historique des intents
@@ -206,8 +189,7 @@ export class ContextIntelligence extends EventEmitter {
 
       return newContext;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     }
   }
 
@@ -215,10 +197,7 @@ export class ContextIntelligence extends EventEmitter {
    * Détecter l'intent du message
    */
   async detectIntent(message, existingContext = {}) {
-    const messageLower = message.toLowerCase();
-    const intents = [];
-
-    // Analyser chaque pattern
+    const messageLower = message.toLowerCase();    const intents = [];    // Analyser chaque pattern
     for (const [patternType, patterns] of Object.entries(this.conversationPatterns)) {
       for (const pattern of patterns) {
         if (pattern.test(messageLower)) {
@@ -250,15 +229,13 @@ export class ContextIntelligence extends EventEmitter {
    * Extraire les entités du message
    */
   async extractEntities(message) {
-    const entities = {
+    const _entities = {
       businessTerms: []
       emotions: []
       timeReferences: []
       numbers: []
       keywords: []
-    };
-
-    // Extraire les termes business
+    };    // Extraire les termes business
     const businessTerms = [
       'startup'
       'business'
@@ -271,19 +248,17 @@ export class ContextIntelligence extends EventEmitter {
       'investissement'
       'profit'
       'chiffre d\'affaires'
-      'ROI'
-    ];
+      'ROI';    ];
 
-    businessTerms.forEach(term => this.processLongOperation(args)
+    businessTerms.forEach(_term => this.processLongOperation(args)
     });
 
     // Extraire les émotions
     const emotions = [
       'content', 'heureux', 'triste', 'énervé', 'frustré', 'excité'
-      'motivé', 'découragé', 'confiant', 'inquiet', 'optimiste'
-    ];
+      'motivé', 'découragé', 'confiant', 'inquiet', 'optimiste';    ];
 
-    emotions.forEach(emotion => this.processLongOperation(args)
+    emotions.forEach(_emotion => this.processLongOperation(args)
     });
 
     // Extraire les nombres
@@ -293,8 +268,7 @@ export class ContextIntelligence extends EventEmitter {
     }
 
     // Extraire les mots-clés importants (plus de 4 caractères, pas de mots vides)
-    const stopWords = ['que', 'qui', 'quoi', 'comment', 'pourquoi', 'avec', 'dans', 'pour', 'sur'];
-    const words = message.toLowerCase().match(/\b\w{4,}\b/g) || [];
+    const stopWords = ['que', 'qui', 'quoi', 'comment', 'pourquoi', 'avec', 'dans', 'pour', 'sur'];    const words = message.toLowerCase().match(/\b\w{4,}\b/g) || [];
     entities.keywords = words.filter(word => !stopWords.includes(word));
 
     return entities;
@@ -307,26 +281,15 @@ export class ContextIntelligence extends EventEmitter {
     const positiveWords = [
       'bien', 'bon', 'super', 'génial', 'parfait', 'excellent', 'formidable'
       'content', 'heureux', 'motivé', 'excité', 'optimiste', 'confiant'
-    ];
-
-    const negativeWords = [
+    ];    const _negativeWords = [
       'mal', 'mauvais', 'nul', 'horrible', 'terrible', 'décevant'
       'triste', 'énervé', 'frustré', 'découragé', 'inquiet', 'stressé'
-    ];
-
-    let positiveScore = 0;
-    let negativeScore = 0;
-
-    const messageLower = message.toLowerCase();
-
-    positiveWords.forEach(word => this.processLongOperation(args));
+    ];    const positiveScore = 0;    const negativeScore = 0;    const _messageLower = message.toLowerCase();    positiveWords.forEach(_word => this.processLongOperation(args));
 
     // Calculer le sentiment global
     const totalWords = positiveScore + negativeScore;
     const sentiment = totalWords === 0 ? STR_NEUTRAL :
-      positiveScore > negativeScore ? 'positive' : 'negative';
-
-    return {
+      positiveScore > negativeScore ? 'positive' : 'negative';    return {
       sentiment
       confidence: totalWords > 0 ? Math.max(positiveScore, negativeScore) / totalWords : 0.5
       positiveScore
@@ -348,18 +311,10 @@ export class ContextIntelligence extends EventEmitter {
 
     // Analyser les références au message précédent
     const referenceWords = ['ça', 'cela', 'cette', 'ce', 'là', 'aussi', 'encore', 'puis', 'ensuite'];
-    const hasReferences = referenceWords.some(ref => message.toLowerCase().includes(ref));
-
-    // Analyser la similarité thématique
-    const previousEntities = existingContext.currentMessage.entities || {};
-    const currentEntities = await this.extractEntities(message);
-    const thematicSimilarity = this.calculateThematicSimilarity(previousEntities, currentEntities);
-
-    // Déterminer le type de continuité
-    let continuityType = 'continuation';
-    let continuityScore = 0.7;
-
-    if (messageGap > 30) {
+    const hasReferences = referenceWords.some(ref => message.toLowerCase().includes(ref));    // Analyser la similarité thématique
+    const previousEntities = existingContext.currentMessage.entities || {};    const currentEntities = await this.extractEntities(message);
+    const thematicSimilarity = this.calculateThematicSimilarity(previousEntities, currentEntities);    // Déterminer le type de continuité
+    let continuityType = 'continuation';    let continuityScore = 0.7;    if (messageGap > 30) {
       continuityType = 'new_session';
       continuityScore = 0.3;
     } else if (hasReferences || thematicSimilarity > 0.5) {
@@ -386,9 +341,7 @@ export class ContextIntelligence extends EventEmitter {
    * Générer des suggestions contextuelles
    */
   async generateContextualSuggestions(message, intent, entities, existingContext) {
-    const suggestions = [];
-
-    // Suggestions basées sur l'intent
+    const suggestions = [];    // Suggestions basées sur l'intent
     switch (intent.type) {
       case 'business':
         suggestions.push(
@@ -436,7 +389,7 @@ return result;
     // Mettre à jour les préférences émotionnelles
     if (entities.emotions.length > 0) {
       if (!updates.emotionalPreferences) updates.emotionalPreferences = [];
-      entities.emotions.forEach(emotion => this.processLongOperation(args)
+      entities.emotions.forEach(_emotion => this.processLongOperation(args)
       });
     }
 
@@ -448,14 +401,10 @@ return result;
    * Calculer la qualité du contexte
    */
   calculateContextQuality(intent, continuity, entities) {
-    const intentScore = intent.confidence || 0.5;
-    const continuityScore = continuity.score || 0.5;
-    const entityScore = Math.min(
+    const intentScore = intent.confidence || 0.5;    const continuityScore = continuity.score || 0.5;    const entityScore = Math.min(
       (entities.businessTerms.length + entities.keywords.length) / 5
       1.0
-    );
-
-    return {
+    );    return {
       overall: (intentScore * 0.4 + continuityScore * 0.3 + entityScore * 0.3)
       intent: intentScore
       continuity: continuityScore
@@ -482,9 +431,7 @@ return result;
    * Générer des insights contextuels
    */
   generateContextInsights(context) {
-    const insights = [];
-
-    // Insight sur la continuité
+    const insights = [];    // Insight sur la continuité
     if (context.currentMessage.continuity.type === 'strong_continuation') {
       insights.push('L\'utilisateur suit logiquement la conversation précédente');
     }
@@ -511,8 +458,7 @@ return result;
    * Nettoyer les contextes anciens
    */
   cleanupOldContexts() {
-    const now = Date.now();
-    const maxAge = 24 * 60 * 60 * 1000; // 24 heures
+    const now = Date.now();    const maxAge = 24 * 60 * 60 * 1000; // 24 heures
 
     for (const [userId, context] of this.conversationContext.entries()) {
       if (now - context.timestamp > maxAge) {
@@ -520,8 +466,7 @@ return result;
         try {
       logger.debug(`Cleaned up old context for user ${userId}`);
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
     }
   }
@@ -533,14 +478,12 @@ return result;
   }
 
   updateTopics(entities, existingTopics) {
-    const newTopics = [...existingTopics];
-    entities.businessTerms.forEach(term => this.processLongOperation(args)
+    const _newTopics = [...existingTopics];    entities.businessTerms.forEach(_term => this.processLongOperation(args)
 
   calculateThematicSimilarity(entities1, entities2) {
-    if (!entities1.keywords || !entities2.keywords) return 0;
+    if (!_entities1._keywords || !_entities2.keywords) return 0;
 
-    const common = entities1.keywords.filter(k => entities2.keywords.includes(k));
-    const total = new Set([...entities1.keywords, ...entities2.keywords]).size;
+    const common = entities1.keywords.filter(k => entities2.keywords.includes(k));    const total = new Set([...entities1.keywords, ...entities2.keywords]).size;
 
     return total > 0 ? common.length / total : 0;
   }
@@ -586,9 +529,7 @@ return result;
   }
 
   generateActionRecommendations(context) {
-    const recommendations = [];
-
-    if (context.currentMessage.intent === 'business') {
+    const recommendations = [];    if (context.currentMessage.intent === 'business') {
       recommendations.push('activate_business_mode');
     }
 
@@ -622,8 +563,7 @@ return result;
     try {
       logger.debug('Advanced patterns loaded');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async setupSemanticAnalysis() {
@@ -631,15 +571,14 @@ return result;
     try {
       logger.debug('Semantic analysis configured');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initializeContextMemory() {
     // Initialisation de la mémoire contextuelle
     // Démarrer le nettoyage automatique
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -660,8 +599,7 @@ return result;
     const contexts = Array.from(this.conversationContext.values());
     if (contexts.length === 0) return 0;
 
-    const totalQuality = contexts.reduce((sum, ctx) =>
-      sum + (ctx.contextQuality?.overall || 0), 0);
+    const totalQuality = contexts.reduce((_sum, _ctx) =>;      sum + (ctx.contextQuality?.overall || 0), 0);
 
     return totalQuality / contexts.length;
   }

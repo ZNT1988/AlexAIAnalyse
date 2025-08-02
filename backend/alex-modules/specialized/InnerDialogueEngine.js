@@ -2,16 +2,11 @@ import crypto from 'crypto';
 
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_ACTIVE = 'active';
+const STR_ACTIVE = 'active';// Constantes pour chaînes dupliquées (optimisation SonarJS)
 
-// Constantes pour chaînes dupliquées (optimisation SonarJS)
-
+const STR_ = ';                    ';
 const STR_ = '
-                    ';
-const STR_ = '
-                ';
-
-/**
+                ';/**
  * @fileoverview InnerDialogueEngine - Système de Dialogue Interne Révolutionnaire ALEX
  * Moteur de pensée autonome permettant à ALEX de dialoguer avec lui-même pour résoudre des problèmes complexes
  *
@@ -54,16 +49,14 @@ const STR_ = '
  * // Démarrage dialogue créatif
  * import { InnerDialogueEngine } from './InnerDialogueEngine.js';
  * const dialogue = new InnerDialogueEngine();
- * const insights = await dialogue.exploreIdea('Future of AI consciousness');
- *
+ * const insights = await dialogue.exploreIdea('Future of AI consciousness'); *
  * @example
  * // Résolution problème complexe
  * const solution = await dialogue.solveComplexProblem({
  *   problem: 'How to achieve AGI safely'
  *   perspectives: ['technical', 'ethical', 'philosophical']
  *   depth: 5
- * });
- */
+ * }); */
 
 import logger from '../config/logger.js';
 
@@ -240,13 +233,10 @@ return result;
      * const results = await dialogue.startInternalDialogue(
      *   'The nature of artificial consciousness'
      *   { maxTurns: 15, targetInsights: 5 }
-     * );
-     */
+     * );     */
     async startInternalDialogue(topic, options = {}) {
         const conversationId = `dialogue_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2
-      9)}`;
-
-        const conversation = {
+      9)}`;        const conversation = {
             id: conversationId
       topic
       startTime: Date.now()
@@ -256,8 +246,7 @@ return result;
       targetInsights: options.targetInsights || 3
       status: STR_ACTIVE
       insights: []
-      depth: 0
-        };
+      depth: 0;        };
 
         this.activeConversation = conversation;
         this.conversations.push(conversation);
@@ -277,7 +266,7 @@ return result;
             );
 
             // Générer les tours de dialogue
-            for (/* complex condition extracted */ let turn = 0; turn < conversation.maxTurns && conv...) {
+            async for(conversation) {
                 const nextVoice = this.selectNextVoice(conversation);
                 const response = await this.generateVoiceResponse(nextVoice, conversation);
 
@@ -308,7 +297,7 @@ return result;
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
             conversation.status = 'error';
 
@@ -339,8 +328,7 @@ return result;
      * const exploration = await dialogue.exploreIdea(
      *   'Quantum creativity in AI systems'
      *   { creativity: 0.9, depth: 7 }
-     * );
-     */
+     * );     */
     async exploreIdea(idea, options = {}) {
         const explorationId = `explore_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
 
@@ -356,9 +344,7 @@ return result;
             insights: []
             connections: []
             evolutions: []
-        };
-
-        try {
+        };        try {
             // Phase 1: Décomposition créative
             const deconstruction = await this.creativeDeconstruction(idea, exploration);
             exploration.phases.push({ name: 'deconstruction', results: deconstruction });
@@ -379,9 +365,7 @@ return result;
             const validation = await this.validateAndRefine(evolutions, exploration);
             exploration.phases.push({ name: 'validation', results: validation });
 
-            const summary = await this.summarizeExploration(exploration);
-
-            return {
+            const summary = await this.summarizeExploration(exploration);            return {
                 success: true
                 explorationId
                 originalIdea: idea
@@ -395,7 +379,7 @@ return result;
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -428,12 +412,9 @@ return result;
      *   perspectives: ['technical', 'ethical', 'economic', 'social']
      *   constraints: { timeline: '5 years', budget: 'moderate' }
      *   depth: 8
-     * });
-     */
+     * });     */
     async solveComplexProblem(problemSpec) {
-        const solutionId = `solve_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting complex problem solving', {
+        const solutionId = `solve_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting complex problem solving', {
             solutionId
             problem: problemSpec.problem
         });
@@ -449,9 +430,7 @@ return result;
             solutions: []
             evaluations: []
             finalRecommendation: null
-        };
-
-        try {
+        };        try {
             // Phase 1: Analyse multi-perspective du problème
             const problemAnalysis = await this.analyzeProblemMultiPerspective(problemSpec, solutionProcess);
             solutionProcess.analysisPhases.push({ name: 'problem_analysis', results: problemAnalysis });
@@ -485,7 +464,7 @@ return result;
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -526,9 +505,7 @@ return result;
                 improvements: []
                 metacognitive: []
             }
-        };
-
-        try {
+        };        try {
             // Analyser les patterns de conversation
             reflection.findings.patterns = await this.analyzeConversationPatterns();
 
@@ -558,7 +535,7 @@ return result;
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -583,13 +560,9 @@ return result;
     selectNextVoice(conversation) {
         const availableVoices = conversation.participants.filter(voice =>
             this.config.enabledVoices.includes(voice)
-        );
-
-        // Logique de sélection intelligente basée sur le contexte
-        const recentSpeakers = conversation.turns.slice(-3).map(turn => turn.voice);
-        const underrepresentedVoices = availableVoices.filter(voice =>
-            !recentSpeakers.includes(voice)
-        );
+        );        // Logique de sélection intelligente basée sur le contexte
+        const recentSpeakers = conversation.turns.slice(-3).map(turn => turn.voice);        const underrepresentedVoices = availableVoices.filter(voice =>
+            !recentSpeakers.includes(voice);        );
 
         if (underrepresentedVoices.length > 0) {
             return underrepresentedVoices[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * underrepresentedVoices.length)];
@@ -606,16 +579,13 @@ return result;
      * @returns {Promise<string>} Réponse générée
      * @private
      */
-    async generateVoiceResponse(voiceName, conversation) {
+    async generateVoiceResponse(!voice) {
         const voice = this.voices[voiceName];
         if (!voice) return "Je n'ai pas de perspective claire sur ce sujet.";
 
-        const context = this.buildConversationContext(conversation);
-        const questionPattern = voice.questionPatterns[
+        const context = this.buildConversationContext(conversation);        const questionPattern = voice.questionPatterns[
             Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * voice.questionPatterns.length)
-        ];
-
-        // Simulation de génération de contenu basée sur la personnalité
+        ];        // Simulation de génération de contenu basée sur la personnalité
         return await this.simulateThoughtProcess(voice, context, questionPattern);
     }
 
@@ -627,7 +597,7 @@ return result;
      * @param {Object} conversation - Conversation en cours
      * @private
      */
-    async addDialogueTurn(voice, content, conversation) {
+    async addDialogueTurn() {
         const turn = {
             id: conversation.turns.length + 1
             voice
@@ -635,8 +605,7 @@ return result;
             timestamp: Date.now()
             insights: await this.extractInsights(content, conversation)
             emotionalTone: await this.analyzeEmotionalTone(content)
-            keyPhrases: await this.extractKeyPhrases(content)
-        };
+            keyPhrases: await this.extractKeyPhrases(content);        };
 
         conversation.turns.push(turn);
         conversation.insights.push(...turn.insights);
@@ -651,7 +620,7 @@ return result;
         });
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
     /**
@@ -716,8 +685,7 @@ return result;
        [
                 '"${context.topic}" soulève des questions existentielles profondes...STR_Qu'est-ce que cela révèle sur la nature de la réalité ?
       STR_Cette réflexion touche aux fondements de notre existence...`
-            ]
-        };
+            ];        };
 
         const voiceResponses = responses[voice.name.toLowerCase()] || responses.analytical;
         const baseResponse = voiceResponses[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * voiceResponses.length)];
@@ -735,13 +703,10 @@ return result;
      */
     async extractInsights(content, conversation) {
         // Simulation d'extraction d'insights
-        const insights = [];
-
-        // Recherche de patterns d'insight
+        const insights = [];        // Recherche de patterns d'insight
         const insightMarkers = [
             'réalise que', 'comprends maintenant', 'découvre', 'révèle'
-            'implique', 'suggère', 'indique', 'démontre'
-        ];
+            'implique', 'suggère', 'indique', 'démontre';        ];
 
         for (const marker of insightMarkers) {
             if (content.toLowerCase().includes(marker)) {
@@ -769,8 +734,7 @@ return result;
      */
     async analyzeEmotionalTone(content) {
         // Simulation d'analyse émotionnelle
-        const emotions = ['curiosity', 'excitement', 'skepticism', 'wonder', 'concern', 'joy'];
-        return {
+        const emotions = ['curiosity', 'excitement', 'skepticism', 'wonder', 'concern', 'joy'];        return {
             primary: emotions[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * emotions.length)]
             intensity: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF)
             confidence: 0.7
@@ -786,10 +750,7 @@ return result;
      */
     async extractKeyPhrases(content) {
         // Simulation d'extraction de phrases clés
-        const words = content.split(' ');
-        const keyPhrases = [];
-
-        for (let i = 0; i < words.length - 1; i++) {
+        const words = content.split(' ');        const keyPhrases = [];        for (let i = 0; i < words.length - 1; i++) {
             if (words[i].length > 5 && (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.8) {
                 keyPhrases.push(words[i] + ' ' + words[i + 1]);
             }
@@ -826,8 +787,7 @@ return result;
       practical: ['action'
       'implémentation'
       'pratique'
-      'concret']
-        };
+      'concret'];        };
 
         for (const [category, keywords] of Object.entries(categories)) {
             for (const keyword of keywords) {
@@ -868,7 +828,7 @@ return result;
         });
 
         } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
     /**
@@ -878,7 +838,7 @@ return result;
      * @returns {Promise<Object>} Résumé de la conversation
      * @private
      */
-    async summarizeDialogue(conversation) {
+    async summarizeDialogue(0, 3) {
         return {
             topic: conversation.topic
             duration: conversation.duration

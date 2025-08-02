@@ -1,12 +1,9 @@
 import crypto from 'crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_ = '
-            ';
-const STR_ = ']
-            ';
-const STR_INDO_EUROPEAN = 'Indo-European';
-/**
+const STR_ = ';            ';
+const STR_ = '];            ';
+const STR_INDO_EUROPEAN = 'Indo-European';/**
  * @fileoverview LanguageExpansion - Système Multilingue Révolutionnaire 60+ Langues
  * ALEX parle, comprend et s'adapte à 60+ langues avec nuances culturelles avancées
  *
@@ -62,15 +59,13 @@ const STR_INDO_EUROPEAN = 'Indo-European';
  *   text: "Hello, how can I help you?"
  *   targetLanguage: 'fr'
  *   context: { formal: true, business: true }
- * });
- *
+ * }); *
  * @example
  * // Détection et adaptation automatique
  * const adapted = await lang.adaptToUser({
  *   userInput: "¿Cómo estás, amigo?"
  *   userProfile: { country: 'Mexico', age: 25 }
- * });
- */
+ * }); */
 
 import logger from '../config/logger.js';
 
@@ -252,8 +247,7 @@ export class LanguageExpansion {
                 sounds: this.getPhonemes(langCode)
                 stress: this.getStressPatterns(langCode)
                 intonation: this.getIntonationPatterns(langCode)
-            }
-        };
+            };        };
 
         this.languageDatabase.languages.set(langCode, languageData);
     }
@@ -366,12 +360,9 @@ export class LanguageExpansion {
      *   targetLanguage: 'es'
      *   context: { formal: true, business: true }
      *   domain: 'technology'
-     * });
-     */
+     * });     */
     async communicate(request) {
-        const sessionId = `comm_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting multilingual communication', {
+        const sessionId = `comm_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting multilingual communication', {
             sessionId
             targetLanguage: request.targetLanguage
             hasContext: !!request.context
@@ -385,9 +376,7 @@ export class LanguageExpansion {
             translation: null
             adaptation: null
             result: null
-        };
-
-        try {
+        };        try {
             // Phase 1: Détection et analyse langue source
             communication.analysis = await this.analyzeSourceText(
                 request.text
@@ -402,7 +391,11 @@ export class LanguageExpansion {
             );
 
             // Phase 3: Adaptation culturelle
-            if (this.config.culturalAdaptation) {
+            async if(
+                    communication.translation
+                    request.targetLanguage
+                    request.context
+                ) {
                 communication.adaptation = await this.adaptCulturally(
                     communication.translation
                     request.targetLanguage
@@ -417,7 +410,7 @@ export class LanguageExpansion {
             );
 
             // Phase 5: Apprentissage depuis cette interaction
-            if (this.config.learningMode) {
+            async if(communication) {
                 await this.learnFromInteraction(communication);
             }
 
@@ -441,7 +434,7 @@ export class LanguageExpansion {
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -471,33 +464,24 @@ export class LanguageExpansion {
      *   userInput: "Bonjour, j'aimerais des informations"
      *   userProfile: { country: 'France', age: 35, formal: true }
      *   context: { business: true }
-     * });
-     */
+     * });     */
     async adaptToUser(userInteraction) {
-        const adaptationId = `adapt_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting user adaptation', {
+        const adaptationId = `adapt_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting user adaptation', {
             adaptationId
             hasProfile: !!userInteraction.userProfile
         });
 
         try {
             // Analyse input utilisateur
-            const inputAnalysis = await this.analyzeUserInput(userInteraction.userInput);
-
-            // Création/mise à jour profil utilisateur
+            const inputAnalysis = await this.analyzeUserInput(userInteraction.userInput);            // Création/mise à jour profil utilisateur
             const userProfile = await this.buildUserProfile(
                 inputAnalysis
                 userInteraction.userProfile
-            );
-
-            // Génération recommandations communication
+            );            // Génération recommandations communication
             const recommendations = await this.generateCommunicationRecommendations(
                 userProfile
                 userInteraction.context
-            );
-
-            return {
+            );            return {
                 success: true
                 adaptationId
                 detectedLanguage: inputAnalysis.language
@@ -512,7 +496,7 @@ export class LanguageExpansion {
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -542,12 +526,9 @@ export class LanguageExpansion {
      *   languageCode: 'is', // Islandais
      *   corpus: icelandicTexts
      *   proficiencyTarget: 0.8
-     * });
-     */
+     * });     */
     async learnNewLanguage(learningRequest) {
-        const learningId = `learn_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting new language learning', {
+        const learningId = `learn_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting new language learning', {
             learningId
             languageCode: learningRequest.languageCode
             proficiencyTarget: learningRequest.proficiencyTarget || 0.7
@@ -564,31 +545,24 @@ export class LanguageExpansion {
                 cultural: 0
                 overall: 0
             }
-        };
-
-        try {
+        };        try {
             // Phase 1: Analyse corpus et extraction patterns
             const corpusAnalysis = await this.analyzeLanguageCorpus(
                 learningRequest.corpus
                 learningRequest.languageCode
-            );
-            learning.phases.push({ name: 'corpus_analysis', completed: true });
+            );            learning.phases.push({ name: 'corpus_analysis', completed: true });
 
             // Phase 2: Extraction vocabulaire et structures
-            const vocabularyExtraction = await this.extractVocabulary(corpusAnalysis);
-            const grammarExtraction = await this.extractGrammar(corpusAnalysis);
-            learning.phases.push({ name: 'extraction', completed: true });
+            const vocabularyExtraction = await this.extractVocabulary(corpusAnalysis);            const grammarExtraction = await this.extractGrammar(corpusAnalysis);            learning.phases.push({ name: 'extraction', completed: true });
 
             // Phase 3: Construction modèles linguistiques
             const languageModel = await this.buildLanguageModel(
                 vocabularyExtraction
                 grammarExtraction
-            );
-            learning.phases.push({ name: 'model_building', completed: true });
+            );            learning.phases.push({ name: 'model_building', completed: true });
 
             // Phase 4: Validation et intégration
-            const validation = await this.validateLanguageModel(languageModel);
-            if (validation.success) {
+            const validation = await this.validateLanguageModel(languageModel);            async if(learningRequest.languageCode, languageModel) {
                 await this.integrateNewLanguage(learningRequest.languageCode, languageModel);
                 this.config.supportedLanguages.push(learningRequest.languageCode);
             }
@@ -612,7 +586,7 @@ export class LanguageExpansion {
             };
 
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     });
 
             return {
@@ -633,7 +607,7 @@ export class LanguageExpansion {
      * @description Analyse le texte source et détecte la langue
      * @private
      */
-    async analyzeSourceText(text, providedLanguage) {
+    async analyzeSourceText(providedLanguage) {
         if (providedLanguage) {
             return {
                 text: text
@@ -644,9 +618,7 @@ export class LanguageExpansion {
         }
 
         // Auto-détection langue
-        const detection = await this.detectLanguage(text);
-
-        return {
+        const detection = await this.detectLanguage(text);        return {
             text: text
             detectedLanguage: detection.language
             confidence: detection.confidence
@@ -704,19 +676,12 @@ export class LanguageExpansion {
       'un'
       'in'
       'con']
-        };
-
-        const words = text.toLowerCase().split(/\s+/);
-        const scores = {};
-
-        for (const [lang, patterns] of Object.entries(commonPatterns)) {
+        };        const words = text.toLowerCase().split(/\s+/);        const scores = {};        for (const [lang, patterns] of Object.entries(commonPatterns)) {
             scores[lang] = patterns.filter(pattern => words.includes(pattern)).length;
         }
 
         const bestMatch = Object.entries(scores)
-            .sort(([,a], [,b]) => b - a)[0];
-
-        return {
+            .sort(([,a], [,b]) => b - a)[0];        return {
             language: bestMatch[0] || 'en'
             confidence: Math.min(bestMatch[1] / 10, 1.0)
             alternatives: Object.entries(scores)
@@ -774,15 +739,13 @@ export class LanguageExpansion {
 
     getLanguageFamily(code) {
         const families = {
-            'fr': STR_INDO_EUROPEAN, 'en': STR_INDO_EUROPEAN, 'es': 'Indo-EuropeanSTR_zh': 'Sino-Tibetan', 'ja': 'Japonic', 'ar': 'Afro-Asiatic'
-        };
+            'fr': STR_INDO_EUROPEAN, 'en': STR_INDO_EUROPEAN, 'es': 'Indo-EuropeanSTR_zh': 'Sino-Tibetan', 'ja': 'Japonic', 'ar': 'Afro-Asiatic';        };
         return families[code] || 'Unknown';
     }
 
     getLanguageScript(code) {
         const scripts = {
-            'fr': STR_LATIN, 'en': STR_LATIN, 'es': STR_LATIN, 'de': 'LatinSTR_ru': 'Cyrillic', 'ar': 'Arabic', 'zh': 'Chinese', 'ja': 'Japanese'
-        };
+            'fr': STR_LATIN, 'en': STR_LATIN, 'es': STR_LATIN, 'de': 'LatinSTR_ru': 'Cyrillic', 'ar': 'Arabic', 'zh': 'Chinese', 'ja': 'Japanese';        };
         return scripts[code] || STR_LATIN;
     }
 

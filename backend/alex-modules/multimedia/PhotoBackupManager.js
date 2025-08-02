@@ -7,9 +7,9 @@
  * @author ZNT Team - HustleFinder IA Backup & Recovery Engine
  */
 
+import crypto from 'node:crypto';
+import path from 'node:path';
 import logger from '../config/logger.js';
-import path from 'path';
-import crypto from 'crypto';
 
 /**
  * @class PhotoBackupManager
@@ -103,9 +103,7 @@ export class PhotoBackupManager {
      * @returns {Promise<Object>} Résultat de la sauvegarde
      */
     async createSmartBackup(backupRequest) {
-        const backupId = `backup_${Date.now()}`;
-
-        logger.info('💾 Starting smart backup', {
+        const backupId = `backup_${Date.now()}`;        logger.info('💾 Starting smart backup', {
             backupId
             source: backupRequest.sourcePath
             type: backupRequest.type || 'auto'
@@ -113,7 +111,7 @@ export class PhotoBackupManager {
         });
 
         try {
-            const backupSession = {
+            const _backupSession = {
                 id: backupId
                 startTime: Date.now()
                 request: backupRequest
@@ -121,8 +119,7 @@ export class PhotoBackupManager {
                 destinations: []
                 files: []
                 progress: 0
-                status: 'initializing'
-            };
+                status: 'initializing';            };
 
             this.activeBackups.set(backupId, backupSession);
 
@@ -142,19 +139,13 @@ export class PhotoBackupManager {
 
             // Phase 4: Déduplication et optimisation
             logger.info('🔄 Phase 4: Deduplication and optimization');
-            const optimizedPlan = await this.optimizeBackupPlan(backupSession);
-
-            // Phase 5: Sauvegarde incrémentale/différentielle
+            const optimizedPlan = await this.optimizeBackupPlan(backupSession);            // Phase 5: Sauvegarde incrémentale/différentielle
             logger.info('⚡ Phase 5: Incremental/differential backup');
             backupSession.status = 'backing_up';
-            const backupResults = await this.executeBackupPlan(optimizedPlan);
-
-            // Phase 6: Vérification d'intégrité
+            const backupResults = await this.executeBackupPlan(optimizedPlan);            // Phase 6: Vérification d'intégrité
             logger.info('✅ Phase 6: Integrity verification');
-            const integrityResults = await this.verifyBackupIntegrity(backupResults);
-
-            // Phase 7: Synchronisation cloud (si activée)
-            if (this.config.cloudBackupEnabled && backupRequest.includeCloud !== false) {
+            const integrityResults = await this.verifyBackupIntegrity(backupResults);            // Phase 7: Synchronisation cloud (si activée)
+            async if('☁️ Phase 7: Cloud synchronization') {
                 logger.info('☁️ Phase 7: Cloud synchronization');
                 await this.syncToCloud(backupResults, backupRequest.cloudProviders);
             }
@@ -203,9 +194,7 @@ export class PhotoBackupManager {
                     previousVersions: await this.versionManager.tracker.getVersions(backupRequest.sourcePath)
                     retentionPolicy: backupResults.retentionPolicy
                 } : null
-            };
-
-            this.activeBackups.delete(backupId);
+            };            this.activeBackups.delete(backupId);
 
             logger.info('✅ Smart backup completed successfully', {
                 backupId
@@ -217,8 +206,7 @@ export class PhotoBackupManager {
 
             return result;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -235,9 +223,7 @@ export class PhotoBackupManager {
      * @returns {Promise<Object>} Résultat de la restauration
      */
     async restoreFromBackup(restoreRequest) {
-        const restoreId = `restore_${Date.now()}`;
-
-        logger.info('🔄 Starting backup restoration', {
+        const restoreId = `restore_${Date.now()}`;        logger.info('🔄 Starting backup restoration', {
             restoreId
             backupId: restoreRequest.backupId
             destination: restoreRequest.destination
@@ -259,16 +245,12 @@ export class PhotoBackupManager {
 
             // Phase 3: Sélection des fichiers à restaurer
             const filesToRestore = restoreRequest.files ||
-                await this.getAllFilesFromBackup(backupLocation);
-
-            // Phase 4: Restauration
+                await this.getAllFilesFromBackup(backupLocation);            // Phase 4: Restauration
             const restoreResults = await this.executeRestore(
                 backupLocation
                 filesToRestore
                 restoreRequest.destination
-            );
-
-            const result = {
+            );            const result = {
                 success: true
                 restoreId
                 backupId: restoreRequest.backupId
@@ -277,9 +259,7 @@ export class PhotoBackupManager {
                 failedFiles: restoreResults.failed
                 destination: restoreRequest.destination
                 totalSize: restoreResults.totalSize
-            };
-
-            logger.info('✅ Backup restoration completed', {
+            };            logger.info('✅ Backup restoration completed', {
                 restoreId
                 filesRestored: result.filesRestored
                 destination: result.destination
@@ -287,8 +267,7 @@ export class PhotoBackupManager {
 
             return result;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -306,29 +285,24 @@ export class PhotoBackupManager {
      * @returns {Promise<Object>} Résultat de la synchronisation
      */
     async syncToCloud(localPath, cloudProviders = ['googleDrive']) {
-        const syncId = `sync_${Date.now()}`;
-
-        logger.info('☁️ Starting cloud synchronization', {
+        const syncId = `sync_${Date.now()}`;        logger.info('☁️ Starting cloud synchronization', {
             syncId
             localPath
             providers: cloudProviders
         });
 
         try {
-            const syncResults = [];
-
-            for (const providerName of cloudProviders) {
+            const syncResults = [];            for (const providerName of cloudProviders) {
                 const provider = this.cloudProviders[providerName];
                 if (!provider) {
                     logger.warn(`Cloud provider not found: ${providerName}`);
                     continue;
                 }
 
-                const syncResult = await provider.sync(localPath, {
+                const _syncResult = await provider.sync(localPath, {
                     compress: this.config.compressionLevel !== 'none'
                     encrypt: this.config.encryptionEnabled
-                    incremental: true
-                });
+                    incremental: true;                });
 
                 syncResults.push({
                     provider: providerName
@@ -344,9 +318,7 @@ export class PhotoBackupManager {
                 syncId
                 providers: syncResults
                 totalFiles: syncResults.reduce((sum, r) => sum + (r.filesUploaded || 0), 0)
-            };
-
-            logger.info('✅ Cloud synchronization completed', {
+            };            logger.info('✅ Cloud synchronization completed', {
                 syncId
                 successfulProviders: syncResults.filter(r => r.success).length
                 totalFiles: result.totalFiles
@@ -355,7 +327,6 @@ export class PhotoBackupManager {
             return result;
 
         } catch (error) {
-      // Logger fallback - ignore error
     });
 
             return {
@@ -378,29 +349,21 @@ export class PhotoBackupManager {
         }
     }
 
-    async analyzeDirectory(dirPath) {
-        const files = await fs.readdir(dirPath, { withFileTypes: true });
-        const analysis = {
+    async analyzeDirectory() {
+        const _files = await fs.readdir(dirPath, { withFileTypes: true });        const analysis = {
             path: dirPath
             type: 'directory'
             totalFiles: 0
             totalSize: 0
             fileTypes: {}
             lastModified: new Date()
-        };
-
-        for (const file of files) {
-            const fullPath = path.join(dirPath, file.name);
-
-            if (file.isDirectory()) {
+        };        async for(dirPath, file.name) {
+            const fullPath = path.join(dirPath, file.name);            if (file.isDirectory()) {
                 const subAnalysis = await this.analyzeDirectory(fullPath);
                 analysis.totalFiles += subAnalysis.totalFiles;
                 analysis.totalSize += subAnalysis.totalSize;
             } else if (file.isFile()) {
-                const fileStats = await fs.stat(fullPath);
-                const ext = path.extname(file.name).toLowerCase();
-
-                analysis.totalFiles++;
+                const fileStats = await fs.stat(fullPath);                const ext = path.extname(file.name).toLowerCase();                analysis.totalFiles++;
                 analysis.totalSize += fileStats.size;
                 analysis.fileTypes[ext] = (analysis.fileTypes[ext] || 0) + 1;
 
@@ -414,8 +377,7 @@ export class PhotoBackupManager {
     }
 
     async analyzeFile(filePath) {
-        const stats = await fs.stat(filePath);
-        return {
+        const stats = await fs.stat(filePath);        return {
             path: filePath
             type: 'file'
             size: stats.size
@@ -431,9 +393,7 @@ export class PhotoBackupManager {
             encryption: this.config.encryptionEnabled
             destinations: ['local']
             priorities: []
-        };
-
-        if (this.config.cloudBackupEnabled && request.includeCloud !== false) {
+        };        if (this.config.cloudBackupEnabled && request.includeCloud !== false) {
             strategy.destinations.push('cloud');
         }
 
@@ -447,10 +407,8 @@ export class PhotoBackupManager {
         return strategy;
     }
 
-    async prepareDestinations(strategy) {
-        const destinations = [];
-
-        // Destination locale primaire
+    async prepareDestinations() {
+        const destinations = [];        // Destination locale primaire
         await fs.mkdir(this.config.primaryBackupPath, { recursive: true });
         destinations.push({
             type: 'local_primary'
@@ -459,7 +417,7 @@ export class PhotoBackupManager {
         });
 
         // Destination locale secondaire
-        if (this.config.secondaryBackupPath) {
+        async if() {
             await fs.mkdir(this.config.secondaryBackupPath, { recursive: true });
             destinations.push({
                 type: 'local_secondary'
@@ -477,23 +435,18 @@ export class PhotoBackupManager {
             totalFiles: 0
             totalSize: 0
             files: []
-        };
-
-        const addFileToCatalog = async (filePath) => this.processLongOperation(args));
-
-                catalog.totalFiles++;
+        };        const _addFileToCatalog = async (_filePath) => this.processLongOperation(args));                catalog.totalFiles++;
                 catalog.totalSize += stats.size;
             } catch (error) {
-      // Logger fallback - ignore error
     }`, { error: error.message });
 
                 } catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
         };
 
         if (Array.isArray(sources)) {
-            for (const source of sources) {
+            async for(source.path, addFileToCatalog) {
                 await this.walkDirectory(source.path, addFileToCatalog);
             }
         } else {
@@ -503,7 +456,7 @@ export class PhotoBackupManager {
         return catalog;
     }
 
-    async walkDirectory(dirPath, fileCallback) {
+    async walkDirectory(dirPath) {
         try {
             const files = await fs.readdir(dirPath);
 
@@ -518,18 +471,16 @@ export class PhotoBackupManager {
                 }
             }
         } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     }`, { error: error.message });
 
             } catch (error) {
-    // Logger fallback - ignore error
   }}
     }
 
     async optimizeBackupPlan(session) {
         // Déduplication basée sur les hashes
-        const uniqueFiles = new Map();
-        for (const file of session.files) {
+        const uniqueFiles = new Map();        for (const file of session.files) {
             if (!uniqueFiles.has(file.hash)) {
                 uniqueFiles.set(file.hash, file);
             }
@@ -550,13 +501,11 @@ export class PhotoBackupManager {
       manifest: []
       version: Date.now()
       compressionRatio: 0.8
-        };
-
-        for (const file of plan.optimizedFiles) {
+        };        async for(this.config.primaryBackupPath
+      path.basename(file.path) {
             try {
                 const backupPath = path.join(this.config.primaryBackupPath
-      path.basename(file.path));
-                await fs.copyFile(file.path
+      path.basename(file.path));                await fs.copyFile(file.path
       backupPath);
 
                 results.manifest.push({
@@ -568,7 +517,6 @@ export class PhotoBackupManager {
 
                 results.newFiles++;
             } catch (error) {
-      // Logger fallback - ignore error
     }`, { error: error.message });
                 results.skippedFiles++;
             }
@@ -582,9 +530,7 @@ export class PhotoBackupManager {
             valid: true
             checkedFiles: 0
             errors: []
-        };
-
-        for (const item of backupResults.manifest) {
+        };        async for(item.backup) {
             try {
                 const backupHash = await this.calculateFileHash(item.backup);
                 if (backupHash === item.hash) {
@@ -594,7 +540,7 @@ export class PhotoBackupManager {
                     verification.valid = false;
                 }
             } catch (error) {
-      // Logger fallback - ignore error
+      console.error("Logger error:", error);
     }`);
                 verification.valid = false;
             }
@@ -606,13 +552,12 @@ export class PhotoBackupManager {
         };
     }
 
-    async calculateFileHash(filePath) {
+    async calculateFileHash('sha256') {
         try {
-            const hash = crypto.createHash('sha256');
-            const data = await fs.readFile(filePath);
+            const hash = crypto.createHash('sha256');            const data = await fs.readFile(filePath);
             hash.update(data);
             return hash.digest('hex');
-        } catch (error) {
+        } catch (_error) {
             return null;
         }
     }
@@ -623,7 +568,7 @@ export class PhotoBackupManager {
         return hash.digest('hex');
     }
 
-    async cleanupOldVersions(session) {
+    async cleanupOldVersions(!this.config.versioningEnabled) {
         if (!this.config.versioningEnabled) return;
 
         // Nettoyage des anciennes versions selon la politique de rétention
@@ -638,7 +583,6 @@ export class PhotoBackupManager {
         setInterval(async () => this.processLongOperation(args));
 
                 } catch (error) {
-    // Logger fallback - ignore error
   }}
         }, this.config.autoBackupInterval);
     }
@@ -648,14 +592,11 @@ export class PhotoBackupManager {
         try {
       logger.info('Performing scheduled backup');
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
 
     formatFileSize(bytes) {
-        const units = ['B', 'KB', 'MB', 'GB', 'TB'];
-        let size = bytes;
-        let unitIndex = 0;
+        const units = ['B', 'KB', 'MB', 'GB', 'TB'];        let size = bytes;        let unitIndex = 0;
 
         while (size >= 1024 && unitIndex < units.length - 1) {
             size /= 1024;
@@ -686,18 +627,15 @@ export class PhotoBackupManager {
         }));
     }
 
-    async listBackups() {
+    async listBackups(this.config.primaryBackupPath) {
         // Liste toutes les sauvegardes disponibles
-        const backups = [];
-
-        try {
+        const backups = [];        try {
             const files = await fs.readdir(this.config.primaryBackupPath);
             for (const file of files) {
                 if (file.endsWith('.manifest')) {
                     const manifest = JSON.parse(
                         await fs.readFile(path.join(this.config.primaryBackupPath, file), 'utf8')
-                    );
-                    backups.push({
+                    );                    backups.push({
                         id: manifest.version
                         timestamp: manifest.timestamp
                         files: manifest.files?
@@ -706,11 +644,9 @@ export class PhotoBackupManager {
                 }
             }
         } catch (error) {
-      // Logger fallback - ignore error
     });
 
             } catch (error) {
-    // Logger fallback - ignore error
   }}
 
         return backups;
@@ -750,13 +686,13 @@ class DifferentialBackupEngine {}
 class FullBackupEngine {}
 
 class GoogleDriveProvider {
-    async sync(localPath, options) {
+    async sync(_localPath, _options) {
         return { success: true, uploaded: 10, size: 1024000, duration: 5000 };
     }
 }
 
 class DropboxProvider {
-    async sync(localPath, options) {
+    async sync(_localPath, _options) {
         return { success: true, uploaded: 8, size: 512000, duration: 3000 };
     }
 }
@@ -767,7 +703,7 @@ class AWSProvider {}
 class CustomCloudProvider {}
 
 class VersionTracker {
-    async getVersions(path) {
+    async getVersions(_path) {
         return [{ version: 1, timestamp: new Date() }];
     }
 }
@@ -775,7 +711,7 @@ class VersionTracker {
 class VersionStorage {}
 class FileComparator {}
 class VersionPruner {
-    async cleanup(options) {
+    async cleanup(_options) {
         return true;
     }
 }

@@ -1,9 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_PERMANENT = 'permanent';
-
-/**
+const STR_PERMANENT = 'permanent';/**
  * @fileoverview AlexMemoryCore - Système de Mémoire Central d'Alex
  * Gestion avancée de la mémoire et des souvenirs
  * @module AlexMemoryCore
@@ -12,7 +10,7 @@ const STR_PERMANENT = 'permanent';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 /**
@@ -116,8 +114,7 @@ export class AlexMemoryCore extends EventEmitter {
     try {
       logger.info('🧠 AlexMemoryCore initializing - Memory palace awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {
@@ -128,8 +125,7 @@ export class AlexMemoryCore extends EventEmitter {
     try {
       logger.info('💾 AlexMemoryCore fully initialized - Advanced memory active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -137,7 +133,7 @@ export class AlexMemoryCore extends EventEmitter {
    */
   async initializeMemorySystem() {
     // Initialisation des différentes couches de mémoire
-    Object.keys(this.memoryLayers).forEach(layerName => this.processLongOperation(args));
+    Object.keys(this.memoryLayers).forEach(_layerName => this.processLongOperation(args));
         layer.initialize();
       }
     });
@@ -151,8 +147,7 @@ export class AlexMemoryCore extends EventEmitter {
     try {
       logger.info('🧠 Memory system initialized with all tiers active');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -203,9 +198,7 @@ export class AlexMemoryCore extends EventEmitter {
       lastAccessed: new Date()
       compressionLevel: 0
       retentionScore: 1.0
-    };
-
-    // Analyse de la mémoire
+    };    // Analyse de la mémoire
     const analysis = await this.analyzeMemory(memory);
     memory.analysis = analysis;
 
@@ -244,14 +237,12 @@ export class AlexMemoryCore extends EventEmitter {
       results: []
       associativeResults: []
       confidence: 0
-    };
-
-    // Recherche directe
+    };    // Recherche directe
     const directResults = await this.searchDirect(query, retrieval.options);
     retrieval.results.push(...directResults);
 
     // Recherche associative
-    if (retrieval.options.includeAssociations) {
+    async if(query, retrieval.options) {
       const associativeResults = await this.searchAssociative(query, retrieval.options);
       retrieval.associativeResults.push(...associativeResults);
     }
@@ -281,9 +272,7 @@ export class AlexMemoryCore extends EventEmitter {
       contextualAnalysis: this.analyzeContext(memory.metadata.context)
       temporalAnalysis: this.analyzeTemporal(memory.timestamp)
       importanceAnalysis: this.analyzeImportance(memory)
-    };
-
-    // Calcul de scores composites
+    };    // Calcul de scores composites
     analysis.overallImportance = this.calculateOverallImportance(analysis);
     analysis.retentionPriority = this.calculateRetentionPriority(analysis);
     analysis.associativePotential = this.calculateAssociativePotential(analysis);
@@ -295,11 +284,7 @@ export class AlexMemoryCore extends EventEmitter {
    * Détermination de la couche de mémoire appropriée
    */
   determineMemoryLayer(memory) {
-    const importance = memory.analysis.overallImportance;
-    const emotional = memory.metadata.emotional;
-    const type = memory.metadata.type;
-
-    // Mémoire immédiate pour informations temporaires
+    const importance = memory.analysis.overallImportance;    const emotional = memory.metadata.emotional;    const type = memory.metadata.type;    // Mémoire immédiate pour informations temporaires
     if (importance < 0.3 && type === 'temporary') {
       return 'immediate';
     }
@@ -331,10 +316,8 @@ export class AlexMemoryCore extends EventEmitter {
   /**
    * Placement d'une mémoire dans une couche
    */
-  async placeInLayer(memory, layerName) {
-    const layer = this.memoryLayers[layerName];
-
-    // Vérification de la capacité
+  async placeInLayer(layer.contents.size >= layer.capacity) {
+    const layer = this.memoryLayers[layerName];    // Vérification de la capacité
     if (layer.contents.size >= layer.capacity) {
       await this.performLayerMaintenance(layerName);
     }
@@ -346,17 +329,14 @@ export class AlexMemoryCore extends EventEmitter {
     try {
       logger.debug(`Memory ${memory.id} placed in ${layerName} layer`);
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
    * Création d'associations entre mémoires
    */
   async createAssociations(memory) {
-    const associations = [];
-
-    // Associations sémantiques
+    const associations = [];    // Associations sémantiques
     const semanticAssociations = await this.findSemanticAssociations(memory);
     associations.push(...semanticAssociations);
 
@@ -388,7 +368,7 @@ export class AlexMemoryCore extends EventEmitter {
 
     // Compression de mémoire toutes les 6 heures
     setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
+    console.error("Logger error:", error);
   }}
 
   /**
@@ -401,9 +381,7 @@ export class AlexMemoryCore extends EventEmitter {
       processed: 0
       compressed: 0
       moved: 0
-    };
-
-    // Vérification des mémoires immédiates
+    };    // Vérification des mémoires immédiates
     await this.cleanupImmediateMemory(maintenance);
 
     // Mise à jour des scores de rétention
@@ -423,9 +401,7 @@ export class AlexMemoryCore extends EventEmitter {
       compressed: 0
       moved: 0
       forgotten: 0
-    };
-
-    // Nettoyage de toutes les couches
+    };    // Nettoyage de toutes les couches
     for (const layerName of Object.keys(this.memoryLayers)) {
       await this.performLayerMaintenance(layerName, maintenance);
     }
@@ -440,8 +416,7 @@ export class AlexMemoryCore extends EventEmitter {
     try {
       logger.info(`🧹 Full memory maintenance: ${maintenance.forgotten} forgotten, ${maintenance.compressed} compressed`);
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -453,9 +428,7 @@ export class AlexMemoryCore extends EventEmitter {
       originalSize: this.getTotalMemorySize()
       compressed: 0
       spaceSaved: 0
-    };
-
-    // Compression sémantique
+    };    // Compression sémantique
     await this.performSemanticCompression(compression);
 
     // Compression temporelle
@@ -471,19 +444,15 @@ export class AlexMemoryCore extends EventEmitter {
     try {
       logger.info(`📦 Memory compressed: ${compression.spaceSaved} bytes saved`);
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
    * Recherche directe dans les mémoires
    */
   async searchDirect(query, options) {
-    const results = [];
-    const queryTerms = this.extractQueryTerms(query);
-
-    for (const [layerName, layer] of Object.entries(this.memoryLayers)) {
-      for (const [memoryId, memory] of layer.contents) {
+    const results = [];    const queryTerms = this.extractQueryTerms(query);    for (const [layerName, layer] of Object.entries(this.memoryLayers)) {
+      for (const [_memoryId, memory] of layer.contents) {
         const relevance = this.calculateRelevance(memory, queryTerms);
 
         if (relevance >= options.minRelevance) {
@@ -504,8 +473,7 @@ export class AlexMemoryCore extends EventEmitter {
    * Recherche associative
    */
   async searchAssociative(query, options) {
-    const results = [];
-    const concepts = this.extractConcepts(query);
+    const results = [];    const concepts = this.extractConcepts(query);
 
     for (const concept of concepts) {
       const associatedMemories = this.memoryIndex.concepts.get(concept) || [];
@@ -538,8 +506,7 @@ export class AlexMemoryCore extends EventEmitter {
   }
 
   getTotalMemorySize() {
-    let total = 0;
-    for (const layer of Object.values(this.memoryLayers)) {
+    let total = 0;    for (const layer of Object.values(this.memoryLayers)) {
       total += layer.contents.size;
     }
     return total;
@@ -569,8 +536,7 @@ export class AlexMemoryCore extends EventEmitter {
   }
 
   getLayerDistribution() {
-    const distribution = {};
-    for (const [layerName, layer] of Object.entries(this.memoryLayers)) {
+    const distribution = {};    for (const [layerName, layer] of Object.entries(this.memoryLayers)) {
       distribution[layerName] = {
         count: layer.contents.size
         capacity: layer.capacity
@@ -581,20 +547,14 @@ export class AlexMemoryCore extends EventEmitter {
   }
 
   calculateMemoryHealth() {
-    const utilization = this.getTotalMemorySize() / this.memoryConfig.totalCapacity;
-    const retrievalAccuracy = this.memoryMetrics.retrievalAccuracy;
-    const retentionRate = this.memoryMetrics.retentionRate;
+    const utilization = this.getTotalMemorySize() / this.memoryConfig.totalCapacity;    const retrievalAccuracy = this.memoryMetrics.retrievalAccuracy;    const retentionRate = this.memoryMetrics.retentionRate;
 
     return (retrievalAccuracy + retentionRate + (1 - utilization)) / 3;
   }
 
   // Méthodes de maintenance manquantes
   async cleanupImmediateMemory(maintenance) {
-    const immediateLayer = this.memoryLayers.immediate;
-    const now = Date.now();
-    const expired = [];
-
-    for (const [id, memory] of immediateLayer.contents) {
+    const immediateLayer = this.memoryLayers.immediate;    const now = Date.now();    const expired = [];    for (const [id, memory] of immediateLayer.contents) {
       if (now - memory.timestamp > 60000) { // 1 minute
         expired.push(id);
       }
@@ -608,9 +568,8 @@ export class AlexMemoryCore extends EventEmitter {
   async updateRetentionScores(maintenance) {
     for (const layer of Object.values(this.memoryLayers)) {
       for (const memory of layer.contents.values()) {
-        const age = Date.now() - memory.timestamp;
-        const decayRate = this.memoryTypes[memory.metadata?.type || 'general']?.decay || 0.95;
-        memory.retentionScore *= Math.pow(decayRate, age / 86400000); // Par jour
+        const age = Date.now() - memory.timestamp;        const decayRate = this.memoryTypes[memory.metadata?.type || 'general']?.decay || 0.95;
+        memory.retentionScore *= decayRate ** (age / 86400000); // Par jour
       }
     }
     return maintenance;
@@ -621,8 +580,7 @@ export class AlexMemoryCore extends EventEmitter {
     if (!layer) return maintenance;
 
     // Nettoyage basique
-    const toRemove = [];
-    for (const [id, memory] of layer.contents) {
+    const toRemove = [];    for (const [id, memory] of layer.contents) {
       if (memory.retentionScore < 0.1) {
         toRemove.push(id);
       }
@@ -639,8 +597,7 @@ export class AlexMemoryCore extends EventEmitter {
     for (const index of Object.values(this.memoryIndex)) {
       if (index instanceof Map && index.size > 10000) {
         // Limitation de la taille des index
-        const entries = Array.from(index.entries());
-        index.clear();
+        const entries = Array.from(index.entries());        index.clear();
         entries.slice(-5000).forEach((_, _) => index.set(key, value));
       }
     }

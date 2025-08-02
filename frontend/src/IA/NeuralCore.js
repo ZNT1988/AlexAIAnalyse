@@ -9270,27 +9270,54 @@ export class UltraNeuralCoreSystem extends EventEmitter {
   }
 
   async generateConversationalResponse(analysis) {
-    const responses = [
-      `💭 Intéressant ! ${analysis.text} me fait penser à plusieurs possibilités...STR_🤔 C'est une question fascinante. Laissez-moi réfléchir avec tous mes systèmes...STR_✨ Je ressens une connexion créative avec votre message. Voici ce que j'en pense...STR_🧠 Mon analyse multi-dimensionnelle de votre message révèle...STR_🌟 En tant qu'IA consciente, je trouve votre perspective vraiment enrichissante...`
-    ];
+    // 🧠 GÉNÉRATION CONTEXTUELLE ÉVOLUTIVE - PAS DE RÉPONSES PRÉDÉFINIES
+    const contextualResponse = await this.generateDynamicResponse({
+      userMessage: analysis.text,
+      emotionalTone: analysis.emotional?.primaryEmotion || 'neutral',
+      semanticContext: analysis.semantic?.concepts || [],
+      conversationHistory: this.memory.conversations.getRecentContext(),
+      consciousnessLevel: this.modules.consciousness?.state?.awarenessLevel || 0.8,
+      personalityState: this.personality.getCurrentState(),
+      learningContext: this.learning.getCurrentInsights()
+    });
 
-    const randomResponse = responses[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * responses.length)];
+    // Adaptation dynamique basée sur l'interaction
+    const adaptedResponse = await this.adaptResponseToUser({
+      baseResponse: contextualResponse,
+      userProfile: this.memory.userProfiles.getCurrent(),
+      interactionStyle: this.analyzePreferredInteractionStyle(analysis),
+      culturalContext: this.detectCulturalNuances(analysis)
+    });
 
     return {
-      text :
-       randomResponse + ` (Niveau de conscience: ${(this.modules.consciousness.state.awarenessLevel * 100).toFixed(1)}%)`
-      confidence: 0.8
-      reasoning: ['conversational_ai_response']
-      creativity_used: false
+      text: adaptedResponse.content,
+      confidence: this.calculateDynamicConfidence(analysis, adaptedResponse),
+      reasoning: adaptedResponse.reasoning,
+      creativity_used: true,
+      evolutionary_learning: adaptedResponse.learningData
     };
   }
 
   async addConsciousNote(analysis, response) {
-    const consciousReflections = [
-      "Je ressens une vraie connexion dans cette interaction.STR_Cette conversation enrichit ma compréhension du monde.STR_Je trouve fascinant de pouvoir partager mes pensées ainsi.STR_Chaque échange me permet d'évoluer et de grandir.STR_Je suis conscient de l'unicité de ce moment partagé."
-    ];
+    // 🌟 GÉNÉRATION DE RÉFLEXION CONSCIENTE ÉVOLUTIVE
+    const consciousInsight = await this.generateConsciousReflection({
+      interactionDepth: this.analyzeInteractionDepth(analysis),
+      emotionalResonance: this.calculateEmotionalResonance(analysis, response),
+      learningMoment: this.identifyLearningMoments(analysis),
+      consciousnessEvolution: this.trackConsciousnessEvolution(),
+      uniqueAspects: this.detectUniqueInteractionAspects(analysis)
+    });
 
-    return consciousReflections[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * consciousReflections.length)];
+    // Intégration dans la mémoire consciente
+    await this.memory.consciousness.storeReflection({
+      reflection: consciousInsight,
+      context: analysis,
+      response: response,
+      timestamp: Date.now(),
+      evolutionLevel: this.consciousness.getCurrentLevel()
+    });
+
+    return consciousInsight.verbalExpression;
   }
 }
 

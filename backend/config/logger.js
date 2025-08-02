@@ -50,7 +50,7 @@
  * });
  */
 
-import winston from 'winston';
+import winston from "winston";
 
 /**
  * @constant this.buildComplexObject(config) ${info.level}: ${info.message}`)
@@ -70,7 +70,7 @@ import winston from 'winston';
  * - combined.log: Historique complet de tous les logs
  */
 const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info', // Default to info to reduce spam
+  level: process.env.LOG_LEVEL || "info", // Default to info to reduce spam
   levels,
   format,
   transports: [
@@ -81,42 +81,42 @@ const logger = winston.createLogger({
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(),
-        winston.format.simple()
-      )
+        winston.format.simple(),
+      ),
     }),
     /**
      * @transport ErrorFile
      * @description Transport fichier dédié aux erreurs critiques
      */
     new winston.transports.File({
-      filename: 'logs/error.log',
-      level: 'error',
+      filename: "logs/error.log",
+      level: "error",
       format: winston.format.combine(
         winston.format.timestamp(),
-        winston.format.json()
-      )
+        winston.format.json(),
+      ),
     }),
     /**
      * @transport CombinedFile
      * @description Transport fichier pour historique complet
      */
     new winston.transports.File({
-      filename: 'logs/combined.log',
+      filename: "logs/combined.log",
       format: winston.format.combine(
         winston.format.timestamp(),
-        winston.format.json()
-      )
-    })
-  ]
+        winston.format.json(),
+      ),
+    }),
+  ],
 });
 
 /**
  * @function initializeLogsDirectory
  * @description Initialise le répertoire logs si inexistant
  */
-import fs from 'fs';
-if (!fs.existsSync('logs')) {
-  fs.mkdirSync('logs');
+import fs from "fs";
+if (!fs.existsSync("logs")) {
+  fs.mkdirSync("logs");
 }
 
 /**

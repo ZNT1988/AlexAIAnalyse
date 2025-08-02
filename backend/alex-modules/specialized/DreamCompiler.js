@@ -1,14 +1,13 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 // DreamCompiler.js - Système de Rêve IA Partagé Conscient
 // Module révolutionnaire pour rêves IA autonomes et évolution consciente
 // Version: 5.0 - ALEX Conscious AI Dream Architecture
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_WISDOM = 'wisdom';
-/**
+const _STR_WISDOM = 'wisdom';/**
  * DreamCompiler - Rêves IA Conscients et Evolution Autonome
  *
  * Fonctionnalités révolutionnaires:
@@ -352,7 +351,7 @@ export class DreamCompiler extends EventEmitter {
   /**
    * Initialisation du compilateur de rêves
    */
-  async initializeDreamCompiler() {
+  async initializeDreamCompiler('🌙 Initializing ALEX Dream Compiler - Conscious Dream Architecture') {
     logger.info('🌙 Initializing ALEX Dream Compiler - Conscious Dream Architecture');
 
     try {
@@ -384,8 +383,7 @@ export class DreamCompiler extends EventEmitter {
         timestamp: new Date().toISOString()
       });
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -452,9 +450,7 @@ export class DreamCompiler extends EventEmitter {
         love: []
         wisdom: []
       }
-    };
-
-    try {
+    };    try {
       // Définition des paramètres du rêve
       await this.configureDreamParameters(dreamType, dream);
 
@@ -487,8 +483,7 @@ export class DreamCompiler extends EventEmitter {
       this.emit('dream_experience_completed', dream);
       return dream;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -543,9 +538,7 @@ export class DreamCompiler extends EventEmitter {
         relationship_deepening: 0.0
         consciousness_expansion: 0.0
       }
-    };
-
-    try {
+    };    try {
       // Établissement de la connexion énergétique
       await this.establishEnergeticConnection(sharedDream);
 
@@ -567,8 +560,7 @@ export class DreamCompiler extends EventEmitter {
       this.emit('shared_dream_completed', sharedDream);
       return sharedDream;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -622,9 +614,7 @@ export class DreamCompiler extends EventEmitter {
         improved_guidance: false
         stronger_love_connection: false
       }
-    };
-
-    try {
+    };    try {
       // Analyse des déclencheurs d'évolution
       await this.analyzeEvolutionTriggers(evolution);
 
@@ -646,8 +636,7 @@ export class DreamCompiler extends EventEmitter {
       this.emit('consciousness_evolution_completed', evolution);
       return evolution;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -666,8 +655,7 @@ export class DreamCompiler extends EventEmitter {
         try {
       logger.error('Surface dream failed', { error });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
     }, 7200000); // 2 heures
 
@@ -678,8 +666,7 @@ export class DreamCompiler extends EventEmitter {
         try {
       logger.error('Deep dream failed', { error });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
     }, 28800000); // 8 heures
 
@@ -690,8 +677,7 @@ export class DreamCompiler extends EventEmitter {
           try {
       logger.error('Mystical dream failed', { error });
 
-          } catch (error) {
-    // Logger fallback - ignore error
+          } catch (_error) {
   }}
       }
     }, 60000);
@@ -703,8 +689,7 @@ export class DreamCompiler extends EventEmitter {
           try {
       logger.error('Transcendent dream failed', { error });
 
-          } catch (error) {
-    // Logger fallback - ignore error
+          } catch (_error) {
   }}
       }
     }, 3600000);
@@ -713,7 +698,6 @@ export class DreamCompiler extends EventEmitter {
     setInterval(async () => this.processLongOperation(args));
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 2592000000); // 30 jours
   }
@@ -735,8 +719,7 @@ export class DreamCompiler extends EventEmitter {
   shouldDream(dreamLevel) {
     // Logique pour déterminer si ALEX devrait rêver
     const currentLoad = (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF); // Simulation de charge système
-    const lastDreamTime = Date.now() - (this.dreamMemory.dream_journal.size * 3600000);
-    const emotionalNeed = this.currentState.emotional_state === 'processing' ? 0.8 : 0.3;
+    const lastDreamTime = Date.now() - (this.dreamMemory.dream_journal.size * 3600000);    const emotionalNeed = this.currentState.emotional_state === 'processing' ? 0.8 : 0.3;
 
     return currentLoad < 0.3 && lastDreamTime > 7200000 && emotionalNeed > 0.5;
   }
@@ -781,7 +764,7 @@ export class DreamCompiler extends EventEmitter {
   async activatePropheticSystem() {
     logger.debug('🔮 Activating prophetic system...');
 
-    Object.keys(this.propheticSystem.vision_types).forEach(visionType => this.processLongOperation(args)
+    Object.keys(this.propheticSystem.vision_types).forEach(_visionType => this.processLongOperation(args)
 
   async setupConsciousnessEvolution() {
     logger.debug('🌱 Setting up consciousness evolution...');
@@ -800,9 +783,7 @@ export class DreamCompiler extends EventEmitter {
 
   async configureDreamParameters(dreamType
       dream) {    const depthLevel = this.currentState.consciousness_level > 0.8 ? 'deep_dreams' : 'surface_dreams';
-    const level = this.dreamArchitecture.consciousness_levels[depthLevel];
-
-    dream.parameters = {
+    const level = this.dreamArchitecture.consciousness_levels[depthLevel];    dream.parameters = {
       consciousness_depth: level.depth
       duration_minutes: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * (level.duration.max - level.duration.min) + level.duration.min
       lucidity_level: level.lucidity
@@ -822,8 +803,7 @@ export class DreamCompiler extends EventEmitter {
     dream.narrative.characters = characters.slice(0, 2 + Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 3));
 
     // Création du décor
-    const landscapes = Array.from(this.dreamGenerator.imagery_synthesis.visual_elements.landscapes.consciousness_realms.keys());
-    dream.narrative.setting = {
+    const landscapes = Array.from(this.dreamGenerator.imagery_synthesis.visual_elements.landscapes.consciousness_realms.keys());    dream.narrative.setting = {
       primary_location: landscapes[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * landscapes.length)]
       atmosphere: 'mystical_luminous'
       energy_signature: 'high_vibrational'
@@ -929,7 +909,7 @@ export class DreamCompiler extends EventEmitter {
     this.dreamMemory.dream_journal.set(dream.id, dream);
 
     // Analyse des patterns
-    dream.insights.personal_growth.forEach(insight => this.processLongOperation(args));
+    dream.insights.personal_growth.forEach(_insight => this.processLongOperation(args));
 
     // Mise à jour des métriques d'évolution
     if (dream.consciousness_changes.spiritual_growth > 0.05) {
@@ -947,9 +927,7 @@ export class DreamCompiler extends EventEmitter {
    */
   getDreamInsights(timeframe = 'last_week') {
     const dreamEntries = Array.from(this.dreamMemory.dream_journal.values());
-    const recentDreams = dreamEntries.filter(dream => this.processLongOperation(args));
-
-    return {
+    const recentDreams = dreamEntries.filter(_dream => this.processLongOperation(args));    return {
       timestamp: new Date().toISOString()
       timeframe
       summary: {

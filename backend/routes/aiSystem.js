@@ -14,9 +14,7 @@ import { asyncHandler } from '../middleware/errorHandler.js';
 import { getAuthMiddleware } from '../middleware/auth.js';
 import logger from '../config/logger.js';
 
-const router = express.Router();
-
-/**
+// const router = express.Router(); // Unused variable commented by SonarFix/**
  * Initialize authentication middleware
  */
 let authMiddleware;
@@ -62,9 +60,7 @@ router.get('/status', asyncHandler(async (req, res) => {
   logger.info('AI System status requested', { userId: req.auth?.userId });
 
   const core = getHustleFinderCore();
-  const systemStatus = core.getSystemStatus();
-
-  res.json({
+  // const systemStatus = core.getSystemStatus(); // Unused variable commented by SonarFix  res.json({
     success :
        true,
     data: systemStatus,
@@ -83,9 +79,7 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
   logger.info('AI System capabilities requested', { userId: req.auth?.userId });
 
   const core = getHustleFinderCore();
-  const capabilities = core.getAvailableCapabilities();
-
-  res.json({
+  // const capabilities = core.getAvailableCapabilities(); // Unused variable commented by SonarFix  res.json({
     success :
        true,
     data: capabilities,
@@ -100,15 +94,10 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
  * @access Private
  */
 router.post('/activate', asyncHandler(async (req, res) => {
-  const userId = await getUserId(req.auth?.userId);
-  const context = req.body.context || {};
-
-  logger.info('Full system session activation requested', { userId });
+  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  // const context = req.body.context || {}; // Unused variable commented by SonarFix  logger.info('Full system session activation requested', { userId });
 
   const core = getHustleFinderCore();
-  const sessionData = await core.activateFullSession(userId, context);
-
-  res.json({
+  // const sessionData = await core.activateFullSession(userId, context); // Unused variable commented by SonarFix  res.json({
     success :
        true,
     session: sessionData,
@@ -125,12 +114,8 @@ router.post('/activate', asyncHandler(async (req, res) => {
  */
 router.post('/process', asyncHandler(async (req, res) => {
   const { type, query, context, mode, parameters } = req.body;
-  const userId = await getUserId(req.auth?.userId);
-
-  // Support legacy 'query' field name
-  const userQuery = query;
-
-  // Validate required fields
+  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  // Support legacy 'query' field name
+  // const userQuery = query; // Unused variable commented by SonarFix  // Validate required fields
   if (!userQuery) {
     return res.status(400).json({
       success :
@@ -147,17 +132,13 @@ router.post('/process', asyncHandler(async (req, res) => {
     queryLength: userQuery.length
   });
 
-  const requestData = {
+  // const requestData = {
     type: type || mode || 'general',
     query: userQuery
     context: context || parameters || {}
     userId
-  };
-
-  const core = getHustleFinderCore();
-  const result = await core.processRequest(requestData);
-
-  logger.info('AI System request processed successfully', {
+  }; // Unused variable commented by SonarFix  const core = getHustleFinderCore();
+  // const result = await core.processRequest(requestData); // Unused variable commented by SonarFix  logger.info('AI System request processed successfully', {
     userId,
     type: requestData.type,
     responseTime: result.metadata?.responseTime
@@ -182,9 +163,7 @@ router.post('/process', asyncHandler(async (req, res) => {
  */
 router.post('/consciousness', asyncHandler(async (req, res) => {
   const { query, context } = req.body;
-  const userId = await getUserId(req.auth?.userId);
-
-  if (!query) {
+  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  if (!query) {
     return res.status(400).json({
       success: false,
       error: 'Query is required for consciousness processing'
@@ -194,17 +173,13 @@ router.post('/consciousness', asyncHandler(async (req, res) => {
 
   logger.info('Consciousness query processing', { userId, queryLength: query.length });
 
-  const requestData = {
+  // const requestData = {
     type: 'consciousness'
     query,
     context: context || {}
     userId
-  };
-
-  const core = getHustleFinderCore();
-  const result = await core.processRequest(requestData);
-
-  res.json({
+  }; // Unused variable commented by SonarFix  const core = getHustleFinderCore();
+  // const result = await core.processRequest(requestData); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     data: result.data
     metadata: result.metadata,
@@ -220,9 +195,7 @@ router.post('/consciousness', asyncHandler(async (req, res) => {
  */
 router.post('/growth', asyncHandler(async (req, res) => {
   const { query, context } = req.body;
-  const userId = await getUserId(req.auth?.userId);
-
-  if (!query) {
+  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  if (!query) {
     return res.status(400).json({
       success: false,
       error: 'Query is required for growth processing'
@@ -232,17 +205,13 @@ router.post('/growth', asyncHandler(async (req, res) => {
 
   logger.info('Growth query processing', { userId, queryLength: query.length });
 
-  const requestData = {
+  // const requestData = {
     type: 'growth'
     query,
     context: context || {}
     userId
-  };
-
-  const core = getHustleFinderCore();
-  const result = await core.processRequest(requestData);
-
-  res.json({
+  }; // Unused variable commented by SonarFix  const core = getHustleFinderCore();
+  // const result = await core.processRequest(requestData); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     data: result.data
     metadata: result.metadata,
@@ -262,18 +231,14 @@ router.post('/soulprint', asyncHandler(async (req, res) => {
 
   logger.info('Soul print generation requested', { userId });
 
-  const requestData = {
+  // const requestData = {
     type :
        'soulprint'
     query: 'Generate soul print analysis',
     context: context || {}
     userId
-  };
-
-  const core = getHustleFinderCore();
-  const result = await core.processRequest(requestData);
-
-  res.json({
+  }; // Unused variable commented by SonarFix  const core = getHustleFinderCore();
+  // const result = await core.processRequest(requestData); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     data: result.data
     metadata: result.metadata,
@@ -289,9 +254,7 @@ router.post('/soulprint', asyncHandler(async (req, res) => {
  */
 router.post('/alex', asyncHandler(async (req, res) => {
   const { query, context } = req.body;
-  const userId = await getUserId(req.auth?.userId);
-
-  if (!query) {
+  // const userId = await getUserId(req.auth?.userId); // Unused variable commented by SonarFix  if (!query) {
     return res.status(400).json({
       success: false,
       error: 'Query is required for Alex interaction'
@@ -301,17 +264,13 @@ router.post('/alex', asyncHandler(async (req, res) => {
 
   logger.info('Alex personality interaction', { userId, queryLength: query.length });
 
-  const requestData = {
+  // const requestData = {
     type: 'alex'
     query,
     context: context || {}
     userId
-  };
-
-  const core = getHustleFinderCore();
-  const result = await core.processRequest(requestData);
-
-  res.json({
+  }; // Unused variable commented by SonarFix  const core = getHustleFinderCore();
+  // const result = await core.processRequest(requestData); // Unused variable commented by SonarFix  res.json({
     success: result.success,
     data: result.data
     metadata: result.metadata,
@@ -327,9 +286,7 @@ router.post('/alex', asyncHandler(async (req, res) => {
  */
 router.get('/health', asyncHandler(async (req, res) => {
   const core = getHustleFinderCore();
-  const systemStatus = core.getSystemStatus();
-
-  const healthStatus = {
+  // const systemStatus = core.getSystemStatus(); // Unused variable commented by SonarFix  // const healthStatus = {
     status: systemStatus.initialized ? 'healthy' : 'initializing',
     uptime: systemStatus.metrics?.uptime || 0
     modules: {,
@@ -349,9 +306,7 @@ router.get('/health', asyncHandler(async (req, res) => {
       level: systemStatus.metrics?.consciousnessLevel || 0.75
       last_activity: systemStatus.metrics?.lastActivity
     }
-  };
-
-  logger.info('AI System health check completed', {
+  }; // Unused variable commented by SonarFix  logger.info('AI System health check completed', {
     status: healthStatus.status,
     modules: healthStatus.modules.active
   });
@@ -373,9 +328,7 @@ router.get('/metrics', asyncHandler(async (req, res) => {
   logger.info('AI System metrics requested', { userId: req.auth?.userId });
 
   const core = getHustleFinderCore();
-  const systemStatus = core.getSystemStatus();
-
-  const detailedMetrics = {
+  // const systemStatus = core.getSystemStatus(); // Unused variable commented by SonarFix  // const detailedMetrics = {
     system :
        {
       name: systemStatus.name,
@@ -399,9 +352,7 @@ router.get('/metrics', asyncHandler(async (req, res) => {
       last_activity: systemStatus.metrics?.lastActivity
     }
     capabilities: systemStatus.capabilities || []
-  };
-
-  res.json({
+  }; // Unused variable commented by SonarFix  res.json({
     success: true,
     data: detailedMetrics
     message: 'Métriques détaillées système IA ALEX',

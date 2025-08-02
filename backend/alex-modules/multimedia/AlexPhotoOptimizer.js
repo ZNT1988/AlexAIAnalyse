@@ -1,7 +1,5 @@
 const sharp = require('sharp');
-const fs = require('fs').promises;
-
-class AlexPhotoOptimizer {
+const fs = require('node:fs').promises;class AlexPhotoOptimizer {
     constructor() {
         this.settings = {
             quality: 85
@@ -12,15 +10,9 @@ class AlexPhotoOptimizer {
     }
 
     async optimizePhoto(inputPath, outputPath, options = {}) {
-        const config = { ...this.settings, ...options };
-
-        try {
+        const config = { ...this.settings, ...options };        try {
             const image = sharp(inputPath);
-            const metadata = await image.metadata();
-
-            let pipeline = image;
-
-            // Resize if needed
+            const metadata = await image.metadata();            let pipeline = image;            // Resize if needed
             if (metadata.width > config.maxWidth || metadata.height > config.maxHeight) {
                 pipeline = pipeline.resize(config.maxWidth, config.maxHeight, {
                     fit: 'inside'
@@ -42,23 +34,17 @@ class AlexPhotoOptimizer {
                 newSize: (await fs.stat(outputPath)).size
                 dimensions: { width: metadata.width, height: metadata.height }
             };
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     };
         }
     }
 
-    async batchOptimize(inputDir, outputDir, options = {}) {
+    async batchOptimize(inputDir) {
         const files = await fs.readdir(inputDir);
         const imageFiles = files.filter(file =>
             /\.(jpg|jpeg|png|webp)$/i.test(file)
-        );
-
-        const results = [];
-
-        for (const _ of imageFiles) {
-            const inputPath = `${inputDir}/${file}';
-            const outputPath = '${outputDir}/${file}`;
+        );        const results = [];        for (const _ of imageFiles) {
+            const inputPath = `${inputDir}/${file}';            const outputPath = '${outputDir}/${file}`;
 
             const result = await this.optimizePhoto(inputPath, outputPath, options);
             results.push({ file, ...result });

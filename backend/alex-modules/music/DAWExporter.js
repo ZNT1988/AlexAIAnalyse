@@ -1,7 +1,6 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_AUTOMATION = 'automation';
-/**
+const STR_AUTOMATION = 'automation';/**
  * @fileoverview DAWExporter - Exportateur de Projets DAW Multiformat
  * Génère des fichiers de projet pour FL Studio, Ableton Live, Logic Pro X
  *
@@ -10,8 +9,8 @@ const STR_AUTOMATION = 'automation';
  * @author ZNT Team - HustleFinder IA DAW Integration Engine
  */
 
+import path from 'node:path';
 import logger from '../config/logger.js';
-import path from 'path';
 
 /**
  * @class DAWExporter
@@ -38,8 +37,7 @@ export class DAWExporter {
             generateMidi: this.config.generateMidi
         });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
 
     /**
@@ -101,9 +99,7 @@ export class DAWExporter {
      * @returns {Promise<Object>} Informations du projet exporté
      */
     async exportAsDAWProject(tracks, dawFormat, projectOptions = {}) {
-        const exportId = `export_${Date.now()}_${dawFormat}`;
-
-        logger.info('💾 Starting DAW project export', {
+        const exportId = `export_${Date.now()}_${dawFormat}`;        logger.info('💾 Starting DAW project export', {
             exportId
             format: dawFormat
             projectName: projectOptions.projectName
@@ -124,9 +120,7 @@ export class DAWExporter {
                 tracks: tracks
                 generatedFiles: []
                 projectData: null
-            };
-
-            // Phase 1: Préparation données projet
+            };            // Phase 1: Préparation données projet
             logger.info('📋 Phase 1: Preparing project data');
             exportSession.projectData = await this.prepareProjectData(
                 tracks
@@ -136,21 +130,25 @@ export class DAWExporter {
 
             // Phase 2: Génération fichiers MIDI
             logger.info('🎹 Phase 2: Generating MIDI files');
-            if (this.config.generateMidi) {
-                const midiFiles = await this.generateMidiFiles(
+            async if(
                     exportSession.projectData
                     dawFormat
-                );
+                ) {
+                const midiFiles = await this.generateMidiFiles(
+                    exportSession.projectData
+                    dawFormat;                );
                 exportSession.generatedFiles.push(...midiFiles);
             }
 
             // Phase 3: Préparation samples et assets
             logger.info('🎵 Phase 3: Preparing samples and assets');
-            if (this.config.includeSamples) {
-                const sampleFiles = await this.prepareSampleFiles(
+            async if(
                     exportSession.projectData
                     projectOptions
-                );
+                ) {
+                const sampleFiles = await this.prepareSampleFiles(
+                    exportSession.projectData
+                    projectOptions;                );
                 exportSession.generatedFiles.push(...sampleFiles);
             }
 
@@ -161,18 +159,14 @@ export class DAWExporter {
                 dawFormat
                 exportSession.generatedFiles
                 projectOptions
-            );
-
-            // Phase 5: Organisation structure finale
+            );            // Phase 5: Organisation structure finale
             logger.info('📁 Phase 5: Organizing final structure');
             const finalStructure = await this.organizeFinalStructure(
                 projectFile
                 exportSession.generatedFiles
                 dawFormat
                 projectOptions
-            );
-
-            exportSession.endTime = Date.now();
+            );            exportSession.endTime = Date.now();
             exportSession.duration = exportSession.endTime - exportSession.startTime;
 
             const result = {
@@ -209,9 +203,7 @@ export class DAWExporter {
                 }
                 // Instructions ouverture
                 instructions: this.generateOpeningInstructions(dawFormat, finalStructure)
-            };
-
-            logger.info('✅ DAW project export completed', {
+            };            logger.info('✅ DAW project export completed', {
                 exportId
                 format: dawFormat
                 projectFile: path.basename(result.projectFile)
@@ -221,8 +213,7 @@ export class DAWExporter {
 
             return result;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -252,9 +243,7 @@ export class DAWExporter {
             mixer: {}
             automation: {}
             effects: {}
-        };
-
-        // Conversion des pistes vers format DAW
+        };        // Conversion des pistes vers format DAW
         for (const [trackName, trackData] of Object.entries(tracks)) {
             projectData.tracks[trackName] = await this.convertTrackForDaw(
                 trackName
@@ -264,7 +253,7 @@ export class DAWExporter {
         }
 
         // Génération patterns (pour FL Studio)
-        if (dawFormat === 'flp') {
+        async if(tracks) {
             projectData.patterns = await this.generatePatternsForFL(tracks);
         }
 
@@ -299,13 +288,11 @@ export class DAWExporter {
       audio: null
       instrument: null
       effects: []
-        };
-
-        // Traitement selon type de piste
-        if (dawTrack.type === STR_MIDI) {
+        };        // Traitement selon type de piste
+        async if(trackData) {
             dawTrack.midi = await this.convertToMidiData(trackData);
             dawTrack.instrument = this.suggestInstrument(trackName, dawFormat);
-        } else if (dawTrack.type === STR_AUDIO) {
+        } else async if(trackData) {
             dawTrack.audio = await this.prepareAudioData(trackData);
         }
 
@@ -318,16 +305,13 @@ export class DAWExporter {
     /**
      * Génère les fichiers MIDI
      */
-    async generateMidiFiles(projectData, dawFormat) {
-        const midiFiles = [];
-
-        for (const [trackName, trackData] of Object.entries(projectData.tracks)) {
+    async generateMidiFiles(const [trackName, trackData] of Object.entries(projectData.tracks) {
+        const midiFiles = [];        for (const [trackName, trackData] of Object.entries(projectData.tracks)) {
             if (trackData.type === STR_MIDI && trackData.midi) {
                 const midiFile = await this.createMidiFile(
                     trackName
                     trackData.midi
-                    projectData.metadata
-                );
+                    projectData.metadata;                );
 
                 if (midiFile) {
                     midiFiles.push({
@@ -351,9 +335,7 @@ export class DAWExporter {
             this.config.outputDirectory
             STR_MIDI
             `${trackName}.mid`
-        );
-
-        // Assurer que le dossier existe
+        );        // Assurer que le dossier existe
         await fs.mkdir(path.dirname(midiPath), { recursive: true });
 
         // Génération contenu MIDI
@@ -362,9 +344,7 @@ export class DAWExporter {
             bpm: projectMetadata.bpm
             timeSignature: projectMetadata.timeSignature
             trackName: trackName
-        });
-
-        // Écriture fichier
+        });        // Écriture fichier
         await fs.writeFile(midiPath, midiContent);
 
         return {
@@ -376,17 +356,14 @@ export class DAWExporter {
     /**
      * Prépare les fichiers de samples
      */
-    async prepareSampleFiles(projectData, projectOptions) {
-        const sampleFiles = [];
-
-        for (const [trackName, trackData] of Object.entries(projectData.tracks)) {
+    async prepareSampleFiles(const [trackName, trackData] of Object.entries(projectData.tracks) {
+        const sampleFiles = [];        for (const [trackName, trackData] of Object.entries(projectData.tracks)) {
             if (trackData.samples) {
                 for (const sample of trackData.samples) {
                     const sampleFile = await this.copySampleFile(
                         sample
                         trackName
-                        projectOptions
-                    );
+                        projectOptions;                    );
 
                     if (sampleFile) {
                         sampleFiles.push(sampleFile);
@@ -401,23 +378,18 @@ export class DAWExporter {
     /**
      * Génère le fichier projet principal
      */
-    async generateProjectFile(projectData, dawFormat, supportingFiles, projectOptions) {
+    async generateProjectFile() {
 
         // Génération du contenu projet selon le format
         const projectContent = await template.generate({
             projectData: projectData
             supportingFiles: supportingFiles
             options: projectOptions
-        });
-
-        // Chemin fichier projet
-        const projectFileName = `${projectOptions.projectName || 'ALEX_Project'}${this.fileStructures[dawFormat].extension}`;
-        const projectPath = path.join(
+        });        // Chemin fichier projet
+        const projectFileName = `${projectOptions.projectName || 'ALEX_Project'}${this.fileStructures[dawFormat].extension}`;        const projectPath = path.join(
             this.config.outputDirectory
             projectFileName
-        );
-
-        // Écriture fichier
+        );        // Écriture fichier
         await fs.writeFile(projectPath, projectContent);
 
         return {
@@ -431,18 +403,17 @@ export class DAWExporter {
      * Organise la structure finale du projet
      */
     async organizeFinalStructure(projectFile, supportingFiles, dawFormat, projectOptions) {
-        const structure = {
+        const _structure = {
             mainFile: projectFile.path
             supportingFiles: supportingFiles
             totalFiles: 1 + supportingFiles.length
             trackMapping: this.generateTrackMapping(supportingFiles)
             mixerSetup: this.generateMixerSetup(dawFormat)
             automationData: this.generateAutomationStructure()
-            effectsChain: this.generateEffectsStructure(dawFormat)
-        };
+            effectsChain: this.generateEffectsStructure(dawFormat);        };
 
         // Création structure dossiers si nécessaire
-        if (dawFormat === 'logicx') {
+        async if(projectFile.path, supportingFiles) {
             await this.createLogicPackageStructure(projectFile.path, supportingFiles);
         }
 
@@ -471,7 +442,7 @@ export class DAWExporter {
      * Assigne un canal MIDI
      */
     assignMidiChannel(trackName) {
-        const channelMap = {
+        const _channelMap = {
             drums: 10, // Canal batterie standard
             kick: 10
             snare: 10
@@ -481,8 +452,7 @@ export class DAWExporter {
             melody: 2
             chords: 3
             lead: 4
-            pads: 5
-        };
+            pads: 5;        };
 
         return channelMap[trackName] || 1;
     }
@@ -499,7 +469,7 @@ export class DAWExporter {
      * Suggère un instrument virtuel
      */
     suggestInstrument(trackName, dawFormat) {
-        const instruments = {
+        const _instruments = {
             flp: {
                 bass: 'GMS Bass'
                 melody: 'Serum'
@@ -520,8 +490,7 @@ export class DAWExporter {
                 chords: 'Vintage Electric Piano'
                 lead: 'Lead Synth'
                 pads: 'Pad Synth'
-            }
-        };
+            };        };
 
         return instruments[dawFormat]?
       .[trackName] || instruments[dawFormat]?.melody || 'Default Synth';
@@ -531,7 +500,7 @@ export class DAWExporter {
      * Suggère des effets
      */
     suggestEffects(trackName, dawFormat) {
-        const effects = {
+        const _effects = {
             kick :
        ['EQ'
       STR_COMPRESSOR]
@@ -549,8 +518,7 @@ export class DAWExporter {
       'Chorus']
       pads: ['EQ'
       STR_REVERB
-      'Filter']
-        };
+      'Filter'];        };
 
         return effects[trackName] || ['EQ'];
     }
@@ -586,9 +554,7 @@ export class DAWExporter {
             masterVolume: 0
             masterPan: 0
             tracks: {}
-        };
-
-        for (const [trackName] of Object.entries(tracks)) {
+        };        for (const [trackName] of Object.entries(tracks)) {
             mixerConfig.tracks[trackName] = {
                 volume: 0
                 pan: 0
@@ -627,9 +593,7 @@ export class DAWExporter {
 
     // Méthodes génération patterns FL Studio
     async generatePatternsForFL(tracks) {
-        const patterns = {};
-
-        for (const [trackName, trackData] of Object.entries(tracks)) {
+        const patterns = {};        for (const [trackName, trackData] of Object.entries(tracks)) {
             if (trackData.steps || trackData.pattern) {
                 patterns[trackName] = {
                     name: trackName
@@ -646,14 +610,12 @@ export class DAWExporter {
     // Méthodes utilitaires finales
     estimateProjectDuration(projectData) {
         // Durée estimée en secondes basée sur le BPM et le nombre de mesures
-        const bpm = projectData.metadata.bpm;
-        const bars = 32; // Par défaut
+        const bpm = projectData.metadata.bpm;        const bars = 32; // Par défaut
         return (bars * 4 * 60) / bpm;
     }
 
     countMidiChannels(projectData) {
-        const channels = new Set();
-        for (const trackData of Object.values(projectData.tracks)) {
+        const channels = new Set();        for (const trackData of Object.values(projectData.tracks)) {
             if (trackData.type === STR_MIDI) {
                 channels.add(trackData.midiChannel);
             }
@@ -667,7 +629,7 @@ export class DAWExporter {
     }
 
     generateOpeningInstructions(dawFormat, structure) {
-        const instructions = {
+        const _instructions = {
             flp: [
                 '1. Open FL Studio'
       '2. File → Open → Select the .flp file'
@@ -688,15 +650,13 @@ export class DAWExporter {
       '3. All tracks and regions are organized'
       '4. Virtual instruments are auto-loaded'
       '5. Mix settings are applied automatically'
-            ]
-        };
+            ];        };
 
         return instructions[dawFormat] || [];
     }
 
     generateTrackMapping(supportingFiles) {
-        const mapping = {};
-        for (const file of supportingFiles) {
+        const mapping = {};        for (const file of supportingFiles) {
             if (file.track) {
                 mapping[file.track] = file.name;
             }
@@ -782,8 +742,7 @@ class AbletonLiveTemplate {
         </Tracks>
         <Tempo>${data.projectData.metadata.bpm}</Tempo>
         <Generator>ALEX AI Music Creator</Generator>
-    </LiveSet>
-</Ableton>`;
+    </LiveSet>;</Ableton>`;
 
         return Buffer.from(xmlContent, 'utf-8');
     }
@@ -822,13 +781,13 @@ class LogicProTemplate {
 }
 
 class ReasonTemplate {
-    async generate(data) {
+    async generate(_data) {
         return Buffer.from('Reason project data');
     }
 }
 
 class CubaseTemplate {
-    async generate(data) {
+    async generate(_data) {
         return Buffer.from('Cubase project data');
     }
 }

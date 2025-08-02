@@ -5,7 +5,7 @@
  * @version 1.0.0 - Core Orchestration System
  */
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 export class AlexKernel extends EventEmitter {
@@ -33,8 +33,7 @@ export class AlexKernel extends EventEmitter {
     try {
       logger.info('🔥 AlexKernel initializing - Core orchestration system awakening');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async initialize() {

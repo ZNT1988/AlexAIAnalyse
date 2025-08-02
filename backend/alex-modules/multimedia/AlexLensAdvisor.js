@@ -2,8 +2,7 @@
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
                 break;
             case ';
-const STR_CRITICAL = 'critical';
-/**
+const STR_CRITICAL = 'critical';/**
  * @fileoverview AlexLensAdvisor - Conseiller Objectifs Photo Intelligent IA
  * Recommande les objectifs optimaux selon situation et style photographique
  *
@@ -40,8 +39,7 @@ export class AlexLensAdvisor {
             professionalGrade: this.config.professionalGrade
         });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
 
     /**
@@ -107,9 +105,7 @@ export class AlexLensAdvisor {
      * @returns {Promise<Object>} Recommandations d'objectifs
      */
     async recommendLenses(photographyContext, cameraSystem, preferences = {}) {
-        const advisoryId = `advisory_${Date.now()}`;
-
-        logger.info('🔍 Starting lens advisory analysis', {
+        const advisoryId = `advisory_${Date.now()}`;        logger.info('🔍 Starting lens advisory analysis', {
             advisoryId
             photographyType: photographyContext.type
             cameraSystem: cameraSystem.brand
@@ -125,9 +121,7 @@ export class AlexLensAdvisor {
                 preferences: preferences
                 analysis: {}
                 recommendations: []
-            };
-
-            // Phase 1: Analyse du contexte photographique
+            };            // Phase 1: Analyse du contexte photographique
             logger.info('📸 Phase 1: Photography context analysis');
             advisorySession.analysis.contextAnalysis = await this.analyzePhotographyContext(
                 photographyContext
@@ -139,25 +133,19 @@ export class AlexLensAdvisor {
             const compatibleLenses = await this.findCompatibleLenses(
                 cameraSystem
                 this.config.brandPreferences
-            );
-
-            // Phase 3: Filtrage par critères
+            );            // Phase 3: Filtrage par critères
             logger.info('🎯 Phase 3: Criteria-based filtering');
             const filteredLenses = await this.filterLensesByCriteria(
                 compatibleLenses
                 photographyContext
                 preferences
-            );
-
-            // Phase 4: Analyse de performance prédictive
+            );            // Phase 4: Analyse de performance prédictive
             logger.info('⚡ Phase 4: Predictive performance analysis');
             const analyzedLenses = await this.analyzeLensPerformance(
                 filteredLenses
                 photographyContext
                 cameraSystem
-            );
-
-            // Phase 5: Génération des recommandations
+            );            // Phase 5: Génération des recommandations
             logger.info('🏆 Phase 5: Recommendation generation');
             advisorySession.recommendations = await this.generateRecommendations(
                 analyzedLenses
@@ -170,9 +158,7 @@ export class AlexLensAdvisor {
             const alternatives = await this.findAlternatives(
                 advisorySession.recommendations
                 preferences
-            );
-
-            advisorySession.endTime = Date.now();
+            );            advisorySession.endTime = Date.now();
             advisorySession.duration = advisorySession.endTime - advisorySession.startTime;
 
             const result = {
@@ -219,9 +205,7 @@ export class AlexLensAdvisor {
                     performanceMetrics: this.generatePerformanceMetrics(advisorySession.recommendations)
                     opticalQuality: this.analyzeOpticalQuality(advisorySession.recommendations)
                 }
-            };
-
-            logger.info('✅ Lens advisory completed successfully', {
+            };            logger.info('✅ Lens advisory completed successfully', {
                 advisoryId
                 lensesAnalyzed: result.lensesAnalyzed
                 topRecommendation: result.primary.topChoice.model
@@ -230,8 +214,7 @@ export class AlexLensAdvisor {
 
             return result;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -250,9 +233,7 @@ export class AlexLensAdvisor {
      * @returns {Promise<Object>} Comparaison détaillée
      */
     async compareLenses(lens1, lens2, context = {}) {
-        const comparisonId = `comparison_${Date.now()}`;
-
-        logger.info('⚖️ Starting detailed lens comparison', {
+        const comparisonId = `comparison_${Date.now()}`;        logger.info('⚖️ Starting detailed lens comparison', {
             comparisonId
             lens1: lens1.model
             lens2: lens2.model
@@ -266,9 +247,7 @@ export class AlexLensAdvisor {
       lens2]
       context: context
       analysis: {}
-            };
-
-            // Analyse comparative des performances
+            };            // Analyse comparative des performances
             comparison.analysis.performance = await this.comparePerformance(lens1
       lens2
       context);
@@ -280,9 +259,7 @@ export class AlexLensAdvisor {
       lens2);
 
             // Génération des recommandations de choix
-            const recommendation = await this.generateComparisonRecommendation(comparison);
-
-            return {
+            const recommendation = await this.generateComparisonRecommendation(comparison);            return {
                 success: true
       comparisonId
       winner: recommendation.winner
@@ -292,8 +269,7 @@ export class AlexLensAdvisor {
       detailed: comparison.analysis
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -317,17 +293,13 @@ export class AlexLensAdvisor {
         };
     }
 
-    async findCompatibleLenses(cameraSystem, brandPreferences) {
-        const compatibleLenses = [];
-        const mount = this.determineCameraMount(cameraSystem);
-
-        for (const [brand, database] of Object.entries(this.lensDatabase)) {
+    async findCompatibleLenses(cameraSystem) {
+        const compatibleLenses = [];        const mount = this.determineCameraMount(cameraSystem);        for (const [brand, database] of Object.entries(this.lensDatabase)) {
             if (brandPreferences && !brandPreferences.includes(brand)) continue;
 
             const lenses = await database.findByMount(mount);
             const compatibleForBrand = lenses.filter(lens =>
-                this.compatibilityChecker.mountChecker.isCompatible(lens, cameraSystem)
-            );
+                this.compatibilityChecker.mountChecker.isCompatible(lens, cameraSystem);            );
 
             compatibleLenses.push(...compatibleForBrand);
         }
@@ -336,9 +308,7 @@ export class AlexLensAdvisor {
     }
 
     async filterLensesByCriteria(lenses, context, preferences) {
-        let filtered = [...lenses];
-
-        // Filtrage par type de photographie
+        let filtered = [...lenses];        // Filtrage par type de photographie
         filtered = filtered.filter(lens =>
             this.isSuitableForPhotographyType(lens, context.type)
         );
@@ -375,16 +345,12 @@ export class AlexLensAdvisor {
     }
 
     async analyzeLensPerformance(lenses, context, cameraSystem) {
-        const analyzedLenses = [];
-
-        for (const lens of lenses) {
+        const analyzedLenses = [];        for (const lens of lenses) {
             const performance = {
                 lens: lens
                 scores: {}
                 suitability: {}
-            };
-
-            // Analyse de la netteté
+            };            // Analyse de la netteté
             performance.scores.sharpness = await this.performanceAnalyzer.sharpnessAnalyzer.analyze(
                 lens, cameraSystem, context
             );
@@ -419,14 +385,10 @@ export class AlexLensAdvisor {
         return analyzedLenses.sort((a, b) => b.overallScore - a.overallScore);
     }
 
-    async generateRecommendations(analyzedLenses, contextAnalysis, preferences) {
-        const recommendations = [];
-
-        for (let i = 0; i < Math.min(10, analyzedLenses.length); i++) {
+    async generateRecommendations(let i = 0; i < Math.min(10, analyzedLenses.length) {
+        const recommendations = [];        for (let i = 0; i < Math.min(10, analyzedLenses.length); i++) {
             const lensAnalysis = analyzedLenses[i];
-            const lens = lensAnalysis.lens;
-
-            const recommendation = {
+            const lens = lensAnalysis.lens;            const _recommendation = {
                 rank: i + 1
       lens: lens
       model: lens.model
@@ -460,8 +422,7 @@ export class AlexLensAdvisor {
                 tips: this.generateUsageTips(lens
       contextAnalysis)
       settings: this.suggestOptimalSettings(lens
-      contextAnalysis)
-            };
+      contextAnalysis);            };
 
             recommendations.push(recommendation);
         }
@@ -486,9 +447,7 @@ export class AlexLensAdvisor {
             distance: 'variable'
             movement: 'static'
             size: 'medium'
-        };
-
-        switch (context.type) {
+        };        switch (context.type) {
             case 'portrait':
                 requirements.distance = 'medium';
                 requirements.movement = 'minimalSTR_BREAK_CASElandscape':
@@ -535,22 +494,20 @@ export class AlexLensAdvisor {
     }
 
     determineCameraMount(cameraSystem) {
-        const mountMap = {
-            'canon_eos': 'EFSTR_canon_eos_r': 'RFSTR_nikon_f': 'FSTR_nikon_z': 'ZSTR_sony_e': 'ESTR_sony_fe': 'FESTR_fujifilm_x': 'XSTR_micro_four_thirds': 'MFT'
-        };
+        const _mountMap = {
+            'canon_eos': 'EFSTR_canon_eos_r': 'RFSTR_nikon_f': 'FSTR_nikon_z': 'ZSTR_sony_e': 'ESTR_sony_fe': 'FESTR_fujifilm_x': 'XSTR_micro_four_thirds': 'MFT';        };
 
         return mountMap[cameraSystem.mount] || cameraSystem.mount;
     }
 
     isSuitableForPhotographyType(lens, type) {
-        const suitabilityMap = {
+        const _suitabilityMap = {
             portrait: lens => lens.focalLength >= 85 && lens.maxAperture <= 2.8
             landscape: lens => lens.focalLength <= 35 || lens.type === 'wide-angle'
             wildlife: lens => lens.focalLength >= 200
             macro: lens => lens.type === STR_MACRO || lens.minFocusDistance <= 0.3
             street: lens => lens.focalLength >= 24 && lens.focalLength <= 85
-            sports: lens => lens.focalLength >= 70 && lens.maxAperture <= 4
-        };
+            sports: lens => lens.focalLength >= 70 && lens.maxAperture <= 4;        };
 
         const check = suitabilityMap[type];
         return check ? check(lens) : true;
@@ -565,22 +522,17 @@ export class AlexLensAdvisor {
     }
 
     isPortable(lens, level) {
-        const weightLimits = {
+        const _weightLimits = {
             ultralight: 400, // grammes
             light: 800
             moderate: 1500
-            heavy: 3000
-        };
+            heavy: 3000;        };
 
         return lens.weight <= weightLimits[level];
     }
 
     calculateOverallScore(scores, context) {
-        const weights = this.getScoreWeights(context);
-        let totalScore = 0;
-        let totalWeight = 0;
-
-        for (const [metric, score] of Object.entries(scores)) {
+        const weights = this.getScoreWeights(context);        let totalScore = 0;        let totalWeight = 0;        for (const [metric, score] of Object.entries(scores)) {
             const weight = weights[metric] || 1;
             totalScore += score * weight;
             totalWeight += weight;
@@ -596,9 +548,7 @@ export class AlexLensAdvisor {
             colorAccuracy: 2
             distortion: 1
             vignetting: 1
-        };
-
-        // Ajustement selon le contexte
+        };        // Ajustement selon le contexte
         switch (context.primaryUse) {
             case 'portrait':
                 baseWeights.bokeh = 4;
@@ -771,8 +721,7 @@ class CanonLensDatabase {
                 weight: 805
                 mount: 'EF'
                 stabilization: false
-            }
-        ];
+            };        ];
 
         return lenses.filter(lens => lens.mount === mount);
     }
@@ -822,19 +771,19 @@ class AutofocusValidator {}
 class StabilizationAnalyzer {}
 
 class SharpnessAnalyzer {
-    async analyze(lens, camera, context) {
+    async analyze(_lens, _camera, _context) {
         return 0.85; // Score simulé
     }
 }
 
 class BokehAnalyzer {
-    async analyze(lens, context) {
+    async analyze(lens, _context) {
         return lens.maxAperture <= 2.8 ? 0.9 : 0.6;
     }
 }
 
 class ColorAccuracyAnalyzer {
-    async analyze(lens, camera) {
+    async analyze(_lens, _camera) {
         return 0.8;
     }
 }

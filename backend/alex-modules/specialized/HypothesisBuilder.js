@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_LOGICAL = 'logical';
-/**
+const STR_LOGICAL = 'logical';/**
  * @fileoverview HypothesisBuilder - Système de Génération d'Hypothèses Révolutionnaire
  * Moteur intelligent qui génère, évalue et raffine des hypothèses pour exploration scientifique et créative
  *
@@ -57,16 +56,14 @@ const STR_LOGICAL = 'logical';
  *   context: marketData
  *   count: 10
  *   creativity: 0.8
- * });
- *
+ * }); *
  * @example
  * // Test et validation
  * const results = await builder.testHypotheses(hypotheses, {
  *   methods: [STR_LOGICAL, STR_EMPIRICAL, STR_STATISTICAL]
  *   confidence: 0.95
  *   iterations: 5
- * });
- */
+ * }); */
 
 import logger from '../config/logger.js';
 
@@ -281,12 +278,9 @@ export class HypothesisBuilder {
      *   count: 15
      *   types: ['causal', 'predictive', 'explanatory']
      *   creativity: 0.9
-     * });
-     */
+     * });     */
     async generateHypotheses(specification) {
-        const sessionId = `gen_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting hypothesis generation', {
+        const sessionId = `gen_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting hypothesis generation', {
             sessionId
             domain: specification.domain
             count: specification.count || 10
@@ -303,9 +297,7 @@ export class HypothesisBuilder {
                 averageConfidence: 0
                 generationMethods: []
             }
-        };
-
-        try {
+        };        try {
             // Phase 1: Génération hypothèses primaires
             const primaryHypotheses = await this.generatePrimaryHypotheses(specification, generation);
             generation.hypotheses.push(...primaryHypotheses);
@@ -319,15 +311,9 @@ export class HypothesisBuilder {
             generation.hypotheses.push(...counterHypotheses);
 
             // Phase 4: Validation et scoring
-            const validatedHypotheses = await this.validateAndScore(generation.hypotheses, specification);
-
-            // Phase 5: Sélection et ranking final
-            const rankedHypotheses = await this.rankAndSelect(validatedHypotheses, specification);
-
-            // Phase 6: Enrichissement métadonnées
-            const enrichedHypotheses = await this.enrichWithMetadata(rankedHypotheses, generation);
-
-            // Finaliser génération
+            const validatedHypotheses = await this.validateAndScore(generation.hypotheses, specification);            // Phase 5: Sélection et ranking final
+            const rankedHypotheses = await this.rankAndSelect(validatedHypotheses, specification);            // Phase 6: Enrichissement métadonnées
+            const enrichedHypotheses = await this.enrichWithMetadata(rankedHypotheses, generation);            // Finaliser génération
             generation.hypotheses = enrichedHypotheses;
             generation.endTime = Date.now();
             generation.duration = generation.endTime - generation.startTime;
@@ -347,8 +333,7 @@ export class HypothesisBuilder {
                 recommendations: await this.generateTestingRecommendations(enrichedHypotheses)
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -381,8 +366,7 @@ export class HypothesisBuilder {
      *   confidence: 0.90
      *   iterations: 3
      *   parallel: true
-     * });
-     */
+     * });     */
     async testHypotheses(hypotheses, testingOptions = {}) {
         logger.info('Starting hypothesis testing', {
             testingId
@@ -390,17 +374,17 @@ export class HypothesisBuilder {
             methods: testingOptions.methods || [STR_LOGICAL]
         });
         try {
-            const methods = testingOptions.methods || this.config.testingMethods;
-            const confidence = testingOptions.confidence || 0.95;
-            const iterations = testingOptions.iterations || 1;
-
-            for (const hypothesis of hypotheses) {
-                const hypothesisResults = await this.testSingleHypothesis(
+            const methods = testingOptions.methods || this.config.testingMethods;            const confidence = testingOptions.confidence || 0.95;            const iterations = testingOptions.iterations || 1;            async for(
                     hypothesis
                     methods
                     confidence
                     iterations
-                );
+                ) {
+                const hypothesisResults = await this.testSingleHypothesis(
+                    hypothesis
+                    methods
+                    confidence
+                    iterations;                );
 
                 testing.results.push(hypothesisResults);
                 this.updateTestingSummary(testing.summary, hypothesisResults);
@@ -413,8 +397,7 @@ export class HypothesisBuilder {
                     overallResult: hypothesisResults.overall.status
                 });
 
-                } catch (error) {
-      // Logger fallback - ignore error
+                } catch (_error) {
     }}
 
             // Finaliser tests
@@ -423,9 +406,7 @@ export class HypothesisBuilder {
             testing.summary.averageConfidence = this.calculateAverageConfidence(testing.results);
 
             // Générer recommandations post-test
-            const recommendations = await this.generatePostTestRecommendations(testing);
-
-            return {
+            const recommendations = await this.generatePostTestRecommendations(testing);            return {
                 success: true
                 testingId
                 duration: testing.duration
@@ -469,12 +450,9 @@ export class HypothesisBuilder {
      *   feedback: { expert: 'positive', user: 'mixed' }
      *   evidence: newResearchData
      *   context: { marketChanges: true }
-     * });
-     */
+     * });     */
     async refineHypotheses(hypotheses, refinementData) {
-        const refinementId = `refine_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting hypothesis refinement', {
+        const refinementId = `refine_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting hypothesis refinement', {
             refinementId
             hypothesesCount: hypotheses.length
         });
@@ -490,15 +468,16 @@ export class HypothesisBuilder {
                 averageImprovement: 0
                 confidenceGain: 0
             }
-        };
-
-        try {
-            for (const hypothesis of hypotheses) {
-                const refinedHypothesis = await this.refineSingleHypothesis(
+        };        try {
+            async for(
                     hypothesis
                     refinementData
                     refinement
-                );
+                ) {
+                const refinedHypothesis = await this.refineSingleHypothesis(
+                    hypothesis
+                    refinementData
+                    refinement;                );
 
                 refinement.refined.push(refinedHypothesis);
 
@@ -524,8 +503,7 @@ export class HypothesisBuilder {
                 duration: refinement.duration
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -552,30 +530,19 @@ export class HypothesisBuilder {
      * const metaTheories = await builder.synthesizeMetaHypotheses(
      *   validatedHypotheses
      *   { abstractionLevel: 'high', domains: ['tech', 'social'] }
-     * );
-     */
+     * );     */
     async synthesizeMetaHypotheses(validatedHypotheses, synthesisOptions = {}) {
-        const synthesisId = `synth_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;
-
-        logger.info('Starting meta-hypothesis synthesis', {
+        const synthesisId = `synth_${Date.now()}_${(crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF).toString(36).substr(2, 6)}`;        logger.info('Starting meta-hypothesis synthesis', {
             synthesisId
             inputHypotheses: validatedHypotheses.length
         });
 
         try {
             // Analyser patterns et connexions
-            const patterns = await this.identifyHypothesisPatterns(validatedHypotheses);
-
-            // Générer méta-hypothèses
-            const metaHypotheses = await this.generateMetaHypotheses(patterns, synthesisOptions);
-
-            // Valider méta-hypothèses
-            const validatedMeta = await this.validateMetaHypotheses(metaHypotheses);
-
-            // Générer théories émergentes
-            const emergentTheories = await this.generateEmergentTheories(validatedMeta);
-
-            return {
+            const patterns = await this.identifyHypothesisPatterns(validatedHypotheses);            // Générer méta-hypothèses
+            const metaHypotheses = await this.generateMetaHypotheses(patterns, synthesisOptions);            // Valider méta-hypothèses
+            const validatedMeta = await this.validateMetaHypotheses(metaHypotheses);            // Générer théories émergentes
+            const emergentTheories = await this.generateEmergentTheories(validatedMeta);            return {
                 success: true
                 synthesisId
                 metaHypotheses: validatedMeta
@@ -585,8 +552,7 @@ export class HypothesisBuilder {
                 duration: Date.now() - Date.now()
             };
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -606,20 +572,16 @@ export class HypothesisBuilder {
      * @description Génère hypothèses primaires via générateurs spécialisés
      * @private
      */
-    async generatePrimaryHypotheses(specification, generation) {
-        const hypotheses = [];
-        const requestedTypes = specification.types || Object.keys(this.generators);
-        const countPerType = Math.ceil((specification.count || 10) / requestedTypes.length);
-
-        for (const type of requestedTypes) {
+    async generatePrimaryHypotheses(this.generators) {
+        const hypotheses = [];        const requestedTypes = specification.types || Object.keys(this.generators);
+        const countPerType = Math.ceil((specification.count || 10) / requestedTypes.length);        for (const type of requestedTypes) {
             if (this.generators[type]) {
-                const typeHypotheses = await this.generators[type].generate({
+                const _typeHypotheses = await this.generators[type].generate({
                     domain: specification.domain
                     topic: specification.topic
                     context: specification.context
                     count: countPerType
-                    creativity: specification.creativity || this.config.creativity
-                });
+                    creativity: specification.creativity || this.config.creativity;                });
 
                 hypotheses.push(...typeHypotheses);
                 generation.metadata.generationMethods.push(type);
@@ -643,9 +605,7 @@ export class HypothesisBuilder {
                 confidence: 0
                 evidence: []
             }
-        };
-
-        for (const method of methods) {
+        };        for (const method of methods) {
             if (this.testingFramework.methods[method]) {
                 results.tests[method] = testResult;
             }
@@ -849,43 +809,43 @@ class AnalogicalHypothesisGenerator {
 // =======================================
 
 class LogicalValidator {
-    async validate(hypothesis) {
+    async validate(_hypothesis) {
         return { valid: true, score: 0.8, issues: [] };
     }
 }
 
 class EmpiricalValidator {
-    async validate(hypothesis) {
+    async validate(_hypothesis) {
         return { valid: true, score: 0.7, evidence: [] };
     }
 }
 
 class StatisticalValidator {
-    async validate(hypothesis) {
+    async validate(_hypothesis) {
         return { valid: true, score: 0.75, power: 0.8 };
     }
 }
 
 class CoherenceValidator {
-    async validate(hypothesis) {
+    async validate(_hypothesis) {
         return { coherent: true, score: 0.85, conflicts: [] };
     }
 }
 
 class FalsifiabilityValidator {
-    async validate(hypothesis) {
+    async validate(_hypothesis) {
         return { falsifiable: true, score: 0.9, criteria: [] };
     }
 }
 
 class NoveltyValidator {
-    async validate(hypothesis) {
+    async validate(_hypothesis) {
         return { novel: true, score: 0.6, similarity: [] };
     }
 }
 
 class UtilityValidator {
-    async validate(hypothesis) {
+    async validate(_hypothesis) {
         return { useful: true, score: 0.8, applications: [] };
     }
 }
@@ -895,7 +855,7 @@ class UtilityValidator {
 // =======================================
 
 class LogicalTesting {
-    async test(hypothesis, options) {
+    async test(_hypothesis, _options) {
         return {
             method: STR_LOGICAL
             result: STR_PASSED
@@ -906,7 +866,7 @@ class LogicalTesting {
 }
 
 class EmpiricalTesting {
-    async test(hypothesis, options) {
+    async test(_hypothesis, _options) {
         return {
             method: STR_EMPIRICAL
             result: 'inconclusive'
@@ -917,7 +877,7 @@ class EmpiricalTesting {
 }
 
 class StatisticalTesting {
-    async test(hypothesis, options) {
+    async test(_hypothesis, _options) {
         return {
             method: STR_STATISTICAL
             result: STR_PASSED
@@ -929,7 +889,7 @@ class StatisticalTesting {
 }
 
 class ExperimentalTesting {
-    async test(hypothesis, options) {
+    async test(_hypothesis, _options) {
         return {
             method: 'experimental'
             result: 'pending'
@@ -940,7 +900,7 @@ class ExperimentalTesting {
 }
 
 class SimulationTesting {
-    async test(hypothesis, options) {
+    async test(_hypothesis, _options) {
         return {
             method: 'simulation'
             result: STR_PASSED
@@ -956,7 +916,7 @@ class SimulationTesting {
 // =======================================
 
 class FeedbackRefinement {
-    async refine(hypothesis, feedback) {
+    async refine(hypothesis, _feedback) {
         return { ...hypothesis, confidence: hypothesis.confidence + 0.1 };
     }
 }
@@ -968,13 +928,13 @@ class EvidenceRefinement {
 }
 
 class LogicalRefinement {
-    async refine(hypothesis, logic) {
+    async refine(hypothesis, _logic) {
         return { ...hypothesis, logical: true };
     }
 }
 
 class CreativeRefinement {
-    async refine(hypothesis, creativity) {
+    async refine(hypothesis, _creativity) {
         return { ...hypothesis, creative: true };
     }
 }

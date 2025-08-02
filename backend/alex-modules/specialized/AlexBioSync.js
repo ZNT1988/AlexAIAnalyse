@@ -1,14 +1,13 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 // AlexBioSync.js - Synchronisation Biologique Intelligente
 // Système révolutionnaire d'adaptation aux états physiologiques en temps réel
 // Version: 2.0 - HustleFinderIA Advanced AI System
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_SLEEP = 'sleep';
-/**
+const STR_SLEEP = 'sleep';/**
  * AlexBioSync - Adapter HustleFinderIA aux rythmes biologiques
  *
  * Objectifs:
@@ -43,8 +42,7 @@ export class AlexBioSync extends EventEmitter {
     try {
       logger.info('AlexBioSync initialized - Connected to biological rhythms');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   /**
@@ -58,18 +56,12 @@ export class AlexBioSync extends EventEmitter {
 
     try {
       // Validation et authentification de l'appareil
-      const deviceAuth = await this.authenticateDevice(deviceInfo);
-
-      // Configuration de la synchronisation
-      const syncConfig = await this.setupDeviceSync(deviceInfo, userId);
-
-      // Calibration biologique initiale
-      const bioBaseline = await this.establishBioBaseline(deviceInfo, userId);
-
-      // Démarrage du monitoring continu
+      const deviceAuth = await this.authenticateDevice(deviceInfo);      // Configuration de la synchronisation
+      const syncConfig = await this.setupDeviceSync(deviceInfo, userId);      // Calibration biologique initiale
+      const bioBaseline = await this.establishBioBaseline(deviceInfo, userId);      // Démarrage du monitoring continu
       await this.startDeviceMonitoring(deviceInfo, syncConfig);
 
-      const connectedDevice = {
+      const _connectedDevice = {
         id: deviceInfo.id
       type: deviceInfo.type
       userId
@@ -97,16 +89,14 @@ export class AlexBioSync extends EventEmitter {
           alertThresholds: await this.calculatePersonalizedThresholds(bioBaseline)
           adaptationSensitivity: STR_MEDIUM
           privacySettings: deviceInfo.privacySettings || STR_HIGH
-        }
-      };
+        };      };
 
       this.bioDevices.set(deviceInfo.id, connectedDevice);
       this.emit('bio_device_connected', connectedDevice);
 
       return connectedDevice;
 
-    } catch (error) {
-      // Logger fallback - ignore error
+    } catch (_error) {
     });
       throw error;
     }
@@ -120,29 +110,17 @@ export class AlexBioSync extends EventEmitter {
 
     try {
       // Récupération des métriques actuelles
-      const currentMetrics = await this.getCurrentBioMetrics(userId);
-
-      // Analyse de l'état énergétique
-      const energyState = await this.analyzeEnergyState(currentMetrics);
-
-      // Détection des patterns circadiens
-      const circadianState = await this.analyzeCircadianState(userId, currentMetrics);
-
-      // Évaluation du stress et récupération
-      const recoveryState = await this.analyzeRecoveryState(currentMetrics);
-
-      // Calcul de la capacité cognitive
-      const cognitiveCapacity = await this.assessCognitiveCapacity(currentMetrics);
-
-      // Génération des adaptations
+      const currentMetrics = await this.getCurrentBioMetrics(userId);      // Analyse de l'état énergétique
+      const energyState = await this.analyzeEnergyState(currentMetrics);      // Détection des patterns circadiens
+      const circadianState = await this.analyzeCircadianState(userId, currentMetrics);      // Évaluation du stress et récupération
+      const recoveryState = await this.analyzeRecoveryState(currentMetrics);      // Calcul de la capacité cognitive
+      const cognitiveCapacity = await this.assessCognitiveCapacity(currentMetrics);      // Génération des adaptations
       const adaptations = await this.generateAdaptations(
         energyState
         circadianState
         recoveryState
         cognitiveCapacity
-      );
-
-      const adaptationResult = {
+      );      const _adaptationResult = {
         userId
         timestamp: new Date().toISOString()
         // États analysés
@@ -173,14 +151,12 @@ export class AlexBioSync extends EventEmitter {
           current_efficiency: this.calculateCurrentEfficiency(currentMetrics)
           potential_efficiency: this.calculatePotentialEfficiency(adaptations)
           optimization_score: this.calculateOptimizationScore(adaptations)
-        }
-      };
+        };      };
 
       this.emit('bio_adaptation_generated', adaptationResult);
       return adaptationResult;
 
     } catch (error) {
-      // Logger fallback - ignore error
     });
       throw error;
     }
@@ -196,12 +172,9 @@ export class AlexBioSync extends EventEmitter {
       quality: 'good'
       sustainability: STR_HIGH
       recommendations: []
-    };
-
-    // Analyse de la fréquence cardiaque au repos
+    };    // Analyse de la fréquence cardiaque au repos
     if (currentMetrics.heartRate) {
-      const restingHR = currentMetrics.heartRate.resting;
-      const currentHR = currentMetrics.heartRate.current;
+      const restingHR = currentMetrics.heartRate.resting;      const currentHR = currentMetrics.heartRate.current;
 
       if (currentHR < restingHR * 1.1) {
         energyAnalysis.level = 'low';
@@ -214,8 +187,7 @@ export class AlexBioSync extends EventEmitter {
 
     // Analyse de la variabilité cardiaque (HRV)
     if (currentMetrics.heartRateVariability) {
-      const hrv = currentMetrics.heartRateVariability.current;
-      const baselineHRV = currentMetrics.heartRateVariability.baseline;
+      const hrv = currentMetrics.heartRateVariability.current;      const baselineHRV = currentMetrics.heartRateVariability.baseline;
 
       if (hrv > baselineHRV * 1.1) {
         energyAnalysis.quality = 'excellent';
@@ -262,9 +234,7 @@ export class AlexBioSync extends EventEmitter {
       optimalWorkWindow: null
       recoveryTimeNeeded: 0
       stressLevelTrend: 'stable'
-    };
-
-    // Adaptations basées sur l'énergie
+    };    // Adaptations basées sur l'énergie
     if (energyState.level === 'peak') {
       adaptations.hustleModifications.push({
         type: 'intensity_boost'
@@ -360,9 +330,7 @@ export class AlexBioSync extends EventEmitter {
       active: true
       alertsEnabled: true
       adaptiveMode: true
-    };
-
-    // Monitoring de la fréquence cardiaque
+    };    // Monitoring de la fréquence cardiaque
     this.monitorHeartRate(userId
       monitoring);
 
@@ -407,16 +375,14 @@ export class AlexBioSync extends EventEmitter {
         }
 
         // Adaptation dynamique des hustles
-        if (monitoring.adaptiveMode) {
+        async if(userId) {
           await this.adaptToCurrentState(userId);
         }
 
       } catch (error) {
-      // Logger fallback - ignore error
     });
 
         } catch (error) {
-    // Logger fallback - ignore error
   }}
     }, 60000); // Toutes les minutes
   }
@@ -425,15 +391,12 @@ export class AlexBioSync extends EventEmitter {
    * Suggestions d'activités basées sur l'état biologique
    */
   async suggestOptimalActivities(userId) {
-    const currentState = await this.adaptToCurrentState(userId);
-    const suggestions = {
+    const currentState = await this.adaptToCurrentState(userId);    const suggestions = {
       immediate: []
       next_hour: []
       today: []
       this_week: []
-    };
-
-    // Suggestions immédiates
+    };    // Suggestions immédiates
     if (currentState.states.energy.level === 'peak') {
       suggestions.immediate.push({
         activity: 'Complex Problem Solving Session'
@@ -470,7 +433,7 @@ export class AlexBioSync extends EventEmitter {
 
   async setupDeviceConnections() {
     // Configuration des connexions d'appareils
-    const supportedDevices = {
+    const _supportedDevices = {
       'apple_watch': {
         capabilities: ['heart_rate', STR_SLEEP, STR_STEPS, STR_STRESS]
         apiVersion: '2.0STR_AUTHMETHODoauth2'
@@ -490,15 +453,13 @@ export class AlexBioSync extends EventEmitter {
       'google_fit': {
         capabilities: [STR_STEPS, 'heart_rate', STR_SLEEP]
         apiVersion: 'v1STR_AUTHMETHODoauth2'
-      }
-    };
+      };    };
 
     this.supportedDevices = supportedDevices;
     try {
       logger.debug('Device connections configured');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   async authenticateDevice(deviceInfo) {
@@ -554,8 +515,7 @@ export class AlexBioSync extends EventEmitter {
     try {
       logger.debug('Circadian tracking initialized');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   loadAdaptationProtocols() {
@@ -575,8 +535,7 @@ export class AlexBioSync extends EventEmitter {
     try {
       logger.debug('Adaptation protocols loaded');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 
   setupEnergyOptimization() {
@@ -584,19 +543,13 @@ export class AlexBioSync extends EventEmitter {
     try {
       logger.debug('Energy optimization configured');
 
-    } catch (error) {
-    // Logger fallback - ignore error
+    } catch (_error) {
   }}
 }
 
 // Export des fonctions utilitaires
-export const connectBioDevice = async (deviceInfo, userId) => this.processLongOperation(args);
-
-export const getCurrentBioAdaptation = async (userId) => this.processLongOperation(args);
-
-export const startBioMonitoring = async (userId) => {
-  const bioSync = new AlexBioSync();
-  return await bioSync.startRealTimeMonitoring(userId);
+export const connectBioDevice = async (_deviceInfo, _userId) => this.processLongOperation(args);export const getCurrentBioAdaptation = async (_userId) => this.processLongOperation(args);export const startBioMonitoring = async (userId) => {
+  const bioSync = new AlexBioSync();  return await bioSync.startRealTimeMonitoring(userId);
 };
 
 // Instance singleton

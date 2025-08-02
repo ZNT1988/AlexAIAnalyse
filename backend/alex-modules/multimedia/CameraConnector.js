@@ -1,8 +1,7 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
-const STR_DSLR = 'dslr';
-/**
+const STR_DSLR = 'dslr';/**
  * @fileoverview CameraConnector - Connecteur Universel Appareils Photo/Vidéo IA
  * Contrôle et synchronise tous types d'appareils photo/vidéo intelligemment
  *
@@ -11,8 +10,8 @@ const STR_DSLR = 'dslr';
  * @author ZNT Team - HustleFinder IA Camera Control Engine
  */
 
+import { EventEmitter } from 'node:events';
 import logger from '../config/logger.js';
-import { EventEmitter } from 'events';
 
 /**
  * @class CameraConnector
@@ -44,8 +43,7 @@ export class CameraConnector extends EventEmitter {
             autoDetection: this.config.autoDetection
         });
 
-        } catch (error) {
-    // Logger fallback - ignore error
+        } catch (_error) {
   }}
 
     /**
@@ -110,9 +108,7 @@ export class CameraConnector extends EventEmitter {
      * @returns {Promise<Object>} Appareils découverts
      */
     async discoverCameras(options = {}) {
-        const discoveryId = `discovery_${Date.now()}`;
-
-        logger.info('🔍 Starting camera discovery', {
+        const discoveryId = `discovery_${Date.now()}`;        logger.info('🔍 Starting camera discovery', {
             discoveryId
             protocols: options.protocols || this.config.supportedProtocols
             timeout: options.timeout || this.config.connectionTimeout
@@ -125,22 +121,14 @@ export class CameraConnector extends EventEmitter {
                 protocols: options.protocols || this.config.supportedProtocols
                 discovered: []
                 errors: []
-            };
-
-            // Phase 1: Découverte multi-protocole
+            };            // Phase 1: Découverte multi-protocole
             logger.info('📡 Phase 1: Multi-protocol discovery');
             const discoveryTasks = discoverySession.protocols.map(protocol =>
-                this.discoverByProtocol(protocol, options)
-            );
+                this.discoverByProtocol(protocol, options);            );
 
-            const results = await Promise.allSettled(discoveryTasks);
-
-            // Collecte des résultats
+            const results = await Promise.allSettled(discoveryTasks);            // Collecte des résultats
             for (let i = 0; i < results.length; i++) {
-                const result = results[i];
-                const protocol = discoverySession.protocols[i];
-
-                if (result.status === 'fulfilled' && result.value.cameras.length > 0) {
+                const result = results[i];                const protocol = discoverySession.protocols[i];                if (result.status === 'fulfilled' && result.value.cameras.length > 0) {
                     discoverySession.discovered.push(...result.value.cameras.map(camera => ({
                         ...camera
                         protocol
@@ -156,14 +144,14 @@ export class CameraConnector extends EventEmitter {
 
             // Phase 2: Identification et profilage
             logger.info('🎯 Phase 2: Camera identification and profiling');
-            for (const camera of discoverySession.discovered) {
+            async for(camera) {
                 camera.profile = await this.identifyCamera(camera);
                 camera.capabilities = await this.queryCameraCapabilities(camera);
             }
 
             // Phase 3: Tri par priorité et disponibilité
             logger.info('⚡ Phase 3: Priority sorting and availability check');
-            discoverySession.discovered.sort((a, b) => this.processLongOperation(args));
+            discoverySession.discovered.sort((_a, _b) => this.processLongOperation(args));
 
             discoverySession.endTime = Date.now();
             discoverySession.duration = discoverySession.endTime - discoverySession.startTime;
@@ -190,9 +178,7 @@ export class CameraConnector extends EventEmitter {
                 }
                 // Recommandations de connexion
                 recommendations: this.generateConnectionRecommendations(discoverySession.discovered)
-            };
-
-            logger.info('✅ Camera discovery completed', {
+            };            logger.info('✅ Camera discovery completed', {
                 discoveryId
                 camerasFound: result.camerasFound
                 duration: `${discoverySession.duration}ms`
@@ -201,8 +187,7 @@ export class CameraConnector extends EventEmitter {
 
             return result;
 
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     });
 
             return {
@@ -220,9 +205,7 @@ export class CameraConnector extends EventEmitter {
      * @returns {Promise<Object>} Résultat de la connexion
      */
     async connectCamera(cameraInfo, options = {}) {
-        const connectionId = `conn_${Date.now()}`;
-
-        logger.info('🔗 Connecting to camera', {
+        const connectionId = `conn_${Date.now()}`;        logger.info('🔗 Connecting to camera', {
             connectionId
             cameraModel: cameraInfo.model
             protocol: cameraInfo.protocol
@@ -235,9 +218,7 @@ export class CameraConnector extends EventEmitter {
                 cameraInfo: cameraInfo
                 connected: false
                 retries: 0
-            };
-
-            // Phase 1: Préparation de la connexion
+            };            // Phase 1: Préparation de la connexion
             logger.info('⚙️ Phase 1: Connection preparation');
             const handler = this.protocolHandlers[cameraInfo.protocol.toLowerCase()];
             if (!handler) {
@@ -246,33 +227,25 @@ export class CameraConnector extends EventEmitter {
 
             // Phase 2: Établissement de la connexion
             logger.info('🤝 Phase 2: Establishing connection');
-            let connection = null;
-            let attempt = 0;
-
-            while (attempt < this.config.maxRetries && !connection) {
+            let _connection = null;            const attempt = 0;            async while() {
                 try {
-                    connection = await handler.connect(cameraInfo, {
+                    _connection = await handler.connect(cameraInfo, {
                         timeout: options.timeout || this.config.connectionTimeout
                         authentication: options.authentication
                     });
                     connectionSession.connected = true;
-                } catch (error) {
-      // Logger fallback - ignore error
-    } failed, retrying...`, {
-                            error: connectionError.message
-                        });
+                } catch (_error) {
+    } failed, retrying...`, 
+                            error: connectionError.message);
                         await this.delay(1000 * attempt);
-                    } else {
+                    } else 
                         throw connectionError;
-                    }
                 }
             }
 
             // Phase 3: Initialisation de l'appareil
             logger.info('🎬 Phase 3: Camera initialization');
-            const cameraInstance = await this.initializeCamera(connection, cameraInfo);
-
-            // Phase 4: Configuration initiale
+            const cameraInstance = await this.initializeCamera(connection, cameraInfo);            // Phase 4: Configuration initiale
             logger.info('⚡ Phase 4: Initial configuration');
             await this.applyCameraConfiguration(cameraInstance, options.config);
 
@@ -307,9 +280,7 @@ export class CameraConnector extends EventEmitter {
                     settings: cameraInstance.canChangeSettings
                     fileTransfer: cameraInstance.canTransferFiles
                 }
-            };
-
-            // Émission d'événement
+            };            // Émission d'événement
             this.emit('cameraConnected', result);
 
             logger.info('✅ Camera connected successfully', {
@@ -349,9 +320,7 @@ export class CameraConnector extends EventEmitter {
      * @returns {Promise<Object>} Résultat de la capture
      */
     async capturePhoto(cameraId, captureOptions = {}) {
-        const captureId = `capture_${Date.now()}`;
-
-        logger.info('📸 Starting photo capture', {
+        const captureId = `capture_${Date.now()}`;        logger.info('📸 Starting photo capture', {
             captureId
             cameraId
             settings: captureOptions.settings
@@ -364,7 +333,7 @@ export class CameraConnector extends EventEmitter {
             }
 
             // Phase 1: Configuration avant capture
-            if (captureOptions.settings) {
+            async if(camera, captureOptions.settings) {
                 await this.controlInterfaces.settings.apply(camera, captureOptions.settings);
             }
 
@@ -374,15 +343,12 @@ export class CameraConnector extends EventEmitter {
                 quality: captureOptions.quality || 'high'
                 saveToCard: captureOptions.saveToCard !== false
                 downloadToDevice: captureOptions.downloadToDevice !== false
-            });
-
-            // Phase 3: Post-traitement
-            let processedResult = captureResult;
-            if (captureOptions.autoEnhancement) {
+            });            // Phase 3: Post-traitement
+            let processedResult = captureResult;            async if(captureResult) {
                 processedResult = await this.applyAutoEnhancement(captureResult);
             }
 
-            const result = {
+            const _result = {
                 success: true
                 captureId
                 cameraId
@@ -392,8 +358,7 @@ export class CameraConnector extends EventEmitter {
                     settings: camera.currentSettings
                     location: captureOptions.location
                     enhanced: captureOptions.autoEnhancement
-                }
-            };
+                };            };
 
             this.emit('photoCaptured', result);
 
@@ -406,7 +371,6 @@ export class CameraConnector extends EventEmitter {
             return result;
 
         } catch (error) {
-      // Logger fallback - ignore error
     });
 
             return {
@@ -433,9 +397,7 @@ export class CameraConnector extends EventEmitter {
             resolution: options.resolution || 'medium'
             frameRate: options.frameRate || 30
             format: options.format || 'MJPEG'
-        });
-
-        this.emit('liveViewStarted', {
+        });        this.emit('liveViewStarted', {
             cameraId
             stream: liveViewStream
         });
@@ -471,8 +433,7 @@ export class CameraConnector extends EventEmitter {
 
     async identifyCamera(camera) {
         // Identification basée sur les informations du fabricant
-        const manufacturer = camera.manufacturer?
-      .toLowerCase() || '';
+        const manufacturer = camera.manufacturer?;      .toLowerCase() || '';
 
         if (manufacturer.includes('canon')) return this.cameraProfiles.canon;
         if (manufacturer.includes('nikon')) return this.cameraProfiles.nikon;
@@ -500,9 +461,7 @@ export class CameraConnector extends EventEmitter {
     }
 
     calculateCameraPriority(camera) {
-        let priority = 50;
-
-        // Bonus selon le type
+        let priority = 50;        // Bonus selon le type
         if (camera.type === STR_DSLR) priority += 20;
         else if (camera.type === STR_MIRRORLESS) priority += 15;
         else if (camera.type === 'compact') priority += 10;
@@ -537,30 +496,29 @@ export class CameraConnector extends EventEmitter {
         };
     }
 
-    async applyCameraConfiguration(camera, config) {
+    async applyCameraConfiguration(!config) {
         if (!config) return;
 
         if (config.shootingMode) {
             await this.controlInterfaces.settings.setShootingMode(camera, config.shootingMode);
         }
 
-        if (config.iso) {
+        async if(camera, config.iso) {
             await this.controlInterfaces.settings.setISO(camera, config.iso);
         }
 
-        if (config.aperture) {
+        async if(camera, config.aperture) {
             await this.controlInterfaces.settings.setAperture(camera, config.aperture);
         }
 
-        if (config.shutterSpeed) {
+        async if(camera, config.shutterSpeed) {
             await this.controlInterfaces.settings.setShutterSpeed(camera, config.shutterSpeed);
         }
     }
 
     setupConnectionMonitoring(camera) {
-        const heartbeatInterval = setInterval(() => this.processLongOperation(args))
-                .catch(() => this.processLongOperation(args));
-        }, 5000);
+        const _heartbeatInterval = setInterval(() => this.processLongOperation(args))
+                .catch(() => this.processLongOperation(args));        }, 5000);
 
         camera.heartbeatInterval = heartbeatInterval;
     }
@@ -611,8 +569,7 @@ export class CameraConnector extends EventEmitter {
             this.emit('cameraDisconnected', camera);
 
             return { success: true, cameraId };
-        } catch (error) {
-      // Logger fallback - ignore error
+        } catch (_error) {
     };
         }
     }
@@ -637,48 +594,48 @@ export class CameraConnector extends EventEmitter {
 // =======================================
 
 class USBProtocolHandler {
-    async discover(options) {
+    async discover(_options) {
         return { cameras: [{ manufacturer: 'Canon', model: 'EOS R5', type: STR_MIRRORLESS }] };
     }
 
-    async connect(cameraInfo, options) {
+    async connect(_cameraInfo, _options) {
         return { connected: true, type: 'usb' };
     }
 }
 
 class WiFiProtocolHandler {
-    async discover(options) {
+    async discover(_options) {
         return { cameras: [{ manufacturer: 'Sony', model: 'A7R IV', type: STR_MIRRORLESS }] };
     }
 
-    async connect(cameraInfo, options) {
+    async connect(_cameraInfo, _options) {
         return { connected: true, type: 'wifi' };
     }
 }
 
 class BluetoothProtocolHandler {
-    async discover(options) { return { cameras: [] }; }
-    async connect(cameraInfo, options) { return { connected: true, type: 'bluetooth' }; }
+    async discover(_options) { return { cameras: [] }; }
+    async connect(_cameraInfo, _options) { return { connected: true, type: 'bluetooth' }; }
 }
 
 class PTPProtocolHandler {
-    async discover(options) { return { cameras: [] }; }
-    async connect(cameraInfo, options) { return { connected: true, type: 'ptp' }; }
+    async discover(_options) { return { cameras: [] }; }
+    async connect(_cameraInfo, _options) { return { connected: true, type: 'ptp' }; }
 }
 
 class MTPProtocolHandler {
-    async discover(options) { return { cameras: [] }; }
-    async connect(cameraInfo, options) { return { connected: true, type: 'mtp' }; }
+    async discover(_options) { return { cameras: [] }; }
+    async connect(_cameraInfo, _options) { return { connected: true, type: 'mtp' }; }
 }
 
 class GPhoto2Handler {
-    async discover(options) { return { cameras: [] }; }
-    async connect(cameraInfo, options) { return { connected: true, type: 'gphoto2' }; }
+    async discover(_options) { return { cameras: [] }; }
+    async connect(_cameraInfo, _options) { return { connected: true, type: 'gphoto2' }; }
 }
 
 class SDKHandler {
-    async discover(options) { return { cameras: [] }; }
-    async connect(cameraInfo, options) { return { connected: true, type: 'sdk' }; }
+    async discover(_options) { return { cameras: [] }; }
+    async connect(_cameraInfo, _options) { return { connected: true, type: 'sdk' }; }
 }
 
 // Profils de caméras
@@ -699,7 +656,7 @@ class ConnectionRecovery {}
 
 // Contrôleurs
 class CaptureController {
-    async takePhoto(camera, options) {
+    async takePhoto(_camera, options) {
         return {
             success: true
             filePath: `/tmp/photo_${Date.now()}.jpg`
@@ -710,12 +667,12 @@ class CaptureController {
 }
 
 class SettingsController {
-    async apply(camera, settings) { return true; }
-    async setShootingMode(camera, mode) { return true; }
-    async setISO(camera, iso) { return true; }
-    async setAperture(camera, aperture) { return true; }
-    async setShutterSpeed(camera, speed) { return true; }
-    async ping(camera) { return true; }
+    async apply(_camera, _settings) { return true; }
+    async setShootingMode(_camera, _mode) { return true; }
+    async setISO(_camera, _iso) { return true; }
+    async setAperture(_camera, _aperture) { return true; }
+    async setShutterSpeed(_camera, _speed) { return true; }
+    async ping(_camera) { return true; }
 }
 
 class LiveViewController {
@@ -729,7 +686,7 @@ class LiveViewController {
 }
 
 class FileTransferController {
-    async sync(camera, options) {
+    async sync(_camera, _options) {
         return {
             success: true
             filesTransferred: Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 10)
