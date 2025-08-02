@@ -54,17 +54,9 @@ jobs:
         npm ci --only=production
 
     - name: Perform CodeQL Analysis
-      id: analyze
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:${{matrix.language}}"
-        upload: true
-
-    - name: Upload CodeQL Results
-      if: always()
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: ${{ steps.analyze.outputs.sarif-output }}
         
     - name: Create Security Report
       if: always()
