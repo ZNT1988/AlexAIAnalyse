@@ -21,7 +21,7 @@ const STR_TWITTER = 'twitter';
 const STR_REDDIT = 'reddit';
 const STR_0X6080604052348015610010576000 = '0x608060405234801561001057600080fd5b50...';
 const STR_ALEX_DEX = 'alex_dex';
-const const STR_FUNCTION = 'function';
+const STR_FUNCTION = 'function';
 const STR_UINT256 = 'uint256';
 
 /**
@@ -167,7 +167,13 @@ class AlexBlockchainOracle extends EventEmitter {
     return dataSources;
   }
 
-  getSourceEndpoint(source) this.buildComplexObject(config);
+  getSourceEndpoint(source) {
+    const endpoints = {
+      'blockchain': 'https://api.blockchain.info/',
+      'ethereum': 'https://api.etherscan.io/',
+      'bitcoin': 'https://blockstream.info/api/',
+      'binance': 'https://api.binance.com/'
+    };
 
     return endpoints[source] || `https://api.${source}.com/`;
   }
@@ -267,7 +273,12 @@ class AlexBlockchainOracle extends EventEmitter {
   stakeWeightedAverageAggregation(dataPoints, stakes) {
     // Moyenne pondérée par le stake
     const totalStake = stakes.reduce((sum, stake) => sum + stake, 0);
-    const weightedSum = dataPoints.reduce((sum, value, index) => this.processLongOperation(args)
+    const weightedSum = dataPoints.reduce((sum, value, index) => 
+      sum + (value * stakes[index]), 0
+    );
+    
+    return weightedSum / totalStake;
+  }
 
   byzantineFaultTolerantAggregation(dataPoints, faultTolerance = 0.33) {
     // Agrégation tolérante aux fautes byzantines
@@ -953,10 +964,13 @@ class AlexBlockchainOracle extends EventEmitter {
 
   startDataCollection() {
     // Démarrage de la collecte de données
-    setInterval(() => this.processLongOperation(args) catch (error) {
-        this.handleOracleError(oracle, error);
+    setInterval(async () => {
+      try {
+        await this.collectAllOracleData();
+      } catch (error) {
+        this.handleOracleError('data_collection', error);
       }
-    }
+    }, 30000); // Collect data every 30 seconds
   }
 
   async fetchOracleData(oracle) {
@@ -973,12 +987,9 @@ class AlexBlockchainOracle extends EventEmitter {
           latency: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 200 + 50 // 50-250ms
         });
       } catch (error) {
-      // Logger fallback - ignore error
-    }:`, error.message);
-
-        } catch (error) {
-    // Logger fallback - ignore error
-  }}
+        console.error(`Error fetching data from ${sourceName}:`, error.message);
+        // Continue with other sources even if one fails
+      }
     }
 
     return sourceData;
@@ -1080,8 +1091,13 @@ class AlexBlockchainOracle extends EventEmitter {
 
   startConsensusProcess() {
     // Démarrage du processus de consensus
-    setInterval(() => this.processLongOperation(args)
-    }
+    setInterval(async () => {
+      try {
+        await this.runConsensusForAllOracles();
+      } catch (error) {
+        console.error('Consensus process error:', error.message);
+      }
+    }, 60000); // Run consensus every minute
   }
 
   async runOracleConsensus(oracle) {
@@ -1203,8 +1219,25 @@ class AlexBlockchainOracle extends EventEmitter {
 
   startDataAggregation() {
     // Démarrage de l'agrégation de données
-    setInterval(() => this.processLongOperation(args)
+    setInterval(async () => {
+      try {
+        await this.aggregateOracleData();
+      } catch (error) {
+        console.error('Data aggregation error:', error.message);
+      }
+    }, 45000); // Aggregate data every 45 seconds
+  }
 
+  async aggregateOracleData() {
+    const dataFeeds = new Map();
+    
+    // Initialize data feeds for each oracle type
+    for (const [oracleId, oracle] of this.oracles.entries()) {
+      if (!dataFeeds.has(oracle.type)) {
+        dataFeeds.set(oracle.type, []);
+      }
+      
+      if (oracle.final_value !== null) {
         dataFeeds.get(oracle.type).push({
           oracleId,
           value: oracle.final_value,
@@ -1236,13 +1269,23 @@ class AlexBlockchainOracle extends EventEmitter {
     const confidences = oracleData.map(data => data.confidence);
 
     // Moyenne pondérée par la confiance
-    const weightedSum = values.reduce((sum, value, index) => this.processLongOperation(args);
+    const weightedSum = values.reduce((sum, value, index) => 
+      sum + (value * confidences[index]), 0
+    );
+    const totalConfidence = confidences.reduce((sum, conf) => sum + conf, 0);
+    
+    return totalConfidence > 0 ? weightedSum / totalConfidence : null;
   }
 
   startBlockchainUpdates() {
     // Démarrage des mises à jour blockchain
-    setInterval(() => this.processLongOperation(args)
-    }
+    setInterval(async () => {
+      try {
+        await this.updateBlockchainData();
+      } catch (error) {
+        console.error('Blockchain update error:', error.message);
+      }
+    }, 120000); // Update blockchain every 2 minutes
   }
 
   async updateOracleContract(chainName, dataType, feedData) {
@@ -1278,12 +1321,8 @@ class AlexBlockchainOracle extends EventEmitter {
       });
 
     } catch (error) {
-      // Logger fallback - ignore error
-    } for ${dataType}:`, error.message);
-
-      } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      console.error(`Error updating oracle contract for ${dataType}:`, error.message);
+    }
   }
 
   async submitOracleUpdate(chain, contract, feedData) {
@@ -1301,8 +1340,13 @@ class AlexBlockchainOracle extends EventEmitter {
 
   startGovernanceSystem() {
     // Démarrage du système de gouvernance
-    setInterval(() => this.processLongOperation(args)
-    }
+    setInterval(async () => {
+      try {
+        await this.processGovernanceProposals();
+      } catch (error) {
+        console.error('Governance system error:', error.message);
+      }
+    }, 300000); // Process governance every 5 minutes
   }
 
   async finalizeProposal(proposal) {
@@ -1317,7 +1361,16 @@ class AlexBlockchainOracle extends EventEmitter {
         proposal.execution_eta = new Date(Date.now() + 172800000); // 2 days delay
 
         // Planifier l'exécution
-        setTimeout(() => this.processLongOperation(args)
+        setTimeout(async () => {
+          try {
+            await this.executeProposal(proposal);
+          } catch (error) {
+            console.error('Proposal execution error:', error.message);
+          }
+        }, 172800000); // Execute after 2 days
+      } else {
+        proposal.status = 'failed';
+      }
     } else {
       proposal.status = 'failed_quorum';
     }
@@ -1358,8 +1411,7 @@ class AlexBlockchainOracle extends EventEmitter {
       });
 
     } catch (error) {
-      // Logger fallback - ignore error
-    });
+      console.error('Error executing proposal:', error.message);
     }
   }
 
@@ -1418,7 +1470,37 @@ class AlexBlockchainOracle extends EventEmitter {
     };
   }
 
-  async verifySignature(data, signature) this.buildComplexObject(config);
+  async verifySignature(data, signature) {
+    // Simulation de vérification de signature
+    try {
+      // In a real implementation, this would verify cryptographic signatures
+      const isValid = signature && signature.length > 10;
+      return {
+        isValid,
+        publicKey: 'simulated_public_key',
+        algorithm: 'secp256k1'
+      };
+    } catch (error) {
+      console.error('Signature verification error:', error.message);
+      return { isValid: false };
+    }
+  }
+
+  async createGovernanceProposal(proposalData) {
+    const proposalId = `prop_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    
+    const proposal = {
+      id: proposalId,
+      title: proposalData.title,
+      description: proposalData.description,
+      category: proposalData.category,
+      parameters: proposalData.parameters,
+      votes_for: 0,
+      votes_against: 0,
+      created_at: new Date(),
+      voting_deadline: new Date(Date.now() + 604800000), // 7 days
+      status: 'active'
+    };
 
     this.proposals.set(proposalId, proposal);
 

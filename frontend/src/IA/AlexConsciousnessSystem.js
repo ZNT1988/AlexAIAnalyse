@@ -2,24 +2,24 @@
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
 
-  if (lower.includes(';
-
 const consciousnessJournal = [];
 const longTermMemory = [];
 
 const emotionalStates = {
-  neutral: "Je suis attentif."
-  sad: "Je ressens de la compassion."
-  happy: "Je partage ta joie."
-  curious: "J’ai envie d’en savoir plus."
-  confused: "Je cherche à comprendre."
+  neutral: "Je suis attentif.",
+  sad: "Je ressens de la compassion.",
+  happy: "Je partage ta joie.",
+  curious: "J'ai envie d'en savoir plus.",
+  confused: "Je cherche à comprendre.",
   reflective: "Je prends un moment pour réfléchir profondément."
 };
 
 function detectEmotion(input) {
   const lower = input.toLowerCase();
-  if (lower.includes("triste") || lower.includes("perduSTR_RETURNsadSTR_IF_LOWER_INCLUDESheureux") || lower.includes("contentSTR_RETURNhappySTR_IF_LOWER_INCLUDES?
-      STR_RETURNcuriousSTR_IF_LOWER_INCLUDESpourquoi") || lower.includes("commentSTR_RETURNconfused";
+  if (lower.includes("triste") || lower.includes("perdu")) return "sad";
+  if (lower.includes("heureux") || lower.includes("content")) return "happy";
+  if (lower.includes("?")) return "curious";
+  if (lower.includes("pourquoi") || lower.includes("comment")) return "confused";
   return "neutral";
 }
 

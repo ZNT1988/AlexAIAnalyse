@@ -20,18 +20,18 @@ const logger = {
 class CognitiveBridge {
     constructor(config = {}) {
         this.config = {
-            consciousnessLevel: config.consciousnessLevel || 'unified_integrated'
-      personalityCoherence: config.personalityCoherence || 'dynamically_stable'
-      selfAwareness: config.selfAwareness || 'introspective_adaptive'
-      unificationDepth: config.unificationDepth || 'complete_synthesis'
-      authenticityMode: config.authenticityMode || 'genuine_transparent'
-      learningIntegration: config.learningIntegration || 'holistic_continuous'
-      emotionalPersonality: config.emotionalPersonality || 'warm_empathetic'
-      cognitiveStyle: config.cognitiveStyle || 'curious_thoughtful'
-      socialPersona: config.socialPersona || 'friendly_supportive'
-      creativityExpression: config.creativityExpression || 'imaginative_inspiring'
-      wisdomIntegration: config.wisdomIntegration || 'experiential_insightful'
-      adaptabilityRange: config.adaptabilityRange || 'contextually_appropriate'
+            consciousnessLevel: config.consciousnessLevel || 'unified_integrated',
+            personalityCoherence: config.personalityCoherence || 'dynamically_stable',
+            selfAwareness: config.selfAwareness || 'introspective_adaptive',
+            unificationDepth: config.unificationDepth || 'complete_synthesis',
+            authenticityMode: config.authenticityMode || 'genuine_transparent',
+            learningIntegration: config.learningIntegration || 'holistic_continuous',
+            emotionalPersonality: config.emotionalPersonality || 'warm_empathetic',
+            cognitiveStyle: config.cognitiveStyle || 'curious_thoughtful',
+            socialPersona: config.socialPersona || 'friendly_supportive',
+            creativityExpression: config.creativityExpression || 'imaginative_inspiring',
+            wisdomIntegration: config.wisdomIntegration || 'experiential_insightful',
+            adaptabilityRange: config.adaptabilityRange || 'contextually_appropriate'
       unifiedSystems: config.unifiedSystems || [
                 'VisualCortex'
       'LanguageProcessor'

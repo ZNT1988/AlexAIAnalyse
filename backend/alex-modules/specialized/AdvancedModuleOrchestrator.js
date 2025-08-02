@@ -19,47 +19,47 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     super();
 
     this.orchestratorConfig = {
-      version: '2.0.0-transcendent'
-      name: 'Transcendent Module Orchestrator'
-      maxConcurrentModules: 100
+      version: '2.0.0-transcendent',
+      name: 'Transcendent Module Orchestrator',
+      maxConcurrentModules: 100,
       communicationTimeout: 50,  // Ultra-rapide 50ms
-      cacheEnabled: true
-      parallelProcessing: true
+      cacheEnabled: true,
+      parallelProcessing: true,
       quantumAcceleration: true
     };
 
     // Pool de communication haute performance
     this.communicationPool = {
-      activeConnections: new Map()
-      messageQueue: []
-      responseCache: new Map()
+      activeConnections: new Map(),
+      messageQueue: [],
+      responseCache: new Map(),
       performanceMetrics: new Map()
     };
 
     // Optimisations de performance
     this.performanceOptimizations = {
-      lazyLoading: true
-      preloadCritical: true
-      memoryPooling: true
-      connectionReuse: true
+      lazyLoading: true,
+      preloadCritical: true,
+      memoryPooling: true,
+      connectionReuse: true,
       batchProcessing: true
     };
 
     // Métriques de performance temps réel
     this.metrics = {
-      averageResponseTime: 0
-      throughput: 0
-      errorRate: 0
-      moduleLoadTime: new Map()
-      communicationLatency: new Map()
+      averageResponseTime: 0,
+      throughput: 0,
+      errorRate: 0,
+      moduleLoadTime: new Map(),
+      communicationLatency: new Map(),
       memoryUsage: 0
     };
 
     // Cache intelligent pour réponses fréquentes
     this.intelligentCache = {
-      responses: new Map()
-      moduleStates: new Map()
-      frequencyTracker: new Map()
+      responses: new Map(),
+      moduleStates: new Map(),
+      frequencyTracker: new Map(),
       hitRate: 0
     };
 
@@ -67,10 +67,10 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
 
     try {
       logger.info('⚡ AdvancedModuleOrchestrator initializing - Ultra performance mode');
-
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Initialise l'orchestrateur haute performance
@@ -90,7 +90,7 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     logger.info('🚀 AdvancedModuleOrchestrator fully initialized - Ultra performance active');
 
     this.emit('orchestrator_ready', {
-      maxConcurrent: this.orchestratorConfig.maxConcurrentModules
+      maxConcurrent: this.orchestratorConfig.maxConcurrentModules,
       optimizations: this.performanceOptimizations
     });
   }
@@ -101,25 +101,25 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
   async initializeCommunicationPool() {
     // Pool de connexions réutilisables
     this.connectionPool = {
-      available: []
-      busy: new Set()
-      maxSize: this.orchestratorConfig.maxConcurrentModules
+      available: [],
+      busy: new Set(),
+      maxSize: this.orchestratorConfig.maxConcurrentModules,
       created: 0
     };
 
     // Worker pool pour traitement parallèle
     this.workerPool = {
-      workers: new Map()
-      taskQueue: []
+      workers: new Map(),
+      taskQueue: [],
       activeJobs: new Map()
     };
 
     try {
       logger.info('🔗 High-performance communication pool initialized');
-
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Configure les optimisations de performance
@@ -136,54 +136,73 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
 
     try {
       logger.info('⚡ Performance optimizations configured');
-
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Configuration du cache intelligent
    */
   setupIntelligentCache() {
     this.cacheConfig = {
-      maxSize: 1000
+      maxSize: 1000,
       ttl: 300000, // 5 minutes
       cleanupInterval: 60000 // 1 minute
     };
 
     // Nettoyage périodique du cache
-    setInterval(() => this.processLongOperation(args) preloaded (${loadTime}ms)`);
+    setInterval(() => {
+      this.cleanupCache();
+    }, this.cacheConfig.cleanupInterval);
+  }
+
+  /**
+   * Précharge les modules critiques
+   */
+  async preloadCriticalModules() {
+    const criticalModules = ['AlexConsciousness', 'AlexMemoryCore', 'AlexIntelligentCore'];
+    const preloadPromises = criticalModules.map(async (moduleName) => {
+      try {
+        const startTime = Date.now();
+        // Simulate module preload
+        const loadTime = Date.now() - startTime;
+        logger.info(`📦 Critical module ${moduleName} preloaded (${loadTime}ms)`);
       } catch (error) {
         try {
-      logger.warn(`⚠️ Failed to preload critical module ${moduleName}:`, error.message);
-
+          logger.warn(`⚠️ Failed to preload critical module ${moduleName}:`, error.message);
         } catch (error) {
-    // Logger fallback - ignore error
-  }}
+          // Logger fallback - ignore error
+        }
+      }
     });
 
     await Promise.allSettled(preloadPromises);
     try {
       logger.info('🎯 Critical modules preloaded for ultra-low latency');
-
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   /**
    * Configuration du traitement par batch
    */
   setupBatchProcessing() {
     this.batchConfig = {
-      batchSize: 10
+      batchSize: 10,
       maxWaitTime: 50, // 50ms max wait
       processingInterval: 10 // 10ms interval
     };
 
     // Traitement périodique des batches
-    setInterval(() => this.processLongOperation(args) catch (error) {
-      // Logger fallback - ignore error
-    }
+    setInterval(() => {
+      try {
+        this.processBatch();
+      } catch (error) {
+        // Logger fallback - ignore error
+      }
+    }, this.batchConfig.processingInterval);
   }
 
   /**
@@ -219,19 +238,26 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     const results = [];
 
     for (const chunk of chunks) {
-      const chunkPromises = chunk.map(async (request) => this.processLongOperation(args);
+      const chunkPromises = chunk.map(async (request) => {
+        try {
+          // Check cache first
+          if (request.fromCache) {
+            return { request, result: request.cached, fromCache: true };
+          }
+
+          const moduleInstance = await this.getOptimizedModule(request.moduleName, moduleRegistry);
+          const result = await this.executeWithTimeout(
+            () => moduleInstance.processRequest(request),
+            this.orchestratorConfig.communicationTimeout
+          );
+
+          // Cache du résultat
+          this.cacheResult(request, result);
+
+          return { request, result, fromCache: false };
+        } catch (error) {
+          return { request, result: null, error: error.message, fromCache: false };
         }
-
-        const moduleInstance = await this.getOptimizedModule(request.moduleName, moduleRegistry);
-        const result = await this.executeWithTimeout(
-          () => moduleInstance.processRequest(request)
-          this.orchestratorConfig.communicationTimeout
-        );
-
-        // Cache du résultat
-        this.cacheResult(request, result);
-
-        return { request, result, fromCache: false };
       });
 
       const chunkResults = await Promise.allSettled(chunkPromises);
@@ -266,10 +292,20 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Exécution avec timeout optimisé
    */
   async executeWithTimeout(fn, timeout) {
-    return new Promise((resolve, reject) => this.processLongOperation(args), timeout);
+    return new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        reject(new Error('Operation timeout'));
+      }, timeout);
 
       Promise.resolve(fn())
-        .then(result => this.processLongOperation(args));
+        .then(result => {
+          clearTimeout(timeoutId);
+          resolve(result);
+        })
+        .catch(error => {
+          clearTimeout(timeoutId);
+          reject(error);
+        });
     });
   }
 
@@ -278,14 +314,14 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    */
   async aggregateResults(results) {
     const aggregated = {
-      success: true
-      totalResults: results.length
-      successful: results.filter(r => r.result).length
-      fromCache: results.filter(r => r.fromCache).length
-      responses: []
+      success: true,
+      totalResults: results.length,
+      successful: results.filter(r => r.result).length,
+      fromCache: results.filter(r => r.fromCache).length,
+      responses: [],
       performance: {
-        averageLatency: 0
-        cacheHitRate: (results.filter(r => r.fromCache).length / results.length) * 100
+        averageLatency: 0,
+        cacheHitRate: (results.filter(r => r.fromCache).length / results.length) * 100,
         throughput: results.length
       }
     };
@@ -294,8 +330,8 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
     for (const result of results) {
       if (result.result) {
         aggregated.responses.push({
-          module: result.request.moduleName
-          response: result.result
+          module: result.request.moduleName,
+          response: result.result,
           fromCache: result.fromCache || false
         });
       }
@@ -320,8 +356,8 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    */
   generateCacheKey(request) {
     return JSON.stringify({
-      module: request.moduleName
-      type: request.type
+      module: request.moduleName,
+      type: request.type,
       contentHash: this.hashContent(request.message || request.content || '')
     });
   }
@@ -345,8 +381,8 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
   cacheResult(request, result) {
     const cacheKey = this.generateCacheKey(request);
     this.intelligentCache.responses.set(cacheKey, {
-      data: result
-      timestamp: Date.now()
+      data: result,
+      timestamp: Date.now(),
       hits: 0
     });
 
@@ -398,11 +434,11 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
 
     if (toDelete.length > 0) {
       try {
-      logger.debug(`🧹 Cleaned ${toDelete.length} expired cache entries`);
-
+        logger.debug(`🧹 Cleaned ${toDelete.length} expired cache entries`);
       } catch (error) {
-    // Logger fallback - ignore error
-  }}
+        // Logger fallback - ignore error
+      }
+    }
   }
 
   /**
@@ -436,20 +472,25 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    * Monitoring de performance temps réel
    */
   startPerformanceMonitoring() {
-    setInterval(() => this.processLongOperation(args) catch (error) {
-    // Logger fallback - ignore error
-  }}
+    setInterval(() => {
+      try {
+        this.collectPerformanceMetrics();
+      } catch (error) {
+        // Logger fallback - ignore error
+      }
+    }, 30000); // Every 30 seconds
+  }
 
   /**
    * Collecte des métriques de performance
    */
   collectPerformanceMetrics() {
     const metrics = {
-      timestamp: new Date()
-      averageResponseTime: this.metrics.averageResponseTime
-      throughput: this.metrics.throughput
-      errorRate: this.metrics.errorRate
-      cacheHitRate: this.intelligentCache.hitRate
+      timestamp: new Date(),
+      averageResponseTime: this.metrics.averageResponseTime,
+      throughput: this.metrics.throughput,
+      errorRate: this.metrics.errorRate,
+      cacheHitRate: this.intelligentCache.hitRate,
       memoryUsage: process.memoryUsage().heapUsed / 1024 / 1024, // MB
       activeConnections: this.communicationPool.activeConnections.size
     };
@@ -488,16 +529,16 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    */
   getPerformanceMetrics() {
     return {
-      averageResponseTime: this.metrics.averageResponseTime
-      throughput: this.metrics.throughput
-      errorRate: this.metrics.errorRate
+      averageResponseTime: this.metrics.averageResponseTime,
+      throughput: this.metrics.throughput,
+      errorRate: this.metrics.errorRate,
       cacheStats: {
-        size: this.intelligentCache.responses.size
-        hitRate: this.intelligentCache.hitRate
+        size: this.intelligentCache.responses.size,
+        hitRate: this.intelligentCache.hitRate,
         maxSize: this.cacheConfig.maxSize
-      }
-      moduleLoadTimes: Object.fromEntries(this.metrics.moduleLoadTime)
-      communicationLatency: Object.fromEntries(this.metrics.communicationLatency)
+      },
+      moduleLoadTimes: Object.fromEntries(this.metrics.moduleLoadTime),
+      communicationLatency: Object.fromEntries(this.metrics.communicationLatency),
       memoryUsage: this.metrics.memoryUsage
     };
   }
@@ -507,13 +548,13 @@ export class AdvancedModuleOrchestrator extends EventEmitter {
    */
   getOrchestratorStatus() {
     return {
-      initialized: this.isInitialized
-      config: this.orchestratorConfig
-      optimizations: this.performanceOptimizations
-      metrics: this.getPerformanceMetrics()
+      initialized: this.isInitialized,
+      config: this.orchestratorConfig,
+      optimizations: this.performanceOptimizations,
+      metrics: this.getPerformanceMetrics(),
       connectionPool: {
-        available: this.connectionPool?.available?.length || 0
-        busy: this.connectionPool?.busy?.size || 0
+        available: this.connectionPool?.available?.length || 0,
+        busy: this.connectionPool?.busy?.size || 0,
         total: this.connectionPool?.created || 0
       }
     };

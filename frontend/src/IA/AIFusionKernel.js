@@ -296,8 +296,7 @@ class AIFusionKernel {
     const factors = [
       this.cognitiveQueue.length * 10,
       this.state.activeProcesses.size * 5,
-      this.modules.emotions?
-      .getEmotionalIntensity() * 20 || 0
+      this.modules.emotions?.getEmotionalIntensity() * 20 || 0
     ];
 
     return Math.min(100, factors.reduce((a, b) => a + b, 0));
@@ -539,7 +538,7 @@ export const createAlex = (config = {}) => {
     language: 'fr',
     emotionalSensitivity: 0.8,
     learningRate: 0.4,
-    debugMode: process.env.NODE_ENV === 'development'
+    debugMode: process.env.NODE_ENV === 'development',
     ...config
   });
 };

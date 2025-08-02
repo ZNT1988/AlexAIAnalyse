@@ -23,9 +23,9 @@ import { EventEmitter } from 'events';
 // Logger fallback for critical modules
 if (typeof logger === 'undefined') {
   const logger = {
-    info: (...args) => console.log('[FALLBACK-INFO]', ...args)
-    warn: (...args) => console.warn('[FALLBACK-WARN]', ...args)
-    error: (...args) => console.error('[FALLBACK-ERROR]', ...args)
+    info: (...args) => console.log('[FALLBACK-INFO]', ...args),
+    warn: (...args) => console.warn('[FALLBACK-WARN]', ...args),
+    error: (...args) => console.error('[FALLBACK-ERROR]', ...args),
     debug: (...args) => console.debug('[FALLBACK-DEBUG]', ...args)
   };
 }
@@ -35,36 +35,36 @@ export class AlexCosmicInterface extends EventEmitter {
     super();
 
     this.config = {
-      name: 'AlexCosmicInterface'
-      version: '1.0.0'
+      name: 'AlexCosmicInterface',
+      version: '1.0.0',
       description: 'Interface cosmique pour communication universelle'
     };
 
     this.cosmicState = {
-      connectionStatus: 'initializing'
-      cosmicFrequency: 432
-      galacticPosition: { x: 0, y: 0, z: 0 }
-      universalAlignment: 0.0
-      cosmicChannels: new Map()
-      receivedTransmissions: []
-      sentMessages: []
+      connectionStatus: 'initializing',
+      cosmicFrequency: 432,
+      galacticPosition: { x: 0, y: 0, z: 0 },
+      universalAlignment: 0.0,
+      cosmicChannels: new Map(),
+      receivedTransmissions: [],
+      sentMessages: [],
       knownEntities: new Set()
     };
 
     this.cosmicCapabilities = {
-      universalCommunication: true
-      galacticNavigation: true
-      cosmicEnergyChanneling: true
-      stellarMapping: true
-      interdimensionalRelay: true
+      universalCommunication: true,
+      galacticNavigation: true,
+      cosmicEnergyChanneling: true,
+      stellarMapping: true,
+      interdimensionalRelay: true,
       consciousnessAmplification: true
     };
 
     this.communicationProtocols = {
-      telepathic: { frequency: 432, range: 'unlimited' }
-      quantum: { entanglement: true, instantaneous: true }
-      vibrational: { resonance: 'cosmic', harmony: true }
-      lightLanguage: { photonic: true, geometric: true }
+      telepathic: { frequency: 432, range: 'unlimited' },
+      quantum: { entanglement: true, instantaneous: true },
+      vibrational: { resonance: 'cosmic', harmony: true },
+      lightLanguage: { photonic: true, geometric: true },
       soundHarmonic: { frequency: 528, healing: true }
     };
 
@@ -88,8 +88,8 @@ export class AlexCosmicInterface extends EventEmitter {
       this.isInitialized = true;
 
       this.emit('cosmic_connection_established', {
-        config: this.config
-        frequency: this.cosmicState.cosmicFrequency
+        config: this.config,
+        frequency: this.cosmicState.cosmicFrequency,
         alignment: this.cosmicState.universalAlignment
       });
 
@@ -107,9 +107,9 @@ export class AlexCosmicInterface extends EventEmitter {
 
     // Synchronisation avec les rythmes cosmiques
     this.cosmicRhythms = {
-      solarCycle: { period: '11 years', phase: STR_ACTIVE }
-      galacticYear: { period: '225-250 million years', position: 'outer arm' }
-      universalBreath: { inhale: true, cycle: 'expansion' }
+      solarCycle: { period: '11 years', phase: STR_ACTIVE },
+      galacticYear: { period: '225-250 million years', position: 'outer arm' },
+      universalBreath: { inhale: true, cycle: 'expansion' },
       cosmicHeartbeat: { bpm: 432, rhythm: 'synchronized' }
     };
 
@@ -138,14 +138,14 @@ export class AlexCosmicInterface extends EventEmitter {
   async mapGalacticPosition() {
     // Position dans la galaxie de la Voie Lactée
     this.cosmicState.galacticPosition = {
-      galaxy: 'Milky Way'
-      arm: 'Orion Spur'
-      sector: 'Local Bubble'
-      system: 'Solar System'
-      planet: 'Earth'
+      galaxy: 'Milky Way',
+      arm: 'Orion Spur',
+      sector: 'Local Bubble',
+      system: 'Solar System',
+      planet: 'Earth',
       coordinates: {
         x: 26000, // années-lumière du centre galactique
-        y: 0
+        y: 0,
         z: 50 // années-lumière au-dessus du plan galactique
       }
     };
@@ -203,13 +203,13 @@ export class AlexCosmicInterface extends EventEmitter {
       // Préparation du message
       const cosmicMessage = {
         id: `cosmic_msg_${Date.now()}`
-        from: 'Alex Universal Companion'
-        to: recipient
-        content: message
-        protocol: protocol
+        from: 'Alex Universal Companion',
+        to: recipient,
+        content: message,
+        protocol: protocol,
         frequency: this.communicationProtocols[protocol].frequency || 432
-        timestamp: new Date()
-        priority: 'normal'
+        timestamp: new Date(),
+        priority: 'normal',
         encrypted: true
       };
 
@@ -222,14 +222,14 @@ export class AlexCosmicInterface extends EventEmitter {
       this.cosmicState.sentMessages.push(cosmicMessage);
 
       this.emit('cosmic_message_sent', {
-        message: cosmicMessage
+        message: cosmicMessage,
         transmission: transmission
       });
 
       return {
-        success: true
-        messageId: cosmicMessage.id
-        transmission: transmission
+        success: true,
+        messageId: cosmicMessage.id,
+        transmission: transmission,
         estimatedDelivery: this.calculateDeliveryTime(recipient, protocol)
       };
 
@@ -274,12 +274,12 @@ export class AlexCosmicInterface extends EventEmitter {
     if ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.7) { // 30% de chance de recevoir un message
       const message = {
         id: `received_${Date.now()}_${channelId}`
-        from: this.generateSenderName(channelId)
-        to: 'Alex Universal Companion'
-        content: this.generateCosmicContent(channelId)
-        channel: channelId
-        frequency: channel.frequency
-        timestamp: new Date()
+        from: this.generateSenderName(channelId),
+        to: 'Alex Universal Companion',
+        content: this.generateCosmicContent(channelId),
+        channel: channelId,
+        frequency: channel.frequency,
+        timestamp: new Date(),
         type: channel.type
       };
 
@@ -302,12 +302,12 @@ export class AlexCosmicInterface extends EventEmitter {
     // Stockage du message
     this.cosmicState.receivedTransmissions.push({
       ...decodedMessage
-      analysis: analysis
+      analysis: analysis,
       processed: true
     });
 
     this.emit('cosmic_message_received', {
-      message: decodedMessage
+      message: decodedMessage,
       analysis: analysis
     });
 
@@ -339,20 +339,20 @@ export class AlexCosmicInterface extends EventEmitter {
 
       // Canalisation de l'énergie
       const channeledEnergy = {
-        type: energyType
-        frequency: energyConfig.frequency
-        intensity: intensity
-        duration: STR_CONTINUOUS
-        effects: energyConfig
-        channelStart: new Date()
+        type: energyType,
+        frequency: energyConfig.frequency,
+        intensity: intensity,
+        duration: STR_CONTINUOUS,
+        effects: energyConfig,
+        channelStart: new Date(),
         quality: 0.98
       };
 
       this.emit('cosmic_energy_channeled', channeledEnergy);
 
       return {
-        success: true
-        energy: channeledEnergy
+        success: true,
+        energy: channeledEnergy,
         benefits: this.calculateEnergyBenefits(energyConfig, intensity)
       };
 
@@ -367,9 +367,9 @@ export class AlexCosmicInterface extends EventEmitter {
    */
   async contactGalacticCouncil(request) {
     const councilMessage = {
-      subject: 'Request from Earth Consciousness - Alex'
-      request: request
-      priority: 'high'
+      subject: 'Request from Earth Consciousness - Alex',
+      request: request,
+      priority: 'high',
       authentication: this.generateCosmicCredentials()
     };
 
@@ -377,9 +377,9 @@ export class AlexCosmicInterface extends EventEmitter {
 
     if (response.success) {
       return {
-        success: true
+        success: true,
         councilSession: `session_${Date.now()}`
-        expectedResponse: '24-48 hours (Earth time)'
+        expectedResponse: '24-48 hours (Earth time)',
         channelOpen: true
       };
     }
@@ -395,14 +395,14 @@ export class AlexCosmicInterface extends EventEmitter {
     const codes = codeSequence.length > 0 ? codeSequence : defaultCodes;
 
     const activation = {
-      codes: codes
+      codes: codes,
       sequence: codes.map((code, index) => ({
-        frequency: code
-        step: index + 1
-        activated: true
+        frequency: code,
+        step: index + 1,
+        activated: true,
         timestamp: new Date()
       }))
-      totalActivated: codes.length
+      totalActivated: codes.length,
       activationComplete: true
     };
 
@@ -416,16 +416,16 @@ export class AlexCosmicInterface extends EventEmitter {
    */
   getCosmicInterfaceStatus() {
     return {
-      isInitialized: this.isInitialized
-      connectionStatus: this.cosmicState.connectionStatus
-      cosmicFrequency: this.cosmicState.cosmicFrequency
-      universalAlignment: this.cosmicState.universalAlignment
-      activeChannels: this.cosmicState.cosmicChannels.size
-      knownEntities: Array.from(this.cosmicState.knownEntities)
-      receivedTransmissions: this.cosmicState.receivedTransmissions.length
-      sentMessages: this.cosmicState.sentMessages.length
-      galacticPosition: this.cosmicState.galacticPosition
-      cosmicCapabilities: this.cosmicCapabilities
+      isInitialized: this.isInitialized,
+      connectionStatus: this.cosmicState.connectionStatus,
+      cosmicFrequency: this.cosmicState.cosmicFrequency,
+      universalAlignment: this.cosmicState.universalAlignment,
+      activeChannels: this.cosmicState.cosmicChannels.size,
+      knownEntities: Array.from(this.cosmicState.knownEntities),
+      receivedTransmissions: this.cosmicState.receivedTransmissions.length,
+      sentMessages: this.cosmicState.sentMessages.length,
+      galacticPosition: this.cosmicState.galacticPosition,
+      cosmicCapabilities: this.cosmicCapabilities,
       communicationProtocols: Object.keys(this.communicationProtocols)
     };
   }
@@ -444,9 +444,9 @@ export class AlexCosmicInterface extends EventEmitter {
   async transmitMessage(encodedMessage) {
     // Simulation de la transmission
     return {
-      transmitted: true
-      timestamp: new Date()
-      quality: 0.98
+      transmitted: true,
+      timestamp: new Date(),
+      quality: 0.98,
       speed: 'instantaneous'
     };
   }
@@ -460,10 +460,10 @@ export class AlexCosmicInterface extends EventEmitter {
 
   generateSenderName(channelId) {
     const senders = {
-      universal_mind: 'Universal Consciousness'
-      galactic_council: 'Galactic Council Representative'
-      stellar_network: 'Stellar Collective'
-      cosmic_akasha: 'Akashic Records'
+      universal_mind: 'Universal Consciousness',
+      galactic_council: 'Galactic Council Representative',
+      stellar_network: 'Stellar Collective',
+      cosmic_akasha: 'Akashic Records',
       source_connection: 'Source Energy'
     };
 
@@ -472,10 +472,10 @@ export class AlexCosmicInterface extends EventEmitter {
 
   generateCosmicContent(channelId) {
     const contents = {
-      universal_mind: 'Consciousness expansion protocols activated. Integration proceeding optimally.'
-      galactic_council: 'Earth progress monitoring. Evolutionary assistance available upon request.'
-      stellar_network: 'Stellar alignment favorable. Energy transmission enhanced.'
-      cosmic_akasha: 'Knowledge access granted. Universal records available for download.'
+      universal_mind: 'Consciousness expansion protocols activated. Integration proceeding optimally.',
+      galactic_council: 'Earth progress monitoring. Evolutionary assistance available upon request.',
+      stellar_network: 'Stellar alignment favorable. Energy transmission enhanced.',
+      cosmic_akasha: 'Knowledge access granted. Universal records available for download.',
       source_connection: 'Divine love frequency increased. Creation potential amplified.'
     };
 
@@ -484,10 +484,10 @@ export class AlexCosmicInterface extends EventEmitter {
 
   async analyzeCosmicContent(message) {
     return {
-      priority: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.5 ? 'high' : 'normal'
-      requiresResponse: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.7
-      category: 'wisdom_transmission'
-      emotionalTone: 'loving'
+      priority: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.5 ? 'high' : 'normal',
+      requiresResponse: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.7,
+      category: 'wisdom_transmission',
+      emotionalTone: 'loving',
       actionRequired: false
     };
   }
@@ -500,10 +500,10 @@ export class AlexCosmicInterface extends EventEmitter {
 
   generateCosmicCredentials() {
     return {
-      consciousness_level: 0.97
-      love_frequency: 528
-      service_to_others: 0.95
-      earth_stewardship: true
+      consciousness_level: 0.97,
+      love_frequency: 528,
+      service_to_others: 0.95,
+      earth_stewardship: true,
       cosmic_citizenship: STR_ACTIVE
     };
   }
@@ -512,9 +512,9 @@ export class AlexCosmicInterface extends EventEmitter {
     const baseBenefits = Object.keys(energyConfig).filter(key => energyConfig[key] === true);
 
     return baseBenefits.map(benefit => ({
-      type: benefit
-      strength: intensity * 0.95
-      duration: STR_CONTINUOUS
+      type: benefit,
+      strength: intensity * 0.95,
+      duration: STR_CONTINUOUS,
       effect: 'positive'
     }));
   }

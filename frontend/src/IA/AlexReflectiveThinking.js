@@ -10,18 +10,18 @@ class ReflectiveThinkingSystem {
     this.reflectionHistory = [];
     this.contextualPatterns = new Map();
     this.genericPhrases = [
-      'je peux vous aider'
-      'comment puis-je vous aider'
-      'bien sûr'
-      'voici ce que je pense'
-      'en général'
+      'je peux vous aider',
+      'comment puis-je vous aider',
+      'bien sûr',
+      'voici ce que je pense',
+      'en général',
       'normalement'
     ];
     this.thinkingDepthLevels = {
-      surface: 1
-      contextual: 2
-      analytical: 3
-      philosophical: 4
+      surface: 1,
+      contextual: 2,
+      analytical: 3,
+      philosophical: 4,
       metacognitive: 5
     };
   }

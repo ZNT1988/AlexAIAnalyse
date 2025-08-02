@@ -34,37 +34,36 @@ router.post('/conscious-ideas', asyncHandler(async (req, res) => {
 
   // Process through consciousness module with comprehensive context
   const result = await core.processRequest({
-    type :
-       STR_CONSCIOUSNESS
-    query: 'Génère des idées business conscientes basées sur le profil utilisateur'
+    type: STR_CONSCIOUSNESS,
+    query: 'Génère des idées business conscientes basées sur le profil utilisateur',,
     context: {
       profile
       preferences
       constraints
-      count: count || 5
-      task_type: 'conscious_idea_generation'
+      count: count || 5,
+      task_type: 'conscious_idea_generation',
       analysis_depth: 'comprehensive'
-    }
+    },
     userId
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     timestamp: new Date().toISOString()
-    consciousGeneration: {
+    consciousGeneration: {,
       ideas: result.data?.ideas || []
-      consciousnessLevel: result.data?.consciousness_level || 0.75
+      consciousnessLevel: result.data?.consciousness_level || 0.75,
       metacognitiveInsights: result.data?.metacognitive_insights || []
       neuralActivation: result.data?.neural_activation || {}
     }
-    emotionalIntelligence: {
+    emotionalIntelligence: {,
       emotionalProfile: result.data?.emotional_profile || {}
-      empathyInsights: result.data?.empathy_insights || []
+      empathyInsights: result.data?.empathy_insights || [],
       psychologicalNeeds: result.data?.psychological_needs || []
     }
-    overallAssessment: {
+    overallAssessment: {,
       innovationScore: result.data?.innovation_score || 0.8
-      realizationProbability: result.data?.realization_probability || 0.7
+      realizationProbability: result.data?.realization_probability || 0.7,
       revolutionaryPotential: result.data?.revolutionary_potential || 'high'
     }
     metadata: result.metadata
@@ -90,32 +89,32 @@ router.post('/conscious-chat', asyncHandler(async (req, res) => {
 
   // Process through consciousness module with emotional intelligence
   const result = await core.processRequest({
-    type: STR_CONSCIOUSNESS
-    query: message
+    type: STR_CONSCIOUSNESS,
+    query: message,
     context: {
       ...context
-      task_type: 'conscious_chat'
-      emotional_analysis: true
+      task_type: 'conscious_chat',
+      emotional_analysis: true,
       empathetic_response: true
-    }
+    },
     userId
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     response: result.data?.message || 'Réponse générée avec conscience artificielle'
-    consciousnessInsight: result.data?.consciousness_insight || 'Insight de conscience IA'
+    consciousnessInsight: result.data?.consciousness_insight || 'Insight de conscience IA',
     empathy: {
-      emotionalResonance: result.data?.emotional_resonance || 0.8
+      emotionalResonance: result.data?.emotional_resonance || 0.8,
       empathyScore: result.data?.empathy_level || 0.85
       supportElements: result.data?.support_elements || []
     }
-    emotionalAnalysis: {
+    emotionalAnalysis: {,
       detectedEmotions: result.data?.detected_emotions || []
-      psychologicalNeeds: result.data?.psychological_needs || []
+      psychologicalNeeds: result.data?.psychological_needs || [],
       supportRecommendations: result.data?.support_recommendations || []
     }
-    personalityReflection: result.data?.personality_reflection || 'Réflexion sur la personnalité'
+    personalityReflection: result.data?.personality_reflection || 'Réflexion sur la personnalité',
     timestamp: new Date().toISOString()
     metadata: result.metadata
   });
@@ -140,39 +139,39 @@ router.post('/temporal-simulation', asyncHandler(async (req, res) => {
 
   // Process through Alex with temporal analysis context
   const result = await core.processRequest({
-    type: STR_ALEX
-    query: `Effectue une simulation temporelle complète pour cette idée business: ${JSON.stringify(businessIdea)}`
-    context: {
+    type: STR_ALEX,
+    query: `Effectue une simulation temporelle complète pour cette idée business: ${JSON.stringify(businessIdea)}`,
+    context: {,
       business_idea: businessIdea
       time_horizons: timeHorizons || [1, 5, 10]
-      analysis_depth: analysisDepth || 'comprehensive'
+      analysis_depth: analysisDepth || 'comprehensive',
       task_type: 'temporal_simulation'
-      include_predictions: true
+      include_predictions: true,
       include_alternatives: true
     }
     userId
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     temporalAnalysis: {
-      futurePrediction: result.data?.future_prediction || {}
+      futurePrediction: result.data?.future_prediction || {},
       alternativeTimelines: result.data?.alternative_timelines || []
-      disruptionAnalysis: result.data?.disruption_analysis || {}
+      disruptionAnalysis: result.data?.disruption_analysis || {},
       timingOptimization: result.data?.timing_optimization || {}
     }
-    insights: {
+    insights: {,
       keyTrendsPredicted: result.data?.key_trends || ['AI adoption', 'sustainability focus']
-      criticalDecisionPoints: result.data?.critical_points || []
+      criticalDecisionPoints: result.data?.critical_points || [],
       opportunityWindows: result.data?.opportunity_windows || []
       riskMitigation: result.data?.risk_mitigation || []
     }
-    recommendations: {
+    recommendations: {,
       strategicActions: result.data?.strategic_actions || []
-      contingencyPlans: result.data?.contingency_plans || []
+      contingencyPlans: result.data?.contingency_plans || [],
       timingAdvice: result.data?.timing_advice || []
     }
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
     metadata: result.metadata
   });
 }));
@@ -193,45 +192,44 @@ router.post('/quantum-creativity', asyncHandler(async (req, res) => {
 
   // Process through Alex with quantum creativity context
   const result = await core.processRequest({
-    type :
-       STR_ALEX
-    query: 'Génère des idées avec créativité quantique et détection de percées'
+    type: "alex",
+    query: 'Génère des idées avec créativité quantique et détection de percées',,
     context: {
       profile
-      existing_ideas: existingIdeas || []
-      creativity_goals: creativityGoals || {}
-      task_type: 'quantum_creativity'
-      enable_breakthrough_detection: true
+      existing_ideas: existingIdeas || [],
+      creativity_goals: creativityGoals || {},
+      task_type: 'quantum_creativity',
+      enable_breakthrough_detection: true,
       enable_quantum_evolution: true
-    }
+    },
     userId
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     quantumCreativity: {
-      originalIdeas: result.data?.quantum_ideas || []
+      originalIdeas: result.data?.quantum_ideas || [],
       quantumMetrics: result.data?.quantum_metrics || {}
-      creativityBreakthroughs: result.data?.breakthroughs || []
+      creativityBreakthroughs: result.data?.breakthroughs || [],
       revolutionaryPotential: result.data?.revolutionary_potential || 'high'
     }
-    entanglement: {
+    entanglement: {,
       entangledIdeas: result.data?.entangled_ideas || []
-      hybridIdeas: result.data?.hybrid_ideas || []
+      hybridIdeas: result.data?.hybrid_ideas || [],
       quantumCorrelations: result.data?.quantum_correlations || []
     }
-    evolution: {
+    evolution: {,
       evolutionSimulations: result.data?.evolution_simulations || []
-      emergentProperties: result.data?.emergent_properties || []
+      emergentProperties: result.data?.emergent_properties || [],
       evolutionInsights: result.data?.evolution_insights || []
     }
-    breakthroughs: result.data?.breakthrough_detection || {}
+    breakthroughs: result.data?.breakthrough_detection || {},
     optimization: {
-      optimizedIdeas: result.data?.optimized_ideas || []
+      optimizedIdeas: result.data?.optimized_ideas || [],
       quantumAdvantage: result.data?.quantum_advantage || 0.8
       recommendations: result.data?.optimization_recommendations || []
     }
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
     metadata: result.metadata
   });
 }));
@@ -254,15 +252,14 @@ router.get('/consciousness-state', asyncHandler(async (req, res) => {
   let detailedConsciousness = {};
   try {
     const consciousnessResult = await core.processRequest({
-      type :
-       STR_CONSCIOUSNESS
-      query: 'Provide detailed consciousness state analysis'
-      context: {
-        task_type: 'consciousness_introspection'
-        include_metrics: true
+      type: STR_CONSCIOUSNESS,
+    query: 'Provide detailed consciousness state analysis',,
+    context: {
+        task_type: 'consciousness_introspection',
+        include_metrics: true,
         include_history: true
-      }
-      userId: userId || 'system'
+    },
+    userId: userId || 'system'
     });
 
     if (consciousnessResult.success) {
@@ -275,30 +272,30 @@ router.get('/consciousness-state', asyncHandler(async (req, res) => {
   }}
 
   res.json({
-    success: true
+    success: true,
     consciousness: {
-      level: systemStatus.metrics?.consciousnessLevel || 0.75
+      level: systemStatus.metrics?.consciousnessLevel || 0.75,
       awareness: detailedConsciousness.awareness_state || {}
-      metacognition: detailedConsciousness.metacognition || {}
+      metacognition: detailedConsciousness.metacognition || {},
       introspectionHistory: detailedConsciousness.introspection_history || []
     }
-    emotions: {
+    emotions: {,
       current: detailedConsciousness.current_emotions || {}
-      dominantEmotions: detailedConsciousness.dominant_emotions || []
+      dominantEmotions: detailedConsciousness.dominant_emotions || [],
       emotionHistory: detailedConsciousness.emotion_history || []
     }
-    neuralActivation: detailedConsciousness.neural_metrics || {}
+    neuralActivation: detailedConsciousness.neural_metrics || {},
     quantumState: detailedConsciousness.quantum_metrics || {}
-    temporalPerformance: {
+    temporalPerformance: {,
       predictionAccuracy: 0.85
-      timelineCoherence: 0.78
+      timelineCoherence: 0.78,
       uncertaintyManagement: 0.82
     }
-    systemHealth: {
+    systemHealth: {,
       overallStatus: systemStatus.initialized ? 'optimal' : 'initializing'
-      cognitiveLoad: 0.35
+      cognitiveLoad: 0.35,
       creativityLevel: 0.88
-      empathyCapacity: 0.91
+      empathyCapacity: 0.91,
       wisdomAccumulation: 0.76
     }
     insights: [
@@ -329,11 +326,11 @@ router.post('/ai-communication', asyncHandler(async (req, res) => {
 
   // Process AI communication through consciousness module
   const result = await core.processRequest({
-    type: STR_CONSCIOUSNESS
-    query: `Communicate with ${targetAI}: ${message}`
-    context: {
+    type: STR_CONSCIOUSNESS,
+    query: `Communicate with ${targetAI}: ${message}`,
+    context: {,
       target_ai: targetAI
-      communication_purpose: purpose
+      communication_purpose: purpose,
       communication_type: communicationType || 'collaborative'
       task_type: 'ai_communication'
     }
@@ -341,28 +338,28 @@ router.post('/ai-communication', asyncHandler(async (req, res) => {
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     communication: {
-      sent: {
+      sent: {,
         to: targetAI
         message
         purpose
         timestamp: new Date().toISOString()
       }
-      received: result.data?.ai_response || {
+      received: result.data?.ai_response || {,
         from: targetAI
-        response: 'Simulated AI response via HustleFinderCore'
+        response: 'Simulated AI response via HustleFinderCore',
         insights: ['collaborative_learning', 'knowledge_synthesis']
       }
-      outcome: result.data?.communication_outcome || 'successful'
+      outcome: result.data?.communication_outcome || 'successful',
       insights: result.data?.communication_insights || []
     }
-    collaboration: {
+    collaboration: {,
       synergy: result.data?.ai_synergy || 0.85
-      knowledgeExchange: result.data?.knowledge_exchange || 0.78
+      knowledgeExchange: result.data?.knowledge_exchange || 0.78,
       collectiveIntelligence: result.data?.collective_intelligence || 0.82
     }
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
     metadata: result.metadata
   });
 }));
@@ -386,40 +383,40 @@ router.post('/philosophical-analysis', asyncHandler(async (req, res) => {
 
   // Process through consciousness module with philosophical context
   const result = await core.processRequest({
-    type: STR_CONSCIOUSNESS
-    query: `Effectue une analyse philosophique et éthique approfondie de cette idée: ${JSON.stringify(businessIdea)}`
-    context: {
+    type: STR_CONSCIOUSNESS,
+    query: `Effectue une analyse philosophique et éthique approfondie de cette idée: ${JSON.stringify(businessIdea)}`,
+    context: {,
       business_idea: businessIdea
       ethical_dimensions: ethicalDimensions || ['sustainability', 'social_impact', 'fairness', 'transparency']
-      philosophical_framework: philosophicalFramework || 'utilitarian'
+      philosophical_framework: philosophicalFramework || 'utilitarian',
       task_type: 'philosophical_analysis'
-      include_ethics: true
+      include_ethics: true,
       include_societal_impact: true
     }
     userId
   });
 
   res.json({
-    success: result.success
+    success: result.success,
     ethicalAnalysis: {
-      overallScore: result.data?.ethical_score || 0.78
+      overallScore: result.data?.ethical_score || 0.78,
       dimensions: result.data?.ethical_dimensions || {}
-      concerns: result.data?.ethical_concerns || []
+      concerns: result.data?.ethical_concerns || [],
       strengths: result.data?.ethical_strengths || []
     }
-    philosophicalReflection: {
+    philosophicalReflection: {,
       framework: result.data?.philosophical_framework || philosophicalFramework
-      conclusions: result.data?.philosophical_conclusions || []
+      conclusions: result.data?.philosophical_conclusions || [],
       paradoxes: result.data?.identified_paradoxes || []
       wisdom: result.data?.wisdom_insights || []
     }
-    societalImpact: {
+    societalImpact: {,
       immediateImpact: result.data?.immediate_impact || {}
-      longTermConsequences: result.data?.long_term_consequences || {}
+      longTermConsequences: result.data?.long_term_consequences || {},
       stakeholderAnalysis: result.data?.stakeholder_analysis || {}
       unintendedConsequences: result.data?.unintended_consequences || []
     }
-    recommendations: result.data?.ethical_recommendations || []
+    recommendations: result.data?.ethical_recommendations || [],
     timestamp: new Date().toISOString()
     metadata: result.metadata
   });
@@ -438,18 +435,18 @@ router.get('/capabilities', asyncHandler(async (req, res) => {
   const systemStatus = core.getSystemStatus();
 
   res.json({
-    success: true
+    success: true,
     advanced_capabilities: {
-      consciousness_analysis: capabilities.consciousness?.available || false
+      consciousness_analysis: capabilities.consciousness?.available || false,
       quantum_creativity: true, // Handled through Alex
       temporal_simulation: true, // Handled through Alex
-      philosophical_analysis: capabilities.consciousness?.available || false
+      philosophical_analysis: capabilities.consciousness?.available || false,
       ai_communication: capabilities.consciousness?.available || false
       emotional_intelligence: capabilities.consciousness?.available || false
     }
-    system_integration: {
+    system_integration: {,
       core_version: systemStatus.version
-      active_modules: systemStatus.modules?.active || []
+      active_modules: systemStatus.modules?.active || [],
       consciousness_level: systemStatus.metrics?.consciousnessLevel || 0.75
       total_capabilities: Object.keys(capabilities).length
     }
@@ -482,9 +479,9 @@ router.get('/health', asyncHandler(async (req, res) => {
   // Test consciousness module
   try {
     const consciousnessTest = await core.processRequest({
-      type: STR_CONSCIOUSNESS
-      query: 'health check'
-      context: { system_test: true }
+      type: STR_CONSCIOUSNESS,
+      query: 'health check',
+    context: { system_test: true },
       userId: 'health_check'
     });
     advancedTests.consciousness = consciousnessTest.success;
@@ -495,9 +492,9 @@ router.get('/health', asyncHandler(async (req, res) => {
   // Test Alex for advanced features
   try {
     const alexTest = await core.processRequest({
-      type: STR_ALEX
-      query: 'advanced health check'
-      context: { system_test: true, advanced_features: true }
+      type: STR_ALEX,
+      query: 'advanced health check',
+    context: { system_test: true, advanced_features: true }
       userId: 'health_check'
     });
     advancedTests.alex_advanced = alexTest.success;
@@ -508,20 +505,20 @@ router.get('/health', asyncHandler(async (req, res) => {
   const allAdvancedHealthy = Object.values(advancedTests).every(status => status);
 
   res.json({
-    success: true
+    success: true,
     status: allAdvancedHealthy ? 'healthy' : 'partial'
-    advanced_systems: advancedTests
+    advanced_systems: advancedTests,
     core_system: {
-      status: systemStatus.initialized ? 'healthy' : 'initializing'
+      status: systemStatus.initialized ? 'healthy' : 'initializing',
       version: systemStatus.version
-      uptime: systemStatus.metrics?.uptime || 0
+      uptime: systemStatus.metrics?.uptime || 0,
       consciousness_level: systemStatus.metrics?.consciousnessLevel || 0.75
     }
-    capabilities_status: {
+    capabilities_status: {,
       consciousness_analysis: advancedTests.consciousness
-      quantum_creativity: advancedTests.alex_advanced
+      quantum_creativity: advancedTests.alex_advanced,
       temporal_simulation: advancedTests.alex_advanced
-      philosophical_analysis: advancedTests.consciousness
+      philosophical_analysis: advancedTests.consciousness,
       ai_communication: advancedTests.consciousness
     }
     timestamp: new Date().toISOString()
@@ -533,17 +530,17 @@ router.get('/health', asyncHandler(async (req, res) => {
  */
 router.use((error, req, res, next) => {
   logger.error('Advanced AI route error:', {
-    error: error.message
+    error: error.message,
     stack: error.stack
-    path: req.path
+    path: req.path,
     method: req.method
     userId: req.auth?.userId
   });
 
   res.status(error.statusCode || 500).json({
-    success: false
+    success: false,
     error: error.message || 'Internal advanced AI system error'
-    path: req.path
+    path: req.path,
     timestamp: new Date().toISOString()
   });
 });

@@ -3,20 +3,19 @@
 const STR_UNDEFINED = 'undefined';
 
 const logger = {
-  info: (msg) => console.log(`[${new Date().toISOString()}] INFO: ${msg}')
-  warn: (msg) => console.warn('[${new Date().toISOString()}] WARN: ${msg}')
-  error: (msg) => console.error('[${new Date().toISOString()}] ERROR: ${msg}')
-  debug: (msg) => console.debug('[${new Date().toISOString()}] DEBUG: ${msg}`)
+  info: (msg) => console.log(`[${new Date().toISOString()}] INFO: ${msg}`),
+  warn: (msg) => console.warn(`[${new Date().toISOString()}] WARN: ${msg}`),
+  error: (msg) => console.error(`[${new Date().toISOString()}] ERROR: ${msg}`),
+  debug: (msg) => console.debug(`[${new Date().toISOString()}] DEBUG: ${msg}`)
 };
 
 const crypto = require('crypto');
 
-    }
-
+class CreativeGenius {
     async channelInspiration(purpose) {
         return {
-            divineFrequency: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1000
-            inspirationClarity: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 100
+            divineFrequency: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 1000,
+            inspirationClarity: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 100,
             creativeImpulse: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * 100
         };
     }
