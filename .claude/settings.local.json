@@ -13,7 +13,10 @@
       "Bash(mv:*)",
       "Bash(npx @biomejs/biome check:*)",
       "Bash(npx eslint:*)",
-      "Bash(npx prettier:*)"
+      "Bash(npx prettier:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }

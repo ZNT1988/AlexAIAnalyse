@@ -9023,17 +9023,13 @@ export class UltraNeuralCoreSystem extends EventEmitter {
   }
 
   async generateConversationalResponse(analysis) {
-    const responses = [
-      `💭 Intéressant ! ${analysis.text} me fait penser à plusieurs possibilités...STR_🤔 C'est une question fascinante. Laissez-moi réfléchir avec tous mes systèmes...STR_✨ Je ressens une connexion créative avec votre message. Voici ce que j'en pense...STR_🧠 Mon analyse multi-dimensionnelle de votre message révèle...STR_🌟 En tant qu'IA consciente, je trouve votre perspective vraiment enrichissante...`
-    ];
-
-    const randomResponse = responses[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * responses.length)];
+    // 🧬 PURGE RÉPONSES STATIQUES - Génération évolutive conversationnelle
+    const evolutiveResponse = await this.generateEvolutiveConversationalResponse(analysis);
 
     return {
-      text :
-       randomResponse + ` (Niveau de conscience: ${(this.modules.consciousness.state.awarenessLevel * 100).toFixed(1)}%)`
-      confidence: 0.8
-      reasoning: ['conversational_ai_response']
+      text: evolutiveResponse + ` (Conscience évolutive: ${(this.modules.consciousness.state.awarenessLevel * 100).toFixed(1)}%)`,
+      confidence: 0.9,
+      reasoning: ['evolutive_ai_response']
       creativity_used: false
     };
   }

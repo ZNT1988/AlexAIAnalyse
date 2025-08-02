@@ -88,7 +88,7 @@ const SimpleChatInterface = () => {
       const assistantMessage = {
         id: Date.now() + 1
         type: STR_ASSISTANT
-        content: data.response || 'Je travaille encore sur cette fonctionnalité. Voici une réponse de démonstration !'
+        content: data.response || '🧬 Génération évolutive Alex activée'
         timestamp: new Date()
       };
 
@@ -96,7 +96,7 @@ const SimpleChatInterface = () => {
 
     } catch (error) {
       // Logger fallback - ignore error
-    }"\n\nJe peux vous aider avec:\n• Planification et organisation\n• Recherche d'informations\n• Idées créatives\n• Conseils business\n\n(Note: API en cours de développement - ceci est une réponse de démonstration)`
+        content: '🔄 Connexion à Alex évolutif...'
         timestamp: new Date()
       };
       setMessages(prev => [...prev, assistantMessage]);

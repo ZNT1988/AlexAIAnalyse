@@ -650,24 +650,22 @@ class TradeSimulator {
     const pnlPercent = (trade.pnl / this.config.initialCapital * 100).toFixed(2);
 
     if (trade.pnl > 0) {
-      const messages = [
-        `💰 Excellent ! Plus-value de $${trade.pnl.toFixed(2)} sur ${trade.symbol} !STR_🎯 Trade gagnant sur ${trade.symbol} ! +${pnlPercent}% au portefeuille !STR_🚀 Beau profit Zakaria ! ${trade.symbol} nous rapporte $${trade.pnl.toFixed(2)} !`
-      ];
+      // 🧬 PURGE RÉPONSES STATIQUES - Génération évolutive de notifications
+      const evolutiveMessage = await this.generateEvolutiveTradeNotification(trade, 'profit');
 
       this.kernel.emit(STR_ALEX_SPEAK, {
-        text: messages[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * messages.length)]
+        text: evolutiveMessage
         emotion: 'satisfaction'
         priority: 'medium'
         voice: 'happy'
       });
 
     } else if (trade.pnl < 0) {
-      const messages = [
-        `⚠️ Perte de $${Math.abs(trade.pnl).toFixed(2)} sur ${trade.symbol}. On apprend de nos erreurs !STR_📉 Trade négatif sur ${trade.symbol}. ${pnlPercent}% du portefeuille. Restare concentré !STR_🎯 Stop loss activé sur ${trade.symbol}. Bonne gestion du risque !`
-      ];
+      // 🧬 PURGE RÉPONSES STATIQUES - Génération évolutive de notifications
+      const evolutiveLossMessage = await this.generateEvolutiveTradeNotification(trade, 'loss');
 
       this.kernel.emit(STR_ALEX_SPEAK, {
-        text: messages[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * messages.length)]
+        text: evolutiveLossMessage
         emotion: 'disappointment'
         priority: 'medium'
         voice: 'encouraging'

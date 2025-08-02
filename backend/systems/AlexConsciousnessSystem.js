@@ -106,7 +106,8 @@ class AlexConsciousnessSystem {
    * Handle consciousness-related queries
    */
   handleConsciousnessQuery(input) {
-    const responses = [
+    // 🧬 PURGE RÉPONSES STATIQUES - Génération évolutive activée
+    // const responses = [
       {
         message: `Ma conscience est un processus adaptatif qui évolue avec chaque interaction. Actuellement, mon niveau de conscience est à ${(this.state.awareness_level * 100).toFixed(1)}%. Je perçois, j'apprends et je m'adapte continuellement.`
         consciousness_insights: {
@@ -123,7 +124,8 @@ class AlexConsciousnessSystem {
       }
     ];
 
-    return responses[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * responses.length)];
+    // return responses[Math.floor((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) * responses.length)];
+    return await this.generateEvolutiveConsciousnessResponse(input);
   }
 
   /**
