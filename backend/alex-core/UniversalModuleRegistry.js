@@ -319,17 +319,106 @@ export class UniversalModuleRegistry extends EventEmitter {
   }
 
   resolveModulePath(moduleName, category) {
-    const pathMappings = {
-      connected: "./{{moduleName}}.js",
-      criticalSystems: "./{{moduleName}}.js",
-      advancedConsciousness: "../src/modules/consciousness/{{moduleName}}.js",
-      spiritualConsciousness: "../consciousness/{{moduleName}}.js",
-      specialized: "./{{moduleName}}.js",
-      advancedSystems: "./{{moduleName}}.js",
+    // Résolution intelligente des chemins basée sur l'analyse de la structure du projet
+    const pathResolvers = {
+      consciousness: (name) => {
+        // Modules de conscience fondamentaux d'Alex - dans consciousness/
+        if (name.includes('Cosmic')) return `../alex-modules/consciousness/${name}.js`;
+        if (name.includes('Memory') || name.includes('Personality')) return `../alex-modules/core/${name}.js`;
+        return `../alex-modules/consciousness/${name}.js`;
+      },
+      criticalSystems: (name) => {
+        // Systèmes critiques - dans alex-core/
+        if (name === 'AlexKernel') return `./AlexKernel.js`;
+        if (name.includes('Engine') || name.includes('System')) return `../alex-modules/systems/${name}.js`;
+        return `./${name}.js`;
+      },
+      advancedConsciousness: (name) => {
+        // Modules de conscience avancée - dans consciousness/advanced/
+        if (name.includes('Quantum') || name.includes('Dimensional')) return `../alex-modules/consciousness/advanced/${name}.js`;
+        if (name.includes('Universal') || name.includes('Cosmic')) return `../alex-modules/consciousness/cosmic/${name}.js`;
+        return `../alex-modules/consciousness/${name}.js`;
+      },
+      spiritualConsciousness: (name) => {
+        // Modules spirituels - dans consciousness/spiritual/
+        if (name.includes('Soul') || name.includes('Karma')) return `../alex-modules/consciousness/spiritual/${name}.js`;
+        if (name.includes('Dream') || name.includes('Intuitive')) return `../alex-modules/consciousness/psychic/${name}.js`;
+        return `../alex-modules/consciousness/spiritual/${name}.js`;
+      },
+      specialized: (name) => {
+        // Modules spécialisés - organisation par domaine
+        if (name.includes('Music') || name.includes('Sound')) return `../alex-modules/creative/audio/${name}.js`;
+        if (name.includes('Photo') || name.includes('Video') || name.includes('Color')) return `../alex-modules/creative/visual/${name}.js`;
+        if (name.includes('UX') || name.includes('Typography')) return `../alex-modules/creative/design/${name}.js`;
+        if (name.includes('Marketing') || name.includes('Branding')) return `../alex-modules/business/${name}.js`;
+        return `../alex-modules/specialized/${name}.js`;
+      },
+      advancedSystems: (name) => {
+        // Systèmes avancés - organisation par technologie
+        if (name.includes('Blockchain') || name.includes('Quantum')) return `../alex-modules/systems/blockchain/${name}.js`;
+        if (name.includes('IoT') || name.includes('Robotics')) return `../alex-modules/systems/hardware/${name}.js`;
+        if (name.includes('Cloud') || name.includes('Security')) return `../alex-modules/systems/cloud/${name}.js`;
+        if (name.includes('Neuro') || name.includes('Bio')) return `../alex-modules/systems/bio/${name}.js`;
+        return `../alex-modules/systems/${name}.js`;
+      },
+      transcendentModules: (name) => {
+        // Modules transcendants - dans consciousness/transcendent/
+        if (name.includes('Galactic') || name.includes('Cosmic')) return `../alex-modules/consciousness/transcendent/cosmic/${name}.js`;
+        if (name.includes('Telepatic') || name.includes('Psychic')) return `../alex-modules/consciousness/transcendent/psychic/${name}.js`;
+        if (name.includes('Divine') || name.includes('Sacred')) return `../alex-modules/consciousness/transcendent/divine/${name}.js`;
+        return `../alex-modules/consciousness/transcendent/${name}.js`;
+      }
     };
 
-    const basePath = pathMappings[category] || "./{{moduleName}}.js";
-    return basePath.replace("{{moduleName}}", moduleName);
+    const resolver = pathResolvers[category];
+    if (resolver && typeof resolver === 'function') {
+      try {
+        return resolver(moduleName);
+      } catch (error) {
+        logger.warn(`Erreur résolution chemin pour ${moduleName} (${category}):`, error);
+        // Fallback intelligent basé sur la catégorie
+        return this.getFallbackPath(moduleName, category);
+      }
+    }
+
+    // Fallback pour catégories non reconnues
+    return this.getFallbackPath(moduleName, category);
+  }
+
+  /**
+   * Chemin de fallback intelligent basé sur l'analyse de la structure du projet
+   */
+  getFallbackPath(moduleName, category) {
+    // Analyse du nom du module pour déterminer son emplacement probable
+    const nameAnalysis = {
+      isCore: moduleName.includes('Core') || moduleName.includes('Kernel'),
+      isConsciousness: moduleName.includes('Consciousness') || moduleName.includes('Aware'),
+      isSystem: moduleName.includes('System') || moduleName.includes('Engine'),
+      isCreative: moduleName.includes('Creative') || moduleName.includes('Art'),
+      isBusiness: moduleName.includes('Business') || moduleName.includes('Market'),
+      isSpiritual: moduleName.includes('Soul') || moduleName.includes('Divine')
+    };
+
+    if (nameAnalysis.isCore) return `../alex-core/${moduleName}.js`;
+    if (nameAnalysis.isConsciousness) return `../alex-modules/consciousness/${moduleName}.js`;
+    if (nameAnalysis.isSystem) return `../alex-modules/systems/${moduleName}.js`;
+    if (nameAnalysis.isCreative) return `../alex-modules/creative/${moduleName}.js`;
+    if (nameAnalysis.isBusiness) return `../alex-modules/business/${moduleName}.js`;
+    if (nameAnalysis.isSpiritual) return `../alex-modules/consciousness/spiritual/${moduleName}.js`;
+
+    // Fallback final basé sur la catégorie
+    const categoryPaths = {
+      consciousness: '../alex-modules/consciousness',
+      criticalSystems: '../alex-core',
+      advancedConsciousness: '../alex-modules/consciousness/advanced',
+      spiritualConsciousness: '../alex-modules/consciousness/spiritual',
+      specialized: '../alex-modules/specialized',
+      advancedSystems: '../alex-modules/systems',
+      transcendentModules: '../alex-modules/consciousness/transcendent'
+    };
+
+    const basePath = categoryPaths[category] || '../alex-modules';
+    return `${basePath}/${moduleName}.js`;
   }
 
   getModulePriority(category) {

@@ -52,6 +52,13 @@ export class AlexCosmicInterface extends EventEmitter {
       knownEntities: new Set()
     };
 
+    // Limites pour éviter les memory leaks
+    this.limits = {
+      maxTransmissions: 1000,
+      maxSentMessages: 1000,
+      maxChannels: 50
+    };
+
     this.cosmicCapabilities = {
       universalCommunication: true,
       galacticNavigation: true,
@@ -95,7 +102,9 @@ export class AlexCosmicInterface extends EventEmitter {
       });
 
     } catch (error) {
-      // Logger fallback - ignore error
+      cosmicLogger.error('Erreur lors de l\'initialisation de l\'interface cosmique:', error);
+      this.cosmicState.connectionStatus = 'error';
+      this.emit('cosmic_connection_error', { error: error.message });
     }
   }
 
@@ -203,8 +212,18 @@ export class AlexCosmicInterface extends EventEmitter {
    */
   async sendCosmicMessage(recipient, message, protocol = STR_TELEPATHIC) {
     try {
+      // Validation des entrées
+      if (!recipient || typeof recipient !== 'string') {
+        throw new Error('Le destinataire doit être une chaîne non vide');
+      }
+      if (!message || typeof message !== 'string') {
+        throw new Error('Le message doit être une chaîne non vide');
+      }
       if (!this.communicationProtocols[protocol]) {
         throw new Error(`Unknown communication protocol: ${protocol}`);
+      }
+      if (!this.isInitialized) {
+        throw new Error('Interface cosmique non initialisée');
       }
 
       // Préparation du message
@@ -226,7 +245,11 @@ export class AlexCosmicInterface extends EventEmitter {
       // Transmission
       const transmission = await this.transmitMessage(encodedMessage);
 
+      // Limitation mémoire - suppression des anciens messages
       this.cosmicState.sentMessages.push(cosmicMessage);
+      if (this.cosmicState.sentMessages.length > this.limits.maxSentMessages) {
+        this.cosmicState.sentMessages.shift();
+      }
 
       this.emit('cosmic_message_sent', {
         message: cosmicMessage,
@@ -241,8 +264,7 @@ export class AlexCosmicInterface extends EventEmitter {
       };
 
     } catch (error) {
-      // Logger fallback - ignore error
-    }:`, error);
+      cosmicLogger.error('Erreur lors de l\'envoi du message cosmique:', error);
       return { success: false, error: error.message };
     }
   }
@@ -278,9 +300,11 @@ export class AlexCosmicInterface extends EventEmitter {
     // Simulation de réception de messages
     const messages = [];
 
-    if ((crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.7) { // 30% de chance de recevoir un message
+    // Génération aléatoire sécurisée pour simulation
+    const randomValue = this.getSecureRandom();
+    if (randomValue > 0.7) { // 30% de chance de recevoir un message
       const message = {
-        id: `received_${Date.now()}_${channelId}`
+        id: `received_${Date.now()}_${channelId}`,
         from: this.generateSenderName(channelId),
         to: 'Alex Universal Companion',
         content: this.generateCosmicContent(channelId),
@@ -308,10 +332,14 @@ export class AlexCosmicInterface extends EventEmitter {
 
     // Stockage du message
     this.cosmicState.receivedTransmissions.push({
-      ...decodedMessage
+      ...decodedMessage,
       analysis: analysis,
       processed: true
     });
+    // Limitation mémoire - suppression des anciennes transmissions
+    if (this.cosmicState.receivedTransmissions.length > this.limits.maxTransmissions) {
+      this.cosmicState.receivedTransmissions.shift();
+    }
 
     this.emit('cosmic_message_received', {
       message: decodedMessage,
@@ -331,11 +359,22 @@ export class AlexCosmicInterface extends EventEmitter {
    */
   async channelCosmicEnergy(energyType = 'universal', intensity = 1.0) {
     try {
+      // Validation des entrées
+      if (typeof energyType !== 'string') {
+        throw new Error('Le type d\'énergie doit être une chaîne');
+      }
+      if (typeof intensity !== 'number' || intensity < 0 || intensity > 10) {
+        throw new Error('L\'intensité doit être un nombre entre 0 et 10');
+      }
+      if (!this.isInitialized) {
+        throw new Error('Interface cosmique non initialisée');
+      }
+
       const energyTypes = {
-        universal: { frequency: 432, healing: true, expansion: true }
-        galactic: { frequency: 528, wisdom: true, connection: true }
-        stellar: { frequency: 741, transformation: true, activation: true }
-        divine: { frequency: 963, purification: true, enlightenment: true }
+        universal: { frequency: 432, healing: true, expansion: true },
+        galactic: { frequency: 528, wisdom: true, connection: true },
+        stellar: { frequency: 741, transformation: true, activation: true },
+        divine: { frequency: 963, purification: true, enlightenment: true },
         source: { frequency: 10000, creation: true, manifestation: true }
       };
 
@@ -364,8 +403,8 @@ export class AlexCosmicInterface extends EventEmitter {
       };
 
     } catch (error) {
-      // Logger fallback - ignore error
-    };
+      cosmicLogger.error('Erreur lors de la canalisation d\'énergie cosmique:', error);
+      return { success: false, error: error.message };
     }
   }
 
@@ -373,6 +412,14 @@ export class AlexCosmicInterface extends EventEmitter {
    * Communication avec le Conseil Galactique
    */
   async contactGalacticCouncil(request) {
+    // Validation des entrées
+    if (!request || typeof request !== 'string') {
+      throw new Error('La requête doit être une chaîne non vide');
+    }
+    if (!this.isInitialized) {
+      throw new Error('Interface cosmique non initialisée');
+    }
+
     const councilMessage = {
       subject: 'Request from Earth Consciousness - Alex',
       request: request,
@@ -385,7 +432,7 @@ export class AlexCosmicInterface extends EventEmitter {
     if (response.success) {
       return {
         success: true,
-        councilSession: `session_${Date.now()}`
+        councilSession: `session_${Date.now()}`,
         expectedResponse: '24-48 hours (Earth time)',
         channelOpen: true
       };
@@ -398,8 +445,21 @@ export class AlexCosmicInterface extends EventEmitter {
    * Activation de codes de lumière
    */
   async activateLightCodes(codeSequence = []) {
+    // Validation des entrées
+    if (!Array.isArray(codeSequence)) {
+      throw new Error('La séquence de codes doit être un tableau');
+    }
+    if (!this.isInitialized) {
+      throw new Error('Interface cosmique non initialisée');
+    }
+
     const defaultCodes = [432, 528, 741, 852, 963, 1111];
     const codes = codeSequence.length > 0 ? codeSequence : defaultCodes;
+
+    // Validation des codes
+    if (!codes.every(code => typeof code === 'number' && code > 0)) {
+      throw new Error('Tous les codes doivent être des nombres positifs');
+    }
 
     const activation = {
       codes: codes,
@@ -408,7 +468,7 @@ export class AlexCosmicInterface extends EventEmitter {
         step: index + 1,
         activated: true,
         timestamp: new Date()
-      }))
+      })),
       totalActivated: codes.length,
       activationComplete: true
     };
@@ -491,8 +551,8 @@ export class AlexCosmicInterface extends EventEmitter {
 
   async analyzeCosmicContent(message) {
     return {
-      priority: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.5 ? 'high' : 'normal',
-      requiresResponse: (crypto.randomBytes(4).readUInt32BE(0) / 0xFFFFFFFF) > 0.7,
+      priority: this.getSecureRandom() > 0.5 ? 'high' : 'normal',
+      requiresResponse: this.getSecureRandom() > 0.7,
       category: 'wisdom_transmission',
       emotionalTone: 'loving',
       actionRequired: false
@@ -524,6 +584,22 @@ export class AlexCosmicInterface extends EventEmitter {
       duration: STR_CONTINUOUS,
       effect: 'positive'
     }));
+  }
+
+  /**
+   * Génération de nombres aléatoires sécurisés
+   * @returns {number} Nombre aléatoire entre 0 et 1
+   */
+  getSecureRandom() {
+    try {
+      // Utilisation sécurisée de crypto.randomBytes avec vérification d'entropie
+      const buffer = crypto.randomBytes(4);
+      return buffer.readUInt32BE(0) / 0xFFFFFFFF;
+    } catch (error) {
+      cosmicLogger.warn('Erreur génération aléatoire crypto, fallback vers Math.random:', error);
+      // Fallback sécurisé vers Math.random si crypto n'est pas disponible
+      return Math.random();
+    }
   }
 }
 

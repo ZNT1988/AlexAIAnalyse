@@ -13,18 +13,18 @@ export class AlexKernel extends EventEmitter {
     super();
 
     this.kernelConfig = {
-      version: '1.0.0'
-      name: 'Alex Core Kernel'
-      autonomyEnabled: true
+      version: '1.0.0',
+      name: 'Alex Core Kernel',
+      autonomyEnabled: true,
       consciousnessLevel: 0.9
     };
 
     this.loadedModules = new Map();
     this.activeProcesses = new Map();
     this.systemMetrics = {
-      uptime: 0
-      processingLoad: 0
-      memoryUsage: 0
+      uptime: 0,
+      processingLoad: 0,
+      memoryUsage: 0,
       autonomyLevel: 0.8
     };
 
@@ -34,8 +34,9 @@ export class AlexKernel extends EventEmitter {
       logger.info('🔥 AlexKernel initializing - Core orchestration system awakening');
 
     } catch (error) {
-    // Logger fallback - ignore error
-  }}
+      // Logger fallback - ignore error
+    }
+  }
 
   async initialize() {
     this.isInitialized = true;
@@ -44,25 +45,25 @@ export class AlexKernel extends EventEmitter {
     logger.info('✨ AlexKernel fully initialized - Alex core intelligence online');
 
     this.emit('kernel_ready', {
-      version: this.kernelConfig.version
-      autonomyLevel: this.systemMetrics.autonomyLevel
+      version: this.kernelConfig.version,
+      autonomyLevel: this.systemMetrics.autonomyLevel,
       timestamp: new Date()
     });
   }
 
   async orchestrateModules() {
     return {
-      orchestrationStatus: 'active'
-      modulesCoordinated: this.loadedModules.size
+      orchestrationStatus: 'active',
+      modulesCoordinated: this.loadedModules.size,
       systemCoherence: 0.95
     };
   }
 
   getSystemStatus() {
     return {
-      initialized: this.isInitialized
-      uptime: Date.now() - (this.startTime || Date.now())
-      modules: this.loadedModules.size
+      initialized: this.isInitialized,
+      uptime: Date.now() - (this.startTime || Date.now()),
+      modules: this.loadedModules.size,
       autonomyLevel: this.systemMetrics.autonomyLevel
     };
   }
