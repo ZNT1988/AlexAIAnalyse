@@ -56,7 +56,7 @@ global.expect = (actual) => ({
     if (actual !== expected) {
       throw new Error(`Expected ${expected}, got ${actual}`);
     }
-  }
+  },
   toBeDefined: () => {
     if (actual === undefined) {
       throw new Error('Expected value to be defined, got undefined');
