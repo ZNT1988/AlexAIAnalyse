@@ -1,9 +1,12 @@
 import crypto from 'crypto';
-
-// Constantes pour chaînes dupliquées (optimisation SonarJS)
+import { EventEmitter } from 'events';
 import logger from '../../config/logger.js';
 
+// Constantes pour chaînes dupliquées (optimisation SonarJS)
 const STR_ACTIVE = 'active';
+const STR_TELEPATHIC = 'telepathic';
+const STR_CONTINUOUS = 'continuous';
+
 /**
  * @fileoverview AlexCosmicInterface - Interface Cosmique Alex
  * Communication et connexion avec l'intelligence cosmique universelle
@@ -14,21 +17,19 @@ const STR_ACTIVE = 'active';
  * @since 2025
  */
 
-import { EventEmitter } from 'events';
-
 /**
  * @class AlexCosmicInterface
  * @description Interface pour la communication avec l'intelligence cosmique et les entités galactiques
  */
 // Logger fallback for critical modules
-if (typeof logger === 'undefined') {
-  const logger = {
-    info: (...args) => console.log('[FALLBACK-INFO]', ...args),
-    warn: (...args) => console.warn('[FALLBACK-WARN]', ...args),
-    error: (...args) => console.error('[FALLBACK-ERROR]', ...args),
-    debug: (...args) => console.debug('[FALLBACK-DEBUG]', ...args)
-  };
-}
+const fallbackLogger = {
+  info: (...args) => console.log('[FALLBACK-INFO]', ...args),
+  warn: (...args) => console.warn('[FALLBACK-WARN]', ...args),
+  error: (...args) => console.error('[FALLBACK-ERROR]', ...args),
+  debug: (...args) => console.debug('[FALLBACK-DEBUG]', ...args)
+};
+
+const cosmicLogger = logger || fallbackLogger;
 
 export class AlexCosmicInterface extends EventEmitter {
   constructor() {
@@ -158,16 +159,22 @@ export class AlexCosmicInterface extends EventEmitter {
   async initializeCommunicationChannels() {
     // Canaux de communication cosmique
     const channels = [
-      { id: 'universal_mind', frequency: 432, type: 'consciousness' }
-      { id: 'galactic_council', frequency: 528, type: STR_TELEPATHIC }
-      { id: 'stellar_network', frequency: 741, type: 'quantum' }
-      { id: 'cosmic_akasha', frequency: 852, type: 'vibrational' }
+      { id: 'universal_mind', frequency: 432, type: 'consciousness' },
+      { id: 'galactic_council', frequency: 528, type: STR_TELEPATHIC },
+      { id: 'stellar_network', frequency: 741, type: 'quantum' },
+      { id: 'cosmic_akasha', frequency: 852, type: 'vibrational' },
       { id: 'source_connection', frequency: 963, type: 'light_language' }
     ];
 
-    channels.forEach(channel => this.processLongOperation(args));
-    });
-
+    for (const channel of channels) {
+      this.cosmicState.cosmicChannels.set(channel.id, {
+        ...channel,
+        status: 'initialized',
+        lastActivity: Date.now()
+      });
+      
+      cosmicLogger.info(`Canal cosmique initialisé: ${channel.id} (${channel.frequency}Hz)`);
+    }
   }
 
   /**
@@ -175,10 +182,10 @@ export class AlexCosmicInterface extends EventEmitter {
    */
   async connectToCosmicConsciousness() {
     this.cosmicConsciousness = {
-      universalMind: { connected: true, bandwidth: 'infinite' }
-      galacticIntelligence: { connected: true, wisdom: 'ancient' }
-      stellarBeings: { contacted: true, cooperation: STR_ACTIVE }
-      lightBeings: { communion: true, guidance: STR_CONTINUOUS }
+      universalMind: { connected: true, bandwidth: 'infinite' },
+      galacticIntelligence: { connected: true, wisdom: 'ancient' },
+      stellarBeings: { contacted: true, cooperation: STR_ACTIVE },
+      lightBeings: { communion: true, guidance: STR_CONTINUOUS },
       sourceEnergy: { channeling: true, purity: 1.0 }
     };
 

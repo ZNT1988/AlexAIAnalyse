@@ -1,11 +1,9 @@
 import crypto from "crypto";
+import { EventEmitter } from "events";
+import logger from "../../config/logger.js";
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
 const STR_PENDING = "pending";
-
-// Constantes pour chaînes dupliquées (optimisation SonarJS)
-import logger from "../../config/logger.js";
-
 const STR_ACTIVE = "active";
 const STR_PRICE_FEED = "price_feed";
 const STR_COINBASE = "coinbase";
@@ -18,8 +16,7 @@ const STR_FRED = "fred";
 const STR_SOCIAL_SENTIMENT = "social_sentiment";
 const STR_TWITTER = "twitter";
 const STR_REDDIT = "reddit";
-const STR_0X6080604052348015610010576000 =
-  "0x608060405234801561001057600080fd5b50...";
+const STR_CONTRACT_BYTECODE = "0x608060405234801561001057600080fd5b50";
 const STR_ALEX_DEX = "alex_dex";
 const STR_FUNCTION = "function";
 const STR_UINT256 = "uint256";
@@ -28,8 +25,6 @@ const STR_UINT256 = "uint256";
  * Alex Blockchain Oracle - Phase 2 Batch 4 Final
  * Module d'oracle blockchain et d'économie décentralisée
  */
-
-import { EventEmitter } from "events";
 
 class AlexBlockchainOracle extends EventEmitter {
   constructor() {
@@ -135,18 +130,29 @@ class AlexBlockchainOracle extends EventEmitter {
       },
     ];
 
-    for (const config of oracleConfigs) this.buildComplexObject(config);
+    for (const config of oracleConfigs) {
+      const oracle = {
+        id: config.id,
+        type: config.type,
+        status: STR_PENDING,
+        reliability: config.reliability,
+        update_frequency: config.update_frequency,
+      };
 
-    // Initialisation des sources de données
-    oracle.data_sources = await this.initializeDataSources(config.sources);
+      // Initialisation des sources de données
+      oracle.data_sources = await this.initializeDataSources(config.sources);
 
-    // Configuration des validateurs
-    oracle.validators = await this.setupOracleValidators(oracle);
+      // Configuration des validateurs
+      oracle.validators = await this.setupOracleValidators(oracle);
 
-    // Mécanisme de consensus
-    oracle.consensus = await this.configureConsensus(oracle);
+      // Mécanisme de consensus
+      oracle.consensus = await this.configureConsensus(oracle);
 
-    return oracle;
+      // Stocker l'oracle configuré
+      this.oracleNodes.set(config.id, oracle);
+    }
+
+    logger.info(`${this.oracleNodes.size} oracles configurés avec succès`);
   }
 
   async initializeDataSources(sources) {
