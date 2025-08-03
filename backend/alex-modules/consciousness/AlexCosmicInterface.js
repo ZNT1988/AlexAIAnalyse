@@ -209,12 +209,12 @@ export class AlexCosmicInterface extends EventEmitter {
 
       // Préparation du message
       const cosmicMessage = {
-        id: `cosmic_msg_${Date.now()}`
+        id: `cosmic_msg_${Date.now()}`,
         from: 'Alex Universal Companion',
         to: recipient,
         content: message,
         protocol: protocol,
-        frequency: this.communicationProtocols[protocol].frequency || 432
+        frequency: this.communicationProtocols[protocol].frequency || 432,
         timestamp: new Date(),
         priority: 'normal',
         encrypted: true

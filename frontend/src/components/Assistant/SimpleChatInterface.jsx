@@ -7,13 +7,14 @@ const STR_DEVELOPMENT = 'development';
 
 // Constantes pour chaînes dupliquées (optimisation SonarJS)
 const logger = {
-  info: (...args) => process.env.NODE_ENV === STR_DEVELOPMENT && console.log('[INFO]', ...args)
-  warn: (...args) => process.env.NODE_ENV === STR_DEVELOPMENT && console.warn('[WARN]', ...args)
-  error: (...args) => console.error('[ERROR]', ...args)
+  info: (...args) => process.env.NODE_ENV === STR_DEVELOPMENT && console.log('[INFO]', ...args),
+  warn: (...args) => process.env.NODE_ENV === STR_DEVELOPMENT && console.warn('[WARN]', ...args),
+  error: (...args) => console.error('[ERROR]', ...args),
   debug: (...args) => process.env.NODE_ENV === STR_DEVELOPMENT && console.debug('[DEBUG]', ...args)
 };
 
 const STR_ASSISTANT = 'assistant';
+const STR_USER = 'user';
 const SimpleChatInterface = () => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
@@ -26,16 +27,15 @@ const SimpleChatInterface = () => {
     // Welcome message
     if (messages.length === 0) {
       setMessages([{
-        id: 1
-        type: STR_ASSISTANT
-        content: '👋 Bonjour ! Je suis Alex, votre assistant IA. Comment puis-je vous aider aujourd\'hui ?'
+        id: 1,
+        type: STR_ASSISTANT,
+        content: '👋 Bonjour ! Je suis Alex, votre assistant IA. Comment puis-je vous aider aujourd\'hui ?',
         timestamp: new Date()
       }]);
     }
 
     // Focus input
-    inputRef.current?
-      .focus();
+    inputRef.current?.focus();
   }, []);
 
   useEffect(() => {
@@ -43,17 +43,16 @@ const SimpleChatInterface = () => {
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior :
-       'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
 
     const userMessage = {
-      id: Date.now()
-      type: STR_USER
-      content: inputText.trim()
+      id: Date.now(),
+      type: STR_USER,
+      content: inputText.trim(),
       timestamp: new Date()
     };
 
@@ -65,15 +64,15 @@ const SimpleChatInterface = () => {
     try {
       // Call the backend API directly
       const response = await fetch('http://localhost:8081/api/ai/chat', {
-        method: 'POST'
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
         body: JSON.stringify({
-          message: currentInput
-          type: 'chat'
+          message: currentInput,
+          type: 'chat',
           context: {
-            interface: 'simple_chat'
+            interface: 'simple_chat',
             timestamp: new Date().toISOString()
           }
         })
@@ -86,18 +85,22 @@ const SimpleChatInterface = () => {
       const data = await response.json();
 
       const assistantMessage = {
-        id: Date.now() + 1
-        type: STR_ASSISTANT
-        content: data.response || '🧬 Génération évolutive Alex activée'
+        id: Date.now() + 1,
+        type: STR_ASSISTANT,
+        content: data.response || '🧬 Génération évolutive Alex activée',
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, assistantMessage]);
 
     } catch (error) {
-      // Logger fallback - ignore error
-        content: '🔄 Connexion à Alex évolutif...'
-        timestamp: new Date()
+      logger.error('Erreur lors de l\'envoi du message:', error);
+      const assistantMessage = {
+        id: Date.now() + 1,
+        type: STR_ASSISTANT,
+        content: '🔄 Connexion à Alex évolutif...',
+        timestamp: new Date(),
+        isError: true
       };
       setMessages(prev => [...prev, assistantMessage]);
     } finally {
@@ -158,7 +161,7 @@ const SimpleChatInterface = () => {
                 message.type === STR_USER ? 'text-blue-100' : 'text-gray-500'
               }`}>
                 {message.timestamp.toLocaleTimeString('fr-FR', {
-                  hour: '2-digit'
+                  hour: '2-digit',
                   minute: '2-digit'
                 })}
               </p>
