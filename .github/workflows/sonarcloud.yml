@@ -51,20 +51,10 @@ jobs:
         npm run test:coverage || true
 
     - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@v2.3.0
+      uses: SonarSource/sonarcloud-github-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        args: >
-          -Dsonar.projectKey=alex-ultimate-ia
-          -Dsonar.organization=hustlefinder
-          -Dsonar.sources=backend/alex-modules/,backend/systems/,backend/routes/,backend/config/,backend/alex-core/,frontend/src/
-          -Dsonar.tests=backend/test/,frontend/src/__tests__/
-          -Dsonar.javascript.lcov.reportPaths=backend/coverage/lcov.info,frontend/coverage/lcov.info
-          -Dsonar.coverage.exclusions=**/*.test.js,**/*.spec.js,**/test/**,**/tests/**,**/__tests__/**,**/node_modules/**,**/coverage/**,**/fix-*.cjs
-          -Dsonar.exclusions=**/node_modules/**,**/coverage/**,**/*.backup,**/fix-*.cjs,**/*.sonar-backup
-          -Dsonar.qualitygate.wait=true
 
     - name: SonarCloud Quality Gate Check
       uses: sonarqube-quality-gate-action@v1.3.0
