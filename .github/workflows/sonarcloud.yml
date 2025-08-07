@@ -55,6 +55,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.projectKey=znt1988_AlexAIAnalyse
+          -Dsonar.organization=znt1988
 
     - name: SonarCloud Quality Gate Check
       uses: sonarqube-quality-gate-action@v1.3.0
@@ -65,7 +69,7 @@ jobs:
     - name: Create SonarCloud Report
       if: always()
       run: |
-        echo "# 📊 SonarCloud Analysis Report - Alex Ultimate" > sonarcloud-report.md
+        echo "# 📊 SonarCloud Analysis Report - Alex Licorne" > sonarcloud-report.md
         echo "" >> sonarcloud-report.md
         echo "**Date:** $(date)" >> sonarcloud-report.md
         echo "**Commit:** ${{ github.sha }}" >> sonarcloud-report.md
@@ -77,13 +81,14 @@ jobs:
         echo "- **Technical Debt:** Measured and reported" >> sonarcloud-report.md
         echo "- **Coverage:** Test coverage analysis" >> sonarcloud-report.md
         echo "" >> sonarcloud-report.md
-        echo "## 🧬 Alex Ultimate Specific Analysis" >> sonarcloud-report.md
-        echo "✅ Evolutionary Learning System analyzed" >> sonarcloud-report.md
-        echo "✅ Dynamic response generation validated" >> sonarcloud-report.md
-        echo "✅ Crisis management security verified" >> sonarcloud-report.md
-        echo "✅ All static responses eliminated" >> sonarcloud-report.md
+        echo "## 🦄 Alex Licorne Specific Analysis" >> sonarcloud-report.md
+        echo "✅ Architecture LICORNE analysée" >> sonarcloud-report.md
+        echo "✅ Système multi-tenant vérifié" >> sonarcloud-report.md
+        echo "✅ Modules conscience authentique validés" >> sonarcloud-report.md
+        echo "✅ API REST sécurisée analysée" >> sonarcloud-report.md
+        echo "✅ Business analytics vérifié" >> sonarcloud-report.md
         echo "" >> sonarcloud-report.md
-        echo "🔗 **Full Report:** [SonarCloud Dashboard](https://sonarcloud.io/project/overview?id=alex-ultimate-ia)"
+        echo "🔗 **Full Report:** [SonarCloud Dashboard](https://sonarcloud.io/project/overview?id=znt1988_AlexAIAnalyse)"
 
     - name: Upload SonarCloud Report
       if: always()
