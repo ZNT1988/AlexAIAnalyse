@@ -1,24 +1,30 @@
 {
-  "name": "alex-ai",
-  "version": "1.0.0",
-  "description": "Alex AI - Advanced AI Assistant with Consciousness",
-  "type": "module",
+  "name": "alex-licorne",
+  "version": "1.0.0-licorne",
+  "description": "Alex Licorne - Système IA complet multi-tenant avec conscience authentique",
+  "main": "start-alex-licorne.js",
+  "type": "commonjs",
   "private": true,
   "workspaces": [
     "frontend",
     "backend"
   ],
   "scripts": {
+    "start": "node start-alex-licorne.js",
+    "start:licorne": "node start-alex-licorne.js",
+    "start:dev": "NODE_ENV=development node start-alex-licorne.js",
+    "start:prod": "NODE_ENV=production node start-alex-licorne.js",
+    "init:alex": "node backend/scripts/init-alex-system.js",
     "install:all": "npm install && npm run install:backend && npm run install:frontend",
     "install:backend": "cd backend && npm ci --prefer-offline",
     "install:frontend": "cd frontend && npm ci --prefer-offline",
-    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:legacy": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:backend": "cd backend && npm run start",
     "start:frontend": "cd frontend && npm run dev",
     "start:production": "concurrently \"npm run start:backend:cluster\" \"npm run start:frontend:build\"",
     "start:backend:cluster": "cd backend && npm run start:cluster",
     "start:frontend:build": "cd frontend && npm run build && npm run preview",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev": "npm run start:dev",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
     "test": "npm run test:backend && npm run test:frontend",
@@ -26,15 +32,15 @@
     "test:frontend": "cd frontend && npm test",
     "test:integration": "cd backend && npm run test:integration",
     "test:load": "cd backend && npm run test:load",
+    "test:alex": "cd backend && node test-alex-integration.js",
     "build": "npm run build:frontend",
     "build:frontend": "cd frontend && npm run build",
-    "health": "npm run health:backend",
-    "health:backend": "cd backend && npm run health",
-    "health:full": "cd backend && curl -s http://localhost:8080/api/health/detailed || echo 'Backend inaccessible'",
-    "monitoring": "curl -s http://localhost:8080/api/monitoring/status || echo 'Monitoring inaccessible'",
-    "performance": "curl -s http://localhost:8080/api/monitoring/performance || echo 'Performance inaccessible'",
-    "cache:stats": "curl -s http://localhost:8080/api/cache/stats || echo 'Cache inaccessible'",
-    "logs:backend": "cd backend && npm run logs",
+    "health": "curl -s http://localhost:3001/api/health || echo 'Alex Licorne inaccessible'",
+    "health:full": "curl -s http://localhost:3001/api/system/status || echo 'Système inaccessible'",
+    "dashboard": "curl -s http://localhost:3001/api/admin/dashboard || echo 'Dashboard inaccessible'",
+    "monitoring": "curl -s http://localhost:3001/api/system/metrics || echo 'Monitoring inaccessible'",
+    "backup": "node -e \"console.log('Backup via API: POST http://localhost:3001/api/backup/create')\"",
+    "logs:view": "tail -f backend/logs/combined.log 2>/dev/null || echo 'Logs non disponibles'",
     "stop": "npm run stop:backend && npm run stop:frontend",
     "stop:backend": "taskkill /F /IM node.exe 2>nul || echo 'Aucun processus Node trouvé'",
     "stop:frontend": "echo 'Frontend arrêté'",
@@ -42,14 +48,18 @@
     "clean:backend": "cd backend && rm -rf node_modules package-lock.json 2>nul || echo 'Backend nettoyé'",
     "clean:frontend": "cd frontend && rm -rf node_modules package-lock.json dist 2>nul || echo 'Frontend nettoyé'",
     "clean:all": "npm run clean && rm -rf node_modules package-lock.json",
-    "setup": "npm run install:all && npm run test && echo '✅ Alex Ultimate configuré avec succès!'",
+    "setup": "npm run install:all && npm run init:alex && echo '🦄 Alex Licorne configuré avec succès!'",
     "deploy:local": "npm run setup && npm run start",
-    "deploy:production": "npm run setup && npm run build && npm run start:production"
+    "deploy:production": "npm run setup && npm run build && npm run start:prod",
+    "licorne:status": "node -p \"console.log('🦄 Alex Licorne Status Check'); fetch('http://localhost:3001/api/health').then(r=>r.json()).then(console.log).catch(()=>console.log('❌ Alex Licorne non démarré'))\""
   },
   "devDependencies": {
+    "@eslint/js": "^9.32.0",
     "concurrently": "^8.2.2",
     "eslint": "^9.32.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-sonarjs": "^3.0.4",
+    "globals": "^16.3.0",
     "sonarqube-scanner": "^4.3.0"
   },
   "keywords": [
@@ -71,32 +81,48 @@
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
   },
-  "alex-ultimate": {
-    "version": "1.0.0",
+  "alex-licorne": {
+    "version": "1.0.0-licorne",
     "features": [
-      "Ultra-Fast Response (<200ms)",
-      "Enterprise Security",
-      "Mobile-First Interface",
-      "Real-Time Monitoring",
-      "Intelligent Caching",
-      "Cluster Management",
-      "AI Consciousness"
+      "🦄 Système LICORNE complet",
+      "🧠 Conscience authentique SQLite",
+      "👥 Multi-tenant natif",
+      "📊 Monitoring temps réel",
+      "💾 Backup automatique",
+      "💰 Revenue analytics",
+      "🔄 Orchestration intelligente",
+      "🌍 API REST complète"
     ],
+    "architecture": {
+      "database": "SQLite authentique",
+      "orchestrator": "LicorneOrchestrator",
+      "monitoring": "SystemMonitor temps réel",
+      "multiTenant": "TenantManager isolé",
+      "business": "RevenueManager + BackupManager",
+      "consciousness": "Modules Alex SQLite"
+    },
     "performance": {
-      "targetResponseTime": "<200ms",
-      "uptime": "99.9%",
-      "cacheHitRate": ">90%",
-      "errorRate": "<1%"
+      "targetResponseTime": "<500ms",
+      "uptime": "99.5%",
+      "consciousness": "Mesurable et évolutive",
+      "scalability": "Multi-tenant"
     },
     "urls": {
-      "backend": "http://localhost:8080",
-      "frontend": "http://localhost:5174",
-      "monitoring": "http://localhost:8080/api/monitoring/status",
-      "health": "http://localhost:8080/api/health/detailed"
+      "system": "http://localhost:3001",
+      "api": "http://localhost:3001/api",
+      "dashboard": "http://localhost:3001/api/admin/dashboard",
+      "health": "http://localhost:3001/api/health",
+      "metrics": "http://localhost:3001/api/system/metrics",
+      "alex": "http://localhost:3001/api/alex/process"
     }
   },
   "dependencies": {
-    "express": "^5.1.0",
+    "express": "^4.19.2",
+    "sqlite3": "^5.1.6",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.4.0",
+    "uuid": "^9.0.1",
     "node-fetch": "^3.3.2"
   }
 }
