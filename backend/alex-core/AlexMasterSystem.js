@@ -1058,7 +1058,7 @@ class AlexMasterSystem extends EventEmitter {
   /**
    * Détecte les nuances émotionnelles subtiles
    */
-  detectEmotionalSubtleties(message) {
+   detectEmotionalSubtleties(message) {
     const emotionalMarkers = {
       curiosity: /pourquoi|comment|qu'est-ce|intéressant|fascinant/i,
       concern: /inquiet|préoccupé|soucieux|anxieux|problème/i,
