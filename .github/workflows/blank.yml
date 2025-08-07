@@ -19,14 +19,6 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-<<<<<<< HEAD
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-=======
           node-version: '18'  # Change si ton projet utilise une autre version
 
       - name: Install dependencies
@@ -42,5 +34,3 @@ jobs:
             -Dsonar.projectKey=ZNT1988_AlexAIAnalyse
             -Dsonar.organization=znt1988
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
-            
->>>>>>> 75674b9642eb900201030b53104015eddc80e563
