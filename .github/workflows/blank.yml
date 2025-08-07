@@ -1,20 +1,37 @@
+name: SonarCloud Analysis
 
-name: Build
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   sonarqube:
-    name: SonarQube
-    runs-on: windows-latest
+    name: SonarCloud
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          node-version: '18'  # Change si ton projet utilise une autre version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test || true  # Facultatif
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=ZNT1988_AlexAIAnalyse
+            -Dsonar.organization=znt1988
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+            
