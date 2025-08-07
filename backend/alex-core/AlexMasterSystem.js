@@ -1074,11 +1074,19 @@ class AlexMasterSystem extends EventEmitter {
       }
     }
 
+    let intensity;
+    if (detected.length > 2) {
+      intensity = "high";
+    } else if (detected.length > 0) {
+      intensity = "medium";
+    } else {
+      intensity = "low";
+    }
+
     return {
       primary: detected[0] || "neutral",
       secondary: detected.slice(1),
-      intensity:
-        detected.length > 2 ? "high" : detected.length > 0 ? "medium" : "low",
+      intensity: intensity,
     };
   }
 
