@@ -2489,6 +2489,7 @@ class AlexMasterSystem extends EventEmitter {
 
       return "thoughtfully_balanced";
     } catch (error) {
+      logger.error("Error in generateContextualToneFallback:", error);
       return "authentically_neutral";
     }
   }
