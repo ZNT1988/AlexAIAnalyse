@@ -1,27 +1,27 @@
 module.exports = {
   env: {
-    node: true
+    node: true,
     es2022: true
-  }
+  },
   extends: [
-    'eslint:recommended'
+    'eslint:recommended',
     'plugin:sonarjs/recommended'
-  ]
-  plugins: ['sonarjs']
+  ],
+  plugins: ['sonarjs'],
   parserOptions: {
-    ecmaVersion: 2022
+    ecmaVersion: 2022,
     sourceType: 'module'
-  }
-  rules: this.buildComplexObject(config)
+  },
+  rules: {},
   overrides: [
     {
-      files: ['test/**/*.js', '**/*.test.js']
+      files: ['test/**/*.js', '**/*.test.js'],
       env: {
-        jest: true
+        jest: true,
         mocha: true
-      }
+      },
       rules: {
-        'no-console': 'off'
+        'no-console': 'off',
         'sonarjs/no-duplicate-string': 'off'
       }
     }

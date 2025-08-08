@@ -4,10 +4,10 @@ const STR_POST = 'POST';
 // Integration test script for HustleFinderIA
 // Tests frontend-backend communication and functionality
 const logger = {
-  info: (msg) => console.log(`[TEST-INFO] ${msg}')
-  warn: (msg) => console.warn('[TEST-WARN] ${msg}')
-  error: (msg) => console.error('[TEST-ERROR] ${msg}')
-  debug: (msg) => console.debug('[TEST-DEBUG] ${msg}`)
+  info: (msg) => console.log(`[TEST-INFO] ${msg}`),
+  warn: (msg) => console.warn(`[TEST-WARN] ${msg}`),
+  error: (msg) => console.error(`[TEST-ERROR] ${msg}`),
+  debug: (msg) => console.debug(`[TEST-DEBUG] ${msg}`)
 };
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
@@ -24,17 +24,17 @@ async function runTest(name, testFunction) {
     const duration = Date.now() - start;
 
     results.push({
-      name
-      status: 'success'
-      duration: `${duration}ms`
+      name,
+      status: 'success',
+      duration: `${duration}ms`,
       result
     });
 
     return true;
   } catch (error) {
     results.push({
-      name
-      status: 'error'
+      name,
+      status: 'error',
       error: error.message
     });
 
@@ -85,8 +85,8 @@ async function testIdeasAPI() {
   }
 
   return {
-    message: 'Ideas API working correctly'
-    ideas_count: data.ideas.length
+    message: 'Ideas API working correctly',
+    ideas_count: data.ideas.length,
     sample_idea: data.ideas[0]?.title || 'No ideas found'
   };
 }
@@ -104,8 +104,8 @@ async function testProjectsAPI() {
   }
 
   return {
-    message: 'Projects API working correctly'
-    projects_count: data.projects.length
+    message: 'Projects API working correctly',
+    projects_count: data.projects.length,
     sample_project: data.projects[0]?.title || 'No projects found'
   };
 }
@@ -113,12 +113,12 @@ async function testProjectsAPI() {
 // Test 5: AI Chat API
 async function testAIChatAPI() {
   const response = await fetch(`${BACKEND_URL}/api/ai/chat`, {
-    method: STR_POST
+    method: STR_POST,
     headers: {
-      'Content-Type': STR_JSON_CONTENT
-    }
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify({
-      message: 'Test de connexion API IA'
+      message: 'Test de connexion API IA',
       type: 'chat'
     })
   });
@@ -133,9 +133,9 @@ async function testAIChatAPI() {
   }
 
   return {
-    message: 'AI Chat API working correctly'
-    ai_response: data.response
-    model: data.model
+    message: 'AI Chat API working correctly',
+    ai_response: data.response,
+    model: data.model,
     response_time: data.response_time_ms
   };
 }
@@ -157,11 +157,18 @@ async function testCORSConfiguration() {
 
 // Test 7: Database Operations (Create Idea)
 async function testDatabaseOperations() {
+  const testIdea = {
+    title: 'Test Idea Integration',
+    description: 'Test idea for integration testing',
+    category: 'test',
+    priority: 'medium'
+  };
+
   const response = await fetch(`${BACKEND_URL}/api/ideas`, {
-    method: STR_POST
+    method: STR_POST,
     headers: {
-      'Content-Type': STR_JSON_CONTENT
-    }
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(testIdea)
   });
 
@@ -175,11 +182,22 @@ async function testDatabaseOperations() {
   }
 
   return {
-    message: 'Database operations working correctly'
-    created_idea_id: data.idea.id
+    message: 'Database operations working correctly',
+    created_idea_id: data.idea.id,
     created_idea_title: data.idea.title
   };
 }
+
+// Test functions array
+const testFunctions = [
+  ['Frontend Access', testFrontendAccess],
+  ['Backend Health', testBackendHealth],
+  ['Ideas API', testIdeasAPI],
+  ['Projects API', testProjectsAPI],
+  ['AI Chat API', testAIChatAPI],
+  ['CORS Configuration', testCORSConfiguration],
+  ['Database Operations', testDatabaseOperations]
+];
 
 // Main test runner
 async function runAllTests() {
@@ -194,7 +212,9 @@ async function runAllTests() {
   // Summary
   logger.debug(`✅ Passed: ${successCount}/${testFunctions.length}`);
   if (successCount === testFunctions.length) {
+    logger.info('🎉 All tests passed!');
   } else {
+    logger.error('❌ Some tests failed!');
   }
 
   // Detailed results

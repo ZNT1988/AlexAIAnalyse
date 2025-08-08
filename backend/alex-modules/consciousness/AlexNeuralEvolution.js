@@ -24,9 +24,9 @@ import { EventEmitter } from 'events';
 // Logger fallback for critical modules
 if (typeof logger === 'undefined') {
   const logger = {
-    info: (...args) => console.log('[FALLBACK-INFO]', ...args)
-    warn: (...args) => console.warn('[FALLBACK-WARN]', ...args)
-    error: (...args) => console.error('[FALLBACK-ERROR]', ...args)
+    info: (...args) => console.log('[FALLBACK-INFO]', ...args),
+    warn: (...args) => console.warn('[FALLBACK-WARN]', ...args),
+    error: (...args) => console.error('[FALLBACK-ERROR]', ...args),
     debug: (...args) => console.debug('[FALLBACK-DEBUG]', ...args)
   };
 }

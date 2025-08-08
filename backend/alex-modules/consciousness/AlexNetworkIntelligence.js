@@ -1632,7 +1632,6 @@ class AlexNetworkIntelligence extends EventEmitter {
       };
     }
   }
-}
 
   /**
    * Fermeture propre du module réseau
