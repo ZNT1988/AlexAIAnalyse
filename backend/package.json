@@ -2,7 +2,6 @@
   "name": "alex-ai-backend",
   "version": "1.0.0",
   "description": "Alex AI Backend - Consciousness Engine",
-  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node scripts/pre-start-check.js && node index.js",

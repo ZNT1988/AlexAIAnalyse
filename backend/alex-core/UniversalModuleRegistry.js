@@ -7,14 +7,14 @@
  * @since 2025
  */
 
-import { EventEmitter } from "events";
-import logger from "../config/logger.js";
+const { EventEmitter } = require("events");
+const logger = require("../config/logger-simple");
 
 /**
  * @class UniversalModuleRegistry
  * @description Gestionnaire central pour tous les modules Alex (141 modules)
  */
-export class UniversalModuleRegistry extends EventEmitter {
+class UniversalModuleRegistry extends EventEmitter {
   constructor() {
     super();
 
@@ -1811,4 +1811,4 @@ export class UniversalModuleRegistry extends EventEmitter {
   }
 }
 
-export default new UniversalModuleRegistry();
+module.exports = UniversalModuleRegistry;
