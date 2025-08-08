@@ -1,0 +1,6 @@
+[
+  {"id":"free","name":"Free","price":0,"interval":"month","quota":1000,"rateLimitPerMin":30},
+  {"id":"pro","name":"Pro","price":29,"interval":"month","quota":100000,"rateLimitPerMin":120},
+  {"id":"business","name":"Business","price":199,"interval":"month","quota":1000000,"rateLimitPerMin":600},
+  {"id":"enterprise","name":"Enterprise","price":0,"interval":"month","quota":-1,"rateLimitPerMin":-1,"custom":true}
+]

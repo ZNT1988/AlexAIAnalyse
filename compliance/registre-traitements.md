@@ -1,0 +1,13 @@
+# Registre des traitements — Hustle Finder
+- Responsable de traitement : Hustle Finder SRL
+- DPO : <nom + email>
+- Finalités : Authentification, facturation, logs d’usage API, amélioration produit
+- Données : email, métadonnées requêtes (horodatage, volume), paiements (via Stripe)
+- Base légale : Contrat (CGU/CGV) ; Intérêt légitime (sécurité, prévention abus)
+- Localisation : UE (primary), sauvegardes chiffrées
+- Durées de conservation :
+  - Logs API : 12 mois
+  - Données facturation : 10 ans (obligation légale)
+- Droits : accès, rectification, effacement, portabilité, opposition
+- Sous-traitants : Stripe (paiement), hébergeur (cloud), e-mailing
+- Mesures sécurité : chiffrement au repos et en transit, contrôle d’accès RBAC, journalisation
