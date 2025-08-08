@@ -1,0 +1,34 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hustle Finder — IA rentable</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head><body>
+<header>
+  <h1>Hustle Finder (Alex)</h1>
+  <p>API temps réel. Sécurisé. Conforme UE. Prêt pour l’entreprise.</p>
+  <a href="/signup" >Essai gratuit</a>
+</header>
+<section>
+  <h2>Pourquoi HF ?</h2>
+  <ul>
+    <li>API payante simple (Stripe)</li>
+    <li>Scalable (Kubernetes + HPA)</li>
+    <li>RGPD & AI Act-ready</li>
+  </ul>
+</section>
+<section>
+  <h2>Plans</h2>
+  <div id="plans"></div>
+  <script>
+    const plans = [
+      {name:'Free', price:'0€', quota:'1k req/mois'},
+      {name:'Pro', price:'29€', quota:'100k req/mois'},
+      {name:'Business', price:'199€', quota:'1M req/mois'}
+    ];
+    document.getElementById('plans').innerHTML = plans.map(p=>`<div><h3>${p.name}</h3><p>${p.price}</p><p>${p.quota}</p></div>`).join('');
+  </script>
+</section>
+<footer>
+  <a href="/legal/privacy">Confidentialité</a> · <a href="/legal/terms">CGU</a>
+</footer>
+</body></html>

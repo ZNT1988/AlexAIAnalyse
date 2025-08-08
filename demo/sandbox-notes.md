@@ -1,0 +1,3 @@
+- Dataset mocké, aucun PII
+- Clés limitées, quotas serrés
+- Monitoring temps réel activé

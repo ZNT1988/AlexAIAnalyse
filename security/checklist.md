@@ -1,0 +1,8 @@
+- [ ] TLS partout (Ingress + HSTS)
+- [ ] Secrets K8s via External Secrets/Parameter Store
+- [ ] RBAC strict + namespaces
+- [ ] Logs immuables + rétention 12 mois
+- [ ] Backups chiffrés + tests de restauration mensuels
+- [ ] Scans SCA/DAST (GitHub Dependabot + CodeQL)
+- [ ] Politique de rotation clés API
+- [ ] Limitation CORS + CSP
